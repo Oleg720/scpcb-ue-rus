@@ -1,4 +1,4 @@
-# SCP - Containment Breach Ultimate Edition/Расширенное издание | Русская локализация
+# SCP - Containment Breach UE| Русская локализация
 
 Версия оригинальной игры: 1.3.11
 Версия модификации Ultimate Edition: 5.4

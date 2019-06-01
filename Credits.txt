@@ -1,0 +1,450 @@
+
+*Над переводом работали:
+
+*CreatorMasters
+
+		Олег Сиряк
+		Иван Михайлов
+		Татьяна Низова
+
+
+*Trill Team
+
+		Иван Бадиков
+		Михаил Натариус
+		Арсений Абрамов
+		Александер Орлов
+		Илья Тесаков
+		Алексей Чеканов
+		Денис Арсенюк
+		Алексей Кузьмин
+		Саша Дешко
+		Креостат Креостовский
+		Владислав Семецкий
+		Анатолий Кононов
+		Николай Маркозов
+		Иван Михайлов
+		Дмитрий Сазанов
+		Олег Сиряк
+
+
+*А также
+
+		Сергей Зверев
+
+
+
+*Над игрой работали:
+
+*Программисты
+
+		Joonas Rikkonen ("Regalis")
+		CommanderMark
+		Jesse Ludtke ("MonocleBios")
+		Juan Pablo Arce ("Juanjpro")
+		Luggs123
+		Ryan Stillings ("Risingstar64")
+		Sam Lynch ("InnocentSam")
+		Shaun Gaylard ("ENDSHN")
+
+
+*3D моделлеры
+
+		Joonas Rikkonen ("Regalis")
+		Apocryphos
+		Atomicsneak
+		Brandon Smith
+		EternalError
+		GamerEntitlement
+		Hakkla
+		Ivan Mikhailov ("Redbull.Ivan")
+		James Bear ("Moonsaber")
+		Kenneth Crooker
+		Lionel Ruskin ("Cridone")
+		Micro
+		Night
+		Prosth
+		TheKMan
+		Reilly Grindle ("Mirocaine")
+		SaitoFox
+		Sam Lynch ("InnocentSam")
+		Shaun Gaylard ("ENDSHN")
+		Tom Malinowski
+		Vladislav Borisevich ("Vane Brain")
+
+
+*Звукорежиссёры и композиторы
+
+		Joonas Rikkonen ("Regalis")
+		Caleb Yu ("Omniary")
+		Class401
+		FireFox
+		gmodfan11
+		Kevin MacLeod
+		phlip45
+		revo794
+		Shaun Gaylard ("ENDSHN")
+		Slagar
+		Tim Morrison
+		Vladislav Borisevich ("Vane Brain")
+		Walach
+
+
+*Актеры озвучивания
+
+		Aaron Mckee ("TheVolgun")
+		Brendan Sussman ("DukeLovesYou")
+		CDWinters
+		Graham Ruruku ("Stealthy Zoroark")
+		Hunter
+		ItsDuke
+		Joshofsouls
+		Moonstiee
+		SolidBaker
+		Tallfellow
+
+
+*Художники текстур и спрайтов
+
+		Joonas Rikkonen ("Regalis")
+		Anon4743
+		Balzac
+		Brokami
+		Caleb Yu ("Omniary")
+		KyoteeWilliams
+		Orgil Pount ("Destructoid")
+		Pavel Lvovich Gorfunkel ("-Mark-")
+		Shadowscale48
+		Shaun Gaylard ("ENDSHN")
+		Vladislav Borisevich ("Vane Brain")
+
+
+*Сценаристы
+
+		Joonas Rikkonen ("Regalis")
+		Caleb Yu ("Omniary")
+		Dr. Gears
+		Irontaco
+		Steelpoint
+		Vladislav Borisevich ("Vane Brain")
+
+
+*Тестировщики
+
+		Christian Rie?
+		Emil215p
+		Flipsy
+		Inclination
+		LordDeathv11
+		Onemario1234
+		RadReed
+		TheHappyJammer
+		Zadrakos
+
+
+*Другие
+
+		Agent G
+		Gage Allen ("Lotims")
+		Haversine
+		Max Taylor
+		Meow :3
+		Nikita Sidorov ("Jabka")
+		Turtle Sandwich/Catnipbuddy
+		/v/ и все участники форума SCP-CB
+
+
+*Создатели модификаций
+
+		Nikita Sidorov ("Jabka")
+		Ashad Jackson ("ashadttt") 
+		Andre Pari ("ADMClef")
+		Dawid Mleczko ("Mleczyk76")
+		Dmitriy Sazanov ("Dmitriy-Bars")
+		Yuri Novikov ("BayanForce")
+		C45
+
+
+*Помошники
+		
+		Shaun Gaylard ("ENDSHN")
+		CmElektrik
+		neptuneprogamertv
+		The KMan
+		purseit
+		Levi The Boss#1360
+		Seth Smith ("Faust")
+		I S€NHOR PaORUSSO I
+		Leonard Blackmore ("UnknownDev")
+	
+
+*Тестировщики модификаций
+
+		Alexey Krasnov("TaskeWSH")
+
+*Включённые модификации
+
+		Nine Tailed Fox
+		Box of Horrors
+		Project Resurrection
+		Fan Breach
+		SCP - 914 Expansion
+		SCP - 294 More Drinks
+		SCP - Unlockables
+		Field Of View (FOV) Mod
+
+
+
+*Разработчики включённых модификаций:
+
+*Nine Tailed Fox
+		
+		Shaun Gaylard ("ENDSHN")
+		Vladislav Borisevich ("Vane Brain")
+		revo794
+		undead003
+		Alphive
+		Turtle Sandwich/Catnipbuddy
+		enotovski
+		Sic
+		FireFox
+		Arseny ("PolkovnikAbramov")
+		Alex Morganidze
+		Anon4743
+		Caleb Yu ("Omniary")
+		Took from Fan Breach & Redbull.Ivan
+
+
+*Box Of Horrors
+		
+		Prune
+		Sam Lynch ("InnocentSam")
+		Juan Pablo Arce ("Juanjpro")
+		Skin_
+		Tobop
+		Reilly Grindle ("Mirocaine")
+		FireFox
+		Niborius
+
+				
+*Fan Breach
+
+		Ikobot
+		Ivan Mikhailov ("Redbull.Ivan")
+		The KMan
+		OgaraOrCynder
+		ICAS-14
+		Ivan Badikov
+		JeLlegendz
+		Idera
+		Kenneth Crooker	
+
+
+*Project Resurrection
+
+		Shaun Gaylard ("ENDSHN")
+		Diszxchat
+		Ikobot
+		Vladislav Borisevich ("Vane Brain")
+		Rarity From Valley Of Avalar
+		The KMan
+		Ivan Mikhailov ("Redbull.Ivan")
+		Sam Lynch ("InnocentSam")
+		Juan Pablo Arce ("Juanjpro")
+		DL_Baryonyx	
+		KennethCrooker
+
+
+*SCP-914 Expansion
+
+		EternalError
+
+
+*SCP-294 More Drinks
+
+		TheKlabadisco
+
+
+*Unlockables Mod
+
+		Shaun Gaylard ("ENDSHN")
+
+
+*Field Of View (FOV) Mod
+
+		TheHappyJammer
+		Shaun Gaylard ("ENDSHN")
+		Inclination
+		Vladislav Borisevich ("Vane Brain")
+		Earok
+		Sswift
+		RadReed
+
+
+
+*Данная игра основывается на работах Фонда SCP
+
+
+		Логотипы SCP-CB и SCP основываются на логотипе
+за авторством "far2"
+
+		SCP-005 базируется на "SCP-005 - Отмычка",
+автор неизвестен
+
+		SCP-008 базируется на "SCP-008 - Чума зомби"
+за авторством "Lee Byron"
+
+		SCP-009 базируется на "SCP-009 - Красный лед",
+за авторством "Chameleon X"
+
+		SCP-012 базируется на "SCP-012 - Скверная мелодия"
+автор неизвестен
+
+		SCP-035 базируется на "SCP-035 - Маска одержимости"
+за авторством "Kain Pathos Crow"
+
+		SCP-049 базируется на "SCP-049 - Чумной доктор"
+за авторством "Gabriel Jade"
+
+		SCP-066 базируется на "SCP-066 - Игрушка Эрика"
+за авторством "Scantron"
+
+		SCP-079 базируется на "SCP-079 - Старый ИИ"
+автор неизвестен
+
+		SCP-096 базируется на "SCP-096 - Скромник"
+за авторством "Dr Dan"
+
+		SCP-106 базируется на "SCP-106 - Старик"
+за авторством "Dr Gears"
+
+		SCP-109 базируется на "SCP-109 - Бесконечная фляга"
+автор неизвестен
+
+		SCP-148 базируется на "SCP-148 - Сплав "Телекилл"
+за авторством "Lt Masipag"
+
+		SCP-173 базируется на "SCP-173 - Скульптура"
+за авторством "Moto42"
+
+		SCP-178 базируется на "SCP-178 - 3D-очки"
+за авторством "Dr. Wartheim"
+
+		SCP-198 базируется на "SCP-198 - Стаканчик Джо"
+автор неизвестен
+
+		SCP-207 базируется на "SCP-207 - Бутылки с "Кока-Колой""
+автор неизвестен
+
+		SCP-205 базируется на "SCP-205 - Теневые лампы"
+за авторством "Sorts"
+
+		SCP-215 базируется на "SCP-215 - Очки параноика"
+автор неизвестен
+
+		SCP-294 базируется на "SCP-294 - Кофейный автомат"
+за авторством "far2"
+
+		SCP-357 базируется на "SCP-357 - Голодная глина"
+автор неизвестен
+
+		SCP-372 базируется на "SCP-372 - Переферийный прыгун"
+за авторством "Sylocat"
+
+		SCP-402 базируется на "SCP-402 - Обсидиановый поглотитель"
+за авторством "neptuneprogamertv"
+
+		SCP-409 базируется на "SCP-409 - Инфекционный кристалл",
+за авторством "Dr. Gears"
+
+		SCP-420-J базируется на "SCP-420-J - Лучшая ____ в мире"
+за авторством "Quikngruvn"
+
+		SCP-427 базируется на "SCP-427 - Лавкрафтовский амулет"
+за авторством "Dr Ouros"
+
+		SCP-457 базируется на "SCP-457 - Горящий человек",
+автор неизвестен
+
+		SCP-500 базируется на "SCP-500 - Панацея"
+за авторством "far2"
+
+		SCP-513-1 базируется на "SCP-513 - Коровий колокольчик"
+за авторством "beefwit"
+
+		SCP-650 базируется на "SCP-650 - Поразительная статуя",
+за авторством "Dr. Talson"
+
+		SCP-682 is базируется на "SCP-682 - Неуязвимая рептилия"
+за авторством "Dr. Gears"
+
+		SCP-714 базируется на "SCP-714 - Нефартовое кольцо"
+за авторством "Arcalane"
+
+		SCP-789-J базируется на "SCP-789-J - призрак в унитазе!!"
+за авторством "Salman Corbette"
+
+		SCP-860 базируется на "SCP-860 - Синий ключ"
+за авторством "Enma Ai"
+
+		SCP-895 базируется на "SCP-895 - Искажения на камере"
+за авторством "Aelanna"
+
+		SCP-914 базируется на "SCP-914 - Часовой механизм"
+за авторством "Dr. Gears"
+
+		SCP-939 базируется на "SCP-939 - Со множеством голосов"
+за авторством "Adam Smascher"
+
+		SCP-966 базируется на "SCP-966 - Бессоники"
+за авторством "Enma Ai"
+
+		SCP-970 базируется на "SCP-970 - Рекурсивная комната"
+за авторством "Freudian"		
+
+		SCP-1025 базируется на "SCP-1025 - Энциклопедия заболеваний",
+за авторством "Lasergoose"
+
+		SCP-1033-RU базируется на "SCP-1033-RU - Универсальный защитник",
+автор неизвестен
+
+		SCP-1048 базируется на "SCP-1048 - Мишка-строитель"
+за авторством "Researcher Dios"
+
+		SCP-1074 базируется на "SCP-1074 - Кошмар Стендаля",
+за авторством "Smapti"
+
+		SCP-1123 базируется на "SCP-1123 - Череп жестокости"
+за авторством "sandrewswann"
+
+		SCP-1162 базируется на "SCP-1162 - Дыра в стене"
+за авторством "Dedaluminus"
+
+		SCP-1499 базируется на "SCP-1499 - Противогаз"
+за авторством "Trasknari"
+
+		Аномальные уточки базируются на "Перечень аномальных уточек"
+за авторством "Skara Brae"
+
+/
+	Большое спасибо всем, кто поддерживал проект многие годы
+	- он бы никогда не стал таким, каким является сейчас, без вашей помощи.
+	
+	Над SCP-CB совместными усилиями работало десятки (может быть, даже сотни?)
+	людей, создающих материалы, идеи и отзывы для игры.
+	Я уверен, что забыл упомянуть некоторых из Вас здесь. Если Вы внесли свой вклад
+	в игру и Вам хотелось бы, чтобы ваше имя было добавлено сюда,
+	Сообщите мне на форуме Undertow Games или contact@undertowgames.com!
+	
+	- Joonas Rikkonen ("Regalis")
+
+/
+	Большое спасибо всем, кто давал нам идеи для модификации
+	- а также всем тем, кто искал ошибки и поддерживал модификацию.
+
+	Мы надеемся, что наша модификация всегда будет радовать вас, и дарить новые эмоции.
+	Спасибо всем модификациям, что положили начало Ultimate Edition (Расширенное издание).
+
+	- Ultimate Edition Team
+
+

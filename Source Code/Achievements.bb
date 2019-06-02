@@ -102,8 +102,8 @@ Type AchievementMsg
 End Type
 
 Function CreateAchievementMsg.AchievementMsg(id%,txt$)
+    Local fs.FPS_Settings = First FPS_Settings
 	Local amsg.AchievementMsg = New AchievementMsg
-	Local fs.FPS_Settings = First FPS_Settings
 	
 	amsg\achvID = id
 	amsg\txt = txt
@@ -116,8 +116,8 @@ Function CreateAchievementMsg.AchievementMsg(id%,txt$)
 End Function
 
 Function UpdateAchievementMsg()
+    Local fs.FPS_Settings = First FPS_Settings
 	Local amsg.AchievementMsg,amsg2.AchievementMsg
-	Local fs.FPS_Settings = First FPS_Settings
 	Local scale# = GraphicHeight/768.0
 	Local width% = 264*scale
 	Local height% = 84*scale
@@ -147,22 +147,22 @@ Function UpdateAchievementMsg()
 End Function
 
 Function RenderAchievementMsg()
-    Local fo.Fonts = First Fonts
-	Local amsg.AchievementMsg,amsg2.AchievementMsg
-	Local scale# = GraphicHeight/768.0
-	Local width% = 264*scale
-	Local height% = 84*scale
-	Local x%,y%
-	
-	For amsg = Each AchievementMsg
+     Local fo.Fonts = First Fonts
+	 Local amsg.AchievementMsg,amsg2.AchievementMsg
+	 Local scale# = GraphicHeight/768.0
+	 Local width% = 264*scale
+	 Local height% = 84*scale
+	 Local x%,y%
+
+     For amsg = Each AchievementMsg
 		If amsg\msgtime <> 0
-			x=GraphicWidth+amsg\msgx
+            x=GraphicWidth+amsg\msgx
 			;y=(GraphicHeight-height)
 			y=0
 			For amsg2 = Each AchievementMsg
 				If amsg2 <> amsg
 					If amsg2\msgID > amsg\msgID
-						y=y+height ;-
+						y=y-height
 					EndIf
 				EndIf
 			Next
@@ -175,11 +175,8 @@ Function RenderAchievementMsg()
 			Color 255,255,255
 			AASetFont fo\Font[0]
 			RowText("Новое достижение:      "+amsg\txt,x+84*scale,y+10*scale,width-94*scale,y-20*scale) ;Achievement Unlocked - 
-		Else
-			;Delete amsg
 		EndIf
 	Next
-	
 End Function
 
 

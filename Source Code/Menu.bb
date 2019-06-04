@@ -1467,7 +1467,7 @@ Function InitLoadingScreens(file$)
 	Local f = OpenFile(file)
 	
 	While Not Eof(f)
-		TemporaryString = Trim(ReadLine(f))
+		TemporaryString = Trim2(ReadLine(f))
 		If Left(TemporaryString,1) = "[" Then
 			TemporaryString = Mid(TemporaryString, 2, Len(TemporaryString) - 2)
 			
@@ -1485,7 +1485,7 @@ Function InitLoadingScreens(file$)
 			
 			ls\disablebackground = GetINIInt(file, TemporaryString, "disablebackground")
 			
-			Select Lower(GetINIString(file, TemporaryString, "align x"))
+			Select Lower2(GetINIString(file, TemporaryString, "align x"))
 				Case "left"
 					ls\alignx = -1
 				Case "middle", "center"
@@ -1494,7 +1494,7 @@ Function InitLoadingScreens(file$)
 					ls\alignx = 1
 			End Select 
 			
-			Select Lower(GetINIString(file, TemporaryString, "align y"))
+			Select Lower2(GetINIString(file, TemporaryString, "align y"))
 				Case "top", "up"
 					ls\aligny = -1
 				Case "middle", "center"
@@ -1901,7 +1901,7 @@ Function RowText(A$, X, Y, W, H, align% = 0, Leading#=1)
 		Local space = Instr(A$, " ")
 		If space = 0 Then space = Len(A$)
 		Local temp$ = Left(A$, space)
-		Local trimmed$ = Trim(temp) ;we might ignore a final space 
+		Local trimmed$ = Trim2(temp) ;we might ignore a final space 
 		Local extra = 0 ;we haven't ignored it yet
 		;ignore final space If doing so would make a word fit at End of Line:
 		If (AAStringWidth (b$ + temp$) > W) And (AAStringWidth (b$ + trimmed$) <= W) Then
@@ -1950,7 +1950,7 @@ Function RowText2(A$, X, Y, W, H, align% = 0, Leading#=1)
 		Local space = Instr(A$, " ")
 		If space = 0 Then space = Len(A$)
 		Local temp$ = Left(A$, space)
-		Local trimmed$ = Trim(temp) ;we might ignore a final space 
+		Local trimmed$ = Trim2(temp) ;we might ignore a final space 
 		Local extra = 0 ;we haven't ignored it yet
 		;ignore final space If doing so would make a word fit at End of Line:
 		If (StringWidth (b$ + temp$) > W) And (StringWidth (b$ + trimmed$) <= W) Then
@@ -1999,7 +1999,7 @@ Function GetLineAmount(A$, W, H, Leading#=1)
 		Local space = Instr(A$, " ")
 		If space = 0 Then space = Len(A$)
 		Local temp$ = Left(A$, space)
-		Local trimmed$ = Trim(temp) ;we might ignore a final space 
+		Local trimmed$ = Trim2(temp) ;we might ignore a final space 
 		Local extra = 0 ;we haven't ignored it yet
 		;ignore final space If doing so would make a word fit at End of Line:
 		If (AAStringWidth (b$ + temp$) > W) And (AAStringWidth (b$ + trimmed$) <= W) Then
@@ -2037,7 +2037,7 @@ Function GetLineAmount2(A$, W, H, Leading#=1)
 		Local space = Instr(A$, " ")
 		If space = 0 Then space = Len(A$)
 		Local temp$ = Left(A$, space)
-		Local trimmed$ = Trim(temp) ;we might ignore a final space 
+		Local trimmed$ = Trim2(temp) ;we might ignore a final space 
 		Local extra = 0 ;we haven't ignored it yet
 		;ignore final space If doing so would make a word fit at End of Line:
 		If (StringWidth (b$ + temp$) > W) And (StringWidth (b$ + trimmed$) <= W) Then
@@ -2146,7 +2146,7 @@ Function DrawOptionsTooltip(x%,y%,width%,height%,option$,value#=0,ingame%=False)
 	
 	AASetFont fo\Font[0]
 	Color 255,255,255
-	Select Lower(option$)
+	Select Lower2(option$)
 		;Graphic options
 			;[Block]
 		Case "bump"

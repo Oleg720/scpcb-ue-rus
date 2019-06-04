@@ -596,24 +596,24 @@ Function UpdateConsole()
 			ConsoleScroll = 0
 			CreateConsoleMsg(ConsoleInput,255,255,0,True)
 			If Instr(ConsoleInput, " ") > 0 Then
-				StrTemp$ = Lower(Left(ConsoleInput, Instr(ConsoleInput, " ") - 1))
+				StrTemp$ = Lower2(Left(ConsoleInput, Instr(ConsoleInput, " ") - 1))
 			Else
-				StrTemp$ = Lower(ConsoleInput)
+				StrTemp$ = Lower2(ConsoleInput)
 			End If
 			
-			Select Lower(StrTemp)
+			Select Lower2(StrTemp)
 				Case "help"
 					;[Block]
 					If Instr(ConsoleInput, " ")<>0 Then
-						StrTemp$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+						StrTemp$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					Else
 						StrTemp$ = ""
 					EndIf
 					ConsoleR = 0 : ConsoleG = 255 : ConsoleB = 255
 					
-					Select Lower(StrTemp)
+					Select Lower2(StrTemp)
 						Case "1",""
-							CreateConsoleMsg("LIST OF COMMANDS - PAGE 1/3")
+							CreateConsoleMsg("СПИСОК КОМАНД - СТРАНИЦА 1/3") ;LIST OF COMMANDS - PAGE
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("- asd")
 							CreateConsoleMsg("- status")
@@ -621,24 +621,24 @@ Function UpdateConsole()
 							CreateConsoleMsg("- ending")
 							CreateConsoleMsg("- noclipspeed")
 							CreateConsoleMsg("- noclip")
-							CreateConsoleMsg("- injure [value]")
-							CreateConsoleMsg("- infect [value]")
+							CreateConsoleMsg("- injure [значение]") ;[value]
+							CreateConsoleMsg("- infect [значение]") ;[value]
 							CreateConsoleMsg("- heal")
-							CreateConsoleMsg("- teleport [room name]")
-							CreateConsoleMsg("- spawnitem [item name]")
+							CreateConsoleMsg("- teleport [имя комнаты]") ;[room name]
+							CreateConsoleMsg("- spawnitem [имя предмета]") ;[room name]
 							CreateConsoleMsg("- wireframe")
 							CreateConsoleMsg("- 173speed")
 							CreateConsoleMsg("- 106speed")
 							CreateConsoleMsg("- 173state")
 							CreateConsoleMsg("- 106state")
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Use "+Chr(34)+"help 2/3"+Chr(34)+" to find more commands.")
-							CreateConsoleMsg("Use "+Chr(34)+"help [command name]"+Chr(34)+" to get more information about a command.")
+							CreateConsoleMsg("Используйте "+Chr(34)+"help 2/3"+Chr(34)+", чтобы найти больше команд.") ;Use ;to find more commands.
+							CreateConsoleMsg("Используйте "+Chr(34)+"help [имя команды]"+Chr(34)+", чтобы получить больше информации о команде.")  ;Use "+Chr(34)+"help [command name]"+Chr(34)+" to get more information about a command.
 							CreateConsoleMsg("******************************")
 						Case "2"
-							CreateConsoleMsg("LIST OF COMMANDS - PAGE 2/3")
+							CreateConsoleMsg("СПИСОК КОМАНД - СТРАНИЦА 2/3") ;;LIST OF COMMANDS - PAGE
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("- spawn [npc type] [state]")
+							CreateConsoleMsg("- spawn [тип npc] [состояние]") ;[npc type] ;[state]
 							CreateConsoleMsg("- reset096")
 							CreateConsoleMsg("- disable173")
 							CreateConsoleMsg("- enable173")
@@ -652,20 +652,20 @@ Function UpdateConsole()
 							CreateConsoleMsg("- showfps")
 							CreateConsoleMsg("- 096state")
 							CreateConsoleMsg("- debughud")
-							CreateConsoleMsg("- camerafog [near] [far]")
-							CreateConsoleMsg("- gamma [value]")
+							CreateConsoleMsg("- camerafog [начало тумана] [конец тумана]") ;[near] [far]
+							CreateConsoleMsg("- gamma [значение]") ;[value]
 							CreateConsoleMsg("- infinitestamina")
-							CreateConsoleMsg("- playmusic [clip + .wav/.ogg]")
+							CreateConsoleMsg("- playmusic [ИмяТрека + .wav/.ogg]") ;clip
 							CreateConsoleMsg("- notarget")
 							CreateConsoleMsg("- unlockexits")
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Use "+Chr(34)+"help [command name]"+Chr(34)+" to get more information about a command.")
+							CreateConsoleMsg("Используйте "+Chr(34)+"help [имя команды]"+Chr(34)+", чтобы получить больше информации о команде.") ;;Use "+Chr(34)+"help [command name]"+Chr(34)+" to get more information about a command.
 							CreateConsoleMsg("******************************")
-						;MOD
+						;МОДИФИКАЦИЯ
 						Case "3"
-						    CreateConsoleMsg("LIST OF COMMANDS - PAGE 3/3")
+						    CreateConsoleMsg("СПИСОК КОМАНД - СТРАНИЦА 3/3") ;;LIST OF COMMANDS - PAGE
 						    CreateConsoleMsg("******************************")
-						    CreateConsoleMsg("MODS COMMANDS")
+						    CreateConsoleMsg("КОМАНДЫ МОДИФИКАЦИИ") ;MODS COMMANDS
 						    CreateConsoleMsg("******************************")
 						    CreateConsoleMsg("- newyear") 
 						    CreateConsoleMsg("- cheats") 
@@ -674,171 +674,171 @@ Function UpdateConsole()
 							CreateConsoleMsg("- reset650") 
 							CreateConsoleMsg("- reset1033ru") 
 							CreateConsoleMsg("- money") 
-							CreateConsoleMsg("- crystal [value]") 
+							CreateConsoleMsg("- crystal [значение]") ;value
 							CreateConsoleMsg("- unlockallachievements") 
 							CreateConsoleMsg("- disable049") 
 							CreateConsoleMsg("- enable049") 
 						    CreateConsoleMsg("******************************")
 						;END
 						Case "asd"
-							CreateConsoleMsg("HELP - asd")
+							CreateConsoleMsg("СПРАВКА - asd") ;HELP
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Actives godmode, noclip, wireframe and")
-							CreateConsoleMsg("sets fog distance to 20 near, 30 far")
+							CreateConsoleMsg("Активирует godmode, noclip, wireframe и") ;Actives ;and
+							CreateConsoleMsg("устанавливает дистанцию тумана на 20 (начало), 30 (конец)") ;sets fog distance to 20 near, 30 far
 							CreateConsoleMsg("******************************")
 						Case "camerafog"
-							CreateConsoleMsg("HELP - camerafog")
+							CreateConsoleMsg("СПРАВКА - camerafog") ;HELP
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Sets the draw distance of the fog.")
-							CreateConsoleMsg("The fog begins generating at 'CameraFogNear' units")
-							CreateConsoleMsg("away from the camera and becomes completely opaque")
-							CreateConsoleMsg("at 'CameraFogFar' units away from the camera.")
-							CreateConsoleMsg("Example: camerafog 20 40")
+							CreateConsoleMsg("Устанавливает дистанцию прорисовки тумана.") ;Sets the draw distance of the fog.
+							CreateConsoleMsg("Первый параметр отвечает за дистанцию от камеры") ;The fog begins generating at 'CameraFogNear' units
+							CreateConsoleMsg("на которой начинает появляться туман, а второй за") ;away from the camera and becomes completely opaque
+							CreateConsoleMsg("дистанцию на которой туман заканчивается.") ;at 'CameraFogFar' units away from the camera.
+							CreateConsoleMsg("Например: camerafog 20 40") ;Example:
 							CreateConsoleMsg("******************************")
 						Case "gamma"
-							CreateConsoleMsg("HELP - gamma")
+							CreateConsoleMsg("СПРАВКА - gamma") ;HELP
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Sets the gamma correction.")
-							CreateConsoleMsg("Should be set to a value between 0.0 and 2.0.")
-							CreateConsoleMsg("Default is 1.0.")
+							CreateConsoleMsg("Устанавливает уровень гаммы.") ;Sets the gamma correction.
+							CreateConsoleMsg("Может быть установлено значение от 0.0 до 2.0.") ;Should be set to a value between 0.0 and 2.0.
+							CreateConsoleMsg("Стандартно - 1.0.") ;Default is 1.0.
 							CreateConsoleMsg("******************************")
 						Case "noclip","fly"
-							CreateConsoleMsg("HELP - noclip")
+							CreateConsoleMsg("СПРАВКА - noclip") ;HELP
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Toggles noclip, unless a valid parameter")
-							CreateConsoleMsg("is specified (on/off).")
-							CreateConsoleMsg("Allows the camera to move in any direction while")
-							CreateConsoleMsg("bypassing collision.")
+							CreateConsoleMsg("Переключает noclip, если не указан параметр (on/off).") ;Toggles noclip, unless a valid parameter
+;							CreateConsoleMsg("параметр (on/off).") ;is specified
+							CreateConsoleMsg("Позволяет камере двигаться в любом направлении,") ;Allows the camera to move in any direction while
+							CreateConsoleMsg("и проходить сквозь объекты.") ;bypassing collision.
 							CreateConsoleMsg("******************************")
 						Case "godmode","god"
-							CreateConsoleMsg("HELP - godmode")
+							CreateConsoleMsg("СПРАВКА - godmode") ;HELP
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Toggles godmode, unless a valid parameter")
-							CreateConsoleMsg("is specified (on/off).")
-							CreateConsoleMsg("Prevents player death under normal circumstances.")
+							CreateConsoleMsg("Переключает godmode, если не указан параметр (on/off).") ;Toggles godmode, unless a valid parameter
+;							CreateConsoleMsg("параметр (on/off).") ;is specified
+							CreateConsoleMsg("Предотвращает смерть игрока при нормальных обстоятельствах.") ;Prevents player death under normal circumstances.
 							CreateConsoleMsg("******************************")
 						Case "wireframe"
-							CreateConsoleMsg("HELP - wireframe")
+							CreateConsoleMsg("СПРАВКА - wireframe") ;HELP
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Toggles wireframe, unless a valid parameter")
-							CreateConsoleMsg("is specified (on/off).")
-							CreateConsoleMsg("Allows only the edges of geometry to be rendered,")
-							CreateConsoleMsg("making everything else transparent.")
+							CreateConsoleMsg("Переключает wireframe, если не указан параметр (on/off).") ;Toggles wireframe, unless a valid parameter
+;							CreateConsoleMsg("параметр (on/off).") ;is specified
+							CreateConsoleMsg("Позволяет отображать только рёбра геометрии,") ;Allows only the edges of geometry to be rendered,
+							CreateConsoleMsg("делая всё остальное прозрачным.") ;making everything else transparent.
 							CreateConsoleMsg("******************************")
 						Case "spawnitem"
-							CreateConsoleMsg("HELP - spawnitem")
+							CreateConsoleMsg("СПРАВКА - spawnitem") ;HELP
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Spawns an item at the player's location.")
-							CreateConsoleMsg("Any name that can appear in your inventory")
-							CreateConsoleMsg("is a valid parameter.")
-							CreateConsoleMsg("Example: spawnitem Key Card Omni")
+							CreateConsoleMsg("Создаёт предмет на месте нахождения игрока.") ;Spawns an item at the player's location.
+							CreateConsoleMsg("Любое название, которое может появиться в вашем инвентаре") ;Any name that can appear in your inventory
+							CreateConsoleMsg("является допустимым параметром.") ;is a valid parameter.
+							CreateConsoleMsg("Например: spawnitem Ключ-карта Омни") ;Example: spawnitem Key Card Omni
 							CreateConsoleMsg("******************************")
 						Case "spawn"
-							CreateConsoleMsg("HELP - spawn")
+							CreateConsoleMsg("СПРАВКА - spawn") ;HELP
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Spawns an NPC at the player's location.")
-							CreateConsoleMsg("Valid parameters are:")
+							CreateConsoleMsg("Создаёт NPC на месте нахождения игрока.") ;Spawns an NPC at the player's location.
+							CreateConsoleMsg("Допустимы следующие параметры:") ;Valid parameters are:
 							CreateConsoleMsg("008zombie / 049 / 049-2 / 066 / 096 / 106 / 173")
 							CreateConsoleMsg("/ 178-1 / 372 / 513-1 / 966 / 1499-1 / class-d")
 							CreateConsoleMsg("/ guard / mtf / apache / tentacle / 939 / 0082")
 							CreateConsoleMsg("/ 04922 / 650 / ci / mtf2")
 							CreateConsoleMsg("******************************")
 						Case "revive","undead","resurrect"
-							CreateConsoleMsg("HELP - revive")
+							CreateConsoleMsg("СПРАВКА - revive") ;HELP
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Resets the player's death timer after the dying")
-							CreateConsoleMsg("animation triggers.")
-							CreateConsoleMsg("Does not affect injury, blood loss,")
-							CreateConsoleMsg("008 infection values")
-							CreateConsoleMsg("or 409 crystalization values and others.")
+							CreateConsoleMsg("Сбрасывает таймер смерти игрока, после") ;Resets the player's death timer after the dying
+							CreateConsoleMsg("срабатывания анимации смерти.") ;animation triggers.
+							CreateConsoleMsg("Не влияет на травмы, кровопотерю") ;Does not affect injury, blood loss
+							CreateConsoleMsg("инфекцию 008,") ;008 infection values.
+							CreateConsoleMsg("эффект кристализации 409 и прочее.") ;or 409 crystalization values and others.
 							CreateConsoleMsg("******************************")
 						Case "teleport"
-							CreateConsoleMsg("HELP - teleport")
+							CreateConsoleMsg("СПРАВКА - teleport") ;HELP
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Teleports the player to the first instance")
-							CreateConsoleMsg("of the specified room. Any room that appears")
-							CreateConsoleMsg("in rooms.ini is a valid parameter.")
+							CreateConsoleMsg("Телепортирует игрока в первый экземпляр") ;Teleports the player to the first instance
+							CreateConsoleMsg("указанной комнаты. Любая комната, которая есть") ;of the specified room. Any room that appears
+							CreateConsoleMsg("в rooms.ini, является допустимым параметром.") ;in rooms.ini is a valid parameter.
 							CreateConsoleMsg("******************************")
 						Case "stopsound", "stfu"
-							CreateConsoleMsg("HELP - stopsound")
+							CreateConsoleMsg("СПРАВКА - stopsound") ;HELP
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Stops all currently playing sounds.")
+							CreateConsoleMsg("Останавливает все звуки, проигрываемые в данный момент.") ;Stops all currently playing sounds.
 							CreateConsoleMsg("******************************")
 						Case "camerapick"
-							CreateConsoleMsg("HELP - camerapick")
+							CreateConsoleMsg("СПРАВКА - camerapick") ;HELP
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Prints the texture name and coordinates of")
-							CreateConsoleMsg("the model the camera is pointing at.")
+							CreateConsoleMsg("Выводит имя текстуры и координаты модели,") ;Prints the texture name and coordinates of
+							CreateConsoleMsg("на которую указывает камера.") ;the model the camera is pointing at.
 							CreateConsoleMsg("******************************")
 						Case "status"
-							CreateConsoleMsg("HELP - status")
+							CreateConsoleMsg("СПРАВКА - status") ;HELP
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Prints player, camera, and others.")
+							CreateConsoleMsg("Выводит информацию о игроке, камере и комнате.") ;Prints player, camera, and room information.
 							CreateConsoleMsg("******************************")
-						Case "weed","scp-420-j","420j"
-							CreateConsoleMsg("HELP - 420j")
+						Case "weed","scp-420-j","420"
+							CreateConsoleMsg("СПРАВКА - 420") ;HELP
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Generates dank memes.")
+							CreateConsoleMsg("Создаёт сырые мемы.") ;Generates dank memes
 							CreateConsoleMsg("******************************")
 						Case "playmusic"
-							CreateConsoleMsg("HELP - playmusic")
+							CreateConsoleMsg("СПРАВКА - playmusic") ;HELP
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Will play tracks in .ogg/.wav format")
-							CreateConsoleMsg("from "+Chr(34)+"SFX\Music\Custom\"+Chr(34)+".")
+							CreateConsoleMsg("Проигрывает трек в формате .ogg/.wav") ;Will play tracks in .ogg/.wav format
+							CreateConsoleMsg("из "+Chr(34)+"SFX\Music\Custom\"+Chr(34)+".") ;from
 							CreateConsoleMsg("******************************")
-						;MOD
+						;МОДИФИКАЦИЯ
 						Case "newyear" 
 						    CreateConsoleMsg("HELP - newyear")
 							CreateConsoleMsg("******************************")
-                            CreateConsoleMsg("Makes SCP-173 a cookie.")
+                            CreateConsoleMsg("Делает SCP-173 сладеньким.") ;Makes SCP-173 a cookie.
                             CreateConsoleMsg("******************************")
                         Case "cheats" 
 							CreateConsoleMsg("HELP - cheats")
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Actives godmode, noclip, notarget")
-							CreateConsoleMsg("and infinitestamina.")
-							CreateConsoleMsg("Is specified (on/off).")
+							CreateConsoleMsg("Активирует godmode, noclip, notarget") ;Actives
+							CreateConsoleMsg("и infinitestamina.") ;and
+							CreateConsoleMsg("Применимы значения (on/off).") ;Is specified
 							CreateConsoleMsg("******************************")
-						 Case "fov" 
+						 Case "fov" ;..!
 							CreateConsoleMsg("HELP - fov")
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Field of view (FOV) is the amount of game view")
-							CreateConsoleMsg("that is on display during a game.")
+							CreateConsoleMsg("Field of view (FOV) is the amount of game view") ;Field of view (FOV) is the amount of game view
+							CreateConsoleMsg("that is on display during a game.") ;that is on display during a game.
 							CreateConsoleMsg("******************************")
 						Case "reset372" 
 						    CreateConsoleMsg("HELP - reset372")
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Returns SCP-372 to inactive state.")
+							CreateConsoleMsg("Возвращает SCP-372 в неактивное состояние.") ;Returns ;to inactive state.
 							CreateConsoleMsg("******************************")
 						Case "reset650" 
 						    CreateConsoleMsg("HELP - reset650")
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Returns SCP-650 to inactive state.")
+							CreateConsoleMsg("Возвращает SCP-650 в неактивное состояние.") ;Returns ;to inactive state.
 							CreateConsoleMsg("******************************")
 						Case "money" 
 							CreateConsoleMsg("HELP - money")
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Generates a lot of money.")
+							CreateConsoleMsg("Даёт много денег.") ;Generates a lot of money.
 							CreateConsoleMsg("******************************")
 						Case "crystal" 
 							CreateConsoleMsg("HELP - crystal")
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("SCP-409 crystallizes player.")
+							CreateConsoleMsg("SCP-409 кристаллизирует игрока.") ;crystallizes player.
 							CreateConsoleMsg("Example: crystal 52")
 							CreateConsoleMsg("******************************")
 						Case "reset1033ru"
 						    CreateConsoleMsg("HELP - reset1033ru")
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Reset states of SCP-1033-RU.")
+							CreateConsoleMsg("Сбрасывает состояние SCP-1033-RU.") ;Reset states of
 							CreateConsoleMsg("******************************")
 						Case "unlockallachievements" 
 							CreateConsoleMsg("HELP - unlockallachievements")
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Unlocks all achievements.")
+							CreateConsoleMsg("Выдаёт все достижения.") ;Unlocks all achievements.
 							CreateConsoleMsg("******************************")	
                         ;END	
 						Default
-							CreateConsoleMsg("There is no help available for that command.",255,150,0)
+							CreateConsoleMsg("Справка для этой команды недоступна.",255,150,0) ;There is no help available for that command.
 					End Select
 					
 					;[End Block]
@@ -855,47 +855,47 @@ Function UpdateConsole()
 					;[Block]
 					ConsoleR = 0 : ConsoleG = 255 : ConsoleB = 0
 					CreateConsoleMsg("******************************")
-					CreateConsoleMsg("Status: ")
-					CreateConsoleMsg("Coordinates: ")
-					CreateConsoleMsg("    - collider: "+EntityX(Collider)+", "+EntityY(Collider)+", "+EntityZ(Collider))
-					CreateConsoleMsg("    - camera: "+EntityX(Camera)+", "+EntityY(Camera)+", "+EntityZ(Camera))
+					CreateConsoleMsg("Статус: ") ;Status:
+					CreateConsoleMsg("Координаты: ") ;Coordinates:
+					CreateConsoleMsg("    - цилиндр: "+EntityX(Collider)+", "+EntityY(Collider)+", "+EntityZ(Collider)) ;collider:
+					CreateConsoleMsg("    - камера: "+EntityX(Camera)+", "+EntityY(Camera)+", "+EntityZ(Camera)) ;camera:
 					
-					CreateConsoleMsg("Rotation: ")
-					CreateConsoleMsg("    - collider: "+EntityPitch(Collider)+", "+EntityYaw(Collider)+", "+EntityRoll(Collider))
-					CreateConsoleMsg("    - camera: "+EntityPitch(Camera)+", "+EntityYaw(Camera)+", "+EntityRoll(Camera))
+					CreateConsoleMsg("Поворот: ") ;Rotation
+					CreateConsoleMsg("    - цилиндр: "+EntityPitch(Collider)+", "+EntityYaw(Collider)+", "+EntityRoll(Collider)) ;collider:
+					CreateConsoleMsg("    - камера: "+EntityPitch(Camera)+", "+EntityYaw(Camera)+", "+EntityRoll(Camera)) ;camera:
 					
-					CreateConsoleMsg("Room: "+PlayerRoom\RoomTemplate\Name)
+					CreateConsoleMsg("Комната: "+PlayerRoom\RoomTemplate\Name) ;Room
 					For ev.Events = Each Events
 						If ev\room = PlayerRoom Then
-							CreateConsoleMsg("Room event: "+ev\EventName)	
-							CreateConsoleMsg("-    state: "+ev\EventState)
-							CreateConsoleMsg("-    state2: "+ev\EventState2)	
-							CreateConsoleMsg("-    state3: "+ev\EventState3)
+							CreateConsoleMsg("Событие: "+ev\EventName) ;Room event:
+							CreateConsoleMsg("-    (состояние) state: "+ev\EventState)
+							CreateConsoleMsg("-    (состояние) state2: "+ev\EventState2)	
+							CreateConsoleMsg("-    (состояние) state3: "+ev\EventState3)
 							Exit
 						EndIf
 					Next
 					
-					CreateConsoleMsg("Room coordinates: "+Floor(EntityX(PlayerRoom\obj) / 8.0 + 0.5)+", "+ Floor(EntityZ(PlayerRoom\obj) / 8.0 + 0.5))
-					CreateConsoleMsg("Stamina: "+Stamina)
-					CreateConsoleMsg("Death timer: "+KillTimer)					
-					CreateConsoleMsg("Blinktimer: "+BlinkTimer)
-					CreateConsoleMsg("VomitTimer: "+VomitTimer)
-					CreateConsoleMsg("Injuries: "+Injuries)
-					CreateConsoleMsg("Bloodloss: "+Bloodloss)
+					CreateConsoleMsg("Координаты комнаты: "+Floor(EntityX(PlayerRoom\obj) / 8.0 + 0.5)+", "+ Floor(EntityZ(PlayerRoom\obj) / 8.0 + 0.5)) ;Room coordinates:
+					CreateConsoleMsg("Выносливость: "+Stamina) ;Stamina:
+					CreateConsoleMsg("Таймер смерти: "+KillTimer)	;Death timer:			
+					CreateConsoleMsg("Таймер моргания: "+BlinkTimer) ;Blinktimer:
+					CreateConsoleMsg("Таймер блевоты: "+VomitTimer) ;VomitTimer
+					CreateConsoleMsg("Травмы: "+Injuries) ;Injuries:
+					CreateConsoleMsg("Кровопотеря: "+Bloodloss) ;Bloodloss:
 					;MOD
-					CreateConsoleMsg("BubbleFoam: "+I_1079\Foam)	
-					CreateConsoleMsg("Infection: "+I_008\Timer)
-					CreateConsoleMsg("Crystalization: "+I_409\Timer)
-					CreateConsoleMsg("SCP-215 State: "+I_215\Timer)
-					CreateConsoleMsg("SCP-215 Idle State: "+I_215\IdleTimer)
-					CreateConsoleMsg("SCP-207 Effect: "+I_207\Timer)
-					CreateConsoleMsg("SCP-402 Effect: "+I_402\Timer)
-					CreateConsoleMsg("SCP-357 Effect: "+I_357\Timer)
-					CreateConsoleMsg("HP of SCP-1033-RU: "+I_1033RU\HP)
-					CreateConsoleMsg("Damaged HP of SCP-1033-RU: "+I_1033RU\DHP)
-					CreateConsoleMsg("SCP-447 First Aid Effect: "+I_447\UsingAidTimer)
-					CreateConsoleMsg("SCP-447 Pill Effect: "+I_447\UsingPillTimer)
-                    CreateConsoleMsg("SCP-447 Eye Drops Effect: "+I_447\UsingEyeDropsTimer)
+					CreateConsoleMsg("Пузырьковая пена: "+I_1079\Foam) ;BubbleFoam
+					CreateConsoleMsg("Инфекция: "+I_008\Timer) ;Infection
+					CreateConsoleMsg("Кристаллизация: "+I_409\Timer) ;Crystalization
+					CreateConsoleMsg("Состояние SCP-215: "+I_215\Timer) ;State
+					CreateConsoleMsg("Состояние покоя SCP-215: "+I_215\IdleTimer) ;Idle State
+					CreateConsoleMsg("Эффект SCP-207: "+I_207\Timer) ;Effect
+					CreateConsoleMsg("Эффект SCP-402: "+I_402\Timer) ;Effect
+					CreateConsoleMsg("Эффект SCP-357: "+I_357\Timer) ;Effect
+					CreateConsoleMsg("Здоровье SCP-1033-RU: "+I_1033RU\HP) ;HP of
+					CreateConsoleMsg("Потерянное здоровье SCP-1033-RU: "+I_1033RU\DHP) ;Damaged HP of SCP-1033-RU ;..!
+					CreateConsoleMsg("Эффект Первой помощи SCP-447: "+I_447\UsingAidTimer) ;First Aid Effect
+					CreateConsoleMsg("Эффект Пилюли SCP-447: "+I_447\UsingPillTimer) ;Pill Effect:
+                    CreateConsoleMsg("Эффект пилюли SCP-447: "+I_447\UsingEyeDropsTimer) ;Eye Drops Effect
                     ;END
 					CreateConsoleMsg("******************************")
 					;[End Block]
@@ -905,46 +905,46 @@ Function UpdateConsole()
 					c = CameraPick(Camera,GraphicWidth/2, GraphicHeight/2)
 					If c = 0 Then
 						CreateConsoleMsg("******************************")
-						CreateConsoleMsg("No entity  picked")
+						CreateConsoleMsg("Нет объекта") ;No entity  picked
 						CreateConsoleMsg("******************************")								
 					Else
 						CreateConsoleMsg("******************************")
-						CreateConsoleMsg("Picked entity:")
+						CreateConsoleMsg("Объект:") ;Picked entity:
 						sf = GetSurface(c,1)
 						b = GetSurfaceBrush( sf )
 						t = GetBrushTexture(b,0)
 						texname$ =  StripPath(TextureName(t))
-						CreateConsoleMsg("Texture name: "+texname)
-						CreateConsoleMsg("Coordinates: "+EntityX(c)+", "+EntityY(c)+", "+EntityZ(c))
+						CreateConsoleMsg("Имя текстуры: "+texname) ;Texture name:
+						CreateConsoleMsg("Координаты: "+EntityX(c)+", "+EntityY(c)+", "+EntityZ(c)) ;Coordinates:
 						CreateConsoleMsg("******************************")							
 					EndIf
 					;[End Block]
 				Case "hidedistance"
 					;[Block]
 					HideDistance = Float(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
-					CreateConsoleMsg("Hidedistance set to "+HideDistance)
+					CreateConsoleMsg("Дальность прорисовки установлена на "+HideDistance) ;set to
 					;[End Block]
 				Case "ending"
 					;[Block]
-					I_END\SelectedEnding = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					I_END\SelectedEnding = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					KillTimer = -0.1
 					;I_END\Timer = -0.1
 					;[End Block]
 				Case "noclipspeed"
 					;[Block]
-					StrTemp$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					NoClipSpeed = Float(StrTemp)
 					;[End Block]
 				Case "injure"
 					;[Block]
-					StrTemp$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					Injuries = Float(StrTemp)
 					;[End Block]
 				Case "infect"
 					;[Block]
-					StrTemp$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					I_008\Timer = Float(StrTemp)
 					;[End Block]
@@ -986,7 +986,7 @@ Function UpdateConsole()
 					;[End Block]
 				Case "teleport"
 					;[Block]
-					StrTemp$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					Select StrTemp
 						Case "895", "scp-895"
@@ -1016,29 +1016,29 @@ Function UpdateConsole()
 					;[End Block]
 				Case "spawnitem"
 					;[Block]
-					StrTemp$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					temp = False 
 					For itt.Itemtemplates = Each ItemTemplates
-						If (Lower(itt\name) = StrTemp) Then
+						If (Lower2(itt\name) = StrTemp) Then
 							temp = True
-							CreateConsoleMsg(itt\name + " spawned.")
+							CreateConsoleMsg("Предмет "+Chr(34)+ itt\name +Chr(34)+" создан.") ;spawned.
 							it.Items = CreateItem(itt\name, itt\tempname, EntityX(Collider), EntityY(Camera,True), EntityZ(Collider))
 							EntityType(it\collider, HIT_ITEM)
 							Exit
-						Else If (Lower(itt\tempname) = StrTemp) Then
+						Else If (Lower2(itt\tempname) = StrTemp) Then
 							temp = True
-							CreateConsoleMsg(itt\name + " spawned.")
+							CreateConsoleMsg("Предмет "+Chr(34)+ itt\name +Chr(34)+" создан.") ;spawned.
 							it.Items = CreateItem(itt\name, itt\tempname, EntityX(Collider), EntityY(Camera,True), EntityZ(Collider))
 							EntityType(it\collider, HIT_ITEM)
 							Exit
 						End If
 					Next
 					
-					If temp = False Then CreateConsoleMsg("Item not found.",255,150,0)
+					If temp = False Then CreateConsoleMsg("Предмет не найден.",255,150,0) ;Item not found.
 					;[End Block]
 				Case "wireframe"
 					;[Block]
-					StrTemp$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					Select StrTemp
 						Case "on", "1", "true"
@@ -1050,38 +1050,38 @@ Function UpdateConsole()
 					End Select
 					
 					If WireframeState Then
-						CreateConsoleMsg("WIREFRAME ON")
+						CreateConsoleMsg("КАРКАСНЫЙ РЕЖИМ АКТИВИРОВАН") ;WIREFRAME ON
 					Else
-						CreateConsoleMsg("WIREFRAME OFF")	
+						CreateConsoleMsg("КАРКАСНЫЙ РЕЖИМ ДЕАКТИВИРОВАН") ;WIREFRAME OFF
 					EndIf
 					
 					WireFrame WireframeState
 					;[End Block]
 				Case "173speed"
 					;[Block]
-					StrTemp$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					Curr173\Speed = Float(StrTemp)
-					CreateConsoleMsg("173's speed set to " + StrTemp)
+					CreateConsoleMsg("Скорость 173-го установлена на " + StrTemp) ;173's speed set to
 					;[End Block]
 				Case "106speed"
 					;[Block]
-					StrTemp$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					Curr106\Speed = Float(StrTemp)
-					CreateConsoleMsg("106's speed set to " + StrTemp)
+					CreateConsoleMsg("Скорость 106-го установлена на " + StrTemp) ;106's speed set to
 					;[End Block]
 				Case "173state"
 					;[Block]
 					CreateConsoleMsg("SCP-173")
-					CreateConsoleMsg("Position: " + EntityX(Curr173\obj) + ", " + EntityY(Curr173\obj) + ", " + EntityZ(Curr173\obj))
-					CreateConsoleMsg("Idle: " + Curr173\Idle)
-					CreateConsoleMsg("State: " + Curr173\State)
+					CreateConsoleMsg("Позиция: " + EntityX(Curr173\obj) + ", " + EntityY(Curr173\obj) + ", " + EntityZ(Curr173\obj)) ;Position:
+					CreateConsoleMsg("Ожидание: " + Curr173\Idle) ;Idle:
+					CreateConsoleMsg("Состояние: " + Curr173\State) ;State:
 					;[End Block]
 				Case "106state"
 					;[Block]
 					CreateConsoleMsg("SCP-106")
-					CreateConsoleMsg("Position: " + EntityX(Curr106\obj) + ", " + EntityY(Curr106\obj) + ", " + EntityZ(Curr106\obj))
-					CreateConsoleMsg("Idle: " + Curr106\Idle)
-					CreateConsoleMsg("State: " + Curr106\State)
+					CreateConsoleMsg("Позиция: " + EntityX(Curr106\obj) + ", " + EntityY(Curr106\obj) + ", " + EntityZ(Curr106\obj)) ;Position:
+					CreateConsoleMsg("Ожидание: " + Curr106\Idle) ;Idle:
+					CreateConsoleMsg("Состояние: " + Curr106\State) ;State:
 					;[End Block]
 				Case "reset096"
 					;[Block]
@@ -1128,24 +1128,24 @@ Function UpdateConsole()
 						Local tex = LoadTexture_Strict("GFX\npcs\scp173_h.pt", 1)
 						EntityTexture Curr173\obj, tex, 0, 0
 						FreeTexture tex
-						CreateConsoleMsg("173 JACK-O-LANTERN ON")
+						CreateConsoleMsg("173-Й СВЕТИЛЬНИК ДЖЕКА АКТИВИРОВАН") ;173 JACK-O-LANTERN ON
 					Else
 						Local tex2 = LoadTexture_Strict("GFX\npcs\scp173.png", 1)
 						EntityTexture Curr173\obj, tex2, 0, 0
 						FreeTexture tex2
-						CreateConsoleMsg("173 JACK-O-LANTERN OFF")
+						CreateConsoleMsg("173-Й СВЕТИЛЬНИК ДЖЕКА ДЕАКТИВИРОВАН") ;173 JACK-O-LANTERN OFF
 					EndIf
 					;[End Block]
 				Case "sanic"
 					;[Block]
 					SuperMan = Not SuperMan
 					If SuperMan = True Then
-						CreateConsoleMsg("GOTTA GO FAST")
+						CreateConsoleMsg("БЫСТРЕЕ БЫСТРОГО!") ;GOTTA GO FAST
 					Else
-						CreateConsoleMsg("WHOA SLOW DOWN")
+						CreateConsoleMsg("ЭЙ, ПОМЕДЛЕННЕЕ!") ;WHOA SLOW DOWN
 					EndIf
 					;[End Block]
-				Case "scp-420-j","420j","weed"
+				Case "scp-420-j","420j","weed" ;..!
 					;[Block]
 					For i = 1 To 20
 						If Rand(2)=1 Then
@@ -1159,7 +1159,7 @@ Function UpdateConsole()
 					;[End Block]
 				Case "godmode", "god"
 					;[Block]
-					StrTemp$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					Select StrTemp
 						Case "on", "1", "true"
@@ -1170,9 +1170,9 @@ Function UpdateConsole()
 							chs\GodMode = Not chs\GodMode
 					End Select	
 					If chs\GodMode Then
-						CreateConsoleMsg("GODMODE ON")
+						CreateConsoleMsg("БЕССМЕРТИЕ АКТИВИРОВАНО") ;GODMODE ON
 					Else
-						CreateConsoleMsg("GODMODE OFF")	
+						CreateConsoleMsg("БЕССМЕРТИЕ ДЕАКТИВИРОВАНО") ;GODMODE OFF
 					EndIf
 					;[End Block]
 				Case "revive","undead","resurrect"
@@ -1219,7 +1219,7 @@ Function UpdateConsole()
 					;[End Block]
 				Case "noclip","fly"
 					;[Block]
-					StrTemp$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					Select StrTemp
 						Case "on", "1", "true"
@@ -1238,9 +1238,9 @@ Function UpdateConsole()
 					End Select
 					
 					If chs\NoClip Then
-						CreateConsoleMsg("NOCLIP ON")
+						CreateConsoleMsg("РЕЖИМ ПОЛЁТА АКТИВИРОВАН") ;NOCLIP ON
 					Else
-						CreateConsoleMsg("NOCLIP OFF")
+						CreateConsoleMsg("РЕЖИМ ПОЛЁТА ДЕАКТИВИРОВАН") ;NOCLIP OFF
 					EndIf
 					
 					DropSpeed = 0
@@ -1248,24 +1248,24 @@ Function UpdateConsole()
 				Case "showfps"
 					;[Block]
 					ShowFPS = Not ShowFPS
-					CreateConsoleMsg("ShowFPS: "+Str(ShowFPS))
+					CreateConsoleMsg("Отображение FPS: "+Str(ShowFPS)) ;ShowFPS
 					;[End Block]
 				Case "096state"
 					;[Block]
 					For n.NPCs = Each NPCs
 						If n\NPCtype = NPCtype096 Then
 							CreateConsoleMsg("SCP-096")
-							CreateConsoleMsg("Position: " + EntityX(n\obj) + ", " + EntityY(n\obj) + ", " + EntityZ(n\obj))
-							CreateConsoleMsg("Idle: " + n\Idle)
-							CreateConsoleMsg("State: " + n\State)
+							CreateConsoleMsg("Позиция: " + EntityX(n\obj) + ", " + EntityY(n\obj) + ", " + EntityZ(n\obj)) ;Position:
+							CreateConsoleMsg("Ожидание: " + n\Idle) ;Idle:
+							CreateConsoleMsg("Состояние: " + n\State) ;State:
 							Exit
 						EndIf
 					Next
-					CreateConsoleMsg("SCP-096 has not spawned.")
+					CreateConsoleMsg("SCP-096 нет на карте.") ;has not spawned.
 					;[End Block]
 				Case "debughud"
 					;[Block]
-					StrTemp$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					Select StrTemp
 						Case "on", "1", "true"
 							DebugHUD = True
@@ -1276,9 +1276,9 @@ Function UpdateConsole()
 					End Select
 					
 					If DebugHUD Then
-						CreateConsoleMsg("Debug Mode On")
+						CreateConsoleMsg("Режим отладки Активирован") ;Debug Mode On
 					Else
-						CreateConsoleMsg("Debug Mode Off")
+						CreateConsoleMsg("Режим отладки Деактивирован") ;Debug Mode Off
 					EndIf
 					;[End Block]
 				Case "stopsound", "stfu"
@@ -1306,24 +1306,24 @@ Function UpdateConsole()
 							Exit
 						EndIf
 					Next
-					CreateConsoleMsg("Stopped all sounds.")
+					CreateConsoleMsg("Остановлены все звуки.") ;Stopped all sounds.
 					;[End Block]
 				Case "camerafog"
 					;[Block]
-					args$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					args$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					CameraFogNear = Float(Left(args, Len(args) - Instr(args, " ")))
 					CameraFogFar = Float(Right(args, Len(args) - Instr(args, " ")))
-					CreateConsoleMsg("Near set to: " + CameraFogNear + ", far set to: " + CameraFogFar)
+					CreateConsoleMsg("Начало тумана установлено на " + CameraFogNear + ", а конец на " + CameraFogFar) ;Near set to: ;, far set to
 					;[End Block]
 				Case "gamma"
 					;[Block]
-					StrTemp$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					ScreenGamma = Int(StrTemp)
-					CreateConsoleMsg("Gamma set to " + ScreenGamma)
+					CreateConsoleMsg("Уровень гаммы установлен на " + ScreenGamma) ;Gamma set to
 					;[End Block]
 				Case "spawn"
 					;[Block]
-					args$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					args$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					StrTemp$ = Piece$(args$, 1)
 					StrTemp2$ = Piece$(args$, 2)
 					
@@ -1336,7 +1336,7 @@ Function UpdateConsole()
 					;[End Block]
 				Case "infinitestamina","infstam", "is"
 					;[Block]
-					StrTemp$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					Select StrTemp
 						Case "on", "1", "true"
@@ -1348,9 +1348,9 @@ Function UpdateConsole()
 					End Select
 					
 					If chs\InfiniteStamina
-						CreateConsoleMsg("INFINITE STAMINA ON")
+						CreateConsoleMsg("БЕСКОНЕЧНЫЙ БЕГ АКТИВИРОВАН") ;INFINITE STAMINA ON
 					Else
-						CreateConsoleMsg("INFINITE STAMINA OFF")	
+						CreateConsoleMsg("БЕСКОНЕЧНЫЙ БЕГ ДЕАКТИВИРОВАН") ;INFINITE STAMINA OFF
 					EndIf
 					;[End Block]
 				Case "asd2"
@@ -1373,7 +1373,7 @@ Function UpdateConsole()
 					;[End Block]
 				Case "unlockexits"
 					;[Block]
-					StrTemp$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					Select StrTemp
 						Case "a"
@@ -1384,7 +1384,7 @@ Function UpdateConsole()
 									Exit
 								EndIf
 							Next
-							CreateConsoleMsg("Gate A is now unlocked.")	
+							CreateConsoleMsg("Ворота A открыты.") ;Gate A is now unlocked.
 						Case "b"
 							For e.Events = Each Events
 								If e\EventName = "exit1" Then
@@ -1393,7 +1393,7 @@ Function UpdateConsole()
 									Exit
 								EndIf
 							Next	
-							CreateConsoleMsg("Gate B is now unlocked.")	
+							CreateConsoleMsg("Ворота B открыты.")	;Gate B is now unlocked.
 						Default
 							For e.Events = Each Events
 								If e\EventName = "gateaentrance" Then
@@ -1404,7 +1404,7 @@ Function UpdateConsole()
 									e\room\RoomDoors[4]\open = True
 								EndIf
 							Next
-							CreateConsoleMsg("Gate A and B are now unlocked.")	
+							CreateConsoleMsg("Ворота A и B открыты.") ;Gate A and B are now unlocked.
 					End Select
 					
 					RemoteDoorOn = True
@@ -1414,24 +1414,24 @@ Function UpdateConsole()
 					KillTimer = -1
 					Select Rand(4)
 						Case 1
-							DeathMSG = "[REDACTED]"
+							DeathMSG = "[УДАЛЕНО]"
 						Case 2
-							DeathMSG = SubjectName$+" found dead in Sector [REDACTED]. "
-							DeathMSG = DeathMSG + "The subject appears to have attained no physical damage, and there is no visible indication as to what killed him. "
-							DeathMSG = DeathMSG + "Body was sent for autopsy."
+							DeathMSG = SubjectName$+" найден мёртвым в секторе [УДАЛЕНО]. " ; found dead in Sector [REDACTED].
+							DeathMSG = DeathMSG + "Похоже, что субъект не получил физических повреждений, и нет никаких видимых признаков того, что именно его убило. " ;The subject appears to have attained no physical damage, and there is no visible indication as to what killed him. 
+							DeathMSG = DeathMSG + "Тело отправлено на вскрытие." ;Body was sent for autopsy.
 						Case 3
 							DeathMSG = "EXCP_ACCESS_VIOLATION"
 						Case 4
-							DeathMSG = SubjectName$+" found dead in Sector [REDACTED]. "
-							DeathMSG = DeathMSG + "The subject appears to have scribbled the letters "+Chr(34)+"kys"+Chr(34)+" in his own blood beside him. "
-							DeathMSG = DeathMSG + "No other signs of physical trauma or struggle can be observed. Body was sent for autopsy."
+							DeathMSG = SubjectName$+" найден мёртвым в секторе [УДАЛЕНО]. " ; found dead in Sector [REDACTED].
+							DeathMSG = DeathMSG + "Похоже, что субъект написал буквы "+Chr(34)+"kys"+Chr(34)+" своей собственной кровью радом с собой. " ;The subject appears to have scribbled the letters "+Chr(34)+"kys"+Chr(34)+" in his own blood beside him.
+							DeathMSG = DeathMSG + "Никаких других признаких физического повреждения или борьбы не обнаружено. Тело отправлено на вскрытие." ;No other signs of physical trauma or struggle can be observed. Body was sent for autopsy
 					End Select
 					;[End Block]
 				Case "playmusic"
 					;[Block]
 					; I think this might be broken since the FMod library streaming was added. -Mark
 					If Instr(ConsoleInput, " ")<>0 Then
-						StrTemp$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+						StrTemp$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					Else
 						StrTemp$ = ""
 					EndIf
@@ -1471,7 +1471,7 @@ Function UpdateConsole()
 					;[End Block]
 				Case "tele"
 					;[Block]
-					args$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					args$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					StrTemp$ = Piece$(args$,1," ")
 					StrTemp2$ = Piece$(args$,2," ")
 					StrTemp3$ = Piece$(args$,3," ")
@@ -1479,11 +1479,11 @@ Function UpdateConsole()
 					PositionEntity Camera,Float(StrTemp$),Float(StrTemp2$),Float(StrTemp3$)
 					ResetEntity Collider
 					ResetEntity Camera
-					CreateConsoleMsg("Teleported to coordinates (X|Y|Z): "+EntityX(Collider)+"|"+EntityY(Collider)+"|"+EntityZ(Collider))
+					CreateConsoleMsg("Телепортация на координаты (X|Y|Z): "+EntityX(Collider)+"|"+EntityY(Collider)+"|"+EntityZ(Collider)) ;Teleported to coordinates
 					;[End Block]
 				Case "notarget", "nt"
 					;[Block]
-					StrTemp$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					Select StrTemp
 						Case "on", "1", "true"
@@ -1495,18 +1495,18 @@ Function UpdateConsole()
 					End Select
 					
 					If chs\NoTarget = False Then
-						CreateConsoleMsg("NOTARGET OFF")
+						CreateConsoleMsg("ВИДИМОСТЬ ВРАГАМИ АКТИВИРОВАНА") ;NOTARGET OFF
 					Else
-						CreateConsoleMsg("NOTARGET ON")	
+						CreateConsoleMsg("ВИДИМОСТЬ ВРАГАМИ ДЕАКТИВИРОВАНА") ;NOTARGET ON
 					EndIf
 					;[End Block]
-				Case "spawnradio"
+				Case "spawnradio" ;..!
 					;[Block]
 					it.Items = CreateItem("Radio Transceiver", "fineradio", EntityX(Collider), EntityY(Camera,True), EntityZ(Collider))
 					EntityType(it\collider, HIT_ITEM)
 					it\state = 101
 					;[End Block]
-				Case "spawnnvg"
+				Case "spawnnvg" ;..!
 					;[Block]
 					it.Items = CreateItem("Night Vision Goggles", "nvgoggles", EntityX(Collider), EntityY(Camera,True), EntityZ(Collider))
 					EntityType(it\collider, HIT_ITEM)
@@ -1514,9 +1514,9 @@ Function UpdateConsole()
 					;[End Block]
 				Case "spawnpumpkin","pumpkin"
 					;[Block]
-					CreateConsoleMsg("What pumpkin?")
+					CreateConsoleMsg("Какая тыква?") ;What pumpkin?
 					;[End Block]
-				Case "spawnnav"
+				Case "spawnnav" ;..!
 					;[Block]
 					it.Items = CreateItem("S-NAV Navigator Ultimate", "nav", EntityX(Collider), EntityY(Camera,True), EntityZ(Collider))
 					EntityType(it\collider, HIT_ITEM)
@@ -1529,68 +1529,68 @@ Function UpdateConsole()
 					;[End Block]
 				Case "seteventstate"
 					;[Block]
-					args$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					args$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					StrTemp$ = Piece$(args$,1," ")
 					StrTemp2$ = Piece$(args$,2," ")
 					StrTemp3$ = Piece$(args$,3," ")
 					Local pl_room_found% = False
 					If StrTemp="" Or StrTemp2="" Or StrTemp3=""
-						CreateConsoleMsg("Too few parameters. This command requires 3.",255,150,0)
+						CreateConsoleMsg("Слишком мало параметров. Эта команда требует 3.",255,150,0) ;Too few parameters. This command requires 3.
 					Else
 						For e.Events = Each Events
 							If e\room = PlayerRoom
-								If Lower(StrTemp)<>"keep"
+								If Lower2(StrTemp)<>"keep"
 									e\EventState = Float(StrTemp)
 								EndIf
-								If Lower(StrTemp2)<>"keep"
+								If Lower2(StrTemp2)<>"keep"
 									e\EventState2 = Float(StrTemp2)
 								EndIf
-								If Lower(StrTemp3)<>"keep"
+								If Lower2(StrTemp3)<>"keep"
 									e\EventState3 = Float(StrTemp3)
 								EndIf
-								CreateConsoleMsg("Changed event states from current player room to: "+e\EventState+"|"+e\EventState2+"|"+e\EventState3)
+								CreateConsoleMsg("Изменено состояние события в текущей комнате на: "+e\EventState+"|"+e\EventState2+"|"+e\EventState3) ;Changed event states from current player room to:
 								pl_room_found = True
 								Exit
 							EndIf
 						Next
 						If (Not pl_room_found)
-							CreateConsoleMsg("The current room doesn't has any event applied.",255,150,0)
+							CreateConsoleMsg("В этой комнате нет событий.",255,150,0) ;The current room doesn't has any event applied.
 						EndIf
 					EndIf
 					;[End Block]
 				Case "spawnparticles"
 					;[Block]
 					If Instr(ConsoleInput, " ")<>0 Then
-						StrTemp$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+						StrTemp$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					Else
 						StrTemp$ = ""
 					EndIf
 					
 					If Int(StrTemp) > -1 And Int(StrTemp) <= 1 ;<--- This is the maximum ID of particles by Devil Particle system, will be increased after time - ENDSHN
 						SetEmitter(Collider,ParticleEffect[Int(StrTemp)])
-						CreateConsoleMsg("Spawned particle emitter with ID "+Int(StrTemp)+" at player's position.")
+						CreateConsoleMsg("Создан эмиттер частиц с ID "+Int(StrTemp)+" на месте игрока.") ;Spawned particle emitter with ;at player's position.
 					Else
-						CreateConsoleMsg("Particle emitter with ID "+Int(StrTemp)+" not found.",255,150,0)
+						CreateConsoleMsg("Эмиттер частиц с ID "+Int(StrTemp)+" не найден.",255,150,0) ;Particle emitter with ;not found.
 					EndIf
 					;[End Block]
 				Case "giveachievement"
 					;[Block]
 					If Instr(ConsoleInput, " ")<>0 Then
-						StrTemp$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+						StrTemp$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					Else
 						StrTemp$ = ""
 					EndIf
 					
 					If Int(StrTemp)>=0 And Int(StrTemp)<MAXACHIEVEMENTS
 						Achievements(Int(StrTemp))=True
-						CreateConsoleMsg("Achievemt "+AchievementStrings(Int(StrTemp))+" unlocked.")
+						CreateConsoleMsg("Новое достижение: "+AchievementStrings(Int(StrTemp))) ;Achievemt ;unlocked.
 					Else
-						CreateConsoleMsg("Achievement with ID "+Int(StrTemp)+" doesn't exist.",255,150,0)
+						CreateConsoleMsg("Достижение с ID "+Int(StrTemp)+" не существует.",255,150,0) ;Achievement with ;doesn't exist.
 					EndIf
 					;[End Block]
 				Case "427state"
 					;[Block]
-					StrTemp$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					I_427\Timer = Float(StrTemp)*70.0
 					;[End Block]
@@ -1601,14 +1601,15 @@ Function UpdateConsole()
 					;[End Block]
 				Case "setblinkeffect"
 					;[Block]
-					args$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					args$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					BlinkEffect = Float(Left(args, Len(args) - Instr(args, " ")))
 					BlinkEffectTimer = Float(Right(args, Len(args) - Instr(args, " ")))
-					CreateConsoleMsg("Set BlinkEffect to: " + BlinkEffect + "and BlinkEffect timer: " + BlinkEffectTimer)
+					CreateConsoleMsg("Эффект моргания установлен на: " + BlinkEffect + ", а его таймер на: " + BlinkEffectTimer) ;Set BlinkEffect to: " + BlinkEffect + "and BlinkEffect timer:
 					;[End Block]
-				Case "jorge"
+				Case "jorge","джордж"
 					;[Block]	
-					CreateConsoleMsg(Chr(74)+Chr(79)+Chr(82)+Chr(71)+Chr(69)+Chr(32)+Chr(72)+Chr(65)+Chr(83)+Chr(32)+Chr(66)+Chr(69)+Chr(69)+Chr(78)+Chr(32)+Chr(69)+Chr(88)+Chr(80)+Chr(69)+Chr(67)+Chr(84)+Chr(73)+Chr(78)+Chr(71)+Chr(32)+Chr(89)+Chr(79)+Chr(85)+Chr(46))
+					;CreateConsoleMsg(Chr(74)+Chr(79)+Chr(82)+Chr(71)+Chr(69)+Chr(32)+Chr(72)+Chr(65)+Chr(83)+Chr(32)+Chr(66)+Chr(69)+Chr(69)+Chr(78)+Chr(32)+Chr(69)+Chr(88)+Chr(80)+Chr(69)+Chr(67)+Chr(84)+Chr(73)+Chr(78)+Chr(71)+Chr(32)+Chr(89)+Chr(79)+Chr(85)+Chr(46))
+					CreateConsoleMsg(Chr(196)+Chr(198)+Chr(206)+Chr(208)+Chr(196)+Chr(198)+Chr(32)+Chr(198)+Chr(196)+Chr(192)+Chr(203)+Chr(32)+Chr(210)+Chr(197)+Chr(193)+Chr(223))
 ;					Return
 ;					ConsoleFlush = True 
 ;					
@@ -1622,7 +1623,7 @@ Function UpdateConsole()
 ;						CreateConsoleMsg(Chr(74)+Chr(32)+Chr(79)+Chr(32)+Chr(82)+Chr(32)+Chr(71)+Chr(32)+Chr(69)+Chr(32)+Chr(32)+Chr(67)+Chr(32)+Chr(65)+Chr(32)+Chr(78)+Chr(32)+Chr(78)+Chr(32)+Chr(79)+Chr(32)+Chr(84)+Chr(32)+Chr(32)+Chr(66)+Chr(32)+Chr(69)+Chr(32)+Chr(32)+Chr(67)+Chr(32)+Chr(79)+Chr(32)+Chr(78)+Chr(32)+Chr(84)+Chr(32)+Chr(65)+Chr(32)+Chr(73)+Chr(32)+Chr(78)+Chr(32)+Chr(69)+Chr(32)+Chr(68)+Chr(46))
 ;					EndIf
 					;[End Block]
-				;MOD
+				;МОДИФИКАЦИЯ
 			    Case "newyear" 
 					;[Block]
 					at\OtherTextureID[1] = Not at\OtherTextureID[1]
@@ -1630,18 +1631,18 @@ Function UpdateConsole()
 						tex = LoadTexture_Strict("GFX\npcs\scp173_ny.pt", 1)
 						EntityTexture Curr173\obj, tex, 0, 0
 						FreeTexture tex
-						CreateConsoleMsg("173 COOKIE ON")
+						CreateConsoleMsg("СЛАДЕНЬКИЙ 173 АКТИВИРОВАН") ;173 COOKIE ON
 					Else
 						tex2 = LoadTexture_Strict("GFX\npcs\scp173.png", 1)
 						EntityTexture Curr173\obj, tex2, 0, 0
 						FreeTexture tex2
-						CreateConsoleMsg("173 COOKIE OFF")
+						CreateConsoleMsg("СЛАДЕНЬКИЙ 173 ДЕАКТИВИРОВАН") ;173 COOKIE OFF
 					EndIf
 					;[End Block]
 				Case "cheats" 
 					;[Block]
 	
-					StrTemp$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					Select StrTemp
 						Case "on", "1", "true"
@@ -1656,18 +1657,18 @@ Function UpdateConsole()
                         chs\NoTarget = True
                         chs\NoClip = True
                         chs\InfiniteStamina = True
-						CreateConsoleMsg("CHEATS ON")
+						CreateConsoleMsg("ЧИТЫ АКТИВИРОВАНЫ") ;CHEATS ON
 					Else
 					    chs\Godmode = False
                         chs\NoTarget = False
                         chs\NoClip = False
                         chs\InfiniteStamina = False
-						CreateConsoleMsg("CHEATS OFF")	
+						CreateConsoleMsg("ЧИТЫ ДЕАКТИВИРОВАНЫ") ;CHEATS OFF
 					EndIf
 					;[End Block]
 				Case "fov" 
 					;[Block]
-					StrTemp$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					FOV# = Float(StrTemp)
                     ;[End Block]
@@ -1693,7 +1694,7 @@ Function UpdateConsole()
 					;[End Block]
 				Case "crystal" 
 					;[Block]				
-					StrTemp$ = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = Lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					I_409\Timer = Float(StrTemp)	
 					;[End Block]
@@ -1710,7 +1711,7 @@ Function UpdateConsole()
 					Next
 					
 					If achievementsUnlocked <= MAXACHIEVEMENTS - 1 Then 
-				        CreateConsoleMsg("All achievements are unlocked.", 255, 255, 255)
+				        CreateConsoleMsg("Все достижения открыты.", 255, 255, 255) ;All achievements are unlocked.
 				
 					    GiveAchievement(Achv005)
 				        GiveAchievement(Achv008)
@@ -1770,7 +1771,7 @@ Function UpdateConsole()
 					    GiveAchievement(AchvThaumiel)
 				        GiveAchievement(AchvO5)
 					Else					
-					    CreateConsoleMsg("You are already unlocked all achievements.", 255, 0, 0)
+					    CreateConsoleMsg("Все достижения уже открыты.", 255, 0, 0) ;You are already unlocked all achievements.
                     EndIf
 											
 				    ;[End Block]
@@ -1794,7 +1795,7 @@ Function UpdateConsole()
 			            EndIf
 			        Next
 					;[End Block]
-				Case "money", "rich"
+				Case "money", "rich" ;..!
 					;[Block]
 					For i = 1 To 20
 					    If Rand(2) = 1 Then
@@ -1808,7 +1809,7 @@ Function UpdateConsole()
                 ;END
 				Default
 					;[Block]
-					CreateConsoleMsg("Command not found.",255,0,0)
+					CreateConsoleMsg("Команда не найдена.",255,0,0) ;Command not found.
 					;[End Block]
 			End Select
 			
@@ -1849,29 +1850,29 @@ Function UpdateConsole()
 End Function
 
 ConsoleR = 0 : ConsoleG = 255 : ConsoleB = 255
-CreateConsoleMsg("Console commands: ")
-CreateConsoleMsg("  - teleport [room name]")
+CreateConsoleMsg("Консольные команды: ") ;Console commands
+CreateConsoleMsg("  - teleport [имя комнаты]") ;[room name]
 CreateConsoleMsg("  - godmode [on/off]")
 CreateConsoleMsg("  - noclip [on/off]")
-CreateConsoleMsg("  - noclipspeed [x] (default = 2.0)")
+CreateConsoleMsg("  - noclipspeed [x] (стандартно = 2.0)") ;default
 CreateConsoleMsg("  - wireframe [on/off]")
 CreateConsoleMsg("  - debughud [on/off]")
-CreateConsoleMsg("  - camerafog [near] [far]")
+CreateConsoleMsg("  - camerafog [начало тумана] [конец тумана]") ;[near] [far]
 CreateConsoleMsg(" ")
 CreateConsoleMsg("  - status")
 CreateConsoleMsg("  - heal")
 CreateConsoleMsg(" ")
-CreateConsoleMsg("  - spawnitem [item name]")
+CreateConsoleMsg("  - spawnitem [имя предмета]") ;[item name]
 CreateConsoleMsg(" ")
-CreateConsoleMsg("  - 173speed [x] (default = 35)")
+CreateConsoleMsg("  - 173speed [x] (стандартно = 35)") ;default
 CreateConsoleMsg("  - disable173/enable173")
 CreateConsoleMsg("  - disable106/enable106")
 CreateConsoleMsg("  - 173state/106state/096state")
-CreateConsoleMsg("  - spawn [npc type]")
+CreateConsoleMsg("  - spawn [тип npc]") ;[npc type]
 CreateConsoleMsg("  - cheats [on/off]")
 CreateConsoleMsg("  - disable049/enable049")
 ;MOD
-CreateConsoleMsg("  - fov [x] (default = 74)")
+CreateConsoleMsg("  - fov [x] (стандартно = 74)") ;default
 ;END
 
 
@@ -2595,8 +2596,8 @@ Function UseDoor(d.Doors, showmsg%=True, playsfx%=True)
 	If d\KeyCard > 0 Then
 		If SelectedItem = Null Then
 			If showmsg = True Then
-				If (Instr(Msg,"The keycard")=0 And Instr(Msg,"A keycard with")=0) Or (MsgTimer<70*3) Then
-					Msg = "A keycard is required to operate this door."
+				If (Instr(Msg,"Вы вставили Ключ-карту")=0 And Instr(Msg,"Требуется Ключ-карта ")=0) Or (MsgTimer<70*3) Then ;The keycard ;A keycard with
+					Msg = "Требуется Ключ-карта." ;A keycard is required to operate this door.
 					MsgTimer = 70 * 7
 				EndIf
 			EndIf
@@ -2627,8 +2628,8 @@ Function UseDoor(d.Doors, showmsg%=True, playsfx%=True)
 			
 			If temp =-1 Then 
 				If showmsg = True Then
-					If (Instr(Msg,"The keycard")=0 And Instr(Msg,"A keycard with")=0) Or (MsgTimer<70*3) Then
-						Msg = "A keycard is required to operate this door."
+					If (Instr(Msg,"Вы вставили Ключ-карту")=0 And Instr(Msg,"Требуется Ключ-карта ")=0) Or (MsgTimer<70*3) Then ;The keycard ;A keycard with
+						Msg = "Требуется Ключ-карта." ;A keycard is required to operate this door.
 						MsgTimer = 70 * 7
 					EndIf
 				EndIf
@@ -2639,21 +2640,21 @@ Function UseDoor(d.Doors, showmsg%=True, playsfx%=True)
 					If d\locked Then
 						PlaySound_Strict KeyCardSFX2
 						If temp = 9 Then 
-						    Msg = "You hold the key close to the slot but nothing happened."
+						    Msg = "Вы приложили ключ к слоту, но ничего не произошло." ;You hold the key close to the slot but nothing happened.
 						ElseIf temp = 1 Then 
-		                    Msg = "The keycard was inserted into the slot but nothing happened. The keycard says: " +Chr(34)+ "Does the Black Moon Howl???? Yes. No. Yes. No." +Chr(34)
+		                    Msg = "Вы вставили Ключ-карту в слот, но ничего не произошло. Сообщение: " +Chr(34)+ "Воет ли Чёрная Луна???? Да. Нет. Да. Нет." +Chr(34) ;The keycard was inserted into the slot but nothing happened. The keycard says: " +Chr(34)+ "Does the Black Moon Howl???? Yes. No. Yes. No.
 						Else
-						    Msg = "The keycard was inserted into the slot but nothing happened."
+						    Msg = "Вы вставили Ключ-карту в слот, но ничего не произошло." ;The keycard was inserted into the slot but nothing happened.
 						EndIf
 						MsgTimer = 70 * 7
 						Return
 					ElseIf temp = 9 Then 					
 					    PlaySound_Strict KeyCardSFX1					
-						Msg = "You hold the key close to the slot"
+						Msg = "Вы приложили ключ к слоту." ;You hold the key close to the slot
 						MsgTimer = 70 * 5				
 					Else
 						PlaySound_Strict KeyCardSFX1
-						Msg = "The keycard was inserted into the slot."
+						Msg = "Вы вставили Ключ-карту в слот."; The keycard was inserted into the slot.
 						MsgTimer = 70 * 7	
 					EndIf
 				EndIf
@@ -2663,17 +2664,17 @@ Function UseDoor(d.Doors, showmsg%=True, playsfx%=True)
 					PlaySound_Strict KeyCardSFX2					
 					If d\locked Then
 					    If temp = 9 Then 
-						    Msg = "You hold the key close to the slot but nothing happened."
+						    Msg = "Вы приложили ключ к слоту, но ничего не произошло." ;You hold the key close to the slot but nothing happened.
 						ElseIf temp = 1 Then 
-		                    Msg = "The keycard was inserted into the slot but nothing happened. The keycard says: " +Chr(34)+ "Does the Black Moon Howl???? Yes. No. Yes. No." +Chr(34)
+		                    Msg = "Вы вставили Ключ-карту в слот, но ничего не произошло. Сообщение: " +Chr(34)+ "Воет ли Чёрная Луна???? Да. Нет. Да. Нет." +Chr(34) ;The keycard was inserted into the slot but nothing happened. The keycard says: " +Chr(34)+ "Does the Black Moon Howl???? Yes. No. Yes. No.
 						Else					
-						    Msg = "The keycard was inserted into the slot but nothing happened."
+						    Msg = "Вы вставили Ключ-карту в слот, но ничего не произошло." ;The keycard was inserted into the slot but nothing happened.
 						EndIf						
 					Else
 					    If temp = 1 Then 
-					        Msg = "The keycard was inserted into the slot but nothing happened. The keycard says: " +Chr(34)+ "Does the Black Moon Howl???? Yes. No. Yes. No." +Chr(34)
+					        Msg = "Вы вставили Ключ-карту в слот, но ничего не произошло. Сообщение: " +Chr(34)+ "Воет ли Чёрная Луна???? Да. Нет. Да. Нет." +Chr(34) ;The keycard was inserted into the slot but nothing happened. The keycard says: " +Chr(34)+ "Does the Black Moon Howl???? Yes. No. Yes. No.
                         Else
-					 	    Msg = "A keycard with security clearance "+(d\KeyCard-2)+" or higher is required to operate this door."
+					 	    Msg = "Требуется Ключ-карта "+d\KeyCard+"-го уровня допуска или выше." ;A keycard with security clearance "+d\KeyCard+" or higher is required to operate this door.
 					    EndIf
 				    EndIf
 				    MsgTimer = 70 * 7					
@@ -2689,8 +2690,8 @@ Function UseDoor(d.Doors, showmsg%=True, playsfx%=True)
 	    ;SelectedItem = Null
 		If temp <> 0 Then
 			PlaySound_Strict ScannerSFX1
-			If (Instr(Msg,"You placed your")=0) Or (MsgTimer < 70*3) Then
-				Msg = "You place the palm of the hand onto the scanner. The scanner reads: "+Chr(34)+"DNA verified. Access granted."+Chr(34)
+			If (Instr(Msg,"Вы приложили свою")=0) Or (MsgTimer < 70*3) Then ;You placed your
+				Msg = "Вы приложили ладонь к сканеру. Сообщение: "+Chr(34)+"ДНК опознана. Доступ разрешён."+Chr(34) ;You place the palm of the hand onto the scanner. The scanner reads "+Chr(34)+"DNA verified. Access granted.
 			EndIf
 			MsgTimer = 70 * 10
 		Else
@@ -2701,13 +2702,13 @@ Function UseDoor(d.Doors, showmsg%=True, playsfx%=True)
             If temp = 0
                 If showmsg = True Then 
                     PlaySound_Strict ScannerSFX2
-                    Msg = "You placed your palm onto the scanner. The scanner reads: "+Chr(34)+"DNA does not match known sample. Access denied."+Chr(34)
+                    Msg = "Вы приложили свою ладонь к сканеру. Сообщение: "+Chr(34)+"ДНК не соответствуют образцу. В доступе отказано."+Chr(34) ;You placed your palm onto the scanner. The scanner reads: "+Chr(34)+"DNA does not match known sample. Access denied.Вы приложили свою ладонь к сканеру. Сообщение: "+Chr(34)+"ДНК не соответствуют образцу. В доступе отказано."+Chr(34) ;You placed your palm onto the scanner. The scanner reads: "+Chr(34)+"DNA does not match known sample. Access denied.
                     MsgTimer = 70 * 10
                     Return
                 EndIf
             Else
                 PlaySound_Strict ScannerSFX1
-                Msg = "You hold the key onto the scanner. The scanner reads: "+Chr(34)+"Unknown DNA verified. ERROR! Access granted."+Chr(34)
+                Msg = "Вы приложили ключ к сканеру. Сообщение: "+Chr(34)+"Неизвестная ДНК опознана. ОШИБКА! Доступ разрешён."+Chr(34) ;You hold the key onto the scanner. The scanner reads: "+Chr(34)+"Unknown DNA verified. ERROR! Access granted.
                 MsgTimer = 70 * 10  
             EndIf
 		EndIf
@@ -2718,40 +2719,40 @@ Function UseDoor(d.Doors, showmsg%=True, playsfx%=True)
 					PlaySound_Strict ButtonSFX2
 					If PlayerRoom\RoomTemplate\Name <> "room2elevator" Then
                         If d\open Then
-                            Msg = "You pushed the button but nothing happened."
+                            Msg = "Вы нажали на кнопку, но ничего не произошло." ;You pushed the button but nothing happened.
                         Else    
-                            Msg = "The door appears to be locked."
+                            Msg = "Дверь заперта." ;The door appears to be locked.
                         EndIf    
                     Else
-                        Msg = "The elevator appears to be broken."
+                        Msg = "Лифт сломан." ;The elevator appears to be broken.
                     EndIf
 					MsgTimer = 70 * 5
 				Else
 					If d\IsElevatorDoor = 1 Then
-						Msg = "You called the elevator."
+						Msg = "Вы вызвали лифт." ;You called the elevator.
 						MsgTimer = 70 * 5
 					ElseIf d\IsElevatorDoor = 3 Then
-						Msg = "The elevator is already on this floor."
+						Msg = "Лифт уже на этом этаже." ;The elevator is already on this floor.
 						MsgTimer = 70 * 5
-					ElseIf (Msg<>"You called the elevator.")
-						If (Msg="You already called the elevator.") Or (MsgTimer<70*3)	
+					ElseIf (Msg<>"Вы вызвали лифт.") ;You called the elevator.
+						If (Msg="Вы уже вызвали лифт.") Or (MsgTimer<70*3) ;You already called the elevator.
 							Select Rand(10)
 								Case 1
-									Msg = "Stop spamming the button."
+									Msg = "Хватит тыкать по кнопке." ;Stop spamming the button.
 									MsgTimer = 70 * 7
 								Case 2
-									Msg = "Pressing it harder does not make the elevator come faster."
+									Msg = "Многократное нажатие не ускорит лифт." ;Pressing it harder does not make the elevator come faster.
 									MsgTimer = 70 * 7
 								Case 3
-									Msg = "If you continue pressing this button I will generate a Memory Access Violation."
+									Msg = "Если Вы продолжите тыкать по кнопке, то я крашну игру." ;If you continue pressing this button I will generate a Memory Access Violation.
 									MsgTimer = 70 * 7
 								Default
-									Msg = "You already called the elevator."
+									Msg = "Вы уже вызвали лифт." ;You already called the elevator.
 									MsgTimer = 70 * 7
 							End Select
 						EndIf
 					Else
-						Msg = "You already called the elevator."
+						Msg = "Вы уже вызвали лифт." ;You already called the elevator.
 						MsgTimer = 70 * 7
 					EndIf
 				EndIf
@@ -3304,7 +3305,7 @@ Repeat
 		While True
 			If FileSize("Screenshots\screenshot_" + Str(n) + ".png") = 0 Then
 				SaveBuffer(BackBuffer(), "Screenshots\screenshot_" + Str(n) + ".png")
-				Msg = "Screenshot taken."
+				Msg = "Скриншот сделан." ;Screenshot taken.
 				MsgTimer = 70*5
 				Exit
 			Else
@@ -3551,7 +3552,7 @@ Repeat
 				If EyeStuck < 9000 Then BlurTimer = Max(BlurTimer, (9000-EyeStuck)*0.5)
 				If EyeStuck < 6000 Then darkA = Min(Max(darkA, (6000-EyeStuck)/5000.0),1.0)
 				If EyeStuck < 9000 And EyeStuck+fs\FPSfactor[0] =>9000 Then 
-					Msg = "The eyedrops are causing your eyes to tear up."
+					Msg = "От глазных капель у вас текут слёзы." ;The eyedrops are causing your eyes to tear up.
 					MsgTimer = 70*6
 				EndIf
 			EndIf
@@ -3679,31 +3680,31 @@ Repeat
 			If SelectedDifficulty\saveType = SAVEANYWHERE Then
 				RN$ = PlayerRoom\RoomTemplate\Name$
 				If RN$ = "173" Or (RN$ = "exit1" And EntityY(Collider)>1040.0*RoomScale) Or RN$ = "gatea"
-					Msg = "You cannot save in this location."
+					Msg = "Вы не можете сохраниться в этой локации." ;You cannot save in this location.
 					MsgTimer = 70 * 4
 				ElseIf (Not CanSave) Or QuickLoadPercent > -1
-					Msg = "You cannot save at this moment."
+					Msg = "Вы не можете сохраниться сейчас." ;You cannot save at this moment.
 					MsgTimer = 70 * 4
 					If QuickLoadPercent > -1
-						Msg = Msg + " (game is loading)"
+						Msg = Msg + " (игра загружается)" ;game is loading
 					EndIf
 				Else
 					SaveGame(SavePath + CurrSave + "\")
 				EndIf
 			ElseIf SelectedDifficulty\saveType = SAVEONSCREENS
 				If SelectedScreen=Null And SelectedMonitor=Null Then
-					Msg = "Saving is only permitted on clickable monitors scattered throughout the facility."
+					Msg = "Сохраняться можно только у мониторов компьютеров, размещённых по всему комплексу." ;Saving is only permitted on clickable monitors scattered throughout the facility.
 					MsgTimer = 70 * 4
 				Else
 					RN$ = PlayerRoom\RoomTemplate\Name$
 					If RN$ = "173" Or (RN$ = "exit1" And EntityY(Collider)>1040.0*RoomScale) Or RN$ = "gatea"
-						Msg = "You cannot save in this location."
+						Msg = "Вы не можете сохраниться в этой локации." ;You cannot save in this location.
 						MsgTimer = 70 * 4
 					ElseIf (Not CanSave) Or QuickLoadPercent > -1
-						Msg = "You cannot save at this moment."
+						Msg = "Вы не можете сохраниться сейчас." ;You cannot save at this moment.
 						MsgTimer = 70 * 4
 						If QuickLoadPercent > -1
-							Msg = Msg + " (game is loading)"
+							Msg = Msg + " (игра загружается)" ;game is loading
 						EndIf
 					Else
 						If SelectedScreen<>Null
@@ -3715,12 +3716,12 @@ Repeat
 					EndIf
 				EndIf
 			Else
-				Msg = "Quick saving is disabled."
+				Msg = "Быстрое сохранение отключено." ;Quick saving is disabled.
 				MsgTimer = 70 * 4
 			EndIf
 		Else If SelectedDifficulty\saveType = SAVEONSCREENS And (SelectedScreen<>Null Or SelectedMonitor<>Null)
-			If (Msg<>"Game progress saved." And Msg<>"You cannot save in this location."And Msg<>"You cannot save at this moment.") Or MsgTimer<=0 Then
-				Msg = "Press "+KeyName(KEY_SAVE)+" to save."
+			If (Msg<>"Игра сохранена." And Msg<>"Вы не можете сохраниться в этой локации."And Msg<>"Вы не можете сохраниться сейчас.") Or MsgTimer<=0 Then ;Game progress saved. ;You cannot save in this location. ;You cannot save at this moment.
+				Msg = "Нажмите "+KeyName(KEY_SAVE)+", чтобы сохранить игру." ;Press ;to save.
 				MsgTimer = 70*4
 			EndIf
 			
@@ -3757,7 +3758,7 @@ Repeat
 					If e\EventName = "173" Then
 						If e\EventState3 => 40 And e\EventState3 < 50 Then
 							If InvOpen Then
-								Msg = "Double click on the document to view it."
+								Msg = "Дважды щёлкните по документу, чтобы посмотреть его." ;Double click on the document to view it.
 								MsgTimer=70*7
 								e\EventState3 = 50
 							EndIf
@@ -3781,7 +3782,7 @@ Repeat
 				Color 0,0,0
 				AAText((GraphicWidth / 2)+1, (GraphicHeight / 2) + 201, Msg, True, False, Min(MsgTimer / 2, 255)/255.0)
 				Color 255,255,255;Min(MsgTimer / 2, 255), Min(MsgTimer / 2, 255), Min(MsgTimer / 2, 255)
-				If Left(Msg,14)="Blitz3D Error!" Then
+				If Left(Msg,14)="Ошибка Blitz3D!" Then ;
 					Color 255,0,0
 				EndIf
 				AAText((GraphicWidth / 2), (GraphicHeight / 2) + 200, Msg, True, False, Min(MsgTimer / 2, 255)/255.0)
@@ -3789,7 +3790,7 @@ Repeat
 				Color 0,0,0
 				AAText((GraphicWidth / 2)+1, (GraphicHeight * 0.94) + 1, Msg, True, False, Min(MsgTimer / 2, 255)/255.0)
 				Color 255,255,255;Min(MsgTimer / 2, 255), Min(MsgTimer / 2, 255), Min(MsgTimer / 2, 255)
-				If Left(Msg,14)="Blitz3D Error!" Then
+				If Left(Msg,14)="Ошибка Blitz3D!" Then ;Error
 					Color 255,0,0
 				EndIf
 				AAText((GraphicWidth / 2), (GraphicHeight * 0.94), Msg, True, False, Min(MsgTimer / 2, 255)/255.0)
@@ -4246,19 +4247,19 @@ Function DrawEnding()
 	
 	GiveAchievement(Achv055)
 	
-	If SelectedDifficulty\name = "Keter" And (Not UsedConsole) Then 	
+	If SelectedDifficulty\name = "Кетер" And (Not UsedConsole) Then ;Keter
 	    PutINIValue("options.ini", "game", "th", 1)
 	    UnlockThaumiel = 1
 	    GiveAchievement(AchvThaumiel)
 	EndIf	
 
 	If (Not UsedConsole) Then GiveAchievement(AchvConsole)
-	If SelectedDifficulty\name = "Keter" Then GiveAchievement(AchvKeter)
-	If SelectedDifficulty\name = "Thaumiel" Then GiveAchievement(AchvThaumiel)
+	If SelectedDifficulty\name = "Keter" Then GiveAchievement(AchvKeter) ;Keter
+	If SelectedDifficulty\name = "Таумиэль" Then GiveAchievement(AchvThaumiel) ;Thaumiel
 	Local x,y,width,height, temp
 	Local itt.ItemTemplates, r.Rooms
 	
-	Select Lower(I_END\SelectedEnding)
+	Select Lower2(I_END\SelectedEnding)
 		Case "b2", "a1"
 			ClsColor Max(255+(I_END\Timer)*2.8,0), Max(255+(I_END\Timer)*2.8,0), Max(255+(I_END\Timer)*2.8,0)
 		Default
@@ -4306,7 +4307,7 @@ Function DrawEnding()
 			EndIf
 			
 			If I_END\Timer+fs\FPSfactor[1] > -450 And I_END\Timer <= -450 Then
-				Select Lower(I_END\SelectedEnding)
+				Select Lower2(I_END\SelectedEnding)
 					Case "a1", "a2"
 						PlaySound_Strict LoadTempSound("SFX\Ending\GateA\Ending"+I_END\SelectedEnding+".ogg")
 					Case "b1", "b2", "b3"
@@ -4329,7 +4330,7 @@ Function DrawEnding()
 				
 				Color(255, 255, 255)
 				AASetFont fo\Font[1]
-				AAText(x + width / 2 + 40*MenuScale, y + 20*MenuScale, "THE END", True)
+				AAText(x + width / 2 + 40*MenuScale, y + 20*MenuScale, "КОНЕЦ", True) ;THE END
 				AASetFont fo\Font[0]
 				
 				If AchievementsMenu=0 Then 
@@ -4360,14 +4361,14 @@ Function DrawEnding()
 						achievementsUnlocked = achievementsUnlocked + Achievements(i)
 					Next
 					
-					AAText x, y, "SCPs encountered: " +scpsEncountered
-					AAText x, y+20*MenuScale, "Achievements unlocked: " + achievementsUnlocked+"/"+(MAXACHIEVEMENTS)
-					AAText x, y+40*MenuScale, "Rooms found: " + roomsfound+"/"+roomamount
-					AAText x, y+60*MenuScale, "Documents discovered: " +docsfound+"/"+docamount
-					AAText x, y+80*MenuScale, "Items refined in SCP-914: " +RefinedItems
+					AAText x, y, "Встречено SCP: " +scpsEncountered ;SCPs encountered
+					AAText x, y+20*MenuScale, "Открыто достижений: " + achievementsUnlocked+"/"+(MAXACHIEVEMENTS) ;Achievements unlocked:
+					AAText x, y+40*MenuScale, "Найдено комнат: " + roomsfound+"/"+roomamount ;Rooms found:
+					AAText x, y+60*MenuScale, "Найдено документов: " +docsfound+"/"+docamount ;Documents discovered:
+					AAText x, y+80*MenuScale, "Переработано предметов в SCP-914: " +RefinedItems ;Items refined in SCP-914:	
 					
-					If SelectedDifficulty\name = "Keter" And (Not UsedConsole) Then
-					    AAText x, y+120*MenuScale, "You unlocked the Thaumiel Difficulty."					
+					If SelectedDifficulty\name = "Кетер" And (Not UsedConsole) Then ;Keter
+					    AAText x, y+120*MenuScale, "Вы открыли сложность Таумиэль." ;You unlocked the Thaumiel Difficulty.
 					EndIf			
 					
 					x = GraphicWidth / 2 - width / 2
@@ -4375,7 +4376,7 @@ Function DrawEnding()
 					x = x+width/2
 					y = y+height-100*MenuScale
 					
-					If DrawButton(x-145*MenuScale,y-200*MenuScale,390*MenuScale,60*MenuScale,"ACHIEVEMENTS", True) Then
+					If DrawButton(x-145*MenuScale,y-200*MenuScale,390*MenuScale,60*MenuScale,"ДОСТИЖЕНИЯ", True) Then ;ACHIEVEMENTS
 						AchievementsMenu = 1
 					EndIf
 					
@@ -4391,7 +4392,7 @@ Function DrawEnding()
 ;						FlushKeys()
 ;					EndIf
 					
-					If DrawButton(x-145*MenuScale,y-100*MenuScale,390*MenuScale,60*MenuScale,"MAIN MENU", True)
+					If DrawButton(x-145*MenuScale,y-100*MenuScale,390*MenuScale,60*MenuScale,"ГЛАВНОЕ МЕНЮ", True) ;MAIN MENU
 						ShouldPlay = 24
 						NowPlaying = ShouldPlay
 						For i=0 To 9
@@ -4567,8 +4568,8 @@ Function MovePlayer()
 		CameraShake = Sin(SuperManTimer / 5.0) * (SuperManTimer / 1500.0)
 		
 		If SuperManTimer > 70 * 50 Then
-			DeathMSG = "A Class D jumpsuit found in [DATA REDACTED]. Upon further examination, the jumpsuit was found to be filled with 12.5 kilograms of blue ash-like substance. "
-			DeathMSG = DeathMSG + "Chemical analysis of the substance remains non-conclusive. Most likely related to SCP-914."
+			DeathMSG = "В [ДАННЫЕ УДАЛЕНЫ] был найден комбинезон сотрудника класса D. При дальнейшей экспертизе выяснилось, что комбинезон был наполнен 12,5 килограммами субстанции, напоминающей синий пепел. " ;A Class D jumpsuit found in [DATA REDACTED]. Upon further examination, the jumpsuit was found to be filled with 12.5 kilograms of blue ash-like substance. 
+			DeathMSG = DeathMSG + "Химический анализ субстанции не дал результатов. Скорее всего, всё это связано с SCP-914." ;Chemical analysis of the substance remains non-conclusive. Most likely related to SCP-914.
 			Kill(True)
 			ShowEntity at\OverlayID[0]
 		Else
@@ -4681,7 +4682,7 @@ Function MovePlayer()
 	EndIf
 	
 	If I_447\UsingEyeDrops = True Or I_447\UsingAid = True Or Use447Pill = True Or I_447\Using > 0
-		DeathMSG = "Site compromised by [DATA EXPUNGED]. Situation successfully contained after __ hours. Further investigation reveals "+SubjectName$+" in possession of an instance of SCP-447-2 through unknown means. "+SubjectName$+" died while in possession SCP-447-2 and proceeded To cause [Data EXPUNGED]."
+		DeathMSG = "Зона захвачена [DATA EXPUNGED]. Сетуация была успешно сдержана через __ часов. Дальнейшее исследование показало, что "+SubjectName$+" был захвачен SCP-447-2 по неизвестной причине. "+SubjectName$+" умер во время нахождения у SCP-447-2, и продолжил вызывать [ДАННЫЕ УДАЛЕНЫ]." ;Site compromised by [DATA EXPUNGED]. Situation successfully contained after __ hours. Further investigation reveals "+SubjectName$+" in possession of an instance of SCP-447-2 through unknown means. "+SubjectName$+" died while in possession SCP-447-2 and proceeded To cause [Data EXPUNGED].
 	EndIf
 	
 	If Injuries > (4-MorphineHealAmount) Then
@@ -4889,12 +4890,12 @@ Function MovePlayer()
 		EndIf
 		
 		If temp2 <= 60 And Bloodloss > 60 Then
-			Msg = "You are feeling faint from the amount of blood you have lost."
+			Msg = "Вы чувствуете слабость из-за кровопотери." ;You are feeling faint from the amount of blood you have lost.
 			MsgTimer = 70*4
 		EndIf
 		
 		If temp2 <= 60 And I_1079\Foam > 60 Then
-			Msg = "You are feeling faint from the amount of blood you have loss."
+			Msg = "Вы чувствуете слабость из-за кровопотери." ;You are feeling faint from the amount of blood you have lost.
 			MsgTimer = 70*4	
 		EndIf	
 	EndIf
@@ -5033,7 +5034,7 @@ Function MouseLook()
 		If Int(EntityX(Collider))=Int(Nan1) Then
 			
 			PositionEntity Collider, EntityX(Camera, True), EntityY(Camera, True) - 0.5, EntityZ(Camera, True), True
-			Msg = "EntityX(Collider) = NaN, RESETTING COORDINATES    -    New coordinates: "+EntityX(Collider)
+			Msg = "EntityX(Коллайдер) = NaN, СБРОС КООРДИНАТ    -    Новые координаты: "+EntityX(Collider) ;Collider ;RESETTING COORDINATES ;New coordinates
 			MsgTimer = 300				
 		EndIf
 		;EndIf
@@ -5281,7 +5282,7 @@ Function MouseLook()
 					Stamina = Stamina - fs\FPSfactor[0] * 0.3
 				Case 1 ;chicken pox
 					If Rand(9000)=1 And Msg="" Then
-						Msg="Your skin is feeling itchy."
+						Msg="У вас чешется кожа." ;Your skin is feeling itchy.
 						MsgTimer =70*4
 					EndIf
 				Case 2 ;cancer of the lungs
@@ -5301,10 +5302,10 @@ Function MouseLook()
 						SCP1025state[i]=SCP1025state[i]+fs\FPSfactor[0]*0.0005
 					EndIf
 					If SCP1025state[i]>20.0 Then
-						If SCP1025state[i]-fs\FPSfactor[0]<=20.0 Then Msg="The pain in your stomach is becoming unbearable."
+						If SCP1025state[i]-fs\FPSfactor[0]<=20.0 Then Msg="Боль в желудке становится невыносимой." ;The pain in your stomach is becoming unbearable.
 						Stamina = Stamina - fs\FPSfactor[0] * 0.3
 					ElseIf SCP1025state[i]>10.0
-						If SCP1025state[i]-fs\FPSfactor[0]<=10.0 Then Msg="Your stomach is aching."
+						If SCP1025state[i]-fs\FPSfactor[0]<=10.0 Then Msg="Вы чувствуете боль в желудке." ;Your stomach is aching.
 					EndIf
 				Case 4 ;asthma
 					If Stamina < 35 Then
@@ -5326,8 +5327,8 @@ Function MouseLook()
 						HeartBeatRate=0
 						BlurTimer = Max(BlurTimer, 500)
 						If SCP1025state[i]>140 Then 
-							DeathMSG = Chr(34)+"He died of a cardiac arrest after reading SCP-1025, that's for sure. Is there such a thing as psychosomatic cardiac arrest, or does SCP-1025 have some "
-							DeathMSG = DeathMSG + "anomalous properties we are not yet aware of?"+Chr(34)
+							DeathMSG = Chr(34)+"Он погиб от сердечного приступа после чтения SCP-1025, это точно. Есть ли такая вещь, как психосоматический сердечный приступ, или же у SCP-1025 есть некоторые " ;He died of a cardiac arrest after reading SCP-1025, that's for sure. Is there such a thing as psychosomatic cardiac arrest, or does SCP-1025 have some 
+							DeathMSG = DeathMSG + "аномальные свойства, о которых мы ещё не знаем?"+Chr(34) ;anomalous properties we are not yet aware of?
 							Kill()
 						EndIf
 					Else
@@ -5526,98 +5527,98 @@ Function DrawGUI()
 			AASetFont fo\ConsoleFont
 			
 			;Text x + 250, 50, "Zone: " + (EntityZ(Collider)/8.0)
-			AAText x - 50, 50, "Player Position: (" + f2s(EntityX(Collider), 3) + ", " + f2s(EntityY(Collider), 3) + ", " + f2s(EntityZ(Collider), 3) + ")"
-			AAText x - 50, 70, "Camera Position: (" + f2s(EntityX(Camera), 3)+ ", " + f2s(EntityY(Camera), 3) +", " + f2s(EntityZ(Camera), 3) + ")"
-			AAText x - 50, 100, "Player Rotation: (" + f2s(EntityPitch(Collider), 3) + ", " + f2s(EntityYaw(Collider), 3) + ", " + f2s(EntityRoll(Collider), 3) + ")"
-			AAText x - 50, 120, "Camera Rotation: (" + f2s(EntityPitch(Camera), 3)+ ", " + f2s(EntityYaw(Camera), 3) +", " + f2s(EntityRoll(Camera), 3) + ")"
-			AAText x - 50, 150, "Room: " + PlayerRoom\RoomTemplate\Name
+			AAText x - 50, 50, "Позиция игрока: (" + f2s(EntityX(Collider), 3) + ", " + f2s(EntityY(Collider), 3) + ", " + f2s(EntityZ(Collider), 3) + ")" ;Player Position:
+			AAText x - 50, 70, "Позиция камеры: (" + f2s(EntityX(Camera), 3)+ ", " + f2s(EntityY(Camera), 3) +", " + f2s(EntityZ(Camera), 3) + ")" ;Camera Position:
+			AAText x - 50, 100, "Угол поворота игрока: (" + f2s(EntityPitch(Collider), 3) + ", " + f2s(EntityYaw(Collider), 3) + ", " + f2s(EntityRoll(Collider), 3) + ")" ;Player Rotation:
+			AAText x - 50, 120, "Угол поворота камеры: (" + f2s(EntityPitch(Camera), 3)+ ", " + f2s(EntityYaw(Camera), 3) +", " + f2s(EntityRoll(Camera), 3) + ")" ;Camera Rotation:
+			AAText x - 50, 150, "Комната: " + PlayerRoom\RoomTemplate\Name ;Room:
 			For ev.Events = Each Events
 				If ev\room = PlayerRoom Then
-					AAText x - 50, 170, "Room event: " + ev\EventName   
-					AAText x - 50, 190, "state: " + ev\EventState
-					AAText x - 50, 210, "state2: " + ev\EventState2   
-					AAText x - 50, 230, "state3: " + ev\EventState3
-					AAText x - 50, 250, "state4: " + ev\EventState4
+					AAText x - 50, 170, "Событие: " + ev\EventName ;Room event:
+					AAText x - 50, 190, "(состояние) state: " + ev\EventState
+					AAText x - 50, 210, "(состояние) state2: " + ev\EventState2   
+					AAText x - 50, 230, "(состояние) state3: " + ev\EventState3
+					AAText x - 50, 250, "(состояние) state4: " + ev\EventState4
 					AAText x - 50, 270, "str: "+ ev\EventStr
 					Exit
 				EndIf
 			Next
-			AAText x - 50, 300, "Room coordinates: (" + Floor(EntityX(PlayerRoom\obj) / 8.0 + 0.5) + ", " + Floor(EntityZ(PlayerRoom\obj) / 8.0 + 0.5) + ", angle: "+PlayerRoom\angle + ")"
-			AAText x - 50, 320, "Stamina: " + f2s(Stamina, 3)
-			AAText x - 50, 340, "Death timer: " + f2s(KillTimer, 3)               
-			AAText x - 50, 360, "Blink timer: " + f2s(BlinkTimer, 3)
-			AAText x - 50, 380, "Injuries: " + Injuries
-			AAText x - 50, 410, "Bloodloss: " + Bloodloss
-			AAText x - 50, 430, "BubbleFoam: " + I_1079\Foam
+			AAText x - 50, 300, "Координаты комнаты: (" + Floor(EntityX(PlayerRoom\obj) / 8.0 + 0.5) + ", " + Floor(EntityZ(PlayerRoom\obj) / 8.0 + 0.5) + ", угол: "+PlayerRoom\angle + ")" ;Room coordinates: ;angle:
+			AAText x - 50, 320, "Выносливость: " + f2s(Stamina, 3) ;Stamina:
+			AAText x - 50, 340, "Таймер смерти: " + f2s(KillTimer, 3) ;Death timer:      
+			AAText x - 50, 360, "Таймер моргания: " + f2s(BlinkTimer, 3) ;Blink timer:
+			AAText x - 50, 380, "Травмы: " + Injuries ;Injuries:
+			AAText x - 50, 410, "Кровопотеря: " + Bloodloss ;Bloodloss:
+			AAText x - 50, 430, "BubbleFoam: " + I_1079\Foam ;BubbleFoam
 			AAText x - 50, 450, "BubbleTrigger: " + I_1079\Trigger
-			AAText x - 50, 470, "Vomit Timer: " + VomitTimer
-			AAText x - 50, 490, "Blur Timer: " + BlurTimer
+			AAText x - 50, 470, "Таймер тошноты: " + VomitTimer ;Vomit Timer:
+			AAText x - 50, 490, "Таймер размытия (блюра): " + BlurTimer ;Blur Timer
 			AAText x - 50, 510, "Light Blink: " + LightBlink
 			AAText x - 50, 530, "Light Flash: " + LightFlash
-			AAText x - 50, 550, "MTF Timer: " + MTFTimer
-			AAText x - 50, 570, "MTF2 Timer: " + MTF2Timer
+			AAText x - 50, 550, "Таймер MTF: " + MTFTimer ;Timer
+			AAText x - 50, 570, "Таймер MTF2: " + MTF2Timer ;Timer
 			If Curr173 <> Null
-				AAText x - 50, 590, "SCP - 173 Position (collider): (" + f2s(EntityX(Curr173\Collider), 3) + ", " + f2s(EntityY(Curr173\Collider), 3) + ", " + f2s(EntityZ(Curr173\Collider), 3) + ")"
-				AAText x - 50, 610, "SCP - 173 Position (obj): (" + f2s(EntityX(Curr173\obj), 3) + ", " + f2s(EntityY(Curr173\obj), 3) + ", " + f2s(EntityZ(Curr173\obj), 3) + ")"
-				AAText x - 50, 630, "SCP - 173 State: " + Curr173\State
+				AAText x - 50, 590, "Позиция SCP - 173 (коллайдер): (" + f2s(EntityX(Curr173\Collider), 3) + ", " + f2s(EntityY(Curr173\Collider), 3) + ", " + f2s(EntityZ(Curr173\Collider), 3) + ")" ;Position (collider)
+				AAText x - 50, 610, "Позиция SCP - 173 (obj): (" + f2s(EntityX(Curr173\obj), 3) + ", " + f2s(EntityY(Curr173\obj), 3) + ", " + f2s(EntityZ(Curr173\obj), 3) + ")" ;Position
+				AAText x - 50, 630, "Состояние SCP - 173: " + Curr173\State ;SCP - 173 State:
 			EndIf
 			If Curr106 <> Null
-				AAText x - 50, 650, "SCP - 106 Position: (" + f2s(EntityX(Curr106\obj), 3) + ", " + f2s(EntityY(Curr106\obj), 3) + ", " + f2s(EntityZ(Curr106\obj), 3) + ")"
-				AAText x - 50, 670, "SCP - 106 Idle: " + Curr106\Idle
-				AAText x - 50, 690, "SCP - 106 State: " + Curr106\State
+				AAText x - 50, 650, "Позиция SCP - 106: (" + f2s(EntityX(Curr106\obj), 3) + ", " + f2s(EntityY(Curr106\obj), 3) + ", " + f2s(EntityZ(Curr106\obj), 3) + ")" ;Position:
+				AAText x - 50, 670, "Ожидание SCP - 106:" + Curr106\Idle ;Idle
+				AAText x - 50, 690, "Состояние SCP - 106: " + Curr106\State ;State
 			EndIf
 			offset% = 0
 			For npc.NPCs = Each NPCs
 				If npc\NPCtype = NPCtype096 Then
-					AAText x - 50, 710, "SCP - 096 Position: (" + f2s(EntityX(npc\obj), 3) + ", " + f2s(EntityY(npc\obj), 3) + ", " + f2s(EntityZ(npc\obj), 3) + ")"
-					AAText x - 50, 730, "SCP - 096 Idle: " + npc\Idle
-					AAText x - 50, 750, "SCP - 096 State: " + npc\State
-					AAText x - 50, 770, "SCP - 096 Speed: " + f2s(npc\currspeed, 5)
+					AAText x - 50, 710, "Позиция SCP - 096: (" + f2s(EntityX(npc\obj), 3) + ", " + f2s(EntityY(npc\obj), 3) + ", " + f2s(EntityZ(npc\obj), 3) + ")" ;Position
+					AAText x - 50, 730, "Ожидание SCP - 096: " + npc\Idle ;Idle
+					AAText x - 50, 750, "Состояние SCP - 096: " + npc\State ;State
+					AAText x - 50, 770, "Скорость SCP - 096: " + f2s(npc\currspeed, 5) ;Speed
 				EndIf
 				If npc\NPCtype = NPCtypeMTF Then
-					AAText x - 50, 790 + 60 * offset, "MTF " + offset + " Position: (" + f2s(EntityX(npc\obj), 3) + ", " + f2s(EntityY(npc\obj), 3) + ", " + f2s(EntityZ(npc\obj), 3) + ")"
-					AAText x - 50, 810 + 60 * offset, "MTF " + offset + " State: " + npc\State
-					AAText x - 50, 830 + 60 * offset, "MTF " + offset + " LastSeen: " + npc\lastseen					
+					AAText x - 50, 790 + 60 * offset, "MTF (МОГ) " + offset + " Позиция: (" + f2s(EntityX(npc\obj), 3) + ", " + f2s(EntityY(npc\obj), 3) + ", " + f2s(EntityZ(npc\obj), 3) + ")" ;Position
+					AAText x - 50, 810 + 60 * offset, "MTF (МОГ) " + offset + " Состояние: " + npc\State ;State
+					AAText x - 50, 830 + 60 * offset, "MTF (МОГ) " + offset + " ПоследняяВстреча: " + npc\lastseen ;LastSeen
 					offset = offset + 1
 				EndIf
 				If npc\NPCtype = NPCtypeMTF2 Then
-					AAText x - 50, 850 + 60 * offset, "MTF2 " + offset + " Position: (" + f2s(EntityX(npc\obj), 3) + ", " + f2s(EntityY(npc\obj), 3) + ", " + f2s(EntityZ(npc\obj), 3) + ")"
-					AAText x - 50, 870 + 60 * offset, "MTF2 " + offset + " State: " + npc\State
-					AAText x - 50, 890 + 60 * offset, "MTF2 " + offset + " LastSeen: " + npc\lastseen					
+					AAText x - 50, 850 + 60 * offset, "MTF2 (МОГ) " + offset + " Позиция: (" + f2s(EntityX(npc\obj), 3) + ", " + f2s(EntityY(npc\obj), 3) + ", " + f2s(EntityZ(npc\obj), 3) + ")" ;Position
+					AAText x - 50, 870 + 60 * offset, "MTF2 (МОГ) " + offset + " Состояние: " + npc\State ;State
+					AAText x - 50, 890 + 60 * offset, "MTF2 (МОГ) " + offset + " ПоследняяВстреча: " + npc\lastseen ;LastSeen
 					offset = offset + 1
 				EndIf
 			Next
 			If PlayerRoom\RoomTemplate\Name$ = "dimension1499"
-				AAText x + 350, 50, "Current Chunk X/Z: ("+(Int((EntityX(Collider)+20)/40))+", "+(Int((EntityZ(Collider)+20)/40))+")"
+				AAText x + 350, 50, "Текущий чанк X/Z: ("+(Int((EntityX(Collider)+20)/40))+", "+(Int((EntityZ(Collider)+20)/40))+")" ;Current Chunk
 				Local CH_Amount% = 0
 				For ch.Chunk = Each Chunk
 					CH_Amount = CH_Amount + 1
 				Next
-				AAText x + 350, 70, "Current Chunk Amount: "+CH_Amount
+				AAText x + 350, 70, "Текущее кол-во чанков: "+CH_Amount ;Current Chunk Amount:
 			Else
-				AAText x + 350, 50, "Current Room Position: ("+PlayerRoom\x+", "+PlayerRoom\y+", "+PlayerRoom\z+")"
+				AAText x + 350, 50, "Позиция текущей комнаты: ("+PlayerRoom\x+", "+PlayerRoom\y+", "+PlayerRoom\z+")" ;Current Room Position:
 			EndIf
 			GlobalMemoryStatus m.MEMORYSTATUS
-			AAText x + 350, 90, (m\dwAvailPhys%/1024/1024)+" MB/"+(m\dwTotalPhys%/1024/1024)+" MB ("+(m\dwAvailPhys%/1024)+" KB/"+(m\dwTotalPhys%/1024)+" KB)"
-			AAText x + 350, 110, "Triangles rendered: "+CurrTrisAmount
-			AAText x + 350, 130, "Active textures: "+ActiveTextures()
-			AAText x + 350, 150, "SCP-427 state (secs): "+Int(I_427\Timer/70.0)
-			AAText x + 350, 170, "SCP-008 infection: "+I_008\Timer
-			AAText x + 350, 190, "SCP-409 crystalization: "+I_409\Timer
-			AAText x + 350, 210, "SCP-215 state: "+I_215\Timer
-			AAText x + 350, 230, "SCP-215 idle state: "+I_215\IdleTimer
-			AAText x + 350, 250, "HP of SCP-1033-RU: "+I_1033RU\HP
-			AAText x + 350, 270, "Lost HP of SCP-1033-RU: "+I_1033RU\DHP
-			AAText x + 350, 290, "SCP-207 state: "+I_207\Timer
-			AAText x + 350, 310, "SCP-402 state: "+I_402\Timer
-			AAText x + 350, 330, "SCP-357 state: "+I_357\Timer
+			AAText x + 350, 90, (m\dwAvailPhys%/1024/1024)+" МБ/"+(m\dwTotalPhys%/1024/1024)+" МБ ("+(m\dwAvailPhys%/1024)+" КБ/"+(m\dwTotalPhys%/1024)+" КБ)"
+			AAText x + 350, 110, "Треугольников отображено: "+CurrTrisAmount ;Triangles rendered:
+			AAText x + 350, 130, "Активных текстур: "+ActiveTextures() ;Active textures:
+			AAText x + 350, 150, "Состояние SCP-427 (сек): "+Int(I_427\Timer/70.0) ;state (secs)
+			AAText x + 350, 170, "Инфекция SCP-008: "+Infect ;SCP-008 infection:
+			AAText x + 350, 190, "Кристализация SCP-409: "+I_409\Timer ;crystalization
+			AAText x + 350, 210, "Состояние SCP-215: "+I_215\Timer ;state
+			AAText x + 350, 230, "Состояние покояSCP-215: "+I_215\IdleTimer ;idle state
+			AAText x + 350, 250, "Здоровье SCP-1033-RU: "+I_1033RU\HP ;HP of
+			AAText x + 350, 270, "Потерянное здоровье SCP-1033-RU: "+I_1033RU\DHP ;Lost HP of
+			AAText x + 350, 290, "Состояние SCP-207: "+I_207\Timer ;state
+			AAText x + 350, 310, "Состояние SCP-402: "+I_402\Timer ;state
+			AAText x + 350, 330, "Состояние SCP-357: "+I_357\Timer ;state
 			For i = 0 To 5
-				AAText x + 350, 350+(20*i), "SCP-1025 State "+i+": "+SCP1025state[i]
+				AAText x + 350, 350+(20*i), "Состояние SCP-1025 "+i+": "+SCP1025state[i] ;State
 			Next
 			If SelectedMonitor <> Null Then
-				AAText x + 350, 490, "Current monitor: "+SelectedMonitor\ScrObj
+				AAText x + 350, 490, "Текущий монитор: "+SelectedMonitor\ScrObj ;Current monitor:
 			Else
-				AAText x + 350, 510, "Current monitor: NULL"
+				AAText x + 350, 310, "Текущий монитор: NULL" ;Current monitor: NULL
 			EndIf
 			
 			AASetFont fo\Font[0]
@@ -5657,12 +5658,12 @@ Function DrawGUI()
 					UseDoor(SelectedDoor,True)
 					SelectedDoor = Null
 					PlaySound_Strict ScannerSFX1
-					Msg = "You hold the key close to the keypad."
+					Msg = "Вы приложили ключ к клавиатуре." ;You hold the key close to the keypad.
 					MsgTimer = 70 * 5
 				Else
 					SelectedDoor = Null
 					PlaySound_Strict ScannerSFX2
-					Msg = "You hold the key close to the keypad but nothing happens."
+					Msg = "Вы приложили ключ к клавиатуре, но ничего не произошло." ;You hold the key close to the keypad but nothing happens.
 					MsgTimer = 70 * 5
 				EndIf
 			EndIf
@@ -5697,7 +5698,7 @@ Function DrawGUI()
 					MouseXSpeed() : MouseYSpeed() : MouseZSpeed() : mouse_x_speed_1#=0.0 : mouse_y_speed_1#=0.0
 				EndIf
 			Else
-				AAText GraphicWidth/2, y+70*scale, "ACCESS CODE: ",True,True	
+				AAText GraphicWidth/2, y+70*scale, "КОД ДОСТУПА: ",True,True ;ACCESS CODE:	
 				AASetFont fo\Font[3]
 				AAText GraphicWidth/2, y+124*scale, KeypadInput,True,True	
 			EndIf
@@ -5740,7 +5741,7 @@ Function DrawGUI()
 										MouseXSpeed() : MouseYSpeed() : MouseZSpeed() : mouse_x_speed_1#=0.0 : mouse_y_speed_1#=0.0
 									Else
 										PlaySound_Strict ScannerSFX2
-										KeypadMSG = "ACCESS DENIED"
+										KeypadMSG = "В ДОСТУПЕ ОТКАЗАНО" ;ACCESS DENIED
 										KeypadTimer = 210
 										KeypadInput = ""	
 									EndIf
@@ -5994,7 +5995,7 @@ Function DrawGUI()
 					ElseIf PrevOtherOpen\SecondInv[MouseSlot] <> SelectedItem
 						Select SelectedItem\itemtemplate\tempname
 							Default
-								Msg = "You cannot combine these two items."
+								Msg = "Вы не можете объединить эти предметы." ;You cannot combine these two items.
 								MsgTimer = 70 * 5
 						End Select					
 					EndIf
@@ -6117,7 +6118,7 @@ Function DrawGUI()
 							
 							If DoubleClick Then
 								If WearingHazmat > 0 And Instr(SelectedItem\itemtemplate\tempname,"hazmatsuit")=0 Then
-									Msg = "You cannot use any items while wearing a hazmat suit."
+									Msg = "Вы не можете использовать предметы во время ношения защитного костюма." ;You cannot use any items while wearing a hazmat suit.
 									MsgTimer = 70*5
 									SelectedItem = Null
 									Return
@@ -6167,11 +6168,11 @@ Function DrawGUI()
 				If MouseSlot = 66 Then
 					Select SelectedItem\itemtemplate\tempname
 						Case "vest","finevest","hazmatsuit","hazmatsuit2","hazmatsuit3"
-							Msg = "Double click on this item to take it off."
+							Msg = "Дважды щёлкните по этому предмету, чтобы снять его." ;Double click on this item to take it off.
 							MsgTimer = 70*5
 						Case "scp1499","super1499"
 							If I_1499\Using>0 Then
-								Msg = "Double click on this item to take it off."
+								Msg = "Дважды щёлкните по этому предмету, чтобы снять его." ;Double click on this item to take it off.
 								MsgTimer = 70*5
 							Else
 								DropItem(SelectedItem)
@@ -6184,7 +6185,7 @@ Function DrawGUI()
                                 If Inventory(i)<>Null Then
                                     If Inventory(i)\itemtemplate\name="SCP-215" Then
                                         If I_215\Timer >= 86.0
-                                            Msg = "You can't drop your glasses."
+                                            Msg = "Вы не можете выбросить очки." ;You can't drop your glasses.
 			                                MsgTimer = 70*6
 			                                I_215\Using = 1
 			                            Else
@@ -6198,7 +6199,7 @@ Function DrawGUI()
                             Next
                         Case "gasmask", "gasmask3", "supergasmask"
 							If WearingGasmask > 0 Then
-								Msg = "Double click on this item to take it off."
+								Msg = "Дважды щёлкните по этому предмету, чтобы снять его." ;Double click on this item to take it off.
 								MsgTimer = 70*5
 							Else
 								DropItem(SelectedItem)
@@ -6206,12 +6207,12 @@ Function DrawGUI()
 								InvOpen = False
 							EndIf
 						Case "scp198"
-						    Msg = "You can't get rid of SCP-198."
+						    Msg = "Вы не можете избавиться от SCP-198." ;You can't get rid of SCP-198.
 						    MsgTimer = 70*5
 					    Case "scp402"
 						    If I_402\Timer >= 40.0 Then
 						        I_402\Using = 1
-								Msg = "You can't pull out the stone from your throat."
+								Msg = "Вы не можете вытащить камень из горла." ;You can't pull out the stone from your throat.
 								MsgTimer = 70*5
 							Else
 								DropItem(SelectedItem)
@@ -6220,7 +6221,7 @@ Function DrawGUI()
 							EndIf
 						Case "scp357"
 						    If I_357\Timer >= 56.0 Then
-							    Msg = "You can't get rid of SCP-357."
+							    Msg = "Вы не можете избавиться от SCP-357." ;You can't get rid of SCP-357.
 								MsgTimer = 70*5
 							Else
 								DropItem(SelectedItem)
@@ -6251,7 +6252,7 @@ Function DrawGUI()
 									Local added.Items = Null
 									Local b$ = SelectedItem\itemtemplate\tempname
 									Local b2$ = SelectedItem\itemtemplate\name
-									If (b<>"misc" And b<>"25ct" And b<>"coin" And b<>"key" And b<>"scp860" And b<>"scp005" And b<>"scp500pill" And b<>"pill" And b<>"mintscp500pill") Or (b2="Playing Card" Or b2="Mastercard") Then
+									If (b<>"misc" And b<>"25ct" And b<>"coin" And b<>"key" And b<>"scp860" And b<>"scp005" And b<>"scp500pill" And b<>"pill" And b<>"mintscp500pill") Or (b2="Playing Card" Or b2="Mastercard") Then ;..!
 										For c% = 0 To Inventory(MouseSlot)\invSlots-1
 											If (Inventory(MouseSlot)\SecondInv[c] = Null)
 												If SelectedItem <> Null Then
@@ -6272,20 +6273,20 @@ Function DrawGUI()
 											EndIf
 										Next
 										If SelectedItem <> Null Then
-											Msg = "The paperclip is not strong enough to hold any more items."
-										Else
+											Msg = "Планшет не удержит большее количество предметов." ;The paperclip is not strong enough to hold any more items.
+										Else ;..!
 											If added\itemtemplate\tempname = "paper" Or added\itemtemplate\tempname = "oldpaper" Then
-												Msg = "This document was added to the clipboard."
-											ElseIf added\itemtemplate\tempname = "badge"
-												Msg = added\itemtemplate\name + " was added to the clipboard."
+												Msg = "Документ добавлен в планшет." ;This document was added to the clipboard.
+											ElseIf b="key1" Or b="key2" Or b="key3" Or b="key4" Or b="key5" Or b="key6" Or b2="Playing card" Or b2="Mastercard" Or b="coin" ;..!
+												Msg = added\itemtemplate\name + " добавлена в планшет."
 											Else
-												Msg = "The " + added\itemtemplate\name + " was added to the clipboard."
+												Msg =  added\itemtemplate\name + " добавлен в планшет." ;"The " + added\itemtemplate\name + " was added to the clipboard.
 											EndIf
 											
 										EndIf
 										MsgTimer = 70 * 5
 									Else
-										Msg = "You cannot combine these two items."
+										Msg = "Вы не можете объединить эти предметы." ;You cannot combine these two items.
 										MsgTimer = 70 * 5
 									EndIf
 								ElseIf Inventory(MouseSlot)\itemtemplate\tempname = "wallet" Then
@@ -6318,23 +6319,22 @@ Function DrawGUI()
 										If SelectedItem <> Null Then
 											Msg = "The wallet is full."
 										Else
-											Msg = "You put "+added\itemtemplate\name+" into the wallet."
+											Msg = "Вы положили "+added\itemtemplate\name+" в кошелёк." ;You put ;into the wallet.
 										EndIf
 										
 										MsgTimer = 70 * 5
 									Else
-										Msg = "You cannot combine these two items."
+										Msg = "Вы не можете объеденить эти предметы." ;You cannot combine these two items.
 										MsgTimer = 70 * 5
 									EndIf
 								Else
-									Msg = "You cannot combine these two items."
-									MsgTimer = 70 * 5
+									Msg = "Вы не можете объеденить эти предметы." ;You cannot combine these two items.
 								EndIf
 								SelectedItem = Null
 								
 								;[End Block]							            
 
-							Case "battery", "bat"
+							Case "battery", "bat" ;..!
 								;[Block]
 								Select Inventory(MouseSlot)\itemtemplate\name
 									Case "S-NAV Navigator", "S-NAV 300 Navigator", "S-NAV 310 Navigator"
@@ -6342,25 +6342,25 @@ Function DrawGUI()
 										RemoveItem (SelectedItem)
 										SelectedItem = Null
 										Inventory(MouseSlot)\state = 100.0
-										Msg = "You replaced the navigator's battery."
+										Msg = "Вы заменили батарейку в навигаторе." ;You replaced the navigator's battery.
 										MsgTimer = 70 * 5
 									Case "S-NAV Navigator Ultimate"
-										Msg = "There seems to be no place for batteries in this navigator."
+										Msg = "Похоже, в этом навигаторе нет отсека для батареек." ;There seems to be no place for batteries in this navigator.
 										MsgTimer = 70 * 5
 									Case "Radio Transceiver"
 										Select Inventory(MouseSlot)\itemtemplate\tempname 
 											Case "fineradio", "veryfineradio"
-												Msg = "There seems to be no place for batteries in this radio."
+												Msg = "Похоже, в этой рации нет отсека для батареек." ;There seems to be no place for batteries in this radio.
 												MsgTimer = 70 * 5
 											Case "18vradio"
-												Msg = "The battery does not fit inside this radio."
+												Msg = "Батарейка не подходит к этой рации." ;The battery does not fit inside this radio.
 												MsgTimer = 70 * 5
 											Case "radio"
 												If SelectedItem\itemtemplate\sound <> 66 Then PlaySound_Strict(PickSFX(SelectedItem\itemtemplate\sound))	
 												RemoveItem (SelectedItem)
 												SelectedItem = Null
 												Inventory(MouseSlot)\state = 100.0
-												Msg = "You replaced the radio's battery."
+												Msg = "Вы заменили батарейку в рации." ;You replaced the radio's battery.
 												MsgTimer = 70 * 5
 										End Select
 									Case "Night Vision Goggles"
@@ -6370,14 +6370,14 @@ Function DrawGUI()
 											RemoveItem (SelectedItem)
 											SelectedItem = Null
 											Inventory(MouseSlot)\state = 1000.0
-											Msg = "You replaced the goggles' battery."
+											Msg = "Вы заменили батарейку в очках." ;You replaced the goggles' battery.
 											MsgTimer = 70 * 5
 										Else
-											Msg = "There seems to be no place for batteries in these night vision goggles."
+											Msg = "Похоже, в этих очках ночного видения нет отсека для батареек." ;There seems to be no place for batteries in these night vision goggles.
 											MsgTimer = 70 * 5
 										EndIf
 									Default
-										Msg = "You cannot combine these two items."
+										Msg = "Вы не можете объеденить эти предметы." ;You cannot combine these two items.
 										MsgTimer = 70 * 5	
 								End Select
 								;[End Block]
@@ -6385,32 +6385,32 @@ Function DrawGUI()
 								;[Block]
 								Select Inventory(MouseSlot)\itemtemplate\name
 									Case "S-NAV Navigator", "S-NAV 300 Navigator", "S-NAV 310 Navigator"
-										Msg = "The battery does not fit inside this navigator."
+										Msg = "Батарейка не подходит к этому навигатору." ;The battery does not fit inside this navigator.
 										MsgTimer = 70 * 5
 									Case "S-NAV Navigator Ultimate"
-										Msg = "There seems to be no place for batteries in this navigator."
+										Msg = "Похоже, в этом навигаторе нет отсека для батареек." ;The battery does not fit inside this navigator.
 										MsgTimer = 70 * 5
 									Case "Radio Transceiver"
 										Select Inventory(MouseSlot)\itemtemplate\tempname 
 											Case "fineradio", "veryfineradio"
-												Msg = "There seems to be no place for batteries in this radio."
+												Msg = "Похоже, в этой рации нет отсека для батареек." ;There seems to be no place for batteries in this radio.
 												MsgTimer = 70 * 5		
 											Case "18vradio"
 												If SelectedItem\itemtemplate\sound <> 66 Then PlaySound_Strict(PickSFX(SelectedItem\itemtemplate\sound))	
 												RemoveItem (SelectedItem)
 												SelectedItem = Null
 												Inventory(MouseSlot)\state = 100.0
-												Msg = "You replaced the radio's battery."
+												Msg = "Вы заменили батарейку в рации." ;You replaced the radio's battery.
 												MsgTimer = 70 * 5
 										End Select 
 									Default
-										Msg = "You cannot combine these two items."
+										Msg = "Вы не можете объеденить эти предметы." ;You cannot combine these two items.
 										MsgTimer = 70 * 5	
 								End Select
 								;[End Block]
 							Default
 								;[Block]
-								Msg = "You cannot combine these two items."
+								Msg = "Вы не можете объеденить эти предметы." ;You cannot combine these two items.
 								MsgTimer = 70 * 5
 								;[End Block]
 						End Select					
@@ -6436,7 +6436,7 @@ Function DrawGUI()
 					For i=0 To MaxItemAmount-1
                         If Inventory(i)<>Null Then
                             If Inventory(i)\itemtemplate\name="SCP-215" And I_215\Timer>=86.0 Then
-                                Msg = "You can't wear the goggles because of the glasses."
+                                Msg = "На вас уже надеты другие очки." ;You can't wear the goggles because of the glasses.
 						        MsgTimer = 70 * 5
 						        SelectedItem = Null
 						        Return
@@ -6446,21 +6446,21 @@ Function DrawGUI()
                     Next
 
 					If WearingHazmat>0
-						Msg = "You need to take off the Hazmat Suit in order to put on the goggles."
+						Msg = "Нужно снять защитный костюм, чтобы надеть очки." ;You need to take off the hazmat suit in order to put on the goggles.
 						MsgTimer = 70 * 5
 						SelectedItem = Null
 						Return
 					EndIf
 					
 					If I_1499\Using>0
-						Msg = "You need to take off SCP-1499 in order to put on the goggles."
+						Msg = "Нужно снять SCP-1499, чтобы надеть очки." ;You need to take off SCP-1499 in order to put on the goggles.
 						MsgTimer = 70 * 5
 						SelectedItem = Null
 						Return
 					EndIf
 					
 					If WearingGasMask>0
-						Msg = "You need to take off a Gas Mask in order to put on the goggles."
+						Msg = "Нужно снять противогаз, чтобы надеть очки." ;You need to take off a Gas Mask in order to put on the goggles."
 						MsgTimer = 70 * 5
 						SelectedItem = Null
 						Return
@@ -6468,11 +6468,11 @@ Function DrawGUI()
 
 					If I_1499\Using = 0 And WearingHazmat=0 Then
 						If WearingNightVision = 1 Then
-							Msg = "You removed the goggles."
+							Msg = "Вы сняли очки." ;You removed the goggles.
 							CameraFogFar = StoredCameraFogFar
 							PlaySound_Strict(NVGUse(0))
 						Else
-							Msg = "You put on the goggles."
+							Msg = "Вы надели очки." ;You put on the goggles.
 							If I_215\Timer < 86.0
 							    I_215\Using = 0
 						    EndIf
@@ -6493,7 +6493,7 @@ Function DrawGUI()
 					For i=0 To MaxItemAmount-1
                         If Inventory(i)<>Null Then
                             If Inventory(i)\itemtemplate\name="SCP-215" And I_215\Timer>=86.0 Then
-                                Msg = "You can't wear the goggles because of the glasses."
+                                Msg = "На вас уже надеты другие очки." ;You can't wear the goggles because of the glasses.
 						        MsgTimer = 70 * 5
 						        SelectedItem=Null
 						        Return
@@ -6503,21 +6503,21 @@ Function DrawGUI()
                     Next
 
 					If WearingHazmat>0
-						Msg = "You need to take off the Hazmat Suit in order to put on the goggles."
+						Msg = "Нужно снять защитный костюм, чтобы надеть очки." ;You need to take off the hazmat suit in order to put on the goggles.
 						MsgTimer = 70 * 5
 						SelectedItem=Null
 						Return
 					EndIf
 					
 					If I_1499\Using>0
-						Msg = "You need to take off SCP-1499 in order to put on the goggles."
+						Msg = "Нужно снять SCP-1499, чтобы надеть очки." ;You need to take off SCP-1499 in order to put on the goggles.
 						MsgTimer = 70 * 5
 						SelectedItem=Null
 						Return
 					EndIf
 					
 					If WearingGasMask>0
-						Msg = "You need to take off a Gas Mask in order to put on the goggles."
+						Msg = "Нужно снять противогаз, чтобы надеть очки." ;You need to take off a Gas Mask in order to put on the goggles."
 						MsgTimer = 70 * 5
 						SelectedItem=Null
 						Return
@@ -6525,11 +6525,11 @@ Function DrawGUI()
 
 					If I_1499\Using = 0 And WearingHazmat=0 Then
 						If WearingNightVision = 2 Then
-							Msg = "You removed the goggles."
+							Msg = "Вы сняли очки." ;You removed the goggles.
 							CameraFogFar = StoredCameraFogFar
 							PlaySound_Strict(NVGUse(0))
 						Else
-							Msg = "You put on the goggles."
+							Msg = "Вы надели очки." ;You put on the goggles.
 							If I_215\Timer < 86.0
 							    I_215\Using = 0
 						    EndIf
@@ -6550,7 +6550,7 @@ Function DrawGUI()
 					For i=0 To MaxItemAmount-1
                         If Inventory(i)<>Null Then
                             If Inventory(i)\itemtemplate\name="SCP-215" And I_215\Timer>=86.0 Then
-                                Msg = "You can't wear the goggles because of the glasses."
+                                Msg = "На вас уже надеты другие очки." ;You can't wear the goggles because of the glasses.
 						        MsgTimer = 70 * 5
 						        SelectedItem=Null
 						        Return
@@ -6560,21 +6560,21 @@ Function DrawGUI()
                     Next
 
 					If WearingHazmat>0
-						Msg = "You need to take off the Hazmat Suit in order to put on the goggles."
+						Msg = "Нужно снять защитный костюм, чтобы надеть очки." ;You need to take off the hazmat suit in order to put on the goggles.
 						MsgTimer = 70 * 5
 						SelectedItem=Null
 						Return
 					EndIf
 					
 					If I_1499\Using>0
-						Msg = "You need to take off SCP-1499 in order to put on the goggles."
+						Msg = "Нужно снять SCP-1499, чтобы надеть очки." ;You need to take off SCP-1499 in order to put on the goggles.
 						MsgTimer = 70 * 5
 						SelectedItem=Null
 						Return
 					EndIf
 					
 					If WearingGasMask>0
-						Msg = "You need to take off a Gas Mask in order to put on the goggles."
+						Msg = "Нужно снять противогаз, чтобы надеть очки." ;You need to take off a Gas Mask in order to put on the goggles."
 						MsgTimer = 70 * 5
 						SelectedItem=Null
 						Return
@@ -6582,11 +6582,11 @@ Function DrawGUI()
 
 					If I_1499\Using = 0 And WearingHazmat = 0 Then
 						If WearingNightVision = 3 Then
-							Msg = "You removed the goggles."
+							Msg = "Вы сняли очки." ;You removed the goggles.
 							CameraFogFar = StoredCameraFogFar
 							PlaySound_Strict(NVGUse(0))
 						Else
-							Msg = "You put on the goggles."
+							Msg = "Вы надели очки." ;You put on the goggles.
 							If I_215\Timer < 86.0
 							    I_215\Using = 0
 						    EndIf
@@ -6610,11 +6610,10 @@ Function DrawGUI()
 							LightFlash = 7
 							PlaySound_Strict(LoadTempSound("SFX\SCP\1123\Touch.ogg"))
 							If I_1033RU\HP = 0		
-							    DeathMSG = SubjectName$+" was shot dead After attempting To attack a member of Nine-Tailed Fox. Surveillance tapes show that the subject had been "
-							    DeathMSG = DeathMSG + "wandering around the site approximately 9 minutes prior, shouting the phrase " + Chr(34) + "get rid of the four pests" + Chr(34)
-							    DeathMSG = DeathMSG + " in chinese. SCP-1123 was found in [REDACTED] nearby, suggesting the subject had come into physical contact with it. How "
-							    DeathMSG = DeathMSG + "exactly SCP-1123 was removed from its containment chamber is still unknown."
-							    Kill()
+							    DeathMSG = SubjectName$+" был застрелен после попытки напасть на члена Девятихвостой Лисы. Записи с камер наблюдения показывают, " ;Subject D-9341 was shot dead after attempting to attack a member of Nine-Tailed Fox. Surveillance tapes show that the subject had been 
+								DeathMSG = DeathMSG + "что примерно за 9 минут до этого субъект блуждал по Зоне, выкрикивая фразу " + Chr(34) + "Избавиться от четырёх вредителей!" + Chr(34) ;wandering around the site approximately 9 minutes prior, shouting the phrase " + Chr(34) + "get rid of the four pests
+								DeathMSG = DeathMSG + " на китайском языке. Неподалёку в [УДАЛЕНО] был обнаружен SCP-1123; это даёт основания предположить, что субъект вступил с ним в физический контакт. Как " ; in chinese. SCP-1123 was found in [REDACTED] nearby, suggesting the subject had come into physical contact with it. How 
+								DeathMSG = DeathMSG + "именно SCP-1123 был изъят из своей камеры содержания, до сих пор неизвестно." ;exactly SCP-1123 was removed from its containment chamber is still unknown.
 							Else
 							    Damage1033RU(50+(5*SelectedDifficulty\aggressiveNPCs))
 							EndIf
@@ -6656,13 +6655,13 @@ Function DrawGUI()
 						GiveAchievement(Achv500)
 						
 						If I_008\Timer > 0 Then
-							Msg = "You swallowed the pill. Your nausea is fading."
+							Msg = "Вы проглотили таблетку. Тошнота проходит." ;You swallowed the pill. Your nausea is fading.
 						ElseIf I_409\Timer > 0 Then
-						    Msg = "You swallowed the pill. Your body is getting warmer and the crystals are receding."
+						    Msg = "Вы проглотили таблетку. Температура вашего тела растёт, а кристаллы тают." ;You swallowed the pill. Your body is getting warmer and the crystals are receding.
 						ElseIf I_357\Timer > 0 Then
-						    Msg = "You swallowed the pill. Your body is getting warmer and the clay is receding."
+						    Msg = "Вы проглотили таблетку. Температура вашего тела растёт, а глина тает." ;You swallowed the pill. Your body is getting warmer and the clay is receding.
 						Else
-							Msg = "You swallowed the pill."
+							Msg = "Вы проглотили таблетку." ;You swallowed the pill.
 						EndIf
 						MsgTimer = 70*7
 						
@@ -6700,30 +6699,30 @@ Function DrawGUI()
 						Select Rand(5)
 							Case 1
 								Injuries = 3.5
-								Msg = "You started bleeding heavily."
+								Msg = "У вас началось сильное кровотечение." ;You started bleeding heavily.
 								MsgTimer = 70*7
 							Case 2
 								Injuries = 0
 								Bloodloss = 0
 								I_1079\Foam = 0
-								Msg = "Your wounds are healing up rapidly."
+								Msg = "Выши раны быстро заживают." ;Your wounds are healing up rapidly.
 								MsgTimer = 70*7
 							Case 3
 								Injuries = Max(0, Injuries - Rnd(0.5,3.5))
 								Bloodloss = Max(0, Bloodloss - Rnd(10,100))
-								Msg = "You feel much better."
+								Msg = "Вы чувствуете себя намного лучше." ;You feel much better.
 								MsgTimer = 70*7
 							Case 4
 								BlurTimer = 10000
 								Bloodloss = 0
-								Msg = "You feel nauseated."
+								Msg = "Вас тошнит." ;You feel nauseated.
 								MsgTimer = 70*7
 							Case 5
 								BlinkTimer = -10
 								Local roomname$ = PlayerRoom\RoomTemplate\Name
 								If roomname = "dimension1499" Or roomname = "gatea" Or (roomname="exit1" And EntityY(Collider)>1040.0*RoomScale)
 									Injuries = 2.5
-									Msg = "You started bleeding heavily."
+									Msg = "У вас началось сильное кровотечение." ;You started bleeding heavily.
 									MsgTimer = 70*7
 								Else
 									For r.Rooms = Each Rooms
@@ -6738,7 +6737,7 @@ Function DrawGUI()
 											Exit
 										EndIf
 									Next
-									Msg = "For some inexplicable reason. You find yourself inside the pocket dimension."
+									Msg = "По неизвестным причинам Вы оказались внутри карманного измерения." ;For some inexplicable reason. You find yourself inside the pocket dimension.
 									MsgTimer = 70*8
 								EndIf
 						End Select
@@ -6749,7 +6748,7 @@ Function DrawGUI()
 				Case "firstaid", "finefirstaid", "firstaid2"
 					;[Block]
 					If Bloodloss = 0 And Injuries = 0 Then
-						Msg = "You do not need to use a first aid right now."
+						Msg = "Сейчас вам не нужна аптечка." ;You do not need to use a first aid right now.
 						MsgTimer = 70*5
 						SelectedItem = Null
 					Else
@@ -6776,33 +6775,33 @@ Function DrawGUI()
 									I_1079\Foam = 0
 									Injuries = Max(0, Injuries - 2.0)
 									If Injuries = 0 Then
-										Msg = "You bandaged the wounds and took a painkiller. You feel fine."
+										Msg = "Вы перевязали раны и приняли обезболивающее. Вы чувствуете себя лучше." ;You bandaged the wounds and took a painkiller. You feel fine.
 									ElseIf Injuries > 1.0
-										Msg = "You bandaged the wounds and took a painkiller, but you were not able to stop the bleeding."
+										Msg = "Вы перевязали раны и приняли обезболивающее, но не смогли остановить кровотечение." ;You bandaged the wounds and took a painkiller, but you were not able to stop the bleeding.
 									Else
-										Msg = "You bandaged the wounds and took a painkiller, but you still feel sore."
+										Msg = "Вы перевязали раны и приняли обезболивающее, но всё ещё чувствуете боль." ;You bandaged the wounds and took a painkiller, but you still feel sore.
 									EndIf
 									MsgTimer = 70*5
 									RemoveItem(SelectedItem)
 								Else
 									Bloodloss = Max(0, Bloodloss - Rand(10,20))
 									If Injuries => 2.5 Then
-										Msg = "The wounds were way too severe to staunch the bleeding completely."
+										Msg = "Раны были слишком серьезными, чтобы остановить кровотечение." ;The wounds were way too severe to staunch the bleeding completely.
 										Injuries = Max(2.5, Injuries-Rnd(0.3,0.7))
 									ElseIf Injuries > 1.0
 										Injuries = Max(0.5, Injuries-Rnd(0.5,1.0))
 										If Injuries > 1.0 Then
-											Msg = "You bandaged the wounds but were unable to staunch the bleeding completely."
+											Msg = "Вы перевязали раны, но не смогли полностью остановить кровотечение." ;You bandaged the wounds but were unable to staunch the bleeding completely.
 										Else
-											Msg = "You managed to stop the bleeding."
+											Msg = "Вам удалось остановить кровотечение." ;You managed to stop the bleeding.
 										EndIf
 									Else
 										If Injuries > 0.5 Then
 											Injuries = 0.5
-											Msg = "You took a painkiller, easing the pain slightly."
+											Msg = "Вы приняли обезболивающее, и боль немного отступила." ;You took a painkiller, easing the pain slightly."
 										Else
 											Injuries = 0.5
-											Msg = "You took a painkiller, but it still hurts to walk."
+											Msg = "Вы приняли обезболивающее, но вам всё ещё больно ходить." ;You took a painkiller, but it still hurts to walk.
 										EndIf
 									EndIf
 									
@@ -6810,22 +6809,22 @@ Function DrawGUI()
 										Select Rand(6)
 											Case 1
 												SuperMan = True
-												Msg = "You have becomed overwhelmedwithadrenalineholyshitWOOOOOO~!"
+												Msg = "Вы переполнены адреналиномтвоюматьОДААААА~!" ;You have becomed overwhelmedwithadrenalineholyshitWOOOOOO~!
 											Case 2
 												InvertMouse = (Not InvertMouse)
-												Msg = "You suddenly find it very difficult to turn your head."
+												Msg = "Неожиданно вам становится трудно поворачивать голову." ;You suddenly find it very difficult to turn your head.
 											Case 3
 												BlurTimer = 5000
-												Msg = "You feel nauseated."
+												Msg = "Вы чувствуете тошноту." ;You feel nauseated.
 											Case 4
 												BlinkEffect = 0.6
 												BlinkEffectTimer = Rand(20,30)
 											Case 5
 												Bloodloss = 0
 												Injuries = 0
-												Msg = "You bandaged the wounds. The bleeding stopped completely and you feel fine."
+												Msg = "Вы перевязали раны. Кровотечение полностью прекратилось, и Вы чувствуете себя хорошо." ;You bandaged the wounds. The bleeding stopped completely and you feel fine.
 											Case 6
-												Msg = "You bandaged the wounds and blood started pouring heavily through the bandages."
+												Msg = "Вы перевязали раны, но кровь сильно полилась сквозь повязки." ;You bandaged the wounds and blood started pouring heavily through the bandages.
 												Injuries = 3.5
 										End Select
 									EndIf
@@ -6878,7 +6877,7 @@ Function DrawGUI()
 						EndIf
 					EndIf
 					;[End Block]
-				Case "paper", "ticket"
+				Case "paper", "ticket" ;..!
 					;[Block]
 					If SelectedItem\itemtemplate\img = 0 Then
 						Select SelectedItem\itemtemplate\name
@@ -6906,7 +6905,7 @@ Function DrawGUI()
 								SelectedItem\itemtemplate\img=LoadImage_Strict(SelectedItem\itemtemplate\imgpath)	
 								
 								If (SelectedItem\state = 0) Then
-									Msg = Chr(34)+"Hey, I remember this movie!"+Chr(34)
+									Msg = Chr(34)+"Эй, я помню этот фильм!"+Chr(34) ;Hey, I remember this movie!
 									MsgTimer = 70*10
 									PlaySound_Strict LoadTempSound("SFX\SCP\1162\NostalgiaCancer"+Rand(1,5)+".ogg")
 									SelectedItem\state = 1
@@ -6940,11 +6939,11 @@ Function DrawGUI()
 					;[Block]
 					If (Not (I_402\Using = 1)) Then
 					    If CanUseItem(False,False,True)
-						    SelectedItem\name = Trim(Lower(SelectedItem\name))
-						    If Left(SelectedItem\name, Min(6,Len(SelectedItem\name))) = "cup of" Then
-							    SelectedItem\name = Right(SelectedItem\name, Len(SelectedItem\name)-7)
-						    ElseIf Left(SelectedItem\name, Min(8,Len(SelectedItem\name))) = "a cup of" 
-							    SelectedItem\name = Right(SelectedItem\name, Len(SelectedItem\name)-9)
+						    SelectedItem\name = Trim2(Lower2(SelectedItem\name))
+						If Lower2(Left(SelectedItem\name, Min(6,Len(SelectedItem\name)))) = "внутри" Then
+							SelectedItem\name = Right(SelectedItem\name, Len(SelectedItem\name)-7)
+						;ElseIf Left(SelectedItem\name, Min(8,Len(SelectedItem\name))) = "a cup of" 
+						;	SelectedItem\name = Right(SelectedItem\name, Len(SelectedItem\name)-9)
 						    EndIf
 						
 						    ;the state of refined items is more than 1.0 (fine setting increases it by 1, very fine doubles it)
@@ -6994,7 +6993,7 @@ Function DrawGUI()
 							    Msg = strtemp 
 							    MsgTimer = 70*6		
 						    Else
-							    it.Items = CreateItem("Empty Cup", "emptycup", 0,0,0)
+							    it.Items = CreateItem("Empty Cup", "emptycup", 0,0,0) ;..!
 							    it\Picked = True
 							    For i = 0 To MaxItemAmount-1
 								    If Inventory(i)=SelectedItem Then Inventory(i) = it : Exit
@@ -7015,7 +7014,7 @@ Function DrawGUI()
 						    StaminaEffect = 0.5
 						    StaminaEffectTimer = 20
 						
-						    Msg = "You injected yourself with the syringe and feel a slight adrenaline rush."
+						    Msg = "Вы сделали себе укол и почувствовали лёгкий прилив адреналина." ;You injected yourself with the syringe and feel a slight adrenaline rush.
 						    MsgTimer = 70 * 8
 						
 						    RemoveItem(SelectedItem)
@@ -7030,7 +7029,7 @@ Function DrawGUI()
 						    StaminaEffect = Rnd(0.5, 0.8)
 						    StaminaEffectTimer = Rnd(20, 30)
 						
-						    Msg = "You injected yourself with the syringe and feel an adrenaline rush."
+						    Msg = "Вы сделали себе укол и почувствовали лёгкий прилив адреналина." ;You injected yourself with the syringe and feel a slight adrenaline rush.
 						    MsgTimer = 70 * 8
 						
 						    RemoveItem(SelectedItem)
@@ -7046,13 +7045,13 @@ Function DrawGUI()
 								    HealTimer = Rnd(40, 60)
 								    StaminaEffect = 0.1
 								    StaminaEffectTimer = 30
-								    Msg = "You injected yourself with the syringe and feel a huge adrenaline rush."
+								    Msg = "Вы сделали себе укол и почувствовали сильный прилив адреналина." ;You injected yourself with the syringe and feel a huge adrenaline rush.
 							    Case 2
 								    SuperMan = True
-								    Msg = "You injected yourself with the syringe and feel a humongous adrenaline rush."
+								    Msg = "Вы сделали себе укол и почувствовали чрезмерный прилив адреналина." ;You injected yourself with the syringe and feel a humongous adrenaline rush.
 							    Case 3
 								    VomitTimer = 30
-								    Msg = "You injected yourself with the syringe and feel a pain in your stomach."
+								    Msg = "Вы сделали себе укол и почувствовали боль в животе." ;You injected yourself with the syringe and feel a pain in your stomach.
 						    End Select
 						
 						    MsgTimer = 70 * 8
@@ -7074,7 +7073,7 @@ Function DrawGUI()
 					;RadioState(7) = another timer for the "code channel"
 					
 					If RadioState(5) = 0 Then 
-						Msg = "Use the numbered keys 1 through 5 to cycle between various channels."
+						Msg = "Используйте цифровые клавиши от 1 до 5 для переключения между каналами." ;Use the numbered keys 1 through 5 to cycle between various channels.
 						MsgTimer = 70 * 5
 						RadioState(5) = 1
 						RadioState(0) = -1
@@ -7095,13 +7094,13 @@ Function DrawGUI()
 							Select Int(SelectedItem\state2)
 								Case 0 ;randomkanava
 									ResumeChannel(RadioCHN(0))
-									strtemp = "        USER TRACK PLAYER - "
+									strtemp = "        ПРОИГРЫВАТЕЛЬ ПОЛЬЗОВАТЕЛЬСКИХ ТРЕКОВ - " ;USER TRACK PLAYER
 									If (Not EnableUserTracks)
 										If ChannelPlaying(RadioCHN(0)) = False Then RadioCHN(0) = PlaySound_Strict(RadioStatic)
-										strtemp = strtemp + "NOT ENABLED     "
+										strtemp = strtemp + "НЕ ВКЛЮЧЕНО     " ;NOT ENABLED
 									ElseIf UserTrackMusicAmount<1
 										If ChannelPlaying(RadioCHN(0)) = False Then RadioCHN(0) = PlaySound_Strict(RadioStatic)
-										strtemp = strtemp + "NO TRACKS FOUND     "
+										strtemp = strtemp + "ТРЕКИ НЕ НАЙДЕНЫ     " ;NO TRACKS FOUND
 									Else
 										If (Not ChannelPlaying(RadioCHN(0)))
 											If (Not UserTrackFlag%)
@@ -7151,7 +7150,7 @@ Function DrawGUI()
 									DebugLog RadioState(1) 
 									
 									ResumeChannel(RadioCHN(1))
-									strtemp = "        WARNING - CONTAINMENT BREACH          "
+									strtemp = "        ВНИМАНИЕ - НАРУШЕНИЕ УСЛОВИЙ СОДЕРЖАНИЯ          " ;WARNING - CONTAINMENT BREACH
 									If ChannelPlaying(RadioCHN(1)) = False Then
 										
 										If RadioState(1) => 5 Then
@@ -7166,7 +7165,7 @@ Function DrawGUI()
 									
 								Case 2 ;scp-radio
 									ResumeChannel(RadioCHN(2))
-									strtemp = "        SCP Foundation On-Site Radio          "
+									strtemp = "        Внутренняя радиостанция Фонда SCP          " ;SCP Foundation On-Site Radio
 									If ChannelPlaying(RadioCHN(2)) = False Then
 										RadioState(2)=RadioState(2)+1
 										If RadioState(2) = 17 Then RadioState(2) = 1
@@ -7178,7 +7177,7 @@ Function DrawGUI()
 									EndIf 
 								Case 3
 									ResumeChannel(RadioCHN(3))
-									strtemp = "             EMERGENCY CHANNEL - RESERVED FOR COMMUNICATION IN THE EVENT OF A CONTAINMENT BREACH         "
+									strtemp = "             АВАРИЙНЫЙ КАНАЛ - ЗАРЕЗЕРВИРОВАН НА СЛУЧАЙ НАРУШЕНИЯ УСЛОВИЙ СОДЕРЖАНИЯ         " ;EMERGENCY CHANNEL - RESERVED FOR COMMUNICATION IN THE EVENT OF A CONTAINMENT BREACH
 									If ChannelPlaying(RadioCHN(3)) = False Then RadioCHN(3) = PlaySound_Strict(RadioStatic)
 									
 									If MTFtimer > 0 Then 
@@ -7391,23 +7390,22 @@ Function DrawGUI()
 						If SelectedItem\state = 0 Then
 							Select Rand(6)
 								Case 1
-									Msg = Chr(34)+"I don't have anything to light it with. Umm, what about that... Nevermind."+Chr(34)
+									Msg = Chr(34)+"У меня нет зажигалки. Хмм, а как насчёт... Нет, неважно."+Chr(34) ;I don't have anything to light it with. Umm, what about that... Nevermind.
 								Case 2
-									Msg = "You are unable to get lit."
+									Msg = "Вам нечем её прикурить." ;You are unable to get lit.
 								Case 3
-									Msg = Chr(34)+"I quit that a long time ago."+Chr(34)
+									Msg = Chr(34)+"Я бросил давным-давно."+Chr(34) ;I quit that a long time ago.
 									RemoveItem(SelectedItem)
 								Case 4
-									Msg = Chr(34)+"Even if I wanted one, I have nothing to light it with."+Chr(34)
+									Msg = Chr(34)+"Даже если бы я хотел покурить, у меня нет зажигалки."+Chr(34) ;Even if I wanted one, I have nothing to light it with.
 								Case 5
-									Msg = Chr(34)+"Could really go for one now... Wish I had a lighter."+Chr(34)
+									Msg = Chr(34)+"Я бы покурил... Жаль, что нет зажигалки."+Chr(34) ;Could really go for one now... Wish I had a lighter.
 								Case 6
-									Msg = Chr(34)+"Don't plan on starting, even at a time like this."+Chr(34)
-									RemoveItem(SelectedItem)
+									Msg = Chr(34)+"Я не буду начинать курить, даже в такое время."+Chr(34) ;Don't plan on starting, even at a time like this.
 							End Select
 							SelectedItem\state = 1 
 						Else
-							Msg = "You are unable to get lit."
+							Msg = "Вам нечем её прикурить."
 						EndIf
 						
 						MsgTimer = 70 * 5
@@ -7417,9 +7415,9 @@ Function DrawGUI()
 					;[Block]
 					If CanUseItem(False,False,True)
 						If Wearing714=1 Then
-							Msg = Chr(34) + "DUDE WTF THIS SHIT DOESN'T EVEN WORK" + Chr(34)
+							Msg = Chr(34) + "ЧУВАК, ЧЗХ, ЭТА ХРЕНЬ НЕ РАБОТАЕТ" + Chr(34) ;DUDE WTF THIS SHIT DOESN'T EVEN WORK
 						Else
-							Msg = Chr(34) + "MAN DATS SUM GOOD ASS SHIT" + Chr(34)
+							Msg = Chr(34) + "ЧУВАК, ДА ЭТО ОТЛИЧНАЯ ДУРЬ" + Chr(34) ;MAN DATS SUM GOOD ASS SHIT
 							Injuries = Max(Injuries-0.5, 0)
 							BlurTimer = 500
 							GiveAchievement(Achv420)
@@ -7433,12 +7431,12 @@ Function DrawGUI()
 					;[Block]
 					If CanUseItem(False,False,True)
 						If Wearing714=1 Then
-							Msg = Chr(34) + "DUDE WTF THIS SHIT DOESN'T EVEN WORK" + Chr(34)
+							Msg = Chr(34) + "ЧУВАК, ЧЗХ, ЭТА ХРЕНЬ НЕ РАБОТАЕТ" + Chr(34) ;DUDE WTF THIS SHIT DOESN'T EVEN WORK
 						Else
-							DeathMSG = SubjectName$+" found in a comatose state in [Data REDACTED]. The subject was holding what appears To be a cigarette While smiling widely. "
-							DeathMSG = DeathMSG+"Chemical analysis of the cigarette has been inconclusive, although it seems to contain a high concentration of an unidentified chemical "
-							DeathMSG = DeathMSG+"whose molecular structure is remarkably similar to that of tetrahydrocannabinol."
-							Msg = Chr(34) + "UH WHERE... WHAT WAS I DOING AGAIN... MAN I NEED TO TAKE A NAP..." + Chr(34)
+							DeathMSG = SubjectName$+" найден в коматозном состоянии в [ДАННЫЕ УДАЛЕНЫ]. Субъект держал в руке предмет, похожий на сигарету, и широко улыбался. " ;Subject D-9341 found in a comatose state in [DATA REDACTED]. The subject was holding what appears to be a cigarette while smiling widely. 
+							DeathMSG = DeathMSG+"Химический анализ сигареты не дал результатов, но похоже, что она содержит высокую концентрацию неизвестных химикатов, " ;Chemical analysis of the cigarette has been inconclusive, although it seems to contain a high concentration of an unidentified chemical 
+							DeathMSG = DeathMSG+"молекулярная структура которых похожа на тетрагидроканнабинол." ;whose molecular structure is remarkably similar to that of tetrahydrocannabinol.
+							Msg = Chr(34) + "Э-Э, ГДЕ... ЧТО ЭТО Я ДЕЛАЛ... МНЕ НУЖНО ПОСПАТЬ..." + Chr(34) ;UH WHERE... WHAT WAS I DOING AGAIN... MAN I NEED TO TAKE A NAP...
 							KillTimer = -1						
 						EndIf
 						MsgTimer = 70 * 6
@@ -7448,11 +7446,11 @@ Function DrawGUI()
 				Case "scp714"
 					;[Block]
 					If Wearing714=1 Then
-						Msg = "You removed the ring."
+						Msg = "Вы сняли кольцо." ;You removed the ring.
 						Wearing714 = False
 					Else
 						GiveAchievement(Achv714)
-						Msg = "You put on the ring."
+						Msg = "Вы надели кольцо." ;You put on the ring.
 						Wearing714 = True
 					EndIf
 					MsgTimer = 70 * 5
@@ -7478,7 +7476,7 @@ Function DrawGUI()
 						
 						If SelectedItem\state=100 Then
 							If WearingHazmat>0 Then
-								Msg = "You removed the hazmat suit."
+								Msg = "Вы сняли защитный костюм." ;You removed the hazmat suit.
 								WearingHazmat = False
 								DropItem(SelectedItem)
 							Else
@@ -7493,7 +7491,7 @@ Function DrawGUI()
 									WearingHazmat = 3
 								EndIf
 								If SelectedItem\itemtemplate\sound <> 66 Then PlaySound_Strict(PickSFX(SelectedItem\itemtemplate\sound))
-								Msg = "You put on the hazmat suit."
+								Msg = "Вы надели защитный костюм." ;You put on the hazmat suit.
 								If WearingNightVision Then CameraFogFar = StoredCameraFogFar
 								WearingGasMask = 0
 								WearingNightVision = 0
@@ -7527,15 +7525,15 @@ Function DrawGUI()
 					
 					If SelectedItem\state=100 Then
 						If WearingVest>0 Then
-							Msg = "You removed the vest."
+							Msg = "Вы сняли жилет." ;You removed the vest.
 							WearingVest = False
 							DropItem(SelectedItem)
 						Else
 							If SelectedItem\itemtemplate\tempname="vest" Then
-								Msg = "You put on the vest and feel slightly encumbered."
+								Msg = "Вы надели бронижилет, и передвигаться стало немного сложнее." ;You put on the vest and feel slightly encumbered.
 								WearingVest = 1
 							Else
-								Msg = "You put on the vest and feel heavily encumbered."
+								Msg = "Вы надели бронижилет, и передвигаться стало намного сложнее." ;You put on the vest and feel heavily encumbered.
 								WearingVest = 2
 							EndIf
 							If SelectedItem\itemtemplate\sound <> 66 Then PlaySound_Strict(PickSFX(SelectedItem\itemtemplate\sound))
@@ -7560,21 +7558,21 @@ Function DrawGUI()
                     Next
 
                     If WearingHazmat>0
-						Msg = "You need to take off the hazmat suit in order to put on a gas mask."
+						Msg = "Нужно снять защитный костюм, чтобы надеть противогаз." ;You need to take off the hazmat suit in order to put on a gas mask.
 						MsgTimer = 70 * 5
 						SelectedItem=Null
 						Return
 					EndIf
 					
 					If I_1499\Using>0
-						Msg = "You need to take off SCP-1499 in order to put on a gas mask."
+						Msg = "Нужно снять SCP-1499, чтобы надеть противогаз." ;You need to take off SCP-1499 in order to put on a gas mask.
 						MsgTimer = 70 * 5
 						SelectedItem=Null
 						Return
 					EndIf
 
 					If WearingNightVision>0
-						Msg = "You need to take off the goggles in order to put on a gas mask."
+						Msg = "Нужно снять очки, чтобы надеть противогаз." ;You need to take off the goggles in order to put on a gas mask.
 						MsgTimer = 70 * 5
 						SelectedItem=Null
 						Return
@@ -7598,17 +7596,17 @@ Function DrawGUI()
 					If SelectedItem\state = 100 Then
                         If WearingGasMask>0 Then
                             WearingGasMask = False
-                            Msg = "You removed the gas mask."
+                            Msg = "Вы сняли противогаз." ;You removed the gas mask.
                             If SelectedItem\itemtemplate\sound <> 66 Then PlaySound_Strict(PickSFX(SelectedItem\itemtemplate\sound))
                         Else
 						    If SelectedItem\itemtemplate\tempname = "supergasmask"
-							    Msg = "You put on the gas mask and you can breathe easier."
+							    Msg = "Вы надели противогаз, и вам стало легче дышать." ;You put on the gas mask and you can breathe easier.
 							    WearingGasMask = 2
 						    ElseIf SelectedItem\itemtemplate\tempname = "gasmask3"
-							    Msg = "You put on the gas mask."
+							    Msg = "Вы надели противогаз." ;You put on the gas mask.
 							    WearingGasMask = 3
 						    ElseIf SelectedItem\itemtemplate\tempname = "gasmask"
-							    Msg = "You put on the gas mask."
+							    Msg = "Вы надели противогаз." ;You put on the gas mask.
 							    WearingGasMask = 1
 						    EndIf
 					        If SelectedItem\itemtemplate\sound <> 66 Then PlaySound_Strict(PickSFX(SelectedItem\itemtemplate\sound))
@@ -7662,8 +7660,8 @@ Function DrawGUI()
 					If (Not NavWorks) Then
 						If (MilliSecs2() Mod 1000) > 300 Then
 							Color(200, 0, 0)
-							AAText(x, y + height / 2 - 80, "ERROR 06", True)
-							AAText(x, y + height / 2 - 60, "LOCATION UNKNOWN", True)						
+							AAText(x, y + height / 2 - 80, "ОШИБКА 06", True) ;ERROR 06
+							AAText(x, y + height / 2 - 60, "НЕИЗВЕСТНАЯ ЛОКАЦИЯ", True) ;LOCATION UNKNOWN
 						EndIf
 					Else
 						
@@ -7682,7 +7680,7 @@ Function DrawGUI()
 							For x2 = Max(0, PlayerX - 6) To Min(MapWidth, PlayerX + 6)
 								For z2 = Max(0, PlayerZ - 6) To Min(MapHeight, PlayerZ + 6)
 									
-									If CoffinDistance > 16.0 Or Rnd(16.0)<CoffinDistance Then 
+									If CoffinDistance > 16.0 Or Rnd(16.0)<CoffinDistance Then  ;..!
 										If MapTemp(x2, z2)>0 And (MapFound(x2, z2) > 0 Or SelectedItem\itemtemplate\name = "S-NAV 310 Navigator" Or SelectedItem\itemtemplate\name = "S-NAV Navigator Ultimate") Then
 											Local drawx% = x + (PlayerX - 1 - x2) * 24 , drawy% = y - (PlayerZ - 1 - z2) * 24
 											
@@ -7736,7 +7734,7 @@ Function DrawGUI()
 							EndIf
 							If (MilliSecs2() Mod 1000) > 300 Then
 								If SelectedItem\itemtemplate\name <> "S-NAV 310 Navigator" And SelectedItem\itemtemplate\name <> "S-NAV Navigator Ultimate" Then
-									AAText(x - width/2 + 10, y - height/2 + 10, "MAP DATABASE OFFLINE")
+									AAText(x - width/2 + 10, y - height/2 + 10, "ОФФЛАЙН КАРТА") ;MAP DATABASE OFFLINE
 								EndIf
 								
 								yawvalue = EntityYaw(Collider)-90
@@ -7750,7 +7748,7 @@ Function DrawGUI()
 							EndIf
 							
 							Local SCPs_found% = 0
-							If SelectedItem\itemtemplate\name = "S-NAV Navigator Ultimate" And (MilliSecs2() Mod 600) < 400 Then
+							If SelectedItem\itemtemplate\name = "S-NAV Navigator Ultimate" And (MilliSecs2() Mod 600) < 400 Then ;..!
 								If Curr173<>Null Then
 									Local dist# = EntityDistance(Camera, Curr173\obj)
 									dist = Ceil(dist / 8.0) * 8.0
@@ -7816,7 +7814,7 @@ Function DrawGUI()
 							End If
 							
 							Color (30,30,30)
-							If SelectedItem\itemtemplate\name = "S-NAV Navigator" Then Color(100, 0, 0)
+							If SelectedItem\itemtemplate\name = "S-NAV Navigator" Then Color(100, 0, 0) ;..!
 							If SelectedItem\state <= 100 Then
 								;AAText (x - width/2 + 10, y - height/2 + 10, "BATTERY")
 								;xtemp = x - width/2 + 10
@@ -7852,7 +7850,7 @@ Function DrawGUI()
 					For i=0 To MaxItemAmount-1
                         If Inventory(i)<>Null Then
                             If Inventory(i)\itemtemplate\name="SCP-215" And I_215\Timer>=86.0 Then
-                                Msg = "You can't wear SCP-1499 because of the glasses."
+                                Msg = "На вас уже надеты другие очки." ;You can't wear SCP-1499 because of the glasses.
 						        MsgTimer = 70 * 5
 						        SelectedItem=Null
 						        Return
@@ -7862,14 +7860,14 @@ Function DrawGUI()
                     Next
 
 					If WearingHazmat > 0
-						Msg = "You need to take off the hazmat suit in order to put on SCP-1499."
+						Msg = "Нужно снять защитный костюм, чтобы надеть SCP-1499." ;You need to take off the hazmat suit in order to put on SCP-1499.
 						MsgTimer = 70 * 5
 						SelectedItem=Null
 						Return
 					EndIf
 					
 					If WearingNightVision>0
-						Msg = "You need to take off the goggles in order to put on SCP-1499."
+						Msg = "Нужно снять очки, чтобы надеть SCP-1499." ;You need to take off the goggles in order to put on SCP-1499.
 						MsgTimer = 70 * 5
 						SelectedItem=Null
 						Return
@@ -7973,8 +7971,8 @@ Function DrawGUI()
 					If SelectedItem\state = 0 Then
 						PlaySound_Strict LoadTempSound("SFX\SCP\1162\NostalgiaCancer"+Rand(6,10)+".ogg")
 						Select SelectedItem\itemtemplate\name
-							Case "Old Badge"
-								Msg = Chr(34)+"Huh? This guy looks just like me!"+Chr(34)
+							Case "Old Badge" ;..!
+								Msg = Chr(34)+"Что? Этот парень похож на меня!"+Chr(34) ;Huh? This guy looks just like me!
 								MsgTimer = 70*10
 						End Select
 						
@@ -7986,7 +7984,7 @@ Function DrawGUI()
 					If SelectedItem\state = 0 Then
 						PlaySound_Strict LoadTempSound("SFX\SCP\1162\NostalgiaCancer"+Rand(6,10)+".ogg")
 						
-						Msg = Chr(34)+"Isn't this the key to that old shack? The one where I... No, it can't be."+Chr(34)
+						Msg = Chr(34)+"Это случайно не ключ от той старой деревянной лачуги? В которой я... Нет, не может быть."+Chr(34) ;Isn't this the key to that old shack? The one where I... No, it can't be.
 						MsgTimer = 70*10						
 					EndIf
 					
@@ -8006,10 +8004,10 @@ Function DrawGUI()
 					
 					If SelectedItem\state = 0
 						Select SelectedItem\itemtemplate\name
-							Case "Disciplinary Hearing DH-S-4137-17092"
+							Case "Disciplinary Hearing DH-S-4137-17092" ;..!
 								BlurTimer = 1000
 								
-								Msg = Chr(34)+"Why does this seem so familiar?"+Chr(34)
+								Msg = Chr(34)+"Почему это кажется таким знакомым?"+Chr(34) ;Why does this seem so familiar?
 								MsgTimer = 70*10
 								PlaySound_Strict LoadTempSound("SFX\SCP\1162\NostalgiaCancer"+Rand(6,10)+".ogg")
 								SelectedItem\state = 1
@@ -8030,11 +8028,11 @@ Function DrawGUI()
 				Case "scp427"
 					;[Block]
 					If I_427\Using=1 Then
-						Msg = "You closed the locket."
+						Msg = "Вы закрыли амулет." ;You closed the locket.
 						I_427\Using = False
 					Else
 						GiveAchievement(Achv427)
-						Msg = "You opened the locket."
+						Msg = "Вы открыли амулет." ;You opened the locket.
 						I_427\Using = True
 					EndIf
 					MsgTimer = 70 * 5
@@ -8043,7 +8041,7 @@ Function DrawGUI()
 				Case "pill"
 					;[Block]
 					If CanUseItem(False, False, True)
-						Msg = "You swallowed the pill."
+						Msg = "Вы проглотили таблетку." ;You swallowed the pill.
 						MsgTimer = 70*7
 						
 						RemoveItem(SelectedItem)
@@ -8053,7 +8051,7 @@ Function DrawGUI()
 				Case "scp500pilldeath"
 					;[Block]
 					If CanUseItem(False, False, True)
-						Msg = "You swallowed the pill."
+						Msg = "Вы проглотили таблетку." ;You swallowed the pill.
 						MsgTimer = 70*7
 						
 						If I_427\Timer < 70*360 Then
@@ -8072,7 +8070,7 @@ Function DrawGUI()
 					        StaminaEffect = 0.5
 						    StaminaEffectTimer = 20
 						
-						    Msg = "You injected yourself the syringe."
+						    Msg = "Вы сделали себе укол." ;You injected yourself the syringe.
 						    MsgTimer = 70 * 8
 	
 					        I_008\Timer = I_008\Timer + (1+(1*SelectedDifficulty\aggressiveNPCs))
@@ -8093,16 +8091,16 @@ Function DrawGUI()
 							Injuries = 0
 							Bloodloss = 0
 							I_1079\Foam = 0	
-							Msg = "Your wounds are healing up rapidly and your breath feels minty fresh."
+							Msg = "Выши раны быстро заживают, а дыхание становится свежим." ;Your wounds are healing up rapidly and your breath feels minty fresh.
 							MsgTimer = 70*7
 						Case 2
 							Injuries = Max(0, Injuries - Rnd(1.0,3.5))
 							Bloodloss = Max(0, Bloodloss - Rnd(25,100))
-							Msg = "You feel much better and your breath feels minty fresh."
+							Msg = "Вы чувствуете себя намного лучше, а дыхание становится свежим." ;You feel much better and your breath feels minty fresh.
 							MsgTimer = 70*7
 						Case 3
 							Injuries = 2.5
-							Msg = "You started bleeding heavily. At least your breath feels minty fresh."
+							Msg = "У вас началось сильное кровотечение. По крайней мере, ваше дыхание становится свежим." ;You started bleeding heavily. At least your breath feels minty fresh.
 							MsgTimer = 70*7
 					End Select
 					
@@ -8113,7 +8111,7 @@ Function DrawGUI()
 				Case "mintfirstaid", "mintfinefirstaid", "mintfirstaid2"
 					;[Block]
 					If Bloodloss = 0 And Injuries = 0 And I_1079\Foam = 0 Then
-						Msg = "You do not need to use a first aid right now."
+						Msg = "Сейчас вам не нужна аптечка." ;You do not need to use a first aid right now.
 						MsgTimer = 70*5
 						SelectedItem = Null
 					Else
@@ -8139,11 +8137,11 @@ Function DrawGUI()
 								I_1079\Foam = 0	
 								Injuries = Max(0, Injuries - 2.5)
 								If Injuries = 0 Then
-									Msg = "You bandaged the wounds and took a painkiller. You feel fine and you notice the smell of mint."
+									Msg = "Вы перевязали раны и приняли обезболивающее. Вы чувствуете себя лучше, и замечаете запах мяты вокруг себя." ;You bandaged the wounds and took a painkiller. You feel fine and you notice the smell of mint.
 								ElseIf Injuries > 1.0
-									Msg = "You bandaged the wounds and took a painkiller, but you were not able to stop the bleeding. You notice the smell of mint."
+									Msg = "Вы перевязали раны и приняли обезболивающее, но не смогли остановить кровотечение. Вы замечаете запах мяты вокруг себя." ;You bandaged the wounds and took a painkiller, but you were not able to stop the bleeding. You notice the smell of mint.
 								Else
-									Msg = "You bandaged the wounds and took a painkiller, but you still feel sore. You notice the smell of mint."
+									Msg = "Вы перевязали раны и приняли обезболивающее, но всё ещё чувствуете боль. Вы замечаете запах мяты вокруг себя." ;You bandaged the wounds and took a painkiller, but you still feel sore. You notice the smell of mint.
 								EndIf
 								MsgTimer = 70*5
 								
@@ -8151,22 +8149,22 @@ Function DrawGUI()
 							Else
 								Bloodloss = Max(0, Bloodloss - Rand(15,25))
 								If Injuries => 2.5 Then
-									Msg = "The wounds were way too severe to staunch the bleeding completely. You notice the smell of mint."
+									Msg = "Раны были слишком серьезными, чтобы остановить кровотечение. Вы замечаете запах мяты вокруг себя." ;The wounds were way too severe to staunch the bleeding completely. You notice the smell of mint.
 									Injuries = Max(2.5, Injuries-Rnd(0.4,0.8))
 								ElseIf Injuries > 1.0
 									Injuries = Max(0.5, Injuries-Rnd(0.6,1.1))
 									If Injuries > 1.0 Then
-										Msg = "You bandaged the wounds but were unable to staunch the bleeding completely."
+										Msg = "Вы перевязали раны, но не смогли полностью остановить кровотечение." ;You bandaged the wounds but were unable to staunch the bleeding completely.
 									Else
-										Msg = "You managed to stop the bleeding."
+										Msg = "Вам удалось остановить кровотечение." ;You managed to stop the bleeding.
 									EndIf
 								Else
 									If Injuries > 0.5 Then
 										Injuries = 0.5
-										Msg = "You took a painkiller, easing the pain slightly."
+										Msg = "Вы приняли обезболивающее, и боль немного отступила." ;You took a painkiller, easing the pain slightly.
 									Else
 										Injuries = 0.5
-										Msg = "You took a painkiller, but it still hurts to walk."
+										Msg = "Вы приняли обезболивающее, но вам всё ещё больно ходить." ;You took a painkiller, but it still hurts to walk.
 									EndIf
 								EndIf
 								
@@ -8174,10 +8172,10 @@ Function DrawGUI()
 									Select Rand(5)
 										Case 1
 											SuperMan = True
-											Msg = "You have becomed overwhelmedwithmintyadrenalineholyshitWOOOOOO~!"
+											Msg = "Вы переполнены адреналиномтвоюматьОДААААА~!" ;You have becomed overwhelmedwithadrenalineholyshitWOOOOOO~!
 										Case 2
 											InvertMouse = (Not InvertMouse)
-											Msg = "You suddenly find it very difficult to turn your head. You notice the smell of mint."
+											Msg = "Неожиданно вам становится трудно поворачивать голову. Вы замечаете запах мяты вокруг себя." ;You suddenly find it very difficult to turn your head. You notice the smell of mint.
 										Case 3
 											BlinkEffect = 0.4
 											BlinkEffectTimer = Rand(30,40)
@@ -8185,9 +8183,9 @@ Function DrawGUI()
 											Bloodloss = 0
 											I_1079\Foam = 0	
 											Injuries = 0
-											Msg = "You bandaged the wounds. The bleeding stopped completely and you feel fine. You notice the smell of mint."
+											Msg = "Вы перевязали раны. Кровотечение полностью прекратилось, и Вы чувствуете себя хорошо. Вы замечаете запах мяты вокруг себя." ;You bandaged the wounds. The bleeding stopped completely and you feel fine. You notice the smell of mint.
 										Case 5
-											Msg = "You bandaged the wounds and blood started pouring heavily through the minty bandages."
+											Msg = "Вы перевязали раны, но кровь сильно полилась сквозь повязки." ;You bandaged the wounds and blood started pouring heavily through the minty bandages.
 											Injuries = 2.5
 									End Select
 								EndIf
@@ -8252,7 +8250,7 @@ Function DrawGUI()
 					If (Not (I_402\Using = 1)) Then
 					    If CanUseItem(False,True,True)
 					        If Injuries < 0.5 Then
-						        Msg = "You do not need to use a painkiller right now."
+						        Msg = "Сейчас вам не нужно обезболивающее." ;You do not need to use a painkiller right now.
 						        MsgTimer = 70*5
 						        SelectedItem = Null
 					        Else
@@ -8263,7 +8261,7 @@ Function DrawGUI()
 							        MorphineHealAmount=Min((Injuries-0.5)+MorphineHealAmount, 4)
 							        Injuries=Max(Injuries-2.5,0.5)
 						        EndIf
-						        Msg = "You injected youself with a strong painkiller, easing the pain."
+						        Msg = "Вы приняли обезболивающее, что облегчило боль." ;You injected youself with a strong painkiller, easing the pain.
 						        MsgTimer = 70*5							
 						        MorphineTimer=10000
 						        UsedMorphine=True
@@ -8278,13 +8276,13 @@ Function DrawGUI()
 						GiveAchievement(Achv500)
 						
 						If I_008\Timer > 0 Then
-							Msg = "You swallowed the pill. Your nausea is fading."
+							Msg = "Вы проглотили таблетку. Тошнота проходит." ;You swallowed the pill. Your nausea is fading.
 						ElseIf I_409\Timer > 0 Then
-						    Msg = "You swallowed the pill. Your body is getting warmer and the crystals are receding."	
+						    Msg = "Вы проглотили таблетку. Температура вашего тела растёт, а кристаллы тают." ;You swallowed the pill. Your body is getting warmer and the crystals are receding.
 						ElseIf I_357\Timer > 0 Then
-						    Msg = "You swallowed the pill. Your body is getting warmer and the clay is receding."						
+						    Msg = "Вы проглотили таблетку. Температура вашего тела растёт, а глина тает." ;You swallowed the pill. Your body is getting warmer and the clay is receding.
 						Else
-							Msg = "You swallowed the pill."
+							Msg = "Вы проглотили таблетку." ;You swallowed the pill.
 						EndIf
 						MsgTimer = 70*7
 						
@@ -8324,9 +8322,9 @@ Function DrawGUI()
 			        ;[Block]
 			        If CanUseItem(False, False, True)
 			            If Rand(10) = 1 Then
-			                Msg = Chr(34) + "What happens if I put it in SCP-914 with something item?" + Chr(34)
+			                Msg = Chr(34) + "Что будет, если я положу его в SCP-914 вместе с чем-то ещё?" + Chr(34) ;What happens if I put it in SCP-914 with something item?
 	                    Else
-	                        Msg = Chr(34) + "I'm not stupid enough to drink this slime." + Chr(34)
+	                        Msg = Chr(34) + "Я не настолько глуп, чтобы пить эту слизь." + Chr(34) ;I'm not stupid enough to drink this slime.
 	                    EndIf
 	                    MsgTimer = 70*5
 	                    SelectedItem = Null
@@ -8336,24 +8334,24 @@ Function DrawGUI()
 				    ;[Block]
 					If I_1499\Using = 0 And WearingHazmat = 0 And I_215\Using = 0 And WearingNightVision = 0 And WearingGasMask = 0 Then
 					    If I_178\Using=1 Then
-						    Msg = "You removed the glasses."
+						    Msg = "Вы сняли очки." ;You removed the glasses.
 						    I_178\Using = 0
 					    Else
 						    GiveAchievement(Achv178)
-						    Msg = "You put on the glasses."
+						    Msg = "Вы надели очки." ;You put on the glasses.
 						    I_178\Using = 1
 						    If WearingNightVision Then CameraFogFar = StoredCameraFogFar
 					    EndIf
 				    ElseIf I_1499\Using > 0 Then
-						Msg = "You need to take off SCP-1499 in order to put on the SCP-178."
+						Msg = "Нужно снять SCP-1499, чтобы надеть SCP-178." ;You need to take off SCP-1499 in order to put on the SCP-178.
 					ElseIf I_215\Using = 1 Then
-						Msg = "You need to take off SCP-215 in order to put on the SCP-178."
+						Msg = "Нужно снять SCP-215, чтобы надеть SCP-178." ;You need to take off SCP-215 in order to put on the SCP-178.
 					ElseIf WearingNightVision > 0 Then
-						Msg = "You need to take off the goggles in order to put on the SCP-178."
+						Msg = "Нужно снять очки, чтобы надеть SCP-178." ;"You need to take off the goggles in order to put on the SCP-178.
 					ElseIf WearingGasMask > 0 Then
-						Msg = "You need to take off the gas mask in order to put on the SCP-178."
+						Msg = "Нужно снять противогаз, чтобы надеть SCP-178." ;You need to take off the gas mask in order to put on the SCP-178.
 					Else
-						Msg = "You need to take off the hazmat suit in order to put on the SCP-178."
+						Msg = "Нужно снять защитный костюм, чтобы надеть SCP-178." ;You need to take off the hazmat suit in order to put on the SCP-178.
 					EndIf
 					MsgTimer = 70 * 5
 			        SelectedItem = Null	
@@ -8362,7 +8360,7 @@ Function DrawGUI()
 					;[Block]
 					If I_215\Timer>=86.0
 					    I_215\Using = 1
-						Msg = "You can't take your glasses off."
+						Msg = "Вы не можете снять очки." ;You can't take your glasses off.
 						MsgTimer = 70*5
 						SelectedItem=Null
 						Return
@@ -8370,24 +8368,24 @@ Function DrawGUI()
 
 					 If I_1499\Using = 0 And WearingHazmat = 0 And I_178\Using = 0 And WearingNightVision = 0 And WearingGasMask = 0 Then					
 					    If I_215\Using=1 Then
-						    Msg = "You removed the glasses."
+						    Msg = "Вы сняли очки." ;You removed the glasses.
 						    I_215\Using = 0
 					    Else
 						    GiveAchievement(Achv215)
-						    Msg = "You put on the glasses."
+						    Msg = "Вы надели очки." ;You put on the glasses.
 						    I_215\Using = 1
 						    If WearingNightVision Then CameraFogFar = StoredCameraFogFar						
 					    EndIf
 					ElseIf I_1499\Using > 0 Then
-						Msg = "You need to take off SCP-1499 in order to put on the SCP-215."
+						Msg = "Нужно снять SCP-1499, чтобы надеть SCP-215." ;You need to take off SCP-1499 in order to put on the SCP-215.
 					ElseIf I_178\Using = 1 Then
-						Msg = "You need to take off SCP-178 in order to put on the SCP-215."
+						Msg = "Нужно снять SCP-178, чтобы надеть SCP-215." ;You need to take off SCP-178 in order to put on the SCP-215.
 					ElseIf WearingNightVision > 0 Then
-						Msg = "You need to take off the goggles in order to put on the SCP-215."
+						Msg = "Нужно снять очки, чтобы надеть SCP-215." ;You need to take off the goggles in order to put on the SCP-215.
 					ElseIf WearingGasMask > 0 Then
-						Msg = "You need to take off the gas mask in order to put on the SCP-215."
+						Msg = "Нужно снять противогаз, чтобы надеть SCP-215." ;You need to take off the gas mask in order to put on the SCP-215.
 					Else
-						Msg = "You need to take off the hazmat suit in order to put on the SCP-215."
+						Msg = "Нужно снять защитный костюм, чтобы надеть SCP-215." ;You need to take off the hazmat suit in order to put on the SCP-215.
 					EndIf
 					MsgTimer = 70 * 5
 			        SelectedItem = Null	
@@ -8399,7 +8397,7 @@ Function DrawGUI()
 						For n% = 0 To ItemAmount + 0
 						    If Inventory(n) = Null Then
 						        If ItemAmount > MaxItemAmount Then
-								    Msg = "You cannot carry any more items."
+								    Msg = "Вы не можете нести больше предметов." ;You cannot carry any more items.
 								    MsgTimer = 70*5	
 						        Else
                                     Inventory(n) = CreateItem("SCP-215", "scp215", 1, 1, 1)
@@ -8418,18 +8416,18 @@ Function DrawGUI()
 						    I_215\Limit = 0
 						EndIf
 				    Else
-						Msg = "You cannot carry any more items."
+						Msg = "Вы не можете нести больше предметов." ;You cannot carry any more items.
 						MsgTimer = 70*5					
 					EndIf																																										
 					;[End Block]
 				Case "scp1033ru"
 					;[Block]
 					If I_1033RU\Using = 1 Then
-						Msg = "You removed the bracelet."
+						Msg = "Вы сняли браслет" ;You removed the bracelet.
 						I_1033RU\Using = 0
 					Else
 						GiveAchievement(Achv1033RU)
-						Msg = "You put on the bracelet."
+						Msg = "Вы надели браслет." ;You put on the bracelet.
 						I_1033RU\Using = 1
 					EndIf
 					
@@ -8443,12 +8441,12 @@ Function DrawGUI()
                             Case 1
                                 I_1079\Take = I_1079\Take + 1
 					            Injuries = Injuries + 0.05
-						        Msg = "You swallowed candy. You are bleeding."
+						        Msg = "Вы проглотили конфету, и начали истекать кровью." ;You swallowed candy. You are bleeding.
 						        MsgTimer = 70*7
 				            Case 2
 				                I_1079\Take = I_1079\Take + 1
 				                Injuries = Injuries + 0.05
-						        Msg = "You swallowed candy. You feel good taste."
+						        Msg = "Вы проглотили конфету. Она вкусная." ;You swallowed candy. You feel good taste.
 						        MsgTimer = 70*7
 						End Select
                         
@@ -8471,9 +8469,9 @@ Function DrawGUI()
 				    If I_1079\Take >= 4 Then
 				        I_1079\Trigger = 1													
 					    Injuries = Injuries+Rand(2,3)
-					    DeathMSG = "Nine-Tailed Fox found Class D "+SubjectName$+" dead covered with pink bubblegum-scented foam around the body."
-					    DeathMSG = DeathMSG+" Toxic reports identifies the bubblegum-scented foam from Dr. Wondertainment's Bubblebath Bonbons!®,"
-					    DeathMSG = DeathMSG+" known as SCP-1079."
+					    DeathMSG = "Девятихвостая лиса обнаружила "+SubjectName$+" класса D мёртвым, покрытым розовой жевательной резинкой." ;"Nine-Tailed Fox found Class D "+SubjectName$+" dead covered with pink bubblegum-scented foam around the body.
+					    DeathMSG = DeathMSG+" Эта жевательная резинка - "+Chr(34)+"Пенные конфеты Доктора Развлечудова!®"+Chr(34)+"," ; Toxic reports identifies the bubblegum-scented foam from Dr. Wondertainment's Bubblebath Bonbons!®,
+					    DeathMSG = DeathMSG+" известные как SCP-1079." ; known as SCP-1079.
 					EndIf
 					;[End Block]
 				Case "scp1079"
@@ -8483,7 +8481,7 @@ Function DrawGUI()
 						For n% = 0 To ItemAmount+0
 						    If Inventory(n) = Null Then
 						        If ItemAmount > MaxItemAmount Then
-								    Msg = "You cannot carry any more items."
+								    Msg = "Вы не можете нести больше предметов." ;You cannot carry any more items.
 								    MsgTimer = 70*5	
 						        Else
                                     Inventory(n) = CreateItem("SCP-1079-01", "scp1079sweet", 1, 1, 1)
@@ -8502,7 +8500,7 @@ Function DrawGUI()
 						    I_1079\Limit = 0
 						EndIf
 				    Else
-						Msg = "You cannot carry any more items."
+						Msg = "Вы не можете нести больше предметов." ;You cannot carry any more items.
 						MsgTimer = 70*5					
 					EndIf																																									
 					;[End Block]
@@ -8539,16 +8537,16 @@ Function DrawGUI()
 						            I_207\Timer = 1.0
 							        Select Rand(1,4)
 							            Case 1
-							                Msg = "You drink cold cola. You feel fine."
+							                Msg = "Вы выпили холодную колу,и чувствуете себя лучше." ;You drink cold cola. You feel fine.
 							                MsgTimer = 70*6
 							            Case 2
-							                Msg = "You drink cold cola. You feel refreshed."
+							                Msg = "Вы выпили холодную колу, и чувствуете свежесть." ;You drink cold cola. You feel refreshed.
 							                MsgTimer = 70*6
 							            Case 3
-							                Msg = "You drink cold cola. You quench your thirst."
+							                Msg = "Вы выпили холодную колу, и уталили жажду" ;You drink cold cola. You quench your thirst.
 							                MsgTimer = 70*6
 							            Case 4
-							                Msg = "You drink cold cola. You feel good taste."
+							                Msg = "Вы выпили холодную колу. Она вкусная." ;You drink cold cola. You feel good taste.
 							                MsgTimer = 70*6
 							        End Select
                                     RemoveItem(SelectedItem)
@@ -8560,7 +8558,7 @@ Function DrawGUI()
 					;[End Block]
 				Case "scp198"
 					;[Block]
-				    Msg = Chr(34)+"I feel like the cup is filled with some liquid."+Chr(34)
+				    Msg = Chr(34)+"Мне кажется, что чашка наполнена какой-то жидкостью."+Chr(34) ;I feel like the cup is filled with some liquid.
 					MsgTimer = 70*7
 					SelectedItem = Null
 					;[End Block]
@@ -8621,7 +8619,7 @@ Function DrawGUI()
 						For n% = 0 To ItemAmount+0
 						    If Inventory(n) = Null Then
 						        If ItemAmount > MaxItemAmount Then
-								Msg = "You cannot carry any more items."
+								Msg = "Вы не можете нести больше предметов." ;You cannot carry any more items.
 								MsgTimer = 70*5	
 						    Else
                                 Inventory(n) = CreateItem("SCP-500-01", "scp500pill", 1, 1, 1)
@@ -8640,7 +8638,7 @@ Function DrawGUI()
 						    Limit500 = 0
 						EndIf
 				    Else
-						Msg = "You cannot carry any more items."
+						Msg = "Вы не можете нести больше предметов." ;You cannot carry any more items.
 						MsgTimer = 70*5					
 					EndIf																																										
 					;[End Block]
@@ -9970,7 +9968,7 @@ Function LoadEntities()
 			t1 = GetBrushTexture(b,0)
 			If t1<>0 Then
 				name$ = StripPath(TextureName(t1))
-				If Lower(name) <> "monitoroverlay.png"
+				If Lower2(name) <> "monitoroverlay.png"
 					BrushTexture b, at\OverlayTextureID[20], 0, 0
 					PaintSurface sf,b
 				EndIf
@@ -9986,7 +9984,7 @@ Function LoadEntities()
 			t1 = GetBrushTexture(b,0)
 			If t1<>0 Then
 				name$ = StripPath(TextureName(t1))
-				If Lower(name) <> "monitoroverlay.png"
+				If Lower2(name) <> "monitoroverlay.png"
 					BrushTexture b, at\OverlayTextureID[20], 0, 0
 					PaintSurface sf,b
 				EndIf
@@ -12555,7 +12553,7 @@ Function Use294()
 			Input294 = Left(Input294, Min(Len(Input294),15))
 			
 			If temp And Input294<>"" Then ;dispense
-				Input294 = Trim(Lower(Input294))
+				Input294 = Trim2(Lower2(Input294))
 				If Left(Input294, Min(7,Len(Input294))) = "cup of " Then
 					Input294 = Right(Input294, Len(Input294)-7)
 				ElseIf Left(Input294, Min(9,Len(Input294))) = "a cup of " 
@@ -12583,9 +12581,9 @@ Function Use294()
 					
 					sep1 = Instr(strtemp, ",", 1)
 					sep2 = Instr(strtemp, ",", sep1+1)
-					r% = Trim(Left(strtemp, sep1-1))
-					g% = Trim(Mid(strtemp, sep1+1, sep2-sep1-1))
-					b% = Trim(Right(strtemp, Len(strtemp)-sep2))
+					r% = Trim2(Left(strtemp, sep1-1))
+					g% = Trim2(Mid(strtemp, sep1+1, sep2-sep1-1))
+					b% = Trim2(Right(strtemp, Len(strtemp)-sep2))
 					
 					alpha# = Float(GetINIString2("Data\SCP-294.ini", loc, "alpha",1.0))
 					glow = GetINIInt2("Data\SCP-294.ini", loc, "glow")
@@ -13052,7 +13050,7 @@ Function UpdateMTF()
 			
 			Local entrance.Rooms = Null
 			For r.Rooms = Each Rooms
-				If Lower(r\RoomTemplate\Name) = "gateaentrance" Then entrance = r : Exit
+				If Lower2(r\RoomTemplate\Name) = "gateaentrance" Then entrance = r : Exit
 			Next
 			If entrance <> Null Then 
 				If Abs(EntityZ(entrance\obj)-EntityZ(Collider))<30.0 Then
@@ -13145,7 +13143,7 @@ Function UpdateMTF2()
 			
 			Local entrance2.Rooms = Null
 			For r.Rooms = Each Rooms
-				If Lower(r\RoomTemplate\Name) = "exit1" Then entrance2 = r : Exit
+				If Lower2(r\RoomTemplate\Name) = "exit1" Then entrance2 = r : Exit
 			Next
 			
 			If entrance2 <> Null Then
@@ -14082,7 +14080,7 @@ Function Create3DIcon(width%,height%,modelpath$,modelX#=0,modelY#=0,modelZ#=0,mo
 		CameraFogRange cam,CameraFogNear,CameraFogFar
 	EndIf
 	
-	If Right(Lower(modelpath$),6)=".rmesh"
+	If Right(Lower2(modelpath$),6)=".rmesh"
 		model = LoadRMesh(modelpath$,Null)
 	Else
 		model = LoadMesh(modelpath$)
@@ -14455,19 +14453,41 @@ Function Damage1033RU(damage%)
 		
 End Function
 
+;Фикс пропадающих кириллических букв
+Function Lower2$(txt$)
+	Local m$,nt$=""
 
-;~IDEal Editor Parameters:
-;~F#39#D8#177#17D#18D#241#2EC#2F5#315#329#32E#334#33A#340#346#34B#369#37F#394#39A
-;~F#3A0#3A7#3AE#3BB#3C1#3C7#3CD#3D4#3E3#3EC#3F8#40A#423#43F#444#451#463#47E#485#48B
-;~F#499#4AC#4B5#4BE#4E4#4F6#50D#519#525#538#53E#544#548#54E#553#572#581#590#596#5A5
-;~F#600#6A3#716#73A#7DC#7E9#8BC#959#972#980#9B2#A70#A7F#AB7#AD1#ADA#BB9#CFB#D0C#D43
-;~F#D6B#D7A#DA2#DCC#DE5#DF8#E28#E40#EF3#EFC#F13#F71#F9E#10E7#11D4#1365#14E9#1542#1571#158C
-;~F#15A3#15B6#15C9#15DC#15EB#1607#160B#160F#1618#1633#1666#16C0#16CB#16D7#16E3#170E#171E#175D#176A#1777
-;~F#178C#18D1#18ED#18FD#190D#191A#1944#196A#1983#1A3C#1A96#1AAC#1AB8#1ACF#1ADA#1AE7#1AF1#1AFF#1B58#1BD2
-;~F#1C2C#1C67#1CB7#1E05#1E11#1ED3#1FAF#203D#20D9#2106#2137#224C#225E#227A#2284#2291#22B5#22F5#2335#2385
-;~F#23BE#23D2#23E7#23EB#240B#2413#243E#26A5#2763#27C2#281A#28C6#28D0#28D6#28E0#28EC#28F7#28FB#2936#293E
-;~F#2946#294D#2954#2961#2967#2972#29B1#29C0#29DE#2A0C#2A13#2A26#2A3F#2A6C#2A77#2A7C#2A96#2AA2#2ABD#2B0F
-;~F#2B1D#2B25#2B2D#2B59#2B62#2B8B#2B90#2B95#2B9A#2BA3#2BB4#2C59#2C67#2CD2#2CE4#2D03#2D12#2D29#2D4C#2D50
-;~F#2D54#2D82#2DA0#2DAB#2DD9#2DF7#2E42#2E5B#2E6A#2E7A#2E8A#2EC5
-;~B#11DC#1454#1BF2
-;~C#Blitz3D
+	For i=1 To Len(txt)
+		m=Mid(txt,i,1)
+		If Asc(m)<128
+			nt=nt+Lower(m)
+		Else
+			If Asc(m)>191 And Asc(m)<224
+				nt=nt+Chr(Asc(m)+32)
+			ElseIf Asc(m)=168
+				nt=nt+Chr(184)
+			Else
+				nt=nt+m
+			EndIf
+		EndIf
+	Next
+	Return nt
+End Function
+
+Function Trim2$(txt$)
+	txt0=Len(txt)
+	If txt0=0 Then Return txt
+
+	Local txt1 = 1
+	While Mid(txt,txt1,1)=" "
+		txt1=txt1+1
+		If txt1>txt0 Then Return ""
+	Wend
+	
+	Local txt2 = txt0
+	While Mid(txt, txt2, 1)=" "
+		txt2=txt2-1
+	Wend
+	Return Mid(txt,txt1,txt2+1-txt1)
+End Function
+

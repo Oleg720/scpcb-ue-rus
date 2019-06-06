@@ -788,51 +788,51 @@ Function UpdateConsole()
 							CreateConsoleMsg("******************************")
 						;МОДИФИКАЦИЯ
 						Case "newyear" 
-						    CreateConsoleMsg("HELP - newyear")
+						    CreateConsoleMsg("СПРАВКА - newyear") ;HELP
 							CreateConsoleMsg("******************************")
                             CreateConsoleMsg("Делает SCP-173 сладеньким.") ;Makes SCP-173 a cookie.
                             CreateConsoleMsg("******************************")
                         Case "cheats" 
-							CreateConsoleMsg("HELP - cheats")
+							CreateConsoleMsg("СПРАВКА - cheats") ;HELP
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("Активирует godmode, noclip, notarget") ;Actives
 							CreateConsoleMsg("и infinitestamina.") ;and
 							CreateConsoleMsg("Применимы значения (on/off).") ;Is specified
 							CreateConsoleMsg("******************************")
 						 Case "fov" ;..!
-							CreateConsoleMsg("HELP - fov")
+							CreateConsoleMsg("СПРАВКА - fov") ;HELP
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("Field of view (FOV) is the amount of game view") ;Field of view (FOV) is the amount of game view
 							CreateConsoleMsg("that is on display during a game.") ;that is on display during a game.
 							CreateConsoleMsg("******************************")
 						Case "reset372" 
-						    CreateConsoleMsg("HELP - reset372")
+						    CreateConsoleMsg("СПРАВКА - reset372") ;HELP
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("Возвращает SCP-372 в неактивное состояние.") ;Returns ;to inactive state.
 							CreateConsoleMsg("******************************")
 						Case "reset650" 
-						    CreateConsoleMsg("HELP - reset650")
+						    CreateConsoleMsg("СПРАВКА - reset650") ;HELP
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("Возвращает SCP-650 в неактивное состояние.") ;Returns ;to inactive state.
 							CreateConsoleMsg("******************************")
 						Case "money" 
-							CreateConsoleMsg("HELP - money")
+							CreateConsoleMsg("СПРАВКА - money") ;HELP
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("Даёт много денег.") ;Generates a lot of money.
 							CreateConsoleMsg("******************************")
 						Case "crystal" 
-							CreateConsoleMsg("HELP - crystal")
+							CreateConsoleMsg("СПРАВКА - crystal") ;HELP
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("SCP-409 кристаллизирует игрока.") ;crystallizes player.
 							CreateConsoleMsg("Example: crystal 52")
 							CreateConsoleMsg("******************************")
 						Case "reset1033ru"
-						    CreateConsoleMsg("HELP - reset1033ru")
+						    CreateConsoleMsg("СПРАВКА - reset1033ru") ;HELP
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("Сбрасывает состояние SCP-1033-RU.") ;Reset states of
 							CreateConsoleMsg("******************************")
 						Case "unlockallachievements" 
-							CreateConsoleMsg("HELP - unlockallachievements")
+							CreateConsoleMsg("СПРАВКА - unlockallachievements") ;HELP
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("Выдаёт все достижения.") ;Unlocks all achievements.
 							CreateConsoleMsg("******************************")	
@@ -1012,7 +1012,7 @@ Function UpdateConsole()
 						EndIf
 					Next
 					
-					If PlayerRoom\RoomTemplate\Name <> StrTemp Then CreateConsoleMsg("Room not found.",255,150,0)
+					If PlayerRoom\RoomTemplate\Name <> StrTemp Then CreateConsoleMsg("Комната не найдена.",255,150,0) ;Room not found
 					;[End Block]
 				Case "spawnitem"
 					;[Block]
@@ -1145,13 +1145,13 @@ Function UpdateConsole()
 						CreateConsoleMsg("ЭЙ, ПОМЕДЛЕННЕЕ!") ;WHOA SLOW DOWN
 					EndIf
 					;[End Block]
-				Case "scp-420-j","420j","weed" ;..!
+				Case "scp-420-j","420j","weed"
 					;[Block]
 					For i = 1 To 20
 						If Rand(2)=1 Then
-							it.Items = CreateItem("Some SCP-420-J","scp420j", EntityX(Collider,True)+Cos((360.0/20.0)*i)*Rnd(0.3,0.5), EntityY(Camera,True), EntityZ(Collider,True)+Sin((360.0/20.0)*i)*Rnd(0.3,0.5))
+							it.Items = CreateItem("Немного SCP-420-J","scp420j", EntityX(Collider,True)+Cos((360.0/20.0)*i)*Rnd(0.3,0.5), EntityY(Camera,True), EntityZ(Collider,True)+Sin((360.0/20.0)*i)*Rnd(0.3,0.5)) ;Some SCP-420-J
 						Else
-							it.Items = CreateItem("Joint","scp420s", EntityX(Collider,True)+Cos((360.0/20.0)*i)*Rnd(0.3,0.5), EntityY(Camera,True), EntityZ(Collider,True)+Sin((360.0/20.0)*i)*Rnd(0.3,0.5))
+							it.Items = CreateItem("Самокрутка","scp420s", EntityX(Collider,True)+Cos((360.0/20.0)*i)*Rnd(0.3,0.5), EntityY(Camera,True), EntityZ(Collider,True)+Sin((360.0/20.0)*i)*Rnd(0.3,0.5)) ;Joint
 						EndIf
 						EntityType (it\collider, HIT_ITEM)
 					Next
@@ -1502,13 +1502,13 @@ Function UpdateConsole()
 					;[End Block]
 				Case "spawnradio" ;..!
 					;[Block]
-					it.Items = CreateItem("Radio Transceiver", "fineradio", EntityX(Collider), EntityY(Camera,True), EntityZ(Collider))
+					it.Items = CreateItem("Рация", "fineradio", EntityX(Collider), EntityY(Camera,True), EntityZ(Collider)) ;Radio Transceiver
 					EntityType(it\collider, HIT_ITEM)
 					it\state = 101
 					;[End Block]
-				Case "spawnnvg" ;..!
+				Case "spawnnvg"
 					;[Block]
-					it.Items = CreateItem("Night Vision Goggles", "nvgoggles", EntityX(Collider), EntityY(Camera,True), EntityZ(Collider))
+					it.Items = CreateItem("Очки ночного виденья", "nvgoggles", EntityX(Collider), EntityY(Camera,True), EntityZ(Collider)) ;Night Vision Goggles
 					EntityType(it\collider, HIT_ITEM)
 					it\state = 1000
 					;[End Block]
@@ -1516,9 +1516,9 @@ Function UpdateConsole()
 					;[Block]
 					CreateConsoleMsg("Какая тыква?") ;What pumpkin?
 					;[End Block]
-				Case "spawnnav" ;..!
+				Case "spawnnav"
 					;[Block]
-					it.Items = CreateItem("S-NAV Navigator Ultimate", "nav", EntityX(Collider), EntityY(Camera,True), EntityZ(Collider))
+					it.Items = CreateItem("Навигатор S-NAV Ultimate", "nav", EntityX(Collider), EntityY(Camera,True), EntityZ(Collider)) ;S-NAV Navigator Ultimate
 					EntityType(it\collider, HIT_ITEM)
 					it\state = 101
 					;[End Block]
@@ -1795,13 +1795,13 @@ Function UpdateConsole()
 			            EndIf
 			        Next
 					;[End Block]
-				Case "money", "rich" ;..!
+				Case "money", "rich"
 					;[Block]
 					For i = 1 To 20
 					    If Rand(2) = 1 Then
-						    it.Items = CreateItem("Quarter","25ct", EntityX(Collider,True)+Cos((360.0/20.0)*i)*Rnd(0.3,0.5), EntityY(Camera,True), EntityZ(Collider,True)+Sin((360.0/20.0)*i)*Rnd(0.3,0.5))
+						    it.Items = CreateItem("Четвертак","25ct", EntityX(Collider,True)+Cos((360.0/20.0)*i)*Rnd(0.3,0.5), EntityY(Camera,True), EntityZ(Collider,True)+Sin((360.0/20.0)*i)*Rnd(0.3,0.5)) ;Quarter
 					    Else
-					        it.Items = CreateItem("Coin","coin", EntityX(Collider,True)+Cos((360.0/20.0)*i)*Rnd(0.3,0.5), EntityY(Camera,True), EntityZ(Collider,True)+Sin((360.0/20.0)*i)*Rnd(0.3,0.5))
+					        it.Items = CreateItem("Монета","coin", EntityX(Collider,True)+Cos((360.0/20.0)*i)*Rnd(0.3,0.5), EntityY(Camera,True), EntityZ(Collider,True)+Sin((360.0/20.0)*i)*Rnd(0.3,0.5)) ;Coin
 					    EndIf
 					    EntityType (it\collider, HIT_ITEM)
 					Next
@@ -3782,7 +3782,7 @@ Repeat
 				Color 0,0,0
 				AAText((GraphicWidth / 2)+1, (GraphicHeight / 2) + 201, Msg, True, False, Min(MsgTimer / 2, 255)/255.0)
 				Color 255,255,255;Min(MsgTimer / 2, 255), Min(MsgTimer / 2, 255), Min(MsgTimer / 2, 255)
-				If Left(Msg,14)="Ошибка Blitz3D!" Then ;
+				If Left(Msg,14)="Ошибка Blitz3D!" Then ;Error
 					Color 255,0,0
 				EndIf
 				AAText((GraphicWidth / 2), (GraphicHeight / 2) + 200, Msg, True, False, Min(MsgTimer / 2, 255)/255.0)
@@ -4254,7 +4254,7 @@ Function DrawEnding()
 	EndIf	
 
 	If (Not UsedConsole) Then GiveAchievement(AchvConsole)
-	If SelectedDifficulty\name = "Keter" Then GiveAchievement(AchvKeter) ;Keter
+	If SelectedDifficulty\name = "Кетер" Then GiveAchievement(AchvKeter) ;Keter
 	If SelectedDifficulty\name = "Таумиэль" Then GiveAchievement(AchvThaumiel) ;Thaumiel
 	Local x,y,width,height, temp
 	Local itt.ItemTemplates, r.Rooms
@@ -5550,7 +5550,7 @@ Function DrawGUI()
 			AAText x - 50, 380, "Травмы: " + Injuries ;Injuries:
 			AAText x - 50, 410, "Кровопотеря: " + Bloodloss ;Bloodloss:
 			AAText x - 50, 430, "BubbleFoam: " + I_1079\Foam ;BubbleFoam
-			AAText x - 50, 450, "BubbleTrigger: " + I_1079\Trigger
+			AAText x - 50, 450, "BubbleTrigger: " + I_1079\Trigger ;BubbleTrigger
 			AAText x - 50, 470, "Таймер тошноты: " + VomitTimer ;Vomit Timer:
 			AAText x - 50, 490, "Таймер размытия (блюра): " + BlurTimer ;Blur Timer
 			AAText x - 50, 510, "Light Blink: " + LightBlink
@@ -6252,7 +6252,7 @@ Function DrawGUI()
 									Local added.Items = Null
 									Local b$ = SelectedItem\itemtemplate\tempname
 									Local b2$ = SelectedItem\itemtemplate\name
-									If (b<>"misc" And b<>"25ct" And b<>"coin" And b<>"key" And b<>"scp860" And b<>"scp005" And b<>"scp500pill" And b<>"pill" And b<>"mintscp500pill") Or (b2="Playing Card" Or b2="Mastercard") Then ;..!
+									If (b<>"misc" And b<>"25ct" And b<>"coin" And b<>"key" And b<>"scp860" And b<>"scp005" And b<>"scp500pill" And b<>"pill" And b<>"mintscp500pill") Or (b2="Игральная карта" Or b2="Mastercard") Then ;Playing Card
 										For c% = 0 To Inventory(MouseSlot)\invSlots-1
 											If (Inventory(MouseSlot)\SecondInv[c] = Null)
 												If SelectedItem <> Null Then
@@ -6277,7 +6277,7 @@ Function DrawGUI()
 										Else ;..!
 											If added\itemtemplate\tempname = "paper" Or added\itemtemplate\tempname = "oldpaper" Then
 												Msg = "Документ добавлен в планшет." ;This document was added to the clipboard.
-											ElseIf b="key1" Or b="key2" Or b="key3" Or b="key4" Or b="key5" Or b="key6" Or b2="Playing card" Or b2="Mastercard" Or b="coin" ;..!
+											ElseIf b="key1" Or b="key2" Or b="key3" Or b="key4" Or b="key5" Or b="key6" Or b2="Игральная карта" Or b2="Mastercard" Or b="coin" ;Playing Card
 												Msg = added\itemtemplate\name + " добавлена в планшет."
 											Else
 												Msg =  added\itemtemplate\name + " добавлен в планшет." ;"The " + added\itemtemplate\name + " was added to the clipboard.
@@ -6294,7 +6294,7 @@ Function DrawGUI()
 									added.Items = Null
 									b$ = SelectedItem\itemtemplate\tempname
 									b2$ = SelectedItem\itemtemplate\name
-									If (b<>"misc" And b<>"paper" And b<>"oldpaper" And b<> "paperstrips") Or (b2="Playing Card" Or b2="Mastercard") Then
+									If (b<>"misc" And b<>"paper" And b<>"oldpaper" And b<> "paperstrips") Or (b2="Игральная карта" Or b2="Mastercard") Then ;Playing Card
 										For c% = 0 To Inventory(MouseSlot)\invSlots-1
 											If (Inventory(MouseSlot)\SecondInv[c] = Null)
 												If SelectedItem <> Null Then
@@ -6317,7 +6317,7 @@ Function DrawGUI()
 											EndIf
 										Next
 										If SelectedItem <> Null Then
-											Msg = "The wallet is full."
+											Msg = "Кошелёк полон." ;The wallet is full.
 										Else
 											Msg = "Вы положили "+added\itemtemplate\name+" в кошелёк." ;You put ;into the wallet.
 										EndIf
@@ -6334,20 +6334,20 @@ Function DrawGUI()
 								
 								;[End Block]							            
 
-							Case "battery", "bat" ;..!
+							Case "battery", "bat"
 								;[Block]
 								Select Inventory(MouseSlot)\itemtemplate\name
-									Case "S-NAV Navigator", "S-NAV 300 Navigator", "S-NAV 310 Navigator"
+									Case "Навигатор S-NAV", "Навигатор S-NAV 300", "Навигатор S-NAV 310" ;S-NAV Navigator ;S-NAV 300 Navigator ;S-NAV 310 Navigator
 										If SelectedItem\itemtemplate\sound <> 66 Then PlaySound_Strict(PickSFX(SelectedItem\itemtemplate\sound))	
 										RemoveItem (SelectedItem)
 										SelectedItem = Null
 										Inventory(MouseSlot)\state = 100.0
 										Msg = "Вы заменили батарейку в навигаторе." ;You replaced the navigator's battery.
 										MsgTimer = 70 * 5
-									Case "S-NAV Navigator Ultimate"
+									Case "Навигатор S-NAV Ultimate" ;S-NAV Navigator Ultimate
 										Msg = "Похоже, в этом навигаторе нет отсека для батареек." ;There seems to be no place for batteries in this navigator.
 										MsgTimer = 70 * 5
-									Case "Radio Transceiver"
+									Case "Рация" ;Radio Transceiver
 										Select Inventory(MouseSlot)\itemtemplate\tempname 
 											Case "fineradio", "veryfineradio"
 												Msg = "Похоже, в этой рации нет отсека для батареек." ;There seems to be no place for batteries in this radio.
@@ -6363,7 +6363,7 @@ Function DrawGUI()
 												Msg = "Вы заменили батарейку в рации." ;You replaced the radio's battery.
 												MsgTimer = 70 * 5
 										End Select
-									Case "Night Vision Goggles"
+									Case "Очки ночного виденья" ;Night Vision Goggles
 										Local nvname$ = Inventory(MouseSlot)\itemtemplate\tempname
 										If nvname$="nvgoggles" Or nvname$="supernv" Then
 											If SelectedItem\itemtemplate\sound <> 66 Then PlaySound_Strict(PickSFX(SelectedItem\itemtemplate\sound))	
@@ -6384,13 +6384,13 @@ Function DrawGUI()
 							Case "18vbat"
 								;[Block]
 								Select Inventory(MouseSlot)\itemtemplate\name
-									Case "S-NAV Navigator", "S-NAV 300 Navigator", "S-NAV 310 Navigator"
+									Case "Навигатор S-NAV", "Навигатор S-NAV 300", "Навигатор S-NAV 310" ;S-NAV Navigator ;S-NAV 300 Navigator ;S-NAV 310 Navigator
 										Msg = "Батарейка не подходит к этому навигатору." ;The battery does not fit inside this navigator.
 										MsgTimer = 70 * 5
-									Case "S-NAV Navigator Ultimate"
+									Case "Навигатор S-NAV Ultimate" ;S-NAV Navigator Ultimate
 										Msg = "Похоже, в этом навигаторе нет отсека для батареек." ;The battery does not fit inside this navigator.
 										MsgTimer = 70 * 5
-									Case "Radio Transceiver"
+									Case "Рация" ;Radio Transceiver
 										Select Inventory(MouseSlot)\itemtemplate\tempname 
 											Case "fineradio", "veryfineradio"
 												Msg = "Похоже, в этой рации нет отсека для батареек." ;There seems to be no place for batteries in this radio.
@@ -6877,18 +6877,18 @@ Function DrawGUI()
 						EndIf
 					EndIf
 					;[End Block]
-				Case "paper", "ticket" ;..!
+				Case "paper", "ticket"
 					;[Block]
 					If SelectedItem\itemtemplate\img = 0 Then
 						Select SelectedItem\itemtemplate\name
-							Case "Burnt Note" 
+							Case "Обгоревший документ" ;Burnt Note 
 								SelectedItem\itemtemplate\img = LoadImage_Strict("GFX\items\bn.it")
 								SetBuffer ImageBuffer(SelectedItem\itemtemplate\img)
 								Color 0,0,0
 								AAText 277, 469, AccessCode, True, True
 								Color 255,255,255
 								SetBuffer BackBuffer()
-							Case "Document SCP-372"
+							Case "Документ об SCP-372" ;Document SCP-372
 								SelectedItem\itemtemplate\img = LoadImage_Strict(SelectedItem\itemtemplate\imgpath)	
 								SelectedItem\itemtemplate\img = ResizeImage2(SelectedItem\itemtemplate\img, ImageWidth(SelectedItem\itemtemplate\img) * MenuScale, ImageHeight(SelectedItem\itemtemplate\img) * MenuScale)
 								
@@ -6900,7 +6900,7 @@ Function DrawGUI()
 								AAText 383*MenuScale, 734*MenuScale, temp, True, True
 								Color 255,255,255
 								SetBuffer BackBuffer()
-							Case "Movie Ticket"
+							Case "Билет в кино" ;Movie Ticket
 								;don't resize because it messes up the masking
 								SelectedItem\itemtemplate\img=LoadImage_Strict(SelectedItem\itemtemplate\imgpath)	
 								
@@ -6993,7 +6993,7 @@ Function DrawGUI()
 							    Msg = strtemp 
 							    MsgTimer = 70*6		
 						    Else
-							    it.Items = CreateItem("Empty Cup", "emptycup", 0,0,0) ;..!
+							    it.Items = CreateItem("Пустой стакан", "emptycup", 0,0,0) ;Empty Cup
 							    it\Picked = True
 							    For i = 0 To MaxItemAmount-1
 								    If Inventory(i)=SelectedItem Then Inventory(i) = it : Exit
@@ -7325,7 +7325,7 @@ Function DrawGUI()
 							EndIf	
 							
 							AASetFont fo\Font[2]
-							AAText(x+60, y, "CHN")						
+							AAText(x+60, y, "CHN")						;..! ;..?
 							
 							If SelectedItem\itemtemplate\tempname = "veryfineradio" Then ;"KOODIKANAVA"
 								ResumeChannel(RadioCHN(0))
@@ -7530,10 +7530,10 @@ Function DrawGUI()
 							DropItem(SelectedItem)
 						Else
 							If SelectedItem\itemtemplate\tempname="vest" Then
-								Msg = "Вы надели бронижилет, и передвигаться стало немного сложнее." ;You put on the vest and feel slightly encumbered.
+								Msg = "Вы надели бронежилет, и передвигаться стало немного сложнее." ;You put on the vest and feel slightly encumbered.
 								WearingVest = 1
 							Else
-								Msg = "Вы надели бронижилет, и передвигаться стало намного сложнее." ;You put on the vest and feel heavily encumbered.
+								Msg = "Вы надели бронежилет, и передвигаться стало намного сложнее." ;You put on the vest and feel heavily encumbered.
 								WearingVest = 2
 							EndIf
 							If SelectedItem\itemtemplate\sound <> 66 Then PlaySound_Strict(PickSFX(SelectedItem\itemtemplate\sound))
@@ -7548,7 +7548,7 @@ Function DrawGUI()
                     For i=0 To MaxItemAmount-1
                         If Inventory(i)<>Null Then
                             If Inventory(i)\itemtemplate\name="SCP-215" And I_215\Timer>=86.0 Then
-                                Msg = "You can't wear a gas mask because of the glasses."
+                                Msg = "На вас уже надеты другие очки." ;You can't wear a gas mask because of the glasses.
 						        MsgTimer = 70 * 5
 						        SelectedItem=Null
 						        Return
@@ -7680,8 +7680,8 @@ Function DrawGUI()
 							For x2 = Max(0, PlayerX - 6) To Min(MapWidth, PlayerX + 6)
 								For z2 = Max(0, PlayerZ - 6) To Min(MapHeight, PlayerZ + 6)
 									
-									If CoffinDistance > 16.0 Or Rnd(16.0)<CoffinDistance Then  ;..!
-										If MapTemp(x2, z2)>0 And (MapFound(x2, z2) > 0 Or SelectedItem\itemtemplate\name = "S-NAV 310 Navigator" Or SelectedItem\itemtemplate\name = "S-NAV Navigator Ultimate") Then
+									If CoffinDistance > 16.0 Or Rnd(16.0)<CoffinDistance Then
+										If MapTemp(x2, z2)>0 And (MapFound(x2, z2) > 0 Or SelectedItem\itemtemplate\name = "Навигатор S-NAV 310" Or SelectedItem\itemtemplate\name = "Навигатор S-NAV Ultimate") Then ;S-NAV 310 Navigator ;S-NAV Navigator Ultimate
 											Local drawx% = x + (PlayerX - 1 - x2) * 24 , drawy% = y - (PlayerZ - 1 - z2) * 24
 											
 											If x2+1<=MapWidth Then
@@ -7721,19 +7721,19 @@ Function DrawGUI()
 							SetBuffer BackBuffer()
 							DrawImageRect NavBG,xx+80,yy+70,xx+80,yy+70,270,230
 							Color 30,30,30
-							If SelectedItem\itemtemplate\name = "S-NAV Navigator" Then Color(100, 0, 0)
+							If SelectedItem\itemtemplate\name = "Навигатор S-NAV" Then Color(100, 0, 0) ;S-NAV Navigator
 							Rect xx+80,yy+70,270,230,False
 							
 							x = GraphicWidth - ImageWidth(SelectedItem\itemtemplate\img)*0.5+20
 							y = GraphicHeight - ImageHeight(SelectedItem\itemtemplate\img)*0.4-85
 							
-							If SelectedItem\itemtemplate\name = "S-NAV Navigator" Then 
+							If SelectedItem\itemtemplate\name = "Навигатор S-NAV" Then ;S-NAV Navigator
 								Color(100, 0, 0)
 							Else
 								Color (30,30,30)
 							EndIf
 							If (MilliSecs2() Mod 1000) > 300 Then
-								If SelectedItem\itemtemplate\name <> "S-NAV 310 Navigator" And SelectedItem\itemtemplate\name <> "S-NAV Navigator Ultimate" Then
+								If SelectedItem\itemtemplate\name <> "Навигатор S-NAV 310" And SelectedItem\itemtemplate\name <> "Навигатор S-NAV Ultimate" Then ;S-NAV 310 Navigator ;S-NAV Navigator Ultimate
 									AAText(x - width/2 + 10, y - height/2 + 10, "ОФФЛАЙН КАРТА") ;MAP DATABASE OFFLINE
 								EndIf
 								
@@ -7748,7 +7748,7 @@ Function DrawGUI()
 							EndIf
 							
 							Local SCPs_found% = 0
-							If SelectedItem\itemtemplate\name = "S-NAV Navigator Ultimate" And (MilliSecs2() Mod 600) < 400 Then ;..!
+							If SelectedItem\itemtemplate\name = "Навигатор S-NAV Ultimate" And (MilliSecs2() Mod 600) < 400 Then ;S-NAV Navigator Ultimate
 								If Curr173<>Null Then
 									Local dist# = EntityDistance(Camera, Curr173\obj)
 									dist = Ceil(dist / 8.0) * 8.0
@@ -7814,7 +7814,7 @@ Function DrawGUI()
 							End If
 							
 							Color (30,30,30)
-							If SelectedItem\itemtemplate\name = "S-NAV Navigator" Then Color(100, 0, 0) ;..!
+							If SelectedItem\itemtemplate\name = "Навигатор S-NAV" Then Color(100, 0, 0) ;S-NAV Navigator
 							If SelectedItem\state <= 100 Then
 								;AAText (x - width/2 + 10, y - height/2 + 10, "BATTERY")
 								;xtemp = x - width/2 + 10
@@ -7971,7 +7971,7 @@ Function DrawGUI()
 					If SelectedItem\state = 0 Then
 						PlaySound_Strict LoadTempSound("SFX\SCP\1162\NostalgiaCancer"+Rand(6,10)+".ogg")
 						Select SelectedItem\itemtemplate\name
-							Case "Old Badge" ;..!
+							Case "Старый бейдж" ;Old Badge
 								Msg = Chr(34)+"Что? Этот парень похож на меня!"+Chr(34) ;Huh? This guy looks just like me!
 								MsgTimer = 70*10
 						End Select
@@ -8004,7 +8004,7 @@ Function DrawGUI()
 					
 					If SelectedItem\state = 0
 						Select SelectedItem\itemtemplate\name
-							Case "Disciplinary Hearing DH-S-4137-17092" ;..!
+							Case "Дисциплинарное слушание DH-S-4137-17092" ;Disciplinary Hearing DH-S-4137-17092
 								BlurTimer = 1000
 								
 								Msg = Chr(34)+"Почему это кажется таким знакомым?"+Chr(34) ;Why does this seem so familiar?
@@ -8588,22 +8588,22 @@ Function DrawGUI()
 								        BlurTimer = 10000
 								        VomitTimer = 10
 								        Stamina = 100
-								        Msg = "You drink a lot of water. You feel nauseated."
+								        Msg = "Вы пьёте много воды, и чувствуете тошноту." ;You drink a lot of water. You feel nauseated.
 							        ElseIf Stamina > 30.0 And Stamina < 60.0
 								        PlaySound_Strict LoadTempSound("SFX\SCP\109\ahh.ogg")
 							            Injuries = Max(0, Injuries - Rnd(0.09,0.1))
 								        Stamina = 100
-								        Msg = "You drink clear water. You feel fine."
+								        Msg = "Вы пьёте чистую воду, и чувствуете себя хорошо." ;You drink clear water. You feel fine.
 							        ElseIf Stamina > 60.0 And Stamina < 100.0
 								        PlaySound_Strict LoadTempSound("SFX\SCP\109\ahh.ogg")
 							            Injuries = Max(0, Injuries - Rnd(0.1,0.5))
 								        Stamina = 100
-								        Msg = "You drink clear water. You quench your thirst."
+								        Msg = "Вы пьёте чистую воду, и уталяете жажду." ;You drink clear water. You quench your thirst.
 							        Else
 								        Injuries = Max(0, Injuries - Rnd(0.1,0.5))
 								        Stamina = 100
 								        PlaySound_Strict LoadTempSound("SFX\SCP\109\ahh.ogg")
-								        Msg = "You drink clear water. You feel fine."
+								        Msg = "Вы пьёте чистую воду, и чувствуете себя хорошо." ;You drink clear water. You feel fine.
 							        EndIf
                                     MsgTimer = 70*5
                                     SelectedItem = Null
@@ -8646,7 +8646,7 @@ Function DrawGUI()
 				    ;[Block]
 				    If I_402\Timer >= 40
 					    I_402\Using = 1
-						Msg = "You can't pull out the stone from your throat."
+						Msg = "Вы не можете вытащить камень из горла." ;You can't pull out the stone from your throat.
 						MsgTimer = 70*5
 						SelectedItem=Null
 						Return
@@ -8654,11 +8654,11 @@ Function DrawGUI()
 
 				    If WearingHazmat = 0 And WearingGasmask = 0 And I_1499\Using = 0 Then
 				        If I_402\Using = 1 Then
-						    Msg = "You pull out the SCP-402 from your mouth."
+						    Msg = "Вы вытащили SCP-402 изо рта." ;You pull out the SCP-402 from your mouth.
 						    I_402\Using = 0
 					    Else
 						    GiveAchievement(Achv402)
-						    Msg = "You put the SCP-402 in your mouth."
+						    Msg = "Вы положили SCP-402 в рот." ;You put the SCP-402 in your mouth.
 						    I_402\Using = 1
 					    EndIf
 					
@@ -8781,7 +8781,7 @@ Function DrawMenu()
 					
 					If ms\StopHidingTimer => 40 Then
 						PlaySound_Strict(HorrorSFX(15))
-						Msg = "STOP HIDING"
+						Msg = "ХВАТИТ ПРЯТАТЬСЯ" ;STOP HIDING
 						MsgTimer = 6*70
 						ms\MenuOpen = False
 						Return
@@ -8810,23 +8810,23 @@ Function DrawMenu()
 		
 		If AchievementsMenu > 0 Then
 			AASetFont fo\Font[1]
-			AAText(x, y-(122-45)*MenuScale, "ACHIEVEMENTS",False,True)
+			AAText(x, y-(122-45)*MenuScale, "ДОСТИЖЕНИЯ",False,True) ;ACHIEVEMENTS
 			AASetFont fo\Font[0]
 		ElseIf OptionsMenu > 0 Then
 			AASetFont fo\Font[1]
-			AAText(x, y-(122-45)*MenuScale, "OPTIONS",False,True)
+			AAText(x, y-(122-45)*MenuScale, "НАСТРОЙКИ",False,True) ;OPTIONS
 			AASetFont fo\Font[0]
 		ElseIf QuitMSG > 0 Then
 			AASetFont fo\Font[1]
-			AAText(x, y-(122-45)*MenuScale, "QUIT?",False,True)
+			AAText(x, y-(122-45)*MenuScale, "ВЫЙТИ?",False,True) ;QUIT?
 			AASetFont fo\Font[0]
 		ElseIf KillTimer >= 0 Then
 			AASetFont fo\Font[1]
-			AAText(x, y-(122-45)*MenuScale, "PAUSED",False,True)
+			AAText(x, y-(122-45)*MenuScale, "ПАУЗА",False,True) ;PAUSED
 			AASetFont fo\Font[0]
 		Else
 			AASetFont fo\Font[1]
-			AAText(x, y-(122-45)*MenuScale, "YOU DIED",False,True)
+			AAText(x, y-(122-45)*MenuScale, "ВЫ ПОГИБЛИ",False,True) ;YOU DIED
 			AASetFont fo\Font[0]
 		End If		
 		
@@ -8837,11 +8837,11 @@ Function DrawMenu()
 		
 		If AchievementsMenu <= 0 And OptionsMenu <= 0 And QuitMSG <= 0
 			AASetFont fo\Font[0]
-			AAText x, y, "Difficulty: "+SelectedDifficulty\name
-			AAText x, y+20*MenuScale, "Save: "+CurrSave
-			AAText x, y+40*MenuScale, "Map seed: "+RandomSeed
+			AAText x, y, "Сложность: "+SelectedDifficulty\name ;Difficulty:
+			AAText x, y+20*MenuScale, "Сохранение: "+CurrSave ;Save:
+			AAText x, y+40*MenuScale, "Сид карты: "+RandomSeed ;Map seed:
 		ElseIf AchievementsMenu <= 0 And OptionsMenu > 0 And QuitMSG <= 0 And KillTimer >= 0
-			If DrawButton(x + 101 * MenuScale, y + 410 * MenuScale, 230 * MenuScale, 60 * MenuScale, "Back") Then
+			If DrawButton(x + 101 * MenuScale, y + 410 * MenuScale, 230 * MenuScale, 60 * MenuScale, "Назад") Then ;Back
 				AchievementsMenu = 0
 				OptionsMenu = 0
 				QuitMSG = 0
@@ -8863,10 +8863,10 @@ Function DrawMenu()
 				Rect(x+320*MenuScale,y-5*MenuScale,110*MenuScale,40*MenuScale,True)
 			EndIf
 			
-			If DrawButton(x-5*MenuScale,y,100*MenuScale,30*MenuScale,"GRAPHICS",False) Then OptionsMenu = 1
-			If DrawButton(x+105*MenuScale,y,100*MenuScale,30*MenuScale,"AUDIO",False) Then OptionsMenu = 2
-			If DrawButton(x+215*MenuScale,y,100*MenuScale,30*MenuScale,"CONTROLS",False) Then OptionsMenu = 3
-			If DrawButton(x+325*MenuScale,y,100*MenuScale,30*MenuScale,"ADVANCED",False) Then OptionsMenu = 4
+			If DrawButton(x-5*MenuScale,y,100*MenuScale,30*MenuScale,"ГРАФИКА",False) Then OptionsMenu = 1 ;GRAPHICS
+			If DrawButton(x+105*MenuScale,y,100*MenuScale,30*MenuScale,"АУДИО",False) Then OptionsMenu = 2 ;AUDIO
+			If DrawButton(x+215*MenuScale,y,100*MenuScale,30*MenuScale,"УПРАВЛЕНИЕ",False) Then OptionsMenu = 3 ;CONTROLS
+			If DrawButton(x+325*MenuScale,y,100*MenuScale,30*MenuScale,"ПРОЧЕЕ",False) Then OptionsMenu = 4 ;ADVANCED
 			
 			Local tx# = (GraphicWidth/2)+(width/2)
 			Local ty# = y
@@ -8881,7 +8881,7 @@ Function DrawMenu()
 					y=y+50*MenuScale
 					
 					Color 100,100,100
-					AAText(x, y, "Enable bump mapping:")	
+					AAText(x, y, "Рельефное текстурирование:") ;Enable bump mapping:
 					BumpEnabled = DrawTick(x + 270 * MenuScale, y + MenuScale, BumpEnabled, True)
 					If MouseOn(x + 270 * MenuScale, y + MenuScale, 20*MenuScale,20*MenuScale) And OnSliderID=0
 						DrawOptionsTooltip(tx,ty,tw,th,"bump")
@@ -8890,7 +8890,7 @@ Function DrawMenu()
 					y=y+30*MenuScale
 					
 					Color 255,255,255
-					AAText(x, y, "VSync:")
+					AAText(x, y, "Вертикальная синхронизация:") ;VSync:
 					Vsync% = DrawTick(x + 270 * MenuScale, y + MenuScale, Vsync%)
 					If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale) And OnSliderID=0
 						DrawOptionsTooltip(tx,ty,tw,th,"vsync")
@@ -8899,7 +8899,7 @@ Function DrawMenu()
 					y=y+30*MenuScale
 					
 					Color 255,255,255
-					AAText(x, y, "Anti-aliasing:")
+					AAText(x, y, "Сглаживание:") ;Anti-aliasing:
 					Opt_AntiAlias = DrawTick(x + 270 * MenuScale, y + MenuScale, Opt_AntiAlias%)
 					If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale) And OnSliderID=0
 						DrawOptionsTooltip(tx,ty,tw,th,"antialias")
@@ -8908,7 +8908,7 @@ Function DrawMenu()
 					y=y+30*MenuScale
 					
 					Color 255,255,255
-					AAText(x, y, "Enable room lights:")
+					AAText(x, y, "Улучшенное освещение:") ;Enable room lights:
 					EnableRoomLights = DrawTick(x + 270 * MenuScale, y + MenuScale, EnableRoomLights)
 					If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale) And OnSliderID=0
 						DrawOptionsTooltip(tx,ty,tw,th,"roomlights")
@@ -8918,7 +8918,7 @@ Function DrawMenu()
 					
 					ScreenGamma = (SlideBar(x + 270*MenuScale, y+6*MenuScale, 100*MenuScale, ScreenGamma*50.0)/50.0)
 					Color 255,255,255
-					AAText(x, y, "Screen gamma")
+					AAText(x, y, "Уровень гаммы:") ;Screen gamma
 					If MouseOn(x+270*MenuScale,y+6*MenuScale,100*MenuScale+14,20) And OnSliderID=0
 						DrawOptionsTooltip(tx,ty,tw,th,"gamma",ScreenGamma)
 					EndIf
@@ -8928,7 +8928,7 @@ Function DrawMenu()
 					y=y+50*MenuScale
 					
 					Color 255,255,255
-					AAText(x, y, "Particle amount:")
+					AAText(x, y, "Количество частиц:") ;Particle amount:
 					ParticleAmount = Slider3(x+270*MenuScale,y+6*MenuScale,100*MenuScale,ParticleAmount,2,"MINIMAL","REDUCED","FULL")
 					If (MouseOn(x + 270 * MenuScale, y-6*MenuScale, 100*MenuScale+14, 20) And OnSliderID=0) Or OnSliderID=2
 						DrawOptionsTooltip(tx,ty,tw,th,"particleamount",ParticleAmount)
@@ -8937,7 +8937,7 @@ Function DrawMenu()
 					y=y+50*MenuScale
 					
 					Color 255,255,255
-					AAText(x, y, "Texture LOD Bias:")
+					AAText(x, y, "Детализация текстур:") ;Texture LOD Bias:
 					TextureDetails = Slider5(x+270*MenuScale,y+6*MenuScale,100*MenuScale,TextureDetails,3,"0.8","0.4","0.0","-0.4","-0.8")
 					Select TextureDetails%
 						Case 0
@@ -8958,7 +8958,7 @@ Function DrawMenu()
 					
 					y=y+40*MenuScale
 					Color 100,100,100
-					AAText(x, y, "Save textures in the VRAM:")	
+					AAText(x, y, "Сохранять текстуры в VRAM:") ;Save textures in the VRAM:
 					SaveTexturesInVRam = DrawTick(x + 270 * MenuScale, y + MenuScale, SaveTexturesInVRam, True)
 					If MouseOn(x + 270 * MenuScale, y + MenuScale, 20*MenuScale,20*MenuScale) And OnSliderID=0
 						DrawOptionsTooltip(tx,ty,tw,th,"vram")
@@ -8971,7 +8971,7 @@ Function DrawMenu()
 					SlideBarFOV = (SlideBar(x + 270*MenuScale, y+6*MenuScale,100*MenuScale, SlideBarFOV*2.0)/2.0)
 					FOV = SlideBarFOV+40
 					Color 255,255,255
-					AAText(x, y, "Field of view:")
+					AAText(x, y, "Поле зрения (FOV):") ;Field of view:
 					Color 255,255,0
 					AAText(x + 5 * MenuScale, y + 25 * MenuScale, Int(FOV#)+" FOV")
 					If MouseOn(x+250*MenuScale,y-4*MenuScale,100*MenuScale+14,20)
@@ -8989,7 +8989,7 @@ Function DrawMenu()
 					
 					MusicVolume = (SlideBar(x + 250*MenuScale, y-4*MenuScale, 100*MenuScale, MusicVolume*100.0)/100.0)
 					Color 255,255,255
-					AAText(x, y, "Music volume:")
+					AAText(x, y, "Громкость музыки:") ;Music volume:
 					If MouseOn(x+250*MenuScale,y-4*MenuScale,100*MenuScale+14,20)
 						DrawOptionsTooltip(tx,ty,tw,th,"musicvol",MusicVolume)
 					EndIf
@@ -8999,7 +8999,7 @@ Function DrawMenu()
 					PrevSFXVolume = (SlideBar(x + 250*MenuScale, y-4*MenuScale, 100*MenuScale, SFXVolume*100.0)/100.0)
 					If (Not DeafPlayer) Then SFXVolume# = PrevSFXVolume#
 					Color 255,255,255
-					AAText(x, y, "Sound volume:")
+					AAText(x, y, "Громкость звуков:") ;Sound volume:
 					If MouseOn(x+250*MenuScale,y-4*MenuScale,100*MenuScale+14,20)
 						DrawOptionsTooltip(tx,ty,tw,th,"soundvol",PrevSFXVolume)
 					EndIf
@@ -9007,7 +9007,7 @@ Function DrawMenu()
 					y = y + 30*MenuScale
 					
 					Color 100,100,100
-					AAText x, y, "Sound auto-release:"
+					AAText x, y, "Автовысвобождение звука:" ;Sound auto-release:
 					EnableSFXRelease = DrawTick(x + 270 * MenuScale, y + MenuScale, EnableSFXRelease,True)
 					If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
 						DrawOptionsTooltip(tx,ty,tw,th+220*MenuScale,"sfxautorelease")
@@ -9016,7 +9016,7 @@ Function DrawMenu()
 					y = y + 30*MenuScale
 					
 					Color 100,100,100
-					AAText x, y, "Enable user tracks:"
+					AAText x, y, "Включить польз. треки:" ;Enable user tracks:
 					EnableUserTracks = DrawTick(x + 270 * MenuScale, y + MenuScale, EnableUserTracks,True)
 					If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
 						DrawOptionsTooltip(tx,ty,tw,th,"usertrack")
@@ -9025,12 +9025,12 @@ Function DrawMenu()
 					If EnableUserTracks
 						y = y + 30 * MenuScale
 						Color 255,255,255
-						AAText x, y, "User track mode:"
+						AAText x, y, "Режим польз. треков:" ;User track mode:
 						UserTrackMode = DrawTick(x + 270 * MenuScale, y + MenuScale, UserTrackMode)
 						If UserTrackMode
-							AAText x, y + 20 * MenuScale, "Repeat"
+							AAText x, y + 20 * MenuScale, "Повтор" ;Repeat
 						Else
-							AAText x, y + 20 * MenuScale, "Random"
+							AAText x, y + 20 * MenuScale, "Случайно" ;Random
 						EndIf
 						If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
 							DrawOptionsTooltip(tx,ty,tw,th,"usertrackmode")
@@ -9048,7 +9048,7 @@ Function DrawMenu()
 					
 					MouseSensitivity = (SlideBar(x + 270*MenuScale, y-4*MenuScale, 100*MenuScale, (MouseSensitivity+0.5)*100.0)/100.0)-0.5
 					Color(255, 255, 255)
-					AAText(x, y, "Mouse sensitivity:")
+					AAText(x, y, "Чувствительность мыши:") ;Mouse sensitivity:
 					If MouseOn(x+270*MenuScale,y-4*MenuScale,100*MenuScale+14,20)
 						DrawOptionsTooltip(tx,ty,tw,th,"mousesensitivity",MouseSensitivity)
 					EndIf
@@ -9056,7 +9056,7 @@ Function DrawMenu()
 					y = y + 30*MenuScale
 					
 					Color(255, 255, 255)
-					AAText(x, y, "Invert mouse Y-axis:")
+					AAText(x, y, "Инвертировать мышь по оси Y:") ;Invert mouse Y-axis:
 					InvertMouse = DrawTick(x + 270 * MenuScale, y + MenuScale, InvertMouse)
 					If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
 						DrawOptionsTooltip(tx,ty,tw,th,"mouseinvert")
@@ -9066,7 +9066,7 @@ Function DrawMenu()
 					
 					MouseSmooth = (SlideBar(x + 270*MenuScale, y-4*MenuScale, 100*MenuScale, (MouseSmooth)*50.0)/50.0)
 					Color(255, 255, 255)
-					AAText(x, y, "Mouse smoothing:")
+					AAText(x, y, "Сглаживание мыши:") ;Mouse smoothing:
 					If MouseOn(x+270*MenuScale,y-4*MenuScale,100*MenuScale+14,20)
 						DrawOptionsTooltip(tx,ty,tw,th,"mousesmoothing",MouseSmooth)
 					EndIf
@@ -9074,31 +9074,31 @@ Function DrawMenu()
 					Color(255, 255, 255)
 					
 					y = y + 30*MenuScale
-					AAText(x, y, "Control configuration:")
+					AAText(x, y, "Настройка управления:") ;Control configuration:
 					y = y + 10*MenuScale
 					
-					AAText(x, y + 20 * MenuScale, "Move Forward")
+					AAText(x, y + 20 * MenuScale, "Идти вперёд") ;Move Forward
 					InputBox(x + 200 * MenuScale, y + 20 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_UP,210)),5)		
-					AAText(x, y + 40 * MenuScale, "Strafe Left")
+					AAText(x, y + 40 * MenuScale, "Идти влево") ;Strafe Left
 					InputBox(x + 200 * MenuScale, y + 40 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_LEFT,210)),3)	
-					AAText(x, y + 60 * MenuScale, "Move Backward")
+					AAText(x, y + 60 * MenuScale, "Идти назад") ;Move Backward
 					InputBox(x + 200 * MenuScale, y + 60 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_DOWN,210)),6)				
-					AAText(x, y + 80 * MenuScale, "Strafe Right")
+					AAText(x, y + 80 * MenuScale, "Идти вправо") ;Strafe Right
 					InputBox(x + 200 * MenuScale, y + 80 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_RIGHT,210)),4)
 					
-					AAText(x, y + 100 * MenuScale, "Manual Blink")
+					AAText(x, y + 100 * MenuScale, "Моргнуть") ;Manual Blink
 					InputBox(x + 200 * MenuScale, y + 100 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_BLINK,210)),7)				
-					AAText(x, y + 120 * MenuScale, "Sprint")
+					AAText(x, y + 120 * MenuScale, "Бежать") ;Sprint
 					InputBox(x + 200 * MenuScale, y + 120 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_SPRINT,210)),8)
-					AAText(x, y + 140 * MenuScale, "Open/Close Inventory")
+					AAText(x, y + 140 * MenuScale, "Предметы") ;Open/Close Inventory
 					InputBox(x + 200 * MenuScale, y + 140 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_INV,210)),9)
-					AAText(x, y + 160 * MenuScale, "Crouch")
+					AAText(x, y + 160 * MenuScale, "Ползти") ;Crouch
 					InputBox(x + 200 * MenuScale, y + 160 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_CROUCH,210)),10)
-					AAText(x, y + 180 * MenuScale, "Quick Save")
+					AAText(x, y + 180 * MenuScale, "Быстрое сохр.") ;Quick Save
 					InputBox(x + 200 * MenuScale, y + 180 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_SAVE,210)),11)	
-					AAText(x, y + 200 * MenuScale, "Open/Close Console")
+					AAText(x, y + 200 * MenuScale, "Консоль") ;Open/Close Console
 					InputBox(x + 200 * MenuScale, y + 200 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_CONSOLE,210)),12)
-					AAText(x, y + 220 * MenuScale, "Take Screenshot")
+					AAText(x, y + 220 * MenuScale, "Сделать скриншот") ;Take Screenshot
 					InputBox(x + 200 * MenuScale, y + 220 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_SCREENSHOT,210)),13)
 					
 					If MouseOn(x,y,300*MenuScale,240*MenuScale)
@@ -9142,7 +9142,7 @@ Function DrawMenu()
 					y = y + 50*MenuScale
 					
 					Color 255,255,255				
-					AAText(x, y, "Show HUD:")	
+					AAText(x, y, "Отображать HUD:") ;Show HUD:
 					HUDenabled = DrawTick(x + 270 * MenuScale, y + MenuScale, HUDenabled)
 					If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
 						DrawOptionsTooltip(tx,ty,tw,th,"hud")
@@ -9151,7 +9151,7 @@ Function DrawMenu()
 					y = y + 30*MenuScale
 					
 					Color 255,255,255
-					AAText(x, y, "Enable console:")
+					AAText(x, y, "Включить консоль:") ;Enable console:
 					CanOpenConsole = DrawTick(x +270 * MenuScale, y + MenuScale, CanOpenConsole)
 					If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
 						DrawOptionsTooltip(tx,ty,tw,th,"consoleenable")
@@ -9160,7 +9160,7 @@ Function DrawMenu()
 					y = y + 30*MenuScale
 					
 					Color 255,255,255
-					AAText(x, y, "Open console on error:")
+					AAText(x, y, "Открыть консоль при ошибке:") ;Open console on error:
 					ConsoleOpening = DrawTick(x + 270 * MenuScale, y + MenuScale, ConsoleOpening)
 					If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
 						DrawOptionsTooltip(tx,ty,tw,th,"consoleerror")
@@ -9169,12 +9169,12 @@ Function DrawMenu()
 					y = y + 30*MenuScale
 					
 					Color 255,255,255
-					AAText(x, y, "Console Version:")
+					AAText(x, y, "Версия консоли:") ;Console Version:
 					ConsoleVersion = DrawTick(x + 270 * MenuScale, y + MenuScale, ConsoleVersion)
 					If ConsoleVersion = 1 Then
-					    AAText(x + 310 * MenuScale, y, "New Version")
+					    AAText(x + 310 * MenuScale, y, "Новая") ;New Version
 					Else
-					    AAText(x + 310 * MenuScale, y, "Old Version")
+					    AAText(x + 310 * MenuScale, y, "Старая") ;Old Version
 					EndIf    
 					If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
 						DrawOptionsTooltip(tx,ty,tw,th,"consoleversion")
@@ -9183,7 +9183,7 @@ Function DrawMenu()
 					y = y + 50*MenuScale
 					
 					Color 255,255,255
-					AAText(x, y, "Achievement popups:")
+					AAText(x, y, "Уведом. о новом достижении:") ;Achievement popups:
 					AchvMSGenabled% = DrawTick(x + 270 * MenuScale, y, AchvMSGenabled%)
 					If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
 						DrawOptionsTooltip(tx,ty,tw,th,"achpopup")
@@ -9192,7 +9192,7 @@ Function DrawMenu()
 					y = y + 50*MenuScale
 					
 					Color 255,255,255
-					AAText(x, y, "Show FPS:")
+					AAText(x, y, "Отображать FPS:") ;Show FPS:
 					ShowFPS% = DrawTick(x + 270 * MenuScale, y, ShowFPS%)
 					If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
 						DrawOptionsTooltip(tx,ty,tw,th,"showfps")
@@ -9201,7 +9201,7 @@ Function DrawMenu()
 					y = y + 30*MenuScale
 					
 					Color 255,255,255
-					AAText(x, y, "Framelimit:")
+					AAText(x, y, "Лимит кадров:") ;Framelimit
 					
 					Color 255,255,255
 					If DrawTick(x + 270 * MenuScale, y, CurrFrameLimit > 0.0) Then
@@ -9227,7 +9227,7 @@ Function DrawMenu()
 					y = y + 80*MenuScale
 					
 					Color 255,255,255
-					AAText(x, y, "Antialiased text:")
+					AAText(x, y, "Сглаживание текста:") ;Antialiased text:
 					AATextEnable% = DrawTick(x + 270 * MenuScale, y + MenuScale, AATextEnable%)
 					If AATextEnable_Prev% <> AATextEnable
 						For font.AAFont = Each AAFont
@@ -9268,7 +9268,7 @@ Function DrawMenu()
 				If (Not CanSave) Then AbleToSave = False
 				If AbleToSave
 					QuitButton = 140
-					If DrawButton(x, y + 60*MenuScale, 390*MenuScale, 60*MenuScale, "Save & Quit") Then
+					If DrawButton(x, y + 60*MenuScale, 390*MenuScale, 60*MenuScale, "Сохр и выйти") Then ;Save & Quit
 						DropSpeed = 0
 						SaveGame(SavePath + CurrSave + "\")
 						NullGame()
@@ -9281,7 +9281,7 @@ Function DrawMenu()
 				EndIf
 			EndIf
 			
-			If DrawButton(x, y + QuitButton*MenuScale, 390*MenuScale, 60*MenuScale, "Quit") Then
+			If DrawButton(x, y + QuitButton*MenuScale, 390*MenuScale, 60*MenuScale, "Выйти") Then ;Quit
 				NullGame()
 				ms\MenuOpen = False
 				ms\MainMenuOpen = True
@@ -9290,14 +9290,14 @@ Function DrawMenu()
 				FlushKeys()
 			EndIf
 			
-			If DrawButton(x+101*MenuScale, y + 344*MenuScale, 230*MenuScale, 60*MenuScale, "Back") Then
+			If DrawButton(x+101*MenuScale, y + 344*MenuScale, 230*MenuScale, 60*MenuScale, "Назад") Then ;Back
 				AchievementsMenu = 0
 				OptionsMenu = 0
 				QuitMSG = 0
 				MouseHit1 = False
 			EndIf
 		Else
-			If DrawButton(x+101*MenuScale, y + 344*MenuScale, 230*MenuScale, 60*MenuScale, "Back") Then
+			If DrawButton(x+101*MenuScale, y + 344*MenuScale, 230*MenuScale, 60*MenuScale, "Назад") Then ;Back
 				AchievementsMenu = 0
 				OptionsMenu = 0
 				QuitMSG = 0
@@ -9346,7 +9346,7 @@ Function DrawMenu()
 				
 				y = y+ 72*MenuScale
 				
-				If DrawButton(x, y, 390*MenuScale, 60*MenuScale, "Resume", True, True) Then
+				If DrawButton(x, y, 390*MenuScale, 60*MenuScale, "Продолжить", True, True) Then ;Resume
 					ms\MenuOpen = False
 					ResumeSounds()
 					MouseXSpeed() : MouseYSpeed() : MouseZSpeed() : mouse_x_speed_1#=0.0 : mouse_y_speed_1#=0.0
@@ -9355,7 +9355,7 @@ Function DrawMenu()
 				y = y + 75*MenuScale
 				If (Not SelectedDifficulty\permaDeath) Then
 					If GameSaved Then
-						If DrawButton(x, y, 390*MenuScale, 60*MenuScale, "Load Game") Then
+						If DrawButton(x, y, 390*MenuScale, 60*MenuScale, "Загрузить") Then ;Load Game
 							DrawLoading(0)
 							
 							ms\MenuOpen = False
@@ -9399,22 +9399,22 @@ Function DrawMenu()
 						DrawFrame(x,y,390*MenuScale, 60*MenuScale)
 						Color (100, 100, 100)
 						AASetFont fo\Font[1]
-						AAText(x + (390*MenuScale) / 2, y + (60*MenuScale) / 2, "Load Game", True, True)
+						AAText(x + (390*MenuScale) / 2, y + (60*MenuScale) / 2, "Загрузить", True, True) ;Load Game
 					EndIf
 					y = y + 75*MenuScale
 			EndIf
 				
-				If DrawButton(x, y, 390*MenuScale, 60*MenuScale, "Achievements") Then AchievementsMenu = 1
+				If DrawButton(x, y, 390*MenuScale, 60*MenuScale, "Достижения") Then AchievementsMenu = 1 ;Achievements
 				y = y + 75*MenuScale
 
 				If SelectedDifficulty\menu Then
-					If DrawButton(x, y, 390*MenuScale, 60*MenuScale, "Options") Then OptionsMenu = 1
+					If DrawButton(x, y, 390*MenuScale, 60*MenuScale, "Настройки") Then OptionsMenu = 1 ;Options
 					y = y + 75*MenuScale
 				EndIf				
 			Else							
 				y = y+104*MenuScale
 				If GameSaved And (Not SelectedDifficulty\permaDeath) Then
-					If DrawButton(x, y, 390*MenuScale, 60*MenuScale, "Load Game") Then
+					If DrawButton(x, y, 390*MenuScale, 60*MenuScale, "Загрузить") Then ;Load Game
 						DrawLoading(0)
 						
 						ms\MenuOpen = False
@@ -9457,9 +9457,9 @@ Function DrawMenu()
 				Else
 					DrawButton(x, y, 390*MenuScale, 60*MenuScale, "")
 					Color 50,50,50
-					AAText(x + 185*MenuScale, y + 30*MenuScale, "Load Game", True, True)
+					AAText(x + 185*MenuScale, y + 30*MenuScale, "Загрузить", True, True) ;Load Game
 				EndIf
-				If DrawButton(x, y + 80*MenuScale, 390*MenuScale, 60*MenuScale, "Quit to Menu") Then
+				If DrawButton(x, y + 80*MenuScale, 390*MenuScale, 60*MenuScale, "Выйти в меню") Then ;Quit to Menu
 					NullGame()
 					ms\MenuOpen = False
 					ms\MainMenuOpen = True
@@ -9471,7 +9471,7 @@ Function DrawMenu()
 			EndIf
 			
 			If KillTimer >= 0 And (Not ms\MainMenuOpen)
-				If DrawButton(x, y, 390*MenuScale, 60*MenuScale, "Quit") Then
+				If DrawButton(x, y, 390*MenuScale, 60*MenuScale, "Выйти") Then ;Quit
 					QuitMSG = 1
 				EndIf
 			EndIf
@@ -10287,7 +10287,7 @@ Function InitNewGame()
 		If (r\RoomTemplate\Name = "start" And IntroEnabled = False) Then 
 			PositionEntity (Collider, EntityX(r\obj)+3584*RoomScale, 704*RoomScale, EntityZ(r\obj)+1024*RoomScale)
 			PlayerRoom = r
-			it = CreateItem("Class D Orientation Leaflet", "paper", 1, 1, 1)
+			it = CreateItem("Информационная листовка для персонала класса D", "paper", 1, 1, 1) ;Class D Orientation Leaflet
 			it\Picked = True
 			it\Dropped = -1
 			it\itemtemplate\found=True
@@ -10296,7 +10296,7 @@ Function InitNewGame()
 			EntityType (it\collider, HIT_ITEM)
 			EntityParent(it\collider, 0)
 			ItemAmount = ItemAmount + 1
-			it = CreateItem("Document SCP-173", "paper", 1, 1, 1)
+			it = CreateItem("Документ об SCP-173", "paper", 1, 1, 1) ;Document SCP-173
 			it\Picked = True
 			it\Dropped = -1
 			it\itemtemplate\found=True
@@ -11378,7 +11378,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 	
 	Local it2.Items
 	Select item\itemtemplate\name
-		Case "Gas Mask", "Heavy Gas Mask"
+		Case "Противогаз", "Тяжёлый противогаз" ;Gas Mask ;Heavy Gas Mask
 			Select setting
 				Case "rough", "coarse"
 					d.Decals = CreateDecal(0, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
@@ -11388,7 +11388,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 					PositionEntity(item\collider, x, y, z)
 					ResetEntity(item\collider)
 				Case "fine", "very fine"
-					it2 = CreateItem("Gas Mask", "supergasmask", x, y, z)
+					it2 = CreateItem("Противогаз", "supergasmask", x, y, z) ;Gas Mask
 					RemoveItem(item)
 			End Select
 		Case "SCP-1499"
@@ -11398,7 +11398,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 					d\Size = 0.12 : ScaleSprite(d\obj, d\Size, d\Size)
 					RemoveItem(item)
 				Case "1:1"
-					it2 = CreateItem("Gas Mask", "gasmask" , x, y, z)
+					it2 = CreateItem("Противогаз", "gasmask" , x, y, z) ;Gas Mask
 					RemoveItem(item)
 				Case "fine"
 					it2 = CreateItem("SCP-1499", "super1499", x, y, z)
@@ -11411,29 +11411,29 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 					n\State3 = 1
 					RemoveItem(item)
 			End Select
-		Case "Ballistic Vest"
+		Case "Бронежилет" ;Ballistic Vest
 			Select setting
 				Case "rough"
 					d.Decals = CreateDecal(0, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
 					d\Size = 0.12 : ScaleSprite(d\obj, d\Size, d\Size)
 					RemoveItem(item)
 				Case "coarse"
-					it2 = CreateItem("Corrosive Ballistic Vest", "corrvest", x, y, z)
+					it2 = CreateItem("Разъеденный бронежилет", "corrvest", x, y, z) ;Corrosive Ballistic Vest
 					RemoveItem(item)
 				Case "1:1"
 					PositionEntity(item\collider, x, y, z)
 					ResetEntity(item\collider)
 				Case "fine"
-					it2 = CreateItem("Heavy Ballistic Vest", "finevest", x, y, z)
+					it2 = CreateItem("Тяжёлый бронежилет", "finevest", x, y, z) ;Heavy Ballistic Vest
 					RemoveItem(item)
 				Case "very fine"
-					it2 = CreateItem("Bulky Ballistic Vest", "veryfinevest", x, y, z)
+					it2 = CreateItem("Громоздкий бронежилет", "veryfinevest", x, y, z) ;Bulky Ballistic Vest
 					RemoveItem(item)
 			End Select
-		Case "Clipboard"
+		Case "Планшет" ;Clipboard
 			Select setting
 				Case "rough", "coarse"
-					it2 = CreateItem("Paper Strips", "paperstrips", x, y, z)
+					it2 = CreateItem("Порезанная бумага", "paperstrips", x, y, z) ;Paper Strips
 					For i% = 0 To 19
 						If item\SecondInv[i]<>Null Then RemoveItem(item\SecondInv[i])
 						item\SecondInv[i]=Null
@@ -11451,10 +11451,10 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 					PositionEntity(item\collider, x, y, z)
 					ResetEntity(item\collider)
 			End Select
-		Case "Wallet"
+		Case "Кошелёк" ;Wallet
 			Select setting
 				Case "rough", "coarse"
-					it2 = CreateItem("Paper Strips", "paperstrips", x, y, z)
+					it2 = CreateItem("Порезанная бумага", "paperstrips", x, y, z) ;Paper Strips
 					For i% = 0 To 19
 						If item\SecondInv[i]<>Null Then RemoveItem(item\SecondInv[i])
 						item\SecondInv[i]=Null
@@ -11472,17 +11472,17 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 					PositionEntity(item\collider, x, y, z)
 					ResetEntity(item\collider)
 			End Select
-		Case "Cowbell"
-			Select setting
-				Case "rough","coarse"
-					d.Decals = CreateDecal(0, x, 8*RoomScale+0.010, z, 90, Rand(360), 0)
-					d\Size = 0.2 : EntityAlpha(d\obj, 0.8) : ScaleSprite(d\obj, d\Size, d\Size)
-					RemoveItem(item)
-				Case "1:1","fine","very fine"
-					PositionEntity(item\collider, x, y, z)
-					ResetEntity(item\collider)
-			End Select
-		Case "Night Vision Goggles"
+		;Case "Cowbell"
+		;	Select setting
+		;		Case "rough","coarse"
+		;			d.Decals = CreateDecal(0, x, 8*RoomScale+0.010, z, 90, Rand(360), 0)
+		;			d\Size = 0.2 : EntityAlpha(d\obj, 0.8) : ScaleSprite(d\obj, d\Size, d\Size)
+		;			RemoveItem(item)
+		;		Case "1:1","fine","very fine"
+		;			PositionEntity(item\collider, x, y, z)
+		;			ResetEntity(item\collider)
+		;	End Select
+		Case "Очки ночного виденья" ;Night Vision Goggles
 			Select setting
 				Case "rough", "coarse"
 					d.Decals = CreateDecal(0, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
@@ -11492,17 +11492,17 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 					PositionEntity(item\collider, x, y, z)
 					ResetEntity(item\collider)
 				Case "fine"
-					it2 = CreateItem("Night Vision Goggles", "finenvgoggles", x, y, z)
+					it2 = CreateItem("Очки ночного виденья", "finenvgoggles", x, y, z) ;Night Vision Goggles
 					RemoveItem(item)
 				Case "very fine"
-					it2 = CreateItem("Night Vision Goggles", "supernv", x, y, z)
+					it2 = CreateItem("Очки ночного виденья", "supernv", x, y, z) ;Night Vision Goggles
 					it2\state = 1000
 					RemoveItem(item)
 			End Select
-		Case "Metal Panel", "SCP-148 Ingot"
+		Case "Металлическая панель", "Слиток SCP-148" ;Metal Panel ;SCP-148 Ingot
 			Select setting
 				Case "rough", "coarse"
-					it2 = CreateItem("SCP-148 Ingot", "scp148ingot", x, y, z)
+					it2 = CreateItem("Слиток SCP-148", "scp148ingot", x, y, z) ;SCP-148 Ingot
 					RemoveItem(item)
 				Case "1:1", "fine", "very fine"
 					it2 = Null
@@ -11524,19 +11524,19 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 								RemoveItem (it2)
 								RemoveItem (item)
 								
-								it2 = CreateItem("Heavy Gas Mask", "gasmask3", x, y, z)
+								it2 = CreateItem("Тяжёлый противогаз", "gasmask3", x, y, z) ;Heavy Gas Mask
 							Case "vest"
 								RemoveItem (it2)
 								RemoveItem(item)
-								it2 = CreateItem("Heavy Ballistic Vest", "finevest", x, y, z)
+								it2 = CreateItem("Тяжёлый бронежилет", "finevest", x, y, z) ;Heavy Ballistic Vest
 							Case "hazmatsuit","hazmatsuit2"
 								RemoveItem (it2)
 								RemoveItem(item)
-								it2 = CreateItem("Heavy Hazmat Suit", "hazmatsuit3", x, y, z)
+								it2 = CreateItem("Тяжёлый защитный костюм", "hazmatsuit3", x, y, z) ;Heavy Hazmat Suit
 						End Select
 					Else 
-						If item\itemtemplate\name="SCP-148 Ingot" Then
-							it2 = CreateItem("Metal Panel", "scp148", x, y, z)
+						If item\itemtemplate\name="Слиток SCP-148" Then ;SCP-148 Ingot
+							it2 = CreateItem("Металлическая панель", "scp148", x, y, z) ;Metal Panel
 							RemoveItem(item)
 						Else
 							PositionEntity(item\collider, x, y, z)
@@ -11544,137 +11544,137 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 						EndIf
 					EndIf					
 			End Select
-		Case "Severed Hand", "Black Severed Hand"
+		Case "Оторванная рука", "Чёрная оторванная рука" ;Severed Hand ;Black Severed Hand
 			Select setting
 				Case "rough", "coarse"
 					d.Decals = CreateDecal(3, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
 					d\Size = 0.12 : ScaleSprite(d\obj, d\Size, d\Size)
 				Case "1:1", "fine", "very fine"
-					If (item\itemtemplate\name = "Severed Hand")
-						it2 = CreateItem("Black Severed Hand", "hand2", x, y, z)
+					If (item\itemtemplate\name = "Оторванная рука") ;Severed Hand
+						it2 = CreateItem("Чёрная оторванная рука", "hand2", x, y, z) ;Black Severed Hand
 					Else
-						it2 = CreateItem("Severed Hand", "hand", x, y, z)
+						it2 = CreateItem("Оторванная рука", "hand", x, y, z) ;Severed Hand
 					EndIf
 				Case "very fine"
 					it2 = CreateItem("SCP-447", "scp447", x, y, z)
 			End Select
 			RemoveItem(item)
-		Case "First Aid Kit", "Blue First Aid Kit"
+		Case "Аптечка первой помощи", "Синяя аптечка первой помощи" ;First Aid Kit ;Blue First Aid Kit
 			Select setting
 				Case "rough", "coarse"
 					d.Decals = CreateDecal(0, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
 					d\Size = 0.12 : ScaleSprite(d\obj, d\Size, d\Size)
 				Case "1:1"
 				If Rand(2)=1 Then
-					it2 = CreateItem("Blue First Aid Kit", "firstaid2", x, y, z)
+					it2 = CreateItem("Синяя аптечка первой помощи", "firstaid2", x, y, z) ;Blue First Aid Kit
 				Else
-				    it2 = CreateItem("First Aid Kit", "firstaid", x, y, z)
+				    it2 = CreateItem("Аптечка первой помощи", "firstaid", x, y, z) ;First Aid Kit
 				EndIf
 				Case "fine"
-					it2 = CreateItem("Small First Aid Kit", "finefirstaid", x, y, z)
+					it2 = CreateItem("Маленькая аптечка первой помощи", "finefirstaid", x, y, z) ;Small First Aid Kit
 				Case "very fine"
-					it2 = CreateItem("Strange Bottle", "veryfinefirstaid", x, y, z)
+					it2 = CreateItem("Странная бутылка", "veryfinefirstaid", x, y, z) ;Strange Bottle
 			End Select
 			RemoveItem(item)
-		Case "Level 0 Key Card", "Level 1 Key Card", "Level 2 Key Card", "Level 3 Key Card", "Level 4 Key Card", "Level 5 Key Card", "Level 6 Key Card", "Key Card"
+		Case "Ключ-карта 0-го уровня", "Ключ-карта 1-го уровня", "Ключ-карта 2-го уровня", "Ключ-карта 3-го уровня", "Ключ-карта 4-го уровня", "Ключ-карта 5-го уровня", "Ключ-карта 6-го уровня", "Ключ-карта" ;Level 0 Key Card ;Level 1 Key Card ;Level 2 Key Card ;Level 3 Key Card ;Level 4 Key Card ;Level 5 Key Card ;Level 6 Key Card ;Key Card
 			Select setting
 				Case "rough", "coarse"
 					d.Decals = CreateDecal(0, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
 					d\Size = 0.07 : ScaleSprite(d\obj, d\Size, d\Size)
 				Case "1:1"
-					it2 = CreateItem("Playing Card", "misc", x, y, z)
+					it2 = CreateItem("Игральная карта", "misc", x, y, z) ;Playing Card
 				Case "fine"
 					Select item\itemtemplate\name
-					    Case "Level 0 Key Card"
+					    Case "Ключ-карта 0-го уровня" ;Level 0 Key Card
 							Select SelectedDifficulty\otherFactors
 								Case EASY
-									it2 = CreateItem("Level 1 Key Card", "key1", x, y, z)
+									it2 = CreateItem("Ключ-карта 1-го уровня", "key1", x, y, z) ;Level 1 Key Card
 								Case NORMAL
 									If Rand(5)=1 Then
 										it2 = CreateItem("Mastercard", "misc", x, y, z)
 									Else
-										it2 = CreateItem("Level 1 Key Card", "key1", x, y, z)
+										it2 = CreateItem("Ключ-карта 1-го уровня", "key1", x, y, z) ;Level 1 Key Card
 									EndIf
 								Case HARD
 									If Rand(4)=1 Then
 										it2 = CreateItem("Mastercard", "misc", x, y, z)
 									Else
-										it2 = CreateItem("Level 1 Key Card", "key1", x, y, z)
+										it2 = CreateItem("Ключ-карта 1-го уровня", "key1", x, y, z) ;Level 1 Key Card
 									EndIf
 							End Select
-						Case "Level 1 Key Card"
+						Case "Ключ-карта 1-го уровня" ;Level 1 Key Card
 							Select SelectedDifficulty\otherFactors
 								Case EASY
-									it2 = CreateItem("Level 2 Key Card", "key2", x, y, z)
+									it2 = CreateItem("Ключ-карта 2-го уровня", "key2", x, y, z) ;Level 2 Key Card
 								Case NORMAL
 									If Rand(5)=1 Then
 										it2 = CreateItem("Mastercard", "misc", x, y, z)
 									Else
-										it2 = CreateItem("Level 2 Key Card", "key2", x, y, z)
+										it2 = CreateItem("Ключ-карта 2-го уровня", "key2", x, y, z) ;Level 2 Key Card
 									EndIf
 								Case HARD
 									If Rand(4)=1 Then
 										it2 = CreateItem("Mastercard", "misc", x, y, z)
 									Else
-										it2 = CreateItem("Level 2 Key Card", "key2", x, y, z)
+										it2 = CreateItem("Ключ-карта 2-го уровня", "key2", x, y, z) ;Level 2 Key Card
 									EndIf
 							End Select
-						Case "Level 2 Key Card"
+						Case "Ключ-карта 2-го уровня" ;Level 2 Key Card
 							Select SelectedDifficulty\otherFactors
 								Case EASY
-									it2 = CreateItem("Level 3 Key Card", "key3", x, y, z)
+									it2 = CreateItem("Ключ-карта 3-го уровня", "key3", x, y, z) ;Level 3 Key Card
 								Case NORMAL
 									If Rand(4)=1 Then
 										it2 = CreateItem("Mastercard", "misc", x, y, z)
 									Else
-										it2 = CreateItem("Level 3 Key Card", "key3", x, y, z)
+										it2 = CreateItem("Ключ-карта 3-го уровня", "key3", x, y, z) ;Level 3 Key Card
 									EndIf
 								Case HARD
 									If Rand(3)=1 Then
 										it2 = CreateItem("Mastercard", "misc", x, y, z)
 									Else
-										it2 = CreateItem("Level 3 Key Card", "key3", x, y, z)
+										it2 = CreateItem("Ключ-карта 3-го уровня", "key3", x, y, z) ;Level 3 Key Card
 									EndIf
 							End Select
-						Case "Level 3 Key Card"
+						Case "Ключ-карта 3-го уровня" ;Level 3 Key Card
 							Select SelectedDifficulty\otherFactors
 								Case EASY
 									If Rand(10)=1 Then
-										it2 = CreateItem("Level 4 Key Card", "key4", x, y, z)
+										it2 = CreateItem("Ключ-карта 4-го уровня", "key4", x, y, z) ;Level 4 Key Card
 									Else
 										it2 = CreateItem("Playing Card", "misc", x, y, z)	
 									EndIf
 								Case NORMAL
 									If Rand(15)=1 Then
-										it2 = CreateItem("Level 4 Key Card", "key4", x, y, z)
+										it2 = CreateItem("Ключ-карта 4-го уровня", "key4", x, y, z) ;Level 4 Key Card
 									Else
 										it2 = CreateItem("Playing Card", "misc", x, y, z)	
 									EndIf
 								Case HARD
 									If Rand(20)=1 Then
-										it2 = CreateItem("Level 4 Key Card", "key4", x, y, z)
+										it2 = CreateItem("Ключ-карта 4-го уровня", "key4", x, y, z) ;Level 4 Key Card
 									Else
 										it2 = CreateItem("Playing Card", "misc", x, y, z)	
 									EndIf
 							End Select
-						Case "Level 4 Key Card"
+						Case "Ключ-карта 4-го уровня" ;Level 4 Key Card
 							Select SelectedDifficulty\otherFactors
 								Case EASY
-									it2 = CreateItem("Level 5 Key Card", "key5", x, y, z)
+									it2 = CreateItem("Ключ-карта 5-го уровня", "key5", x, y, z) ;Level 5 Key Card
 								Case NORMAL
 									If Rand(4)=1 Then
 										it2 = CreateItem("Mastercard", "misc", x, y, z)
 									Else
-										it2 = CreateItem("Level 5 Key Card", "key5", x, y, z)
+										it2 = CreateItem("Ключ-карта 5-го уровня", "key5", x, y, z) ;Level 5 Key Card
 									EndIf
 								Case HARD
 									If Rand(3)=1 Then
 										it2 = CreateItem("Mastercard", "misc", x, y, z)
 									Else
-										it2 = CreateItem("Level 5 Key Card", "key5", x, y, z)
+										it2 = CreateItem("Ключ-карта 5-го уровня", "key5", x, y, z) ;Level 5 Key Card
 									EndIf
 							End Select
-						Case "Level 5 Key Card"	
+						Case "Ключ-карта 5-го уровня"	;Level 5 Key Card
 							Local CurrAchvAmount%=0
 							For i = 0 To MAXACHIEVEMENTS-1
 								If Achievements(i)=True
@@ -11687,50 +11687,50 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 							Select SelectedDifficulty\otherFactors
 								Case EASY
 									If Rand(0,((MAXACHIEVEMENTS-1)*3)-((CurrAchvAmount-1)*3))=0
-										it2 = CreateItem("Key Card Omni", "key7", x, y, z)
+										it2 = CreateItem("Ключ-карта Омни", "key7", x, y, z) ;Key Card Omni
 									Else
 										If Rand(4)=1 Then
-					                        it2 = CreateItem("Level 6 Key Card", "key6", x, y, z)
+					                        it2 = CreateItem("Ключ-карта 6-го уровня", "key6", x, y, z) ;Level 6 Key Card
 					                    Else
 				  	                        it2 = CreateItem("Mastercard", "misc", x, y, z)
 					                    EndIf
 									EndIf
 								Case NORMAL
 									If Rand(0,((MAXACHIEVEMENTS-1)*4)-((CurrAchvAmount-1)*3))=0
-										it2 = CreateItem("Key Card Omni", "key7", x, y, z)
+										it2 = CreateItem("Ключ-карта Омни", "key7", x, y, z) ;Key Card Omni
 									Else
 										If Rand(5)=1 Then
-					                        it2 = CreateItem("Level 6 Key Card", "key6", x, y, z)
+					                        it2 = CreateItem("Ключ-карта 6-го уровня", "key6", x, y, z) ;Level 6 Key Card
 					                    Else
 					                        it2 = CreateItem("Mastercard", "misc", x, y, z)
 						                EndIf
 									EndIf
 								Case HARD
 									If Rand(0,((MAXACHIEVEMENTS-1)*5)-((CurrAchvAmount-1)*3))=0
-										it2 = CreateItem("Key Card Omni", "key7", x, y, z)
+										it2 = CreateItem("Ключ-карта Омни", "key7", x, y, z) ;Key Card Omni
 									Else
 										If Rand(6)=1 Then
-					                        it2 = CreateItem("Level 6 Key Card", "key6", x, y, z)
+					                        it2 = CreateItem("Ключ-карта 6-го уровня", "key6", x, y, z) ;Level 6 Key Card
 					                    Else
 				  	                        it2 = CreateItem("Mastercard", "misc", x, y, z)
 					                    EndIf
 									EndIf
                             End Select
-                        Case "Level 6 Key Card"
+                        Case "Ключ-карта 6-го уровня" ;Level 6 Key Card
 							Select SelectedDifficulty\otherFactors
 								Case EASY
-									it2 = CreateItem("Level 2 Key Card", "key2", x, y, z)
+									it2 = CreateItem("Ключ-карта 2-го уровня", "key2", x, y, z) ;Level 2 Key Card
 								Case NORMAL
 									If Rand(4)=1 Then
 										it2 = CreateItem("Mastercard", "misc", x, y, z)
 									Else
-										it2 = CreateItem("Level 2 Key Card", "key2", x, y, z)
+										it2 = CreateItem("Ключ-карта 2-го уровня", "key2", x, y, z) ;Level 2 Key Card
 									EndIf
 								Case HARD
 									If Rand(3)=1 Then
 										it2 = CreateItem("Mastercard", "misc", x, y, z)
 									Else
-										it2 = CreateItem("Level 2 Key Card", "key2", x, y, z)
+										it2 = CreateItem("Ключ-карта 2-го уровня", "key2", x, y, z) ;Level 2 Key Card
 									EndIf
 							End Select				
 					End Select
@@ -11747,20 +11747,20 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 					Select SelectedDifficulty\otherFactors
 						Case EASY
 							If Rand(0,((MAXACHIEVEMENTS-1)*3)-((CurrAchvAmount-1)*3))=0
-								it2 = CreateItem("Key Card Omni", "key7", x, y, z)
+								it2 = CreateItem("Ключ-карта Омни", "key7", x, y, z) ;Key Card Omni
 							Else
 							    If Rand(4)=1 Then
-							        it2 = CreateItem("Level 6 Key Card", "key6", x, y, z)
+							        it2 = CreateItem("Ключ-карта 6-го уровня", "key6", x, y, z) ;Level 6 Key Card
 							    Else
 								    it2 = CreateItem("Mastercard", "misc", x, y, z)
 								EndIf
 							EndIf
 						Case NORMAL
 							If Rand(0,((MAXACHIEVEMENTS-1)*4)-((CurrAchvAmount-1)*3))=0
-								it2 = CreateItem("Key Card Omni", "key7", x, y, z)
+								it2 = CreateItem("Ключ-карта Омни", "key7", x, y, z) ;Key Card Omni
 							Else
 								If Rand(5)=1 Then
-							        it2 = CreateItem("Level 6 Key Card", "key6", x, y, z)
+							        it2 = CreateItem("Ключ-карта 6-го уровня", "key6", x, y, z) ;Level 6 Key Card
 							    Else
 								    it2 = CreateItem("Mastercard", "misc", x, y, z)
 								EndIf
@@ -11768,7 +11768,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 						Case HARD
 							If Rand(0,((MAXACHIEVEMENTS-1)*5)-((CurrAchvAmount-1)*3))=0
 								If Rand(6)=1 Then
-							        it2 = CreateItem("Level 6 Key Card", "key6", x, y, z)
+							        it2 = CreateItem("Ключ-карта 6-го уровня", "key6", x, y, z) ;Level 6 Key Card
 							    Else
 								    it2 = CreateItem("Mastercard", "misc", x, y, z)
 								EndIf
@@ -11779,7 +11779,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 			End Select
 			
 			RemoveItem(item)
-		Case "Key Card Omni"
+		Case "Ключ-карта Омни" ;Key Card Omni
 			Select setting
 				Case "rough", "coarse"
 					d.Decals = CreateDecal(0, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
@@ -11788,22 +11788,22 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 					If Rand(2)=1 Then
 						it2 = CreateItem("Mastercard", "misc", x, y, z)
 					Else
-						it2 = CreateItem("Playing Card", "misc", x, y, z)			
+						it2 = CreateItem("Игральная карта", "misc", x, y, z) ;Playing Card
 					EndIf	
 				Case "fine", "very fine"
-					it2 = CreateItem("Key Card Omni", "key7", x, y, z)
+					it2 = CreateItem("Ключ-карта Омни", "key7", x, y, z) ;Key Card Omni
 			End Select			
 			
 			RemoveItem(item)
-		Case "Playing Card", "Coin", "Quarter"
+		Case "Игральная карта", "Монета", "Четвертак" ;Playing Card ;Coin ;Quarter
 			Select setting
 				Case "rough", "coarse"
 					d.Decals = CreateDecal(0, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
 					d\Size = 0.07 : ScaleSprite(d\obj, d\Size, d\Size)
 				Case "1:1"
-					it2 = CreateItem("Level 0 Key Card", "key0", x, y, z)	
+					it2 = CreateItem("Ключ-карта 0-го уровня", "key0", x, y, z) ;Level 0 Key Card
 			    Case "fine", "very fine"
-					it2 = CreateItem("Level 1 Key Card", "key1", x, y, z)
+					it2 = CreateItem("Ключ-карта 1-го уровня", "key1", x, y, z) ;Level 1 Key Card
 			End Select
 			RemoveItem(item)
 		Case "Mastercard"
@@ -11812,48 +11812,48 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 					d.Decals = CreateDecal(0, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
 					d\Size = 0.07 : ScaleSprite(d\obj, d\Size, d\Size)
 				Case "coarse"
-					it2 = CreateItem("Quarter", "25ct", x, y, z)
+					it2 = CreateItem("Четвертак", "25ct", x, y, z) ;Quarter
 					Local it3.Items,it4.Items,it5.Items
-					it3 = CreateItem("Quarter", "25ct", x, y, z)
-					it4 = CreateItem("Quarter", "25ct", x, y, z)
-					it5 = CreateItem("Quarter", "25ct", x, y, z)
+					it3 = CreateItem("Четвертак", "25ct", x, y, z) ;Quarter
+					it4 = CreateItem("Четвертак", "25ct", x, y, z) ;Quarter
+					it5 = CreateItem("Четвертак", "25ct", x, y, z) ;Quarter
 					EntityType (it3\collider, HIT_ITEM)
 					EntityType (it4\collider, HIT_ITEM)
 					EntityType (it5\collider, HIT_ITEM)
 				Case "1:1"
-					it2 = CreateItem("Level 0 Key Card", "key0", x, y, z)	
+					it2 = CreateItem("Ключ-карта 0-го уровня", "key0", x, y, z) ;Level 0 Key Card
 			    Case "fine", "very fine"
-					it2 = CreateItem("Level 1 Key Card", "key1", x, y, z)
+					it2 = CreateItem("Ключ-карта 1-го уровня", "key1", x, y, z) ;Level 1 Key Card
 			End Select
 			RemoveItem(item)
-		Case "S-NAV 300 Navigator", "S-NAV 310 Navigator", "S-NAV Navigator", "S-NAV Navigator Ultimate"
+		Case "Навигатор S-NAV 300", "Навигатор S-NAV 310", "Навигатор S-NAV", "Навигатор S-NAV Ultimate" ;S-NAV 300 Navigator ;S-NAV 310 Navigator ;S-NAV Navigator ;S-NAV Navigator Ultimate
 			Select setting
 				Case "rough", "coarse"
-					it2 = CreateItem("Electronical components", "misc", x, y, z)
+					it2 = CreateItem("Электронные компоненты", "misc", x, y, z) ;Electronical components
 				Case "1:1"
-					it2 = CreateItem("S-NAV Navigator", "nav", x, y, z)
+					it2 = CreateItem("Навигатор S-NAV", "nav", x, y, z) ;S-NAV Navigator
 					it2\state = 100
 				Case "fine"
-					it2 = CreateItem("S-NAV 310 Navigator", "nav", x, y, z)
+					it2 = CreateItem("Навигатор S-NAV 310", "nav", x, y, z) ;S-NAV 310 Navigator
 					it2\state = 100
 				Case "very fine"
-					it2 = CreateItem("S-NAV Navigator Ultimate", "nav", x, y, z)
+					it2 = CreateItem("Навигатор S-NAV Ultimate", "nav", x, y, z) ;S-NAV Navigator Ultimate
 					it2\state = 101
 			End Select
 			
 			RemoveItem(item)
-		Case "Radio Transceiver"
+		Case "Рация" ;Radio Transceiver
 			Select setting
 				Case "rough", "coarse"
 					it2 = CreateItem("Electronical components", "misc", x, y, z)
 				Case "1:1"
-					it2 = CreateItem("Radio Transceiver", "18vradio", x, y, z)
+					it2 = CreateItem("Рация", "18vradio", x, y, z) ;Radio Transceiver
 					it2\state = 100
 				Case "fine"
-					it2 = CreateItem("Radio Transceiver", "fineradio", x, y, z)
+					it2 = CreateItem("Рация", "fineradio", x, y, z) ;Radio Transceiver
 					it2\state = 101
 				Case "very fine"
-					it2 = CreateItem("Radio Transceiver", "veryfineradio", x, y, z)
+					it2 = CreateItem("Рация", "veryfineradio", x, y, z) ;Radio Transceiver
 					it2\state = 101
 			End Select
 			
@@ -11873,96 +11873,96 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 			End Select
 			
 			RemoveItem(item)
-		Case "Some SCP-420-J", "Cigarette"
+		Case "Немного SCP-420-J", "Сигарета" ;Some SCP-420-J ;Cigarette
 			Select setting
 				Case "rough", "coarse"			
 					d.Decals = CreateDecal(0, x, 8*RoomScale+0.010, z, 90, Rand(360), 0)
 					d\Size = 0.2 : EntityAlpha(d\obj, 0.8) : ScaleSprite(d\obj, d\Size, d\Size)
 				Case "1:1"
-					it2 = CreateItem("Cigarette", "cigarette", x + 1.5, y + 0.5, z + 1.0)
+					it2 = CreateItem("Сигарета", "cigarette", x + 1.5, y + 0.5, z + 1.0) ;Cigarette
 				Case "fine"
-					it2 = CreateItem("Joint", "scp420s", x + 1.5, y + 0.5, z + 1.0)
+					it2 = CreateItem("Самокрутка", "scp420s", x + 1.5, y + 0.5, z + 1.0) ;Joint
 				Case "very fine"
-					it2 = CreateItem("Smelly Joint", "scp420s", x + 1.5, y + 0.5, z + 1.0)
+					it2 = CreateItem("Пахучая самокрутка", "scp420s", x + 1.5, y + 0.5, z + 1.0) ;Smelly Joint
 			End Select
 			
 			RemoveItem(item)
-		Case "9V Battery", "18V Battery", "Strange Battery"
+		Case "9V-батарейка", "18V-батарейка", "Странная батарейка" ;9V Battery ;18V Battery ;Strange Battery
 			Select setting
 				Case "rough", "coarse"
 					d.Decals = CreateDecal(0, x, 8 * RoomScale + 0.010, z, 90, Rand(360), 0)
 					d\Size = 0.2 : EntityAlpha(d\obj, 0.8) : ScaleSprite(d\obj, d\Size, d\Size)
 				Case "1:1"
-					it2 = CreateItem("18V Battery", "18vbat", x, y, z)
+					it2 = CreateItem("18V-батарейка", "18vbat", x, y, z) ;18V Battery
 				Case "fine"
-					it2 = CreateItem("Strange Battery", "killbat", x, y, z)
+					it2 = CreateItem("Странная батарейка", "killbat", x, y, z) ;Strange Battery
 				Case "very fine"
-					it2 = CreateItem("Strange Battery", "killbat", x, y, z)
+					it2 = CreateItem("Странная батарейка", "killbat", x, y, z) ;Strange Battery
 			End Select
 			
 			RemoveItem(item)
-		Case "ReVision Eyedrops"
+		Case "Глазные капли Зрение+" ;ReVision Eyedrops
 			Select setting
 				Case "rough", "coarse"
 					d.Decals = CreateDecal(0, x, 8 * RoomScale + 0.010, z, 90, Rand(360), 0)
 					d\Size = 0.2 : EntityAlpha(d\obj, 0.8) : ScaleSprite(d\obj, d\Size, d\Size)
 				Case "1:1"
-				    it2 = CreateItem("RedVision Eyedrops", "eyedrops2", x,y,z)
+				    it2 = CreateItem("Красные глазные капли Зрение+", "eyedrops2", x,y,z) ;RedVision Eyedrops
 				Case "fine"
-					it2 = CreateItem("Blue Eyedrops", "fineeyedrops", x,y,z)
+					it2 = CreateItem("Глазные капли", "fineeyedrops", x,y,z) ;Eyedrops
 				Case "very fine"
-					it2 = CreateItem("Blue Eyedrops", "supereyedrops", x,y,z)
+					it2 = CreateItem("Глазные капли", "supereyedrops", x,y,z) ;Eyedrops
 			End Select
 			
 			RemoveItem(item)
-		Case "Blue Eyedrops"
+		Case "Глазные капли" ;Eyedrops
 			Select setting
 				Case "rough", "coarse"
 					d.Decals = CreateDecal(0, x, 8 * RoomScale + 0.010, z, 90, Rand(360), 0)
 					d\Size = 0.2 : EntityAlpha(d\obj, 0.8) : ScaleSprite(d\obj, d\Size, d\Size)
 				Case "1:1"
 				    If Rand(2) = 1 Then
-				        it2 = CreateItem("RedVision Eyedrops", "eyedrops2", x,y,z)
+				        it2 = CreateItem("Красные глазные капли Зрение+", "eyedrops2", x,y,z) ;RedVision Eyedrops
 				    Else
-				        it2 = CreateItem("ReVision Eyedrops", "eyedrops", x,y,z)
+				        it2 = CreateItem("Глазные капли Зрение+", "eyedrops", x,y,z) ;ReVision Eyedrops
 				    EndIf
 				Case "fine"
-					it2 = CreateItem("Blue Eyedrops", "fineeyedrops", x,y,z)
+					it2 = CreateItem("Глазные капли", "fineeyedrops", x,y,z) ;Eyedrops
 				Case "very fine"
-					it2 = CreateItem("Blue Eyedrops", "supereyedrops", x,y,z)
+					it2 = CreateItem("Глазные капли", "supereyedrops", x,y,z) ;Eyedrops
 			End Select
 			
 			RemoveItem(item)
-		Case "RedVision Eyedrops"
+		Case "Красные глазные капли Зрение+" ;RedVision Eyedrops
 			Select setting
 				Case "rough", "coarse"
 					d.Decals = CreateDecal(0, x, 8 * RoomScale + 0.010, z, 90, Rand(360), 0)
 					d\Size = 0.2 : EntityAlpha(d\obj, 0.8) : ScaleSprite(d\obj, d\Size, d\Size)
 				Case "1:1"
-				    it2 = CreateItem("ReVision Eyedrops", "eyedrops", x,y,z)
+				    it2 = CreateItem("Глазные капли Зрение+", "eyedrops", x,y,z) ;ReVision Eyedrops
 				Case "fine"
-					it2 = CreateItem("Blue Eyedrops", "fineeyedrops", x,y,z)
+					it2 = CreateItem("Глазные капли", "fineeyedrops", x,y,z) ;Eyedrops
 				Case "very fine"
-					it2 = CreateItem("Blue Eyedrops", "supereyedrops", x,y,z)
+					it2 = CreateItem("Глазные капли", "supereyedrops", x,y,z) ;Eyedrops
 			End Select
 			
 			RemoveItem(item)			
-		Case "Hazmat Suit"
+		Case "Защитный костюм" ;Hazmat Suit
 			Select setting
 				Case "rough", "coarse"
 					d.Decals = CreateDecal(0, x, 8 * RoomScale + 0.010, z, 90, Rand(360), 0)
 					d\Size = 0.2 : EntityAlpha(d\obj, 0.8) : ScaleSprite(d\obj, d\Size, d\Size)
 				Case "1:1"
-					it2 = CreateItem("Hazmat Suit", "hazmatsuit", x,y,z)
+					it2 = CreateItem("Защитный костюм", "hazmatsuit", x,y,z) ;Hazmat Suit
 				Case "fine"
-					it2 = CreateItem("Hazmat Suit", "hazmatsuit2", x,y,z)
+					it2 = CreateItem("Защитный костюм", "hazmatsuit2", x,y,z) ;Hazmat Suit
 				Case "very fine"
-					it2 = CreateItem("Hazmat Suit", "hazmatsuit2", x,y,z)
+					it2 = CreateItem("Защитный костюм", "hazmatsuit2", x,y,z) ;Hazmat Suit
 			End Select
 			
 			RemoveItem(item)
 			
-		Case "Syringe"
+		Case "Шприц" ;Syringe
 			Select item\itemtemplate\tempname
 				Case "syringe"
 					Select setting
@@ -11970,11 +11970,11 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 							d.Decals = CreateDecal(0, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
 							d\Size = 0.07 : ScaleSprite(d\obj, d\Size, d\Size)
 						Case "1:1"
-							it2 = CreateItem("Small First Aid Kit", "finefirstaid", x, y, z)	
+							it2 = CreateItem("Маленькая аптечка первой помощи", "finefirstaid", x, y, z) ;Small First Aid Kit
 						Case "fine"
-							it2 = CreateItem("Syringe", "finesyringe", x, y, z)
+							it2 = CreateItem("Шприц", "finesyringe", x, y, z) ;Syringe
 						Case "very fine"
-							it2 = CreateItem("Syringe", "veryfinesyringe", x, y, z)
+							it2 = CreateItem("Шприц", "veryfinesyringe", x, y, z) ;Syringe
 					End Select
 					
 				Case "finesyringe"
@@ -11983,17 +11983,17 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 							d.Decals = CreateDecal(0, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
 							d\Size = 0.07 : ScaleSprite(d\obj, d\Size, d\Size)
 						Case "coarse"
-							it2 = CreateItem("First Aid Kit", "firstaid", x, y, z)
+							it2 = CreateItem("Аптечка первой помощи", "firstaid", x, y, z) ;First Aid Kit
 						Case "1:1"
-							it2 = CreateItem("Blue First Aid Kit", "firstaid2", x, y, z)	
+							it2 = CreateItem("Синяя аптечка первой помощи", "firstaid2", x, y, z) ;Blue First Aid Kit
 						Case "fine", "very fine"
-							it2 = CreateItem("Syringe", "veryfinesyringe", x, y, z)
+							it2 = CreateItem("Шприц", "veryfinesyringe", x, y, z) ;Syringe
 					End Select
 					
 				Case "veryfinesyringe"
 					Select setting
 						Case "rough", "coarse", "1:1", "fine"
-							it2 = CreateItem("Electronical components", "misc", x, y, z)	
+							it2 = CreateItem("Электронные компоненты", "misc", x, y, z) ;Electronical components
 						Case "very fine"
 							n.NPCs = CreateNPC(NPCtype008,x,y,z)
 							n\State = 2
@@ -12007,9 +12007,9 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 						    n.NPCs = CreateNPC(NPCtype008,x,y,z)
 							n\State = 2	
 						Case "fine"
-						    it2 = CreateItem("Syringe", "syringe", x, y, z)
+						    it2 = CreateItem("Шприц", "syringe", x, y, z) ;Syringe
 						Case "very fine"
-						    it2 = CreateItem("Blue First Aid Kit", "firstaid2", x, y, z)
+						    it2 = CreateItem("Синяя аптечка первой помощи", "firstaid2", x, y, z) ;Blue First Aid Kit
 					End Select
 			End Select
 			
@@ -12018,9 +12018,9 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 			Select setting
 				Case "rough", "coarse"
 					If Rand(2)=1 Then 
-						it2 = CreateItem("Black Severed Hand", "hand2", x, y, z)
+						it2 = CreateItem("Чёрная оторванная рука", "hand2", x, y, z) ;Black Severed Hand
 					Else
-						it2 = CreateItem("Severed Hand", "hand", x, y, z)
+						it2 = CreateItem("Оторванная рука", "hand", x, y, z) ;Severed Hand
 					EndIf
 					RemoveItem(item)
 				Case "1:1", "fine", "very fine"
@@ -12043,7 +12043,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 								RemoveItem (it2)
 								RemoveItem (item)
 								
-								it2 = CreateItem("Minty SCP-500-01", "mintscp500", x, y, z)
+								it2 = CreateItem("Мятный SCP-500-01", "mintscp500", x, y, z) ;Minty SCP-500-01
 								
 								GiveAchievement(Achv447)
 								
@@ -12054,7 +12054,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 								RemoveItem (it2)
 								RemoveItem(item)
 								
-								it2 = CreateItem("Minty First Aid Kit", "mintfirstaid", x, y, z)
+								it2 = CreateItem("Мятная аптечка первой помощи", "mintfirstaid", x, y, z) ;Minty First Aid Kit
 								
 								GiveAchievement(Achv447)
 								
@@ -12065,7 +12065,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 								RemoveItem (it2)
 								RemoveItem(item)
 								
-								it2 = CreateItem("Minty Small First Aid Kit", "mintfinefirstaid", x, y, z)
+								it2 = CreateItem("Мятная маленькая аптечка первой помощи", "mintfinefirstaid", x, y, z) ;Minty Small First Aid Kit
 								
 								GiveAchievement(Achv447)
 								
@@ -12076,7 +12076,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 								RemoveItem (it2)
 								RemoveItem(item)
 								
-								it2 = CreateItem("Minty Blue First Aid Kit", "mintfirstaid2", x, y, z)
+								it2 = CreateItem("Мятная синяя аптечка первой помощи", "mintfirstaid2", x, y, z) ;Minty Blue First Aid Kit
 								
 								GiveAchievement(Achv447)
 								
@@ -12089,7 +12089,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 								
 								GiveAchievement(Achv447)
 								
-								it2 = CreateItem("Minty Strange Bottle", "mintveryfinefirstaid", x, y, z)
+								it2 = CreateItem("Мятная странная бутылка", "mintveryfinefirstaid", x, y, z) ;Minty Strange Bottle
 								
 								d.Decals = CreateDecal(7, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
 							    d\Size = 0.2 : EntityAlpha(d\obj, 0.6) : ScaleSprite(d\obj, d\Size, d\Size)
@@ -12100,7 +12100,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 								
 								GiveAchievement(Achv447)
 								
-								it2 = CreateItem("Minty ReVision Eyedrops", "minteyedrops", x, y, z)
+								it2 = CreateItem("Мятные глазные капли Зрение+", "minteyedrops", x, y, z) ;Minty ReVision Eyedrops
 								
 								d.Decals = CreateDecal(7, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
 							    d\Size = 0.2 : EntityAlpha(d\obj, 0.6) : ScaleSprite(d\obj, d\Size, d\Size)
@@ -12111,7 +12111,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 								
 								GiveAchievement(Achv447)
 								
-								it2 = CreateItem("Minty RedVision Eyedrops", "minteyedrops2", x, y, z)
+								it2 = CreateItem("Мятные красные глазные капли Зрение+", "minteyedrops2", x, y, z) ;Minty RedVision Eyedrops
 								
 								d.Decals = CreateDecal(7, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
 							    d\Size = 0.2 : EntityAlpha(d\obj, 0.6) : ScaleSprite(d\obj, d\Size, d\Size)
@@ -12122,7 +12122,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 								
 								GiveAchievement(Achv447)
 								
-								it2 = CreateItem("Minty Eyedrops", "mintfineeyedrops", x, y, z)
+								it2 = CreateItem("Мятные глазные капли", "mintfineeyedrops", x, y, z) ;Minty Eyedrops
 								
 								d.Decals = CreateDecal(7, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
 							    d\Size = 0.2 : EntityAlpha(d\obj, 0.6) : ScaleSprite(d\obj, d\Size, d\Size)
@@ -12133,15 +12133,15 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 								
 								GiveAchievement(Achv447)
 								
-								it2 = CreateItem("Minty Eyedrops", "mintsupereyedrops", x, y, z)
+								it2 = CreateItem("Мятные глазные капли", "mintsupereyedrops", x, y, z) ;Minty Eyedrops
 								
 								d.Decals = CreateDecal(7, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
 							    d\Size = 0.2 : EntityAlpha(d\obj, 0.6) : ScaleSprite(d\obj, d\Size, d\Size)
 
 						End Select
 					Else 
-						If item\itemtemplate\name="SCP-148 Ingot" Then
-							it2 = CreateItem("Metal Panel", "scp148", x, y, z)
+						If item\itemtemplate\name="Слиток SCP-148" Then ;SCP-148 Ingot
+							it2 = CreateItem("Металлическая панель", "scp148", x, y, z) ;Metal Panel
 							RemoveItem(item)
 						Else
 							PositionEntity(item\collider, x, y, z)
@@ -12149,7 +12149,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 						EndIf
 					EndIf					
 			End Select
-		Case "Minty SCP-500-01"
+		Case "Мятный SCP-500-01" ;Minty SCP-500-01
 			Select setting
 				Case "rough", "coarse", "1:1"
 					PositionEntity(item\collider, x, y, z)
@@ -12158,100 +12158,100 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 					If Rand(5)=1 Then 
 						it2 = CreateItem("SCP-427", "scp427", x, y, z)
 					Else
-						it2 = CreateItem("Minty Strange Bottle", "mintveryfinefirstaid", x, y, z)
+						it2 = CreateItem("Мятная странная бутылка", "mintveryfinefirstaid", x, y, z) ;Minty Strange Bottle
 					EndIf
 					RemoveItem(item)
 				Case "veryfine"
 					If Rand(10)=1 Then 
 						it2 = CreateItem("SCP-427", "scp427", x, y, z)
 					Else
-						it2 = CreateItem("Minty Strange Bottle", "mintveryfinefirstaid", x, y, z)
+						it2 = CreateItem("Мятная странная бутылка", "mintveryfinefirstaid", x, y, z) ;Minty Strange Bottle
 					EndIf
 					RemoveItem(item)
 			End Select
 			
-		Case "Minty First Aid Kit", "Minty Blue First Aid Kit"
+		Case "Мятная аптечка первой помощи", "Мятная синяя аптечка первой помощи" ;Minty First Aid Kit ;Minty Blue First Aid Kit
 			Select setting
 				Case "rough", "coarse"
 					d.Decals = CreateDecal(0, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
 					d\Size = 0.12 : ScaleSprite(d\obj, d\Size, d\Size)
 				Case "1:1"
 				If Rand(2)=1 Then
-					it2 = CreateItem("Minty Blue First Aid Kit", "mintfirstaid2", x, y, z)
+					it2 = CreateItem("Мятная синяя аптечка первой помощи", "mintfirstaid2", x, y, z) ;Minty Blue First Aid Kit
 				Else
-				    it2 = CreateItem("Minty First Aid Kit", "mintfirstaid", x, y, z)
+				    it2 = CreateItem("Мятная аптечка первой помощи", "mintfirstaid", x, y, z) ;Minty First Aid Kit
 				EndIf
 				Case "fine"
-					it2 = CreateItem("Minty Small First Aid Kit", "mintfinefirstaid", x, y, z)
+					it2 = CreateItem("Мятная маленькая аптечка первой помощи", "mintfinefirstaid", x, y, z) ;Minty Small First Aid Kit
 				Case "very fine"
-					it2 = CreateItem("Minty Strange Bottle", "mintveryfinefirstaid", x, y, z)
+					it2 = CreateItem("Мятная странная бутылка", "mintveryfinefirstaid", x, y, z) ;Minty Strange Bottle
 			End Select
 			RemoveItem(item)
 			
-		Case "Minty Strange Bottle"
+		Case "Мятная странная бутылка" ;Minty Strange Bottle
 			Select setting
 				Case "rough"
 					d.Decals = CreateDecal(0, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
 					d\Size = 0.12 : ScaleSprite(d\obj, d\Size, d\Size)
 				Case "coarse"
-					it2 = CreateItem("Minty Blue First Aid Kit", "mintfirstaid2", x, y, z)
+					it2 = CreateItem("Мятная синяя аптечка первой помощи", "mintfirstaid2", x, y, z) ;Minty Blue First Aid Kit
 				Case "1:1"
 					If Rand(2)=1 Then
-						it2 = CreateItem("Minty Small First Aid Kit", "mintfinefirstaid", x, y, z)
+						it2 = CreateItem("Мятная маленькая аптечка первой помощи", "mintfinefirstaid", x, y, z) ;Minty Small First Aid Kit
 					Else
-						it2 = CreateItem("Minty Strange Bottle", "mintveryfinefirstaid", x, y, z)
+						it2 = CreateItem("Мятная странная бутылка", "mintveryfinefirstaid", x, y, z) ;Minty Strange Bottle
 					EndIf
 				Case "fine"
 					If Rand(2)=1 Then
-						it2 = CreateItem("Minty Small First Aid Kit", "mintfinefirstaid", x, y, z)
+						it2 = CreateItem("Мятная маленькая аптечка первой помощи", "mintfinefirstaid", x, y, z) ;Minty Small First Aid Kit
 					Else
-						it2 = CreateItem("Minty Strange Bottle", "mintveryfinefirstaid", x, y, z)
+						it2 = CreateItem("Мятная странная бутылка", "mintveryfinefirstaid", x, y, z) ;Minty Strange Bottle
 					EndIf
 				Case "very fine"
-					it2 = CreateItem("Minty Strange Bottle", "mintveryfinefirstaid", x, y, z)
+					it2 = CreateItem("Мятная странная бутылка", "mintveryfinefirstaid", x, y, z) ;Minty Strange Bottle
 			End Select
 			RemoveItem(item)
 			
-		Case "Minty Small First Aid Kit"
+		Case "Мятная маленькая аптечка первой помощи"
 			Select setting
 				Case "rough"
 					d.Decals = CreateDecal(0, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
 					d\Size = 0.12 : ScaleSprite(d\obj, d\Size, d\Size)
 				Case "coarse"
-					  it2 = CreateItem("Minty First Aid Kit", "mintfirstaid", x, y, z)
+					  it2 = CreateItem("Мятная аптечка первой помощи", "mintfirstaid", x, y, z) ;Minty First Aid Kit
 				Case "1:1"
 					If Rand(2)=1 Then
-					  it2 = CreateItem("Minty Small First Aid Kit", "mintfinefirstaid", x, y, z)
+					  it2 = CreateItem("Мятная маленькая аптечка первой помощи", "mintfinefirstaid", x, y, z) ;Minty Small First Aid Kit
 					Else
-				  	  it2 = CreateItem("Painkiller", "morphine", x, y, z)
+				  	  it2 = CreateItem("Обезболивающее", "morphine", x, y, z) ;Painkiller
 					EndIf
 				Case "fine", "very fine"
-					it2 = CreateItem("Minty Strange Bottle", "mintveryfinefirstaid", x, y, z)
+					it2 = CreateItem("Мятная странная бутылка", "mintveryfinefirstaid", x, y, z) ;Minty Strange Bottle
 			End Select
 			RemoveItem(item)
 
-		Case "Minty ReVision Eyedrops", "Minty RedVision Eyedrops", "Minty Eyedrops"
+		Case "Мятные глазные капли Зрение+", "Мятные красные глазные капли Зрение+", "Мятные глазные капли" ;Minty ReVision Eyedrops ;Minty RedVision Eyedrops ;Minty Eyedrops
 			Select setting
 				Case "rough", "coarse"
 					d.Decals = CreateDecal(0, x, 8 * RoomScale + 0.010, z, 90, Rand(360), 0)
 					d\Size = 0.2 : EntityAlpha(d\obj, 0.8) : ScaleSprite(d\obj, d\Size, d\Size)
 				Case "1:1"
-					it2 = CreateItem("Minty RedVision Eyedrops", "minteyedrops2", x,y,z)
+					it2 = CreateItem("Мятные красные глазные капли Зрение+", "minteyedrops2", x,y,z) ;Minty RedVision Eyedrops
 				Case "fine"
-					it2 = CreateItem("Minty Eyedrops", "mintfineeyedrops", x,y,z)
+					it2 = CreateItem("Мятные глазные капли", "mintfineeyedrops", x,y,z) ;Minty Eyedrops
 				Case "very fine"
-					it2 = CreateItem("Minty Eyedrops", "mintsupereyedrops", x,y,z)
+					it2 = CreateItem("Мятные глазные капли", "mintsupereyedrops", x,y,z) ;Minty Eyedrops
 			End Select
 			
 			RemoveItem(item)
 			
-		Case "SCP-500-01", "Upgraded pill", "Pill"
+		Case "SCP-500-01", "Улучшенная пилюля", "Пилюля" ;Upgraded pill ;Pill
 			Select setting
 				Case "rough", "coarse"
 					d.Decals = CreateDecal(0, x, 8 * RoomScale + 0.010, z, 90, Rand(360), 0)
 					d\Size = 0.2 : EntityAlpha(d\obj, 0.8) : ScaleSprite(d\obj, d\Size, d\Size)
 				Case "1:1"
-					it2 = CreateItem("Pill", "pill", x, y, z)
+					it2 = CreateItem("Пилюля", "pill", x, y, z) ;Pill
 					RemoveItem(item)
 				Case "fine"
 					Local no427Spawn% = False
@@ -12264,11 +12264,11 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 					If (Not no427Spawn) Then
 						it2 = CreateItem("SCP-427", "scp427", x, y, z)
 					Else
-						it2 = CreateItem("Upgraded pill", "scp500pilldeath", x, y, z)
+						it2 = CreateItem("Улучшенная пилюля", "scp500pilldeath", x, y, z) ;Upgraded pill
 					EndIf
 					RemoveItem(item)
 				Case "very fine"
-					it2 = CreateItem("Upgraded pill", "scp500pilldeath", x, y, z)
+					it2 = CreateItem("Улучшенная пилюля", "scp500pilldeath", x, y, z) ;Upgraded pill
 					RemoveItem(item)
 			End Select
 			
@@ -12309,76 +12309,76 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 				Case "paper"
 					Select setting
 						Case "rough", "coarse"
-							it2 = CreateItem("Paper Strips", "paperstrips", x, y, z)
+							it2 = CreateItem("Порезанная бумага", "paperstrips", x, y, z) ;Paper Strips
 						Case "1:1"
 							Select Rand(32)
 								Case 1
-									it2 = CreateItem("Document SCP-106", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-106", "paper", x, y, z) ;Document SCP-106
 								Case 2
-									it2 = CreateItem("Document SCP-079", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-079", "paper", x, y, z) ;Document SCP-079
 								Case 3
-									it2 = CreateItem("Document SCP-173", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-173", "paper", x, y, z) ;Document SCP-173
 								Case 4
-									it2 = CreateItem("Document SCP-895", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-895", "paper", x, y, z) ;Document SCP-895
 								Case 5
-									it2 = CreateItem("Document SCP-682", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-682", "paper", x, y, z) ;Document SCP-682
 								Case 6
-									it2 = CreateItem("Document SCP-860", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-860", "paper", x, y, z) ;Document SCP-860
 								Case 7
-									it2 = CreateItem("Document SCP-1079", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-1079", "paper", x, y, z) ;Document SCP-1079
 								Case 8
-									it2 = CreateItem("Document SCP-1162", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-1162", "paper", x, y, z) ;Document SCP-1162
 								Case 9
-									it2 = CreateItem("Document SCP-096", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-096", "paper", x, y, z) ;Document SCP-096
 								Case 10
-									it2 = CreateItem("Document SCP-109", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-109", "paper", x, y, z) ;Document SCP-109
 								Case 11
-									it2 = CreateItem("Document SCP-215", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-215", "paper", x, y, z) ;Document SCP-215
 								Case 12
-									it2 = CreateItem("Document SCP-178", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-178", "paper", x, y, z) ;Document SCP-178
 								Case 13
-									it2 = CreateItem("Document SCP-198", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-198", "paper", x, y, z) ;Document SCP-198
 								Case 14
-									it2 = CreateItem("Document SCP-457 Page 1/2", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-457 Страница 1/2", "paper", x, y, z) ;Document SCP-457 Page 1/2
 								Case 15
-									it2 = CreateItem("Document SCP-457 Page 1/2", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-457 Страница 2/2", "paper", x, y, z) ;Document SCP-457 Page 2/2
 								Case 16
-									it2 = CreateItem("Document SCP-1079", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-1079", "paper", x, y, z) ;Document SCP-1079
 								Case 17
-									it2 = CreateItem("Document SCP-1499", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-1499", "paper", x, y, z) ;Document SCP-1499
 								Case 18
-									it2 = CreateItem("Document SCP-1123", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-1123", "paper", x, y, z) ;Document SCP-1123
 								Case 19
-									it2 = CreateItem("Document SCP-049", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-049", "paper", x, y, z) ;Document SCP-049
 								Case 20
-									it2 = CreateItem("Document SCP-513", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-513", "paper", x, y, z) ;Document SCP-513
 								Case 21
-									it2 = CreateItem("Document SCP-1048", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-1048", "paper", x, y, z) ;Document SCP-1048
 								Case 22
-									it2 = CreateItem("Document SCP-500", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-500", "paper", x, y, z) ;Document SCP-500
 								Case 23
-									it2 = CreateItem("Document SCP-008", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-008", "paper", x, y, z) ;Document SCP-008
 								Case 24
-									it2 = CreateItem("Document SCP-714", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-714", "paper", x, y, z) ;Document SCP-714
 								Case 25
-									it2 = CreateItem("Document SCP-012", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-012", "paper", x, y, z) ;Document SCP-012
 								Case 26
-									it2 = CreateItem("Document SCP-939", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-939", "paper", x, y, z) ;Document SCP-939
 								Case 27
-									it2 = CreateItem("Document SCP-650", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-650", "paper", x, y, z) ;Document SCP-650
 								Case 28
-									it2 = CreateItem("Document SCP-409", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-409", "paper", x, y, z) ;Document SCP-409
 								Case 29
-									it2 = CreateItem("Document SCP-005", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-005", "paper", x, y, z) ;Document SCP-005
 								Case 30
-									it2 = CreateItem("Document SCP-970", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-970", "paper", x, y, z) ;Document SCP-970
 								Case 31
-									it2 = CreateItem("Document SCP-966", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-966", "paper", x, y, z) ;Document SCP-966
 								Case 32
-									it2 = CreateItem("Document SCP-447", "paper", x, y, z)
+									it2 = CreateItem("Документ об SCP-447", "paper", x, y, z) ;Document SCP-447
 							End Select
 						Case "fine", "very fine"
-							it2 = CreateItem("Origami", "misc", x, y, z)
+							it2 = CreateItem("Оригами", "misc", x, y, z) ;Origami
 					End Select
 					
 					RemoveItem(item)
@@ -12554,10 +12554,10 @@ Function Use294()
 			
 			If temp And Input294<>"" Then ;dispense
 				Input294 = Trim2(Lower2(Input294))
-				If Left(Input294, Min(7,Len(Input294))) = "cup of " Then
+				If Lower2(Left(Input294, Min(7,Len(Input294)))) = "внутри " Then ;cup of
 					Input294 = Right(Input294, Len(Input294)-7)
-				ElseIf Left(Input294, Min(9,Len(Input294))) = "a cup of " 
-					Input294 = Right(Input294, Len(Input294)-9)
+				;ElseIf Left(Input294, Min(9,Len(Input294))) = "a cup of " 
+				;	Input294 = Right(Input294, Len(Input294)-9)
 				EndIf
 				
 				If Input294<>""
@@ -12591,12 +12591,12 @@ Function Use294()
 					If glow Then alpha = -alpha
 					
 					it.items = CreateItem("Cup", "cup", EntityX(PlayerRoom\Objects[1],True),EntityY(PlayerRoom\Objects[1],True),EntityZ(PlayerRoom\Objects[1],True), r,g,b,alpha)
-					it\name = "Cup of "+Input294
+					it\name = "Внутри "+Input294 ;Cup of 
 					EntityType (it\collider, HIT_ITEM)
 					
 				Else
 					;out of range
-					Input294 = "OUT OF RANGE"
+					Input294 = "ВНЕ ЗОНЫ ДЕЙСТВИЯ" ;OUT OF RANGE
 					PlayerRoom\SoundCHN = PlaySound_Strict (LoadTempSound("SFX\SCP\294\outofrange.ogg"))
 				EndIf
 				
@@ -12612,10 +12612,10 @@ Function Use294()
 		EndIf
 		
 	Else ;playing a dispensing sound
-		If Input294 <> "OUT OF RANGE" Then Input294 = "DISPENSING..."
+		If Input294 <> "ВНЕ ЗОНЫ ДЕЙСТВИЯ" Then Input294 = "РАЗЛИВ..." ;OUT OF RANGE ;DISPENSING...
 		
 		If Not ChannelPlaying(PlayerRoom\SoundCHN) Then
-			If Input294 <> "OUT OF RANGE" Then
+			If Input294 <> "ВНЕ ЗОНЫ ДЕЙСТВИЯ" Then ;OUT OF RANGE
 				HidePointer()
 				Using294 = False
 				MouseXSpeed() : MouseYSpeed() : MouseZSpeed() : mouse_x_speed_1#=0.0 : mouse_y_speed_1#=0.0
@@ -12677,10 +12677,10 @@ Function Use427()
 				EndIf
 			EndIf
 			If prevI427Timer < 70*60 And I_427\Timer => 70*60 Then
-				Msg = "You feel refreshed and energetic."
+				Msg = "Вы чувствуете себя отдохнувшим и полным энергии." ;You feel refreshed and energetic.
 				MsgTimer = 70*5
 			ElseIf prevI427Timer < 70*180 And I_427\Timer => 70*180 Then
-				Msg = "You feel gentle muscle spasms all over your body."
+				Msg = "Вы чувствуете небольшие мышечные спазмы по всему телу." ;You feel gentle muscle spasms all over your body.
 				MsgTimer = 70*5
 			EndIf
 		Else
@@ -12694,10 +12694,10 @@ Function Use427()
 		EndIf
 	Else
 		If prevI427Timer-fs\FPSfactor[0] < 70*360 And I_427\Timer => 70*360 Then
-			Msg = "Your muscles are swelling. You feel more powerful than ever."
+			Msg = "Ваши мышцы набухают. Вы чувствуете себя сильнее, чем когда-либо." ;Your muscles are swelling. You feel more powerful than ever.
 			MsgTimer = 70*5
 		ElseIf prevI427Timer-fs\FPSfactor[0] < 70*390 And I_427\Timer => 70*390 Then
-			Msg = "You can't feel your legs. But you don't need legs anymore."
+			Msg = "Вы не чувствуете своих ног. Но вам больше не нужны ноги." ;You can't feel your legs. But you don't need legs anymore.
 			MsgTimer = 70*5
 		EndIf
 		I_427\Timer = I_427\Timer + fs\FPSfactor[0]
@@ -12727,7 +12727,7 @@ Function Use427()
 		EndIf
 		If I_427\Timer >= 70*420 Then
 			Kill()
-			DeathMSG = Chr(34)+"Requesting support from MTF Nu-7. We need more firepower to take this thing down."+Chr(34)
+			DeathMSG = Chr(34)+"Запрашиваю поддержку от МОГ Ню-7. Нам нужно больше огневой мощи, чтобы его уничтожить."+Chr(34) ;Requesting support from MTF Nu-7. We need more firepower to take this thing down.
 		ElseIf I_427\Timer >= 70*390 Then
 			Crouch = True
 		EndIf
@@ -12776,7 +12776,7 @@ Function Use215()
         EndIf
         If I_215\Timer > 30.0 And prevI215Timer =< 30.0 Then
             BlurTimer = 3000
-            Msg = "The walls seems alive for you."
+            Msg = "Стены кажутся Вам живыми." ;The walls seems alive for you.
 			MsgTimer = 70*6
         EndIf
         If I_215\Timer > 35.0 And prevI215Timer =< 35.0 Then
@@ -12784,12 +12784,12 @@ Function Use215()
         EndIf
 		If I_215\Timer > 40.0 And prevI215Timer =< 40.0 Then
 		    BlurTimer = 5000
-			Msg = "You hear strange sounds in your head."
+			Msg = "Вы слышите странные звуки в своей голове." ;You hear strange sounds in your head.
 			MsgTimer = 70*6
 			PlaySound_Strict I_215\Sound[0]
 		EndIf
 		If I_215\Timer > 45.0 And prevI215Timer =< 45.0 Then
-		    Msg = Chr(34)+"Are you okay, Steve?"+Chr(34)
+		    Msg = Chr(34)+"Ты в порядке, Стив?"+Chr(34) ;Are you okay, Steve?
 		    MsgTimer = 70*6
 		EndIf
 		If I_215\Timer > 55.0
@@ -12797,23 +12797,23 @@ Function Use215()
 			HeartBeatVolume = 1.0
 		EndIf
 	    If I_215\Timer > 60.0 And prevI215Timer =< 60.0 Then
-	        Msg = Chr(34)+"It seems to me that everything around me is alive."+Chr(34)
+	        Msg = Chr(34)+"Мне кажется, что всё вокруг живое."+Chr(34) ;It seems to me that everything around me is alive.
 	        MsgTiemr = 70*6
 	    EndIf
 	    If I_215\Timer > 65.0 And prevI215Timer =< 65.0 Then
-	        Msg = Chr(34)+"How are you, Paul?"+Chr(34)
+	        Msg = Chr(34)+"Как ты, Пол?"+Chr(34) ;How are you, Paul
 	        MsgTimer = 70*6
 	    EndIf
 		If I_215\Timer > 70.0 And prevI215Timer =< 70.0 Then
 		    BlurTimer = 5200
 		    CameraShake = 22
-			Msg = "You have a paranoia."
+			Msg = "У вас паранойя." ;You have a paranoia.
 			MsgTimer = 70*6
 			PlaySound_Strict I_215\Sound[0]
 		EndIf
 	    If I_215\Timer > 75.0 And prevI215Timer =< 75.0 Then
 	        CameraShake = 30
-	        Msg = Chr(34)+"Why are you not talking with me?"+Chr(34)
+	        Msg = Chr(34)+"Почему ты не разговариваешь со мной?"+Chr(34) ;Why are you not talking with me?
 	        MsgTimer = 70*6
 	    EndIf
 		If I_215\Timer > 86.0 And prevI215Timer =< 86.0 Then
@@ -12823,7 +12823,7 @@ Function Use215()
 		    For i=0 To MaxItemAmount-1
                 If Inventory(i)<>Null Then
                     If Inventory(i)\itemtemplate\name="SCP-215" Then
-                        Msg = "You don't want to take your glasses off."
+                        Msg = "Вы не хотите снимать очки." ;You don't want to take your glasses off.
 			            MsgTimer = 70*6
 			            If WearingGasMask Or I_1499\Using Or WearingHazmat Or WearingNightVision Or I_178\Using Then
 			                I_215\Using = 1
@@ -12840,36 +12840,36 @@ Function Use215()
 		EndIf
 	    If I_215\Timer > 90.0 And prevI215Timer =< 90.0 Then
 	        CameraShake = 50
-	        Msg = "You feel angry."
+	        Msg = "Вы злитесь." ;You feel angry.
 	        MsgTimer = 70*6
 	    EndIf
 	    If I_215\Timer > 94.0 And prevI215Timer =< 94.0 Then
 	        CameraShake = 50
-	        Msg = Chr(34)+"What are you saying?"+Chr(34)
+	        Msg = Chr(34)+"О чём ты говоришь?"+Chr(34) ;What are you saying?
 	        MsgTimer = 70*6
 	    EndIf
 	    If I_215\Timer > 96.0 And prevI215Timer =< 96.0 Then
 	        BlurTimer = 7000
 	        CameraShake = 50
-	        Msg = Chr(34)+"I feel fine..."+Chr(34)
+	        Msg = Chr(34)+"Я в порядке..."+Chr(34) ;I feel fine...
 	        MsgTimer = 70*6
 	    EndIf
 	    If I_215\Timer > 110.0 And prevI215Timer =< 110.0 Then
 	        BlurTimer = 8000
 	        CameraShake = 50
-	        Msg = Chr(34)+"Please, help..."+Chr(34)
+	        Msg = Chr(34)+"Пожалуйста, помоги..."+Chr(34) ;Please, help...
 	        MsgTimer = 70*6
         EndIf
         If I_215\Timer > 135.0 And prevI215Timer =< 135.0 Then
             BlurTimer = 8000
 	        CameraShake = 50
-	        Msg = Chr(34)+"Something is wrong..."+Chr(34)
+	        Msg = Chr(34)+"Что-то не так..."+Chr(34) ;Something is wrong...
 	        MsgTimer = 70*6
         EndIf
         If I_215\Timer > 146.0 And prevI215Timer =< 146.0 Then
             BlurTimer = 9000
             CameraShake = 100
-            Msg = Chr(34)+"This is the end..."+Chr(34)
+            Msg = Chr(34)+"Это конец..."+Chr(34) ;This is the end...
 	        MsgTimer = 70*6
 	    EndIf
 	Else
@@ -12900,7 +12900,7 @@ Function Use207()
 		  EndIf
 
           If I_207\Timer >= 40.0 Then
-              DeathMSG = SubjectName$+". Cause of death: organ failure due To massive internal hemorrhage. As SCP-207-A was empty on recovery, it is believed ingesting a full bottle [REDACTED]."
+              DeathMSG = SubjectName$+". Причина смерти: отказ органов из-за обильного внутреннего кровоизлияния. Поскольку SCP-207-A был пуст, считается что субъект выпил всю бутылку [УДАЛЕНО]." ;Cause of death: organ failure due To massive internal hemorrhage. As SCP-207-A was empty on recovery, it is believed ingesting a full bottle [REDACTED]."
               Kill()
           EndIf
       EndIf
@@ -12918,7 +12918,7 @@ Function Use402()
             I_402\Timer = Min(I_402\Timer+fs\FPSfactor[0]*0.004,60)
 
             If I_402\Timer > 10.0 And prevI402Timer =< 10.0 Then
-                Msg = "SCP-402 hit you in the throat."
+                Msg = "SCP-402 попал Вам в горло." ;SCP-402 hit you in the throat.
                 MsgTimer = 70*6
                 PlaySound_Strict(CoughSFX(Rand(0, 2)))
                 CameraShake = 5
@@ -12926,12 +12926,12 @@ Function Use402()
             EndIf
 
             If I_402\Timer > 15.0 And prevI402Timer =< 15.0 Then
-                Msg = "You feel fear."
+                Msg = "Вам страшно." ;You feel fear.
                 MsgTimer = 70*6
             EndIf
  
             If I_402\Timer > 20.0 And prevI402Timer =< 20.0 Then
-                Msg = "You feel tired."
+                Msg = "Вы чувствуете усталость." ;You feel tired.
                 MsgTimer = 70*6
                 CameraShake = 5
                 Injuries = Injuries + 0.1
@@ -12939,7 +12939,7 @@ Function Use402()
             EndIf
  
             If I_402\Timer > 40.0 And prevI402Timer =< 40.0 Then
-                Msg = "You breathe heavily. You can't pull out the stone from your throat."
+                Msg = "Вам становится тяжело дышать. Вы не можете вытащить камень из горла." ;You breathe heavily. You can't pull out the stone from your throat.
 			    MsgTimer = 70*6
                 PlaySound_Strict(CoughSFX(Rand(0, 2)))
                 CameraShake = 5
@@ -12956,7 +12956,7 @@ Function Use402()
 	        EndIf
 
 	        If I_402\Timer > 50.0 And prevI402Timer =< 50.0 Then
-	            Msg = Chr(34)+"Can't... Breathe..."+Chr(34)
+	            Msg = Chr(34)+"Не могу... Дышать..."+Chr(34) ;Can't... Breathe...
 	            MsgTimer = 70*6
 	            PlaySound_Strict(CoughSFX(Rand(0, 2)))
 	        EndIf
@@ -12967,7 +12967,7 @@ Function Use402()
 	
 	        If I_402\Timer = 60.0 Then
 	            PlaySound_Strict(CoughSFX(Rand(0, 2)))
-                DeathMSG = "The emaciated body of "+SubjectName$+" is found in [REDACTED]. SCP-402 was discovered in the subject's lungs, death was caused by suffocation."
+                DeathMSG = "Истощённое тело "+SubjectName2$+" найдено в [УДАЛЕНО]. SCP-402 был обнаружен в лёгких субъекта. Смерть наступила от удушья."
 		        Kill()
 	        EndIf   
 	    EndIf
@@ -13005,12 +13005,12 @@ Function Use357()
          EndIf
 		 If I_357\Timer > 40.0 And prevI357Timer =< 40.0 Then
 		     BlurTimer = 5000
-			 Msg = "Your fingers on your hand are immersed inside the SCP-357."
+			 Msg = "Пальцы Вашей руки погружены внутрь SCP-357." ;Your fingers on your hand are immersed inside the SCP-357.
 			 MsgTimer = 70*6
 		 EndIf
          If I_357\Timer > 56.0 And prevI357Timer =< 56.0 Then
              BlurTimer = 5000
-             Msg = "You can't move your fingers."
+             Msg = "Вы не можете пошевелить пильцами." ;You can't move your fingers.
              MsgTimer = 70*6
          EndIf
          If I_357\Timer > 65.0 Then
@@ -13026,11 +13026,11 @@ Function Use357()
 		 EndIf
 	     If I_357\Timer >= 75.0 Then
 	         If Rand(2) = 1 Then
-	             DeathMSG = SubjectName$+" found dead in Sector [REDACTED] without right hand. "
+	             DeathMSG = SubjectName$+" найден мёртвым в секторе [УДАЛЕНО] без правой руки. " ;found dead in Sector [REDACTED] without right hand.
 	         Else
-	             DeathMSG = SubjectName$+" found dead in Sector [REDACTED] without left hand. "
+	             DeathMSG = SubjectName$+" найден мёртвым в секторе [УДАЛЕНО] без левой руки " ;found dead in Sector [REDACTED] without left hand.
              EndIf
-	         DeathMSG = DeathMSG + "Probably subject had physical contact with SCP-357."
+	         DeathMSG = DeathMSG + "Вероятно, субъект имел физический контакт с SCP-357." ;Probably subject had physical contact with SCP-357.
 	         Kill()
 	     EndIf
      EndIf
@@ -13203,27 +13203,27 @@ Function Update409()
 		EndIf
 		
 		If I_409\Timer > 40.0 And prevI409Timer =< 40.0 Then
-			Msg = "Crystals are enveloping the skin on your legs."
+			Msg = "Кристаллы покрывают вашу кожу на ногах." ;Crystals are enveloping the skin on your legs.
 			MsgTimer = 70*6
 		EndIf
 		If I_409\Timer > 55.0 And prevI409Timer =< 55.0 Then
-			Msg = "Crystals are up to your abdomen."
+			Msg = "Кристаллы разрослись до вашего живота." ;Crystals are up to your abdomen.
 			MsgTimer = 70*6
 		EndIf
 		If I_409\Timer > 70.0 And prevI409Timer =< 70.0 Then
-			Msg = "Crystals are starting to envelop your arms."
+			Msg = "Кристаллы начинают покрывать ваши руки." ;Crystals are starting to envelop your arms.
 			MsgTimer = 70*6
 		EndIf
 		If I_409\Timer > 85.0 And prevI409Timer =< 85.0 Then
-			Msg = "Crystals starting to envelop your head."
+			Msg = "Кристаллы начинают покрывать вашу голову." ;Crystals starting to envelop your head.
 			MsgTimer = 70*6
 		EndIf
 		
 		If (kill = True) And (KillTimer>=0) Then	
 			Playable=True
 			CanBreathe=True
-			DeathMSG = "Pile of SCP-409 crystals found and, by comparing list of the dead, was found to be "+SubjectName$+" who had physical contact with SCP-409. "
-			DeathMSG = DeathMSG + "Remains were incinerated along with crystal-infested areas of facility."
+			DeathMSG = "Была обнаружена куча кристаллов SCP-409. Также, при опознании погибших, был обнаружен "+SubjectName$+", который имел физический контакт с SCP-409. " ;Pile of SCP-409 crystals found and, by comparing list of the dead, was found to be "+SubjectName$+" who had physical contact with SCP-409.
+			DeathMSG = DeathMSG + "Останки тела были сожжены вместе с кристаллизированным районом." ;Remains were incinerated along with crystal-infested areas of facility.
 			Kill()
 		EndIf
 	Else
@@ -13274,16 +13274,16 @@ Function Update008()
 			Next
 			
 			If I_008\Timer > 20 And prevI008Timer =< 20.0 Then
-				Msg = "You feel kinda feverish."
+				Msg = "Вы чувствуете, что у вас жар." ;You feel kinda feverish.
 				MsgTimer = 70*6
 			ElseIf I_008\Timer > 40 And prevI008Timer =< 40.0
-				Msg = "You feel nauseated."
+				Msg = "Вы чувствуете тошноту." ;You feel nauseated.
 				MsgTimer = 70*6
 			ElseIf I_008\Timer > 60 And prevI008Timer =< 60.0
-				Msg = "The nausea's getting worse."
+				Msg = "Тошнота усиливается." ;The nausea's getting worse.
 				MsgTimer = 70*6
 			ElseIf I_008\Timer > 80 And prevI008Timer =< 80.0
-				Msg = "You feel very faint."
+				Msg = "Вы чувствуете слабость." ;You feel very faint.
 				MsgTimer = 70*6
 			ElseIf I_008\Timer => 91.5
 				BlinkTimer = Max(Min(-10*(I_008\Timer-91.5), BlinkTimer),-10)
@@ -13343,8 +13343,8 @@ Function Update008()
 						PlayerRoom\NPC[0]\Sound = LoadSound_Strict("SFX\SCP\008\KillScientist2.ogg")
 						PlayerRoom\NPC[0]\SoundChn = PlaySound_Strict(PlayerRoom\NPC[0]\Sound)
 						
-						DeathMSG = SubjectName$+" found ingesting Dr. [REDACTED] at Sector [REDACTED]. Subject was immediately terminated by Nine-Tailed Fox And sent For autopsy. "
-						DeathMSG = DeathMSG + "SCP-008 infection was confirmed, after which the body was incinerated."
+						DeathMSG = SubjectName$+" поедал доктора [УДАЛЕНО] в секторе [УДАЛЕНО]. Субъект был немедленно уничтожен Девятихвостой Лисой и был направлен на вскрытие. " ;Subject D-9341 found ingesting Dr. [REDACTED] at Sector [REDACTED]. Subject was immediately terminated by Nine-Tailed Fox and sent for autopsy. 
+						DeathMSG = DeathMSG + "Инфекция SCP-008 была подтверждена, после чего тело было сожжено." ;SCP-008 infection was confirmed, after which the body was incinerated.
 						
 						Kill()
 						de.Decals = CreateDecal(3, EntityX(PlayerRoom\NPC[0]\Collider), 544*RoomScale + 0.01, EntityZ(PlayerRoom\NPC[0]\Collider),90,Rnd(360),0)
@@ -13384,16 +13384,16 @@ Function Update008()
 				Kill()
 				BlinkTimer = Max(Min(-10*(I_008\Timer-96), BlinkTimer),-10)
 				If PlayerRoom\RoomTemplate\Name = "dimension1499" Then
-					DeathMSG = "The whereabouts of SCP-1499 are still unknown, but a recon team has been dispatched to investigate reports of a violent attack to a church in the Russian town of [REDACTED]."
+					DeathMSG = "Местонахождение SCP-1499 до сих пор неизвестно, однако на расследование сообщений о нападении с применением насилия на церковь в российском городе [УДАЛЕНО] была отправлена разведгруппа ." ;The whereabouts of SCP-1499 are still unknown, but a recon team has been dispatched to investigate reports of a violent attack to a church in the Russian town of [REDACTED].
 				ElseIf PlayerRoom\RoomTemplate\Name = "gatea" Or PlayerRoom\RoomTemplate\Name = "exit1" Then
-					DeathMSG = SubjectName$+" found wandering around Gate "
+					DeathMSG = SubjectName$+" обнаружен блуждающим у Ворот " ;Subject D-9341 found wandering around Gate
 					If PlayerRoom\RoomTemplate\Name = "gatea" Then
 						DeathMSG = DeathMSG + "A"
 					Else
 						DeathMSG = DeathMSG + "B"
 					EndIf
-					DeathMSG = DeathMSG + ". Subject was immediately terminated by Nine-Tailed Fox and sent for autopsy. "
-					DeathMSG = DeathMSG + "SCP-008 infection was confirmed, after which the body was incinerated."
+					DeathMSG = DeathMSG + ". Субъект был немедленно уничтожен Девятихвостой Лисой и был направлен на вскрытие. " ;Subject was immediately terminated by Nine-Tailed Fox and sent for autopsy. 
+					DeathMSG = DeathMSG + "Инфекция SCP-008 была подтверждена, после чего тело было сожжено." ;SCP-008 infection was confirmed, after which the body was incinerated.
 				Else
 					DeathMSG = ""
 				EndIf
@@ -13624,7 +13624,7 @@ Function RenderWorld2()
 					power%=Int(Inventory(i)\state)
 					If Inventory(i)\state<=0.0 Then ;this nvg can't be used
 						hasBattery = 0
-						Msg = "The batteries in these night vision goggles died."
+						Msg = "Батарейки в очках ночного видения разряжены." ;The batteries in these night vision goggles died.
 						BlinkTimer = -1.0
 						MsgTimer = 350
 						Exit
@@ -13672,10 +13672,10 @@ Function RenderWorld2()
 			Local plusY% = 0
 			If hasBattery=1 Then plusY% = 40
 			
-			AAText GraphicWidth/2,(20+plusY)*MenuScale,"REFRESHING DATA IN",True,False
+			AAText GraphicWidth/2,(20+plusY)*MenuScale,"ОБНОВЛЕНИЕ ДАННЫХ ЧЕРЕЗ",True,False ;REFRESHING DATA IN
 			
 			AAText GraphicWidth/2,(60+plusY)*MenuScale,Max(f2s(NVTimer/60.0,1),0.0),True,False
-			AAText GraphicWidth/2,(100+plusY)*MenuScale,"SECONDS",True,False
+			AAText GraphicWidth/2,(100+plusY)*MenuScale,"СЕКУНД",True,False ;SECONDS
 			
 			temp% = CreatePivot() : temp2% = CreatePivot()
 			PositionEntity temp, EntityX(Collider), EntityY(Collider), EntityZ(Collider)
@@ -13752,7 +13752,7 @@ Function RenderWorld2()
 			Color 255,0,0
 			AASetFont fo\Font[2]
 			
-			AAText GraphicWidth/2,20*MenuScale,"WARNING: LOW BATTERY",True,False
+			AAText GraphicWidth/2,20*MenuScale,"ВНИМАНИЕ: НИЗКИЙ УРОВЕНЬ ЗАРЯДА",True,False ;WARNING: LOW BATTERY
 			Color 255,255,255
 		EndIf
 	EndIf
@@ -14027,19 +14027,20 @@ Function CatchErrors(location$)
 	If Len(errStr)>0 Then
 		If FileType(ErrorFile)=0 Then
 			errF = WriteFile(ErrorFile)
-			WriteLine errF,"An error occured in SCP - Containment Breach Ultimate Edition!"
-			WriteLine errF,"Game Version: "+GameVersionNumber
-			WriteLine errF,"Mod Version: "+ModVersionNumber
-			WriteLine errF,"Save compatible version: "+CompatibleNumber
-			WriteLine errF,"Date and time: "+CurrentDate()+" at "+CurrentTime()
-			WriteLine errF,"Total video memory (MB): "+TotalVidMem()/1024/1024
-			WriteLine errF,"Available video memory (MB): "+AvailVidMem()/1024/1024
+			WriteLine errF,"В SCP - Containment Breach Ultimate Edition произошла ошибка!" ;An error occured in SCP - Containment Breach Ultimate Edition!
+			WriteLine errF,"Версия игры: "+GameVersionNumber ;Game Version:
+			WriteLine errF,"Версия модификации: "+ModVersionNumber ;Mod Version:
+			WriteLine errF,"Версия (Совместимость сохранений): "+CompatibleNumber ;Save compatible version:
+			WriteLine errF,"Дата и время: "+CurrentDate()+" в "+CurrentTime() ;Date and time:
+			WriteLine errF,"Всего видеопамяти (MБ): "+TotalVidMem()/1024/1024 ;Total video memory (MB):
+			WriteLine errF,"Доступно видеопамяти (MБ): "+AvailVidMem()/1024/1024 ;Available video memory (MB):
 			GlobalMemoryStatus m.MEMORYSTATUS
-			WriteLine errF,"Global memory status: "+(m\dwAvailPhys%/1024/1024)+" MB/"+(m\dwTotalPhys%/1024/1024)+" MB ("+(m\dwAvailPhys%/1024)+" KB/"+(m\dwTotalPhys%/1024)+" KB)"
-			WriteLine errF,"Triangles rendered: "+CurrTrisAmount
-			WriteLine errF,"Active textures: "+ActiveTextures()
+			WriteLine errF,"Состояние памяти: "+(m\dwAvailPhys%/1024/1024)+" MБ/"+(m\dwTotalPhys%/1024/1024)+" MБ ("+(m\dwAvailPhys%/1024)+" KБ/"+(m\dwTotalPhys%/1024)+" KБ)" ;Global memory status:
+			WriteLine errF,"Отображено треугольников: "+CurrTrisAmount ;Triangles rendered
+			WriteLine errF,"Активных текстур: "+ActiveTextures() ;Active textures:
+			WriteLine errF,"Сообщите об этом на contact@oleg720.ru (Прикрипите этот лог и файл сохранения!)"
 			WriteLine errF,""
-			WriteLine errF,"Error(s):"
+			WriteLine errF,"Ошибки:" ;Error(s):
 		Else
 			Local canwriteError% = True
 			errF = OpenFile(ErrorFile)
@@ -14062,7 +14063,7 @@ Function CatchErrors(location$)
 				errStr = ErrorLog()
 			Wend
 		EndIf
-		Msg = "Blitz3D Error! Details in "+Chr(34)+ErrorFile+Chr(34)
+		Msg = "Ошибка Blitz3D! Подробности в "+Chr(34)+ErrorFile+Chr(34) ;Blitz3D Error! Details in 
 		MsgTimer = 20*70
 		CloseFile errF
 	EndIf
@@ -14326,15 +14327,15 @@ End Function
 
 Function CanUseItem(canUseWithHazmat%, canUseWithGasMask%, canUseWithEyewear%)
 	If (canUseWithHazmat = False And WearingHazmat) Then
-		Msg = "You can't use that item while wearing a hazmat suit."
+		Msg = "Вы не можете использовать этот предмет во время ношения защитного костюма." ;You can't use that item while wearing a hazmat suit.
 		MsgTimer = 70*5
 		Return False
 	Else If (canUseWithGasMask = False And (WearingGasMask Or I_1499\Using))
-		Msg = "You can't use that item while wearing a gas mask."
+		Msg = "Вы не можете использовать этот предмет во время ношения противогаза." ;You can't use that item while wearing a gas mask.
 		MsgTimer = 70*5
 		Return False
 	Else If (canUseWithEyewear = False And (WearingNightVision Or I_178\Using Or I_215\Using))
-		Msg = "You can't use that item while wearing headgear."
+		Msg = "Вы не можете использовать этот предмет во время ношения на голове устройства." ;You can't use that item while wearing headgear.
 	EndIf
 	
 	Return True

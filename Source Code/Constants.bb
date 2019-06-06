@@ -74,6 +74,7 @@ Const MaxMenuLightSprites2Amount = 11
 ;[PLAYER]
 
 Const SubjectName$ = "Субъект D-9341"
+Const SubjectName2$ = "Субъекта D-9341" ;Вариант в Родительном падеже
 
 ;[ACHIEVEMENTS]
 

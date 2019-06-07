@@ -150,8 +150,8 @@ Const MusicPath2$ = "SFX\Radio\UserTracks\"
 ;[VERSIONS]
 
 Const GameVersionNumber$ = "1.3.11"
-Const ModVersionNumber$ = "5.4 [Rus v0.1-TEST]" 
-Const CompatibleNumber$ = "5.4"
+Const ModVersionNumber$ = "5.4 [Rus v0.1-TEST]"
+Const CompatibleNumber$ = "5.4 [Rus v0.1-TEST]"
 
 ;[OPTIONS]
 

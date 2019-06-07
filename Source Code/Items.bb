@@ -322,7 +322,7 @@ Function InitItemTemplates()
     
     it = CreateItemTemplate("Порезанная бумага", "paperstrips", "GFX\items\paperstrips.x", "GFX\items\INVpaperstrips.png", "", 0.003) : it\sound = 0 ;Paper Strips
     it = CreateItemTemplate("Журнал полевого агента #235-001-CO5", "paper", "GFX\items\paper.x", "GFX\items\INVpaper.png", "GFX\items\docO5_1.png", 0.003) : it\sound = 0 ;Field Agent Log #235-001-CO5
-    it = CreateItemTemplate("Журнал групп интересов", "paper", "GFX\items\paper.x", "GFX\items\INVpaper.png", "GFX\items\docO5_2.png", 0.003) : it\sound = 0 ;Groups Of Interest Log
+    it = CreateItemTemplate("Записки групп интересов", "paper", "GFX\items\paper.x", "GFX\items\INVpaper.png", "GFX\items\docO5_2.png", 0.003) : it\sound = 0 ;Groups Of Interest Log
     it = CreateItemTemplate("Неизвестный документ", "paper", "GFX\items\paper.x", "GFX\items\INVpaper.png", "GFX\items\docphoto.png", 0.003) : it\sound = 0 ;Unknown Document
     it = CreateItemTemplate("Неизвестная записка", "paper", "GFX\items\paper.x", "GFX\items\INVnote.png", "GFX\items\unknownnote.png", 0.003, "GFX\items\notetexture.jpg") : it\sound = 0 ;Unknown Note
 
@@ -352,10 +352,10 @@ Function InitItemTemplates()
 	
 	CreateItemTemplate("SCP-005", "scp005", "GFX\items\scp005.b3d", "GFX\items\INVscp005.png", "", 0.0004,"")
     
-    it = CreateItemTemplate("Binoculars", "binocular", "GFX\items\binoculars.b3d", "GFX\items\INVbinoculars.png", "", 0.03) : it\sound = 2 ;Binoculars
+    it = CreateItemTemplate("Бинокль", "binocular", "GFX\items\binoculars.b3d", "GFX\items\INVbinoculars.png", "", 0.03) : it\sound = 2 ;Binoculars
 
-    it = CreateItemTemplate("Document SCP-009", "paper", "GFX\items\paper.x", "GFX\items\INVpaper.png", "GFX\items\doc009.png", 0.003) : it\sound = 0 ;Document SCP-009
-    it = CreateItemTemplate("Document SCP-409", "paper", "GFX\items\paper.x", "GFX\items\INVpaper.png", "GFX\items\doc409.png", 0.003) : it\sound = 0 ;Document SCP-409
+    it = CreateItemTemplate("Документ об SCP-009", "paper", "GFX\items\paper.x", "GFX\items\INVpaper.png", "GFX\items\doc009.png", 0.003) : it\sound = 0 ;Document SCP-009
+    it = CreateItemTemplate("Документ об SCP-409", "paper", "GFX\items\paper.x", "GFX\items\INVpaper.png", "GFX\items\doc409.png", 0.003) : it\sound = 0 ;Document SCP-409
 
     CreateItemTemplate("SCP-178", "scp178", "GFX\items\scp178.b3d", "GFX\items\INVscp178.png", "", 0.02,"","",1)
 

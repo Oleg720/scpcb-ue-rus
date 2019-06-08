@@ -669,7 +669,7 @@ Function UpdateConsole()
 						    CreateConsoleMsg("******************************")
 						    CreateConsoleMsg("- newyear") 
 						    CreateConsoleMsg("- cheats") 
-						    CreateConsoleMsg("- fov [value]") 
+						    CreateConsoleMsg("- fov [значение]") ;value
 						    CreateConsoleMsg("- reset372") 
 							CreateConsoleMsg("- reset650") 
 							CreateConsoleMsg("- reset1033ru") 
@@ -799,11 +799,11 @@ Function UpdateConsole()
 							CreateConsoleMsg("и infinitestamina.") ;and
 							CreateConsoleMsg("Применимы значения (on/off).") ;Is specified
 							CreateConsoleMsg("******************************")
-						 Case "fov" ;..!
+						 Case "fov"
 							CreateConsoleMsg("СПРАВКА - fov") ;HELP
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Field of view (FOV) is the amount of game view") ;Field of view (FOV) is the amount of game view
-							CreateConsoleMsg("that is on display during a game.") ;that is on display during a game.
+							CreateConsoleMsg("Поле зрения (FOV) задаёт угол обзора") ;Field of view (FOV) is the amount of game view
+							CreateConsoleMsg("для игрока во время игры.") ;that is on display during a game.
 							CreateConsoleMsg("******************************")
 						Case "reset372" 
 						    CreateConsoleMsg("СПРАВКА - reset372") ;HELP
@@ -824,7 +824,7 @@ Function UpdateConsole()
 							CreateConsoleMsg("СПРАВКА - crystal") ;HELP
 							CreateConsoleMsg("******************************")
 							CreateConsoleMsg("SCP-409 кристаллизирует игрока.") ;crystallizes player.
-							CreateConsoleMsg("Example: crystal 52")
+							CreateConsoleMsg("Например: crystal 52") ;Example
 							CreateConsoleMsg("******************************")
 						Case "reset1033ru"
 						    CreateConsoleMsg("СПРАВКА - reset1033ru") ;HELP
@@ -892,7 +892,7 @@ Function UpdateConsole()
 					CreateConsoleMsg("Эффект SCP-402: "+I_402\Timer) ;Effect
 					CreateConsoleMsg("Эффект SCP-357: "+I_357\Timer) ;Effect
 					CreateConsoleMsg("Здоровье SCP-1033-RU: "+I_1033RU\HP) ;HP of
-					CreateConsoleMsg("Потерянное здоровье SCP-1033-RU: "+I_1033RU\DHP) ;Damaged HP of SCP-1033-RU ;..!
+					CreateConsoleMsg("Потерянное здоровье SCP-1033-RU: "+I_1033RU\DHP) ;Damaged HP of SCP-1033-RU
 					CreateConsoleMsg("Эффект Первой помощи SCP-447: "+I_447\UsingAidTimer) ;First Aid Effect
 					CreateConsoleMsg("Эффект Пилюли SCP-447: "+I_447\UsingPillTimer) ;Pill Effect:
                     CreateConsoleMsg("Эффект пилюли SCP-447: "+I_447\UsingEyeDropsTimer) ;Eye Drops Effect
@@ -1500,7 +1500,7 @@ Function UpdateConsole()
 						CreateConsoleMsg("ВИДИМОСТЬ ВРАГАМИ ДЕАКТИВИРОВАНА") ;NOTARGET ON
 					EndIf
 					;[End Block]
-				Case "spawnradio" ;..!
+				Case "spawnradio"
 					;[Block]
 					it.Items = CreateItem("Рация", "fineradio", EntityX(Collider), EntityY(Camera,True), EntityZ(Collider)) ;Radio Transceiver
 					EntityType(it\collider, HIT_ITEM)
@@ -4682,7 +4682,7 @@ Function MovePlayer()
 	EndIf
 	
 	If I_447\UsingEyeDrops = True Or I_447\UsingAid = True Or Use447Pill = True Or I_447\Using > 0
-		DeathMSG = "Зона захвачена [DATA EXPUNGED]. Сетуация была успешно сдержана через __ часов. Дальнейшее исследование показало, что "+SubjectName$+" был захвачен SCP-447-2 по неизвестной причине. "+SubjectName$+" умер во время нахождения у SCP-447-2, и продолжил вызывать [ДАННЫЕ УДАЛЕНЫ]." ;Site compromised by [DATA EXPUNGED]. Situation successfully contained after __ hours. Further investigation reveals "+SubjectName$+" in possession of an instance of SCP-447-2 through unknown means. "+SubjectName$+" died while in possession SCP-447-2 and proceeded To cause [Data EXPUNGED].
+		DeathMSG = "Зона захвачена [ДАННЫЕ УДАЛЕНЫ]. Сетуация была успешно сдержана через __ часов. Дальнейшее исследование показало, что "+SubjectName$+" был захвачен SCP-447-2 по неизвестной причине. "+SubjectName$+" умер во время нахождения у SCP-447-2, и продолжил вызывать [ДАННЫЕ УДАЛЕНЫ]." ;Site compromised by [DATA EXPUNGED]. Situation successfully contained after __ hours. Further investigation reveals "+SubjectName$+" in possession of an instance of SCP-447-2 through unknown means. "+SubjectName$+" died while in possession SCP-447-2 and proceeded To cause [Data EXPUNGED].
 	EndIf
 	
 	If Injuries > (4-MorphineHealAmount) Then
@@ -5549,12 +5549,12 @@ Function DrawGUI()
 			AAText x - 50, 360, "Таймер моргания: " + f2s(BlinkTimer, 3) ;Blink timer:
 			AAText x - 50, 380, "Травмы: " + Injuries ;Injuries:
 			AAText x - 50, 410, "Кровопотеря: " + Bloodloss ;Bloodloss:
-			AAText x - 50, 430, "BubbleFoam: " + I_1079\Foam ;BubbleFoam
-			AAText x - 50, 450, "BubbleTrigger: " + I_1079\Trigger ;BubbleTrigger
+			AAText x - 50, 430, "Пузырьковая пена: " + I_1079\Foam ;BubbleFoam
+			AAText x - 50, 450, "Активация"  + Chr(34) + "Пузырьков" + Chr(34) + ": " + I_1079\Trigger ;BubbleTrigger
 			AAText x - 50, 470, "Таймер тошноты: " + VomitTimer ;Vomit Timer:
 			AAText x - 50, 490, "Таймер размытия (блюра): " + BlurTimer ;Blur Timer
-			AAText x - 50, 510, "Light Blink: " + LightBlink
-			AAText x - 50, 530, "Light Flash: " + LightFlash
+			AAText x - 50, 510, "Моргание света: " + LightBlink ;LightBlink
+			AAText x - 50, 530, "Вспышка экрана: " + LightFlash ;LightFlash
 			AAText x - 50, 550, "Таймер MTF: " + MTFTimer ;Timer
 			AAText x - 50, 570, "Таймер MTF2: " + MTF2Timer ;Timer
 			If Curr173 <> Null
@@ -5606,7 +5606,7 @@ Function DrawGUI()
 			AAText x + 350, 170, "Инфекция SCP-008: "+Infect ;SCP-008 infection:
 			AAText x + 350, 190, "Кристализация SCP-409: "+I_409\Timer ;crystalization
 			AAText x + 350, 210, "Состояние SCP-215: "+I_215\Timer ;state
-			AAText x + 350, 230, "Состояние покояSCP-215: "+I_215\IdleTimer ;idle state
+			AAText x + 350, 230, "Состояние покоя SCP-215: "+I_215\IdleTimer ;idle state
 			AAText x + 350, 250, "Здоровье SCP-1033-RU: "+I_1033RU\HP ;HP of
 			AAText x + 350, 270, "Потерянное здоровье SCP-1033-RU: "+I_1033RU\DHP ;Lost HP of
 			AAText x + 350, 290, "Состояние SCP-207: "+I_207\Timer ;state
@@ -6274,7 +6274,7 @@ Function DrawGUI()
 										Next
 										If SelectedItem <> Null Then
 											Msg = "Планшет не удержит большее количество предметов." ;The paperclip is not strong enough to hold any more items.
-										Else ;..!
+										Else
 											If added\itemtemplate\tempname = "paper" Or added\itemtemplate\tempname = "oldpaper" Then
 												Msg = "Документ добавлен в планшет." ;This document was added to the clipboard.
 											ElseIf b="key1" Or b="key2" Or b="key3" Or b="key4" Or b="key5" Or b="key6" Or b2="Игральная карта" Or b2="Mastercard" Or b="coin" ;Playing Card
@@ -6822,7 +6822,7 @@ Function DrawGUI()
 											Case 5
 												Bloodloss = 0
 												Injuries = 0
-												Msg = "Вы перевязали раны. Кровотечение полностью прекратилось, и Вы чувствуете себя хорошо." ;You bandaged the wounds. The bleeding stopped completely and you feel fine.
+												Msg = "Вы перевязали раны. Кровотечение полностью прекратилось, и Вы чувствуете себя лучше." ;You bandaged the wounds. The bleeding stopped completely and you feel fine.
 											Case 6
 												Msg = "Вы перевязали раны, но кровь сильно полилась сквозь повязки." ;You bandaged the wounds and blood started pouring heavily through the bandages.
 												Injuries = 3.5
@@ -7325,7 +7325,7 @@ Function DrawGUI()
 							EndIf	
 							
 							AASetFont fo\Font[2]
-							AAText(x+60, y, "CHN")						;..! ;..?
+							AAText(x+60, y, "CHN") ;..! ;..?
 							
 							If SelectedItem\itemtemplate\tempname = "veryfineradio" Then ;"KOODIKANAVA"
 								ResumeChannel(RadioCHN(0))
@@ -8183,7 +8183,7 @@ Function DrawGUI()
 											Bloodloss = 0
 											I_1079\Foam = 0	
 											Injuries = 0
-											Msg = "Вы перевязали раны. Кровотечение полностью прекратилось, и Вы чувствуете себя хорошо. Вы замечаете запах мяты вокруг себя." ;You bandaged the wounds. The bleeding stopped completely and you feel fine. You notice the smell of mint.
+											Msg = "Вы перевязали раны. Кровотечение полностью прекратилось, и Вы чувствуете себя лучше. Вы замечаете запах мяты вокруг себя." ;You bandaged the wounds. The bleeding stopped completely and you feel fine. You notice the smell of mint.
 										Case 5
 											Msg = "Вы перевязали раны, но кровь сильно полилась сквозь повязки." ;You bandaged the wounds and blood started pouring heavily through the minty bandages.
 											Injuries = 2.5
@@ -8593,7 +8593,7 @@ Function DrawGUI()
 								        PlaySound_Strict LoadTempSound("SFX\SCP\109\ahh.ogg")
 							            Injuries = Max(0, Injuries - Rnd(0.09,0.1))
 								        Stamina = 100
-								        Msg = "Вы пьёте чистую воду, и чувствуете себя хорошо." ;You drink clear water. You feel fine.
+								        Msg = "Вы пьёте чистую воду, и чувствуете себя лучше." ;You drink clear water. You feel fine.
 							        ElseIf Stamina > 60.0 And Stamina < 100.0
 								        PlaySound_Strict LoadTempSound("SFX\SCP\109\ahh.ogg")
 							            Injuries = Max(0, Injuries - Rnd(0.1,0.5))
@@ -8603,7 +8603,7 @@ Function DrawGUI()
 								        Injuries = Max(0, Injuries - Rnd(0.1,0.5))
 								        Stamina = 100
 								        PlaySound_Strict LoadTempSound("SFX\SCP\109\ahh.ogg")
-								        Msg = "Вы пьёте чистую воду, и чувствуете себя хорошо." ;You drink clear water. You feel fine.
+								        Msg = "Вы пьёте чистую воду, и чувствуете себя лучше." ;You drink clear water. You feel fine.
 							        EndIf
                                     MsgTimer = 70*5
                                     SelectedItem = Null
@@ -11642,19 +11642,19 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 									If Rand(10)=1 Then
 										it2 = CreateItem("Ключ-карта 4-го уровня", "key4", x, y, z) ;Level 4 Key Card
 									Else
-										it2 = CreateItem("Playing Card", "misc", x, y, z)	
+										it2 = CreateItem("Игральная карта", "misc", x, y, z) ;Playing Card
 									EndIf
 								Case NORMAL
 									If Rand(15)=1 Then
 										it2 = CreateItem("Ключ-карта 4-го уровня", "key4", x, y, z) ;Level 4 Key Card
 									Else
-										it2 = CreateItem("Playing Card", "misc", x, y, z)	
+										it2 = CreateItem("Игральная карта", "misc", x, y, z) ;Playing Card
 									EndIf
 								Case HARD
 									If Rand(20)=1 Then
 										it2 = CreateItem("Ключ-карта 4-го уровня", "key4", x, y, z) ;Level 4 Key Card
 									Else
-										it2 = CreateItem("Playing Card", "misc", x, y, z)	
+										it2 = CreateItem("Игральная карта", "misc", x, y, z) ;Playing Card
 									EndIf
 							End Select
 						Case "Ключ-карта 4-го уровня" ;Level 4 Key Card
@@ -11845,7 +11845,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 		Case "Рация" ;Radio Transceiver
 			Select setting
 				Case "rough", "coarse"
-					it2 = CreateItem("Electronical components", "misc", x, y, z)
+					it2 = CreateItem("Электронные компоненты", "misc", x, y, z) ;Electronical components
 				Case "1:1"
 					it2 = CreateItem("Рация", "18vradio", x, y, z) ;Radio Transceiver
 					it2\state = 100
@@ -14038,7 +14038,7 @@ Function CatchErrors(location$)
 			WriteLine errF,"Состояние памяти: "+(m\dwAvailPhys%/1024/1024)+" MБ/"+(m\dwTotalPhys%/1024/1024)+" MБ ("+(m\dwAvailPhys%/1024)+" KБ/"+(m\dwTotalPhys%/1024)+" KБ)" ;Global memory status:
 			WriteLine errF,"Отображено треугольников: "+CurrTrisAmount ;Triangles rendered
 			WriteLine errF,"Активных текстур: "+ActiveTextures() ;Active textures:
-			WriteLine errF,"Сообщите об этом на contact@oleg720.ru (Прикрипите этот лог и файл сохранения!)"
+			WriteLine errF,"Сообщите об этом на contact@oleg720.ru (Прикрипите этот лог и файл сохранения! По возможности, опишите сетуацию.)"
 			WriteLine errF,""
 			WriteLine errF,"Ошибки:" ;Error(s):
 		Else

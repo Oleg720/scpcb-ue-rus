@@ -895,7 +895,7 @@ Function UpdateConsole()
 					CreateConsoleMsg("ѕотер€нное здоровье SCP-1033-RU: "+I_1033RU\DHP) ;Damaged HP of SCP-1033-RU
 					CreateConsoleMsg("Ёффект ѕервой помощи SCP-447: "+I_447\UsingAidTimer) ;First Aid Effect
 					CreateConsoleMsg("Ёффект ѕилюли SCP-447: "+I_447\UsingPillTimer) ;Pill Effect:
-                    CreateConsoleMsg("Ёффект пилюли SCP-447: "+I_447\UsingEyeDropsTimer) ;Eye Drops Effect
+                    CreateConsoleMsg("Ёффект √лазных капель: "+I_447\UsingEyeDropsTimer) ;Eye Drops Effect
                     ;END
 					CreateConsoleMsg("******************************")
 					;[End Block]

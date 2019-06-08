@@ -9078,28 +9078,28 @@ Function DrawMenu()
 					y = y + 10*MenuScale
 					
 					AAText(x, y + 20 * MenuScale, "Идти вперёд") ;Move Forward
-					InputBox(x + 200 * MenuScale, y + 20 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_UP,210)),5)		
+					InputBox(x + 200 * MenuScale, y + 20 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_UP,210)),5) ;100
 					AAText(x, y + 40 * MenuScale, "Идти влево") ;Strafe Left
-					InputBox(x + 200 * MenuScale, y + 40 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_LEFT,210)),3)	
+					InputBox(x + 200 * MenuScale, y + 40 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_LEFT,210)),3) ;100
 					AAText(x, y + 60 * MenuScale, "Идти назад") ;Move Backward
-					InputBox(x + 200 * MenuScale, y + 60 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_DOWN,210)),6)				
+					InputBox(x + 200 * MenuScale, y + 60 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_DOWN,210)),6) ;100
 					AAText(x, y + 80 * MenuScale, "Идти вправо") ;Strafe Right
-					InputBox(x + 200 * MenuScale, y + 80 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_RIGHT,210)),4)
+					InputBox(x + 200 * MenuScale, y + 80 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_RIGHT,210)),4) ;100
 					
 					AAText(x, y + 100 * MenuScale, "Моргнуть") ;Manual Blink
-					InputBox(x + 200 * MenuScale, y + 100 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_BLINK,210)),7)				
+					InputBox(x + 200 * MenuScale, y + 100 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_BLINK,210)),7) ;100
 					AAText(x, y + 120 * MenuScale, "Бежать") ;Sprint
-					InputBox(x + 200 * MenuScale, y + 120 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_SPRINT,210)),8)
+					InputBox(x + 200 * MenuScale, y + 120 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_SPRINT,210)),8) ;100
 					AAText(x, y + 140 * MenuScale, "Предметы") ;Open/Close Inventory
-					InputBox(x + 200 * MenuScale, y + 140 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_INV,210)),9)
+					InputBox(x + 200 * MenuScale, y + 140 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_INV,210)),9) ;100
 					AAText(x, y + 160 * MenuScale, "Ползти") ;Crouch
-					InputBox(x + 200 * MenuScale, y + 160 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_CROUCH,210)),10)
+					InputBox(x + 200 * MenuScale, y + 160 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_CROUCH,210)),10) ;100
 					AAText(x, y + 180 * MenuScale, "Быстрое сохр.") ;Quick Save
-					InputBox(x + 200 * MenuScale, y + 180 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_SAVE,210)),11)	
+					InputBox(x + 200 * MenuScale, y + 180 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_SAVE,210)),11) ;100
 					AAText(x, y + 200 * MenuScale, "Консоль") ;Open/Close Console
-					InputBox(x + 200 * MenuScale, y + 200 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_CONSOLE,210)),12)
-					AAText(x, y + 220 * MenuScale, "Сделать скриншот") ;Take Screenshot
-					InputBox(x + 200 * MenuScale, y + 220 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_SCREENSHOT,210)),13)
+					InputBox(x + 200 * MenuScale, y + 200 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_CONSOLE,210)),12) ;100
+					AAText(x, y + 220 * MenuScale, "Скриншот") ;Take Screenshot
+					InputBox(x + 200 * MenuScale, y + 220 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_SCREENSHOT,210)),13) ;100
 					
 					If MouseOn(x,y,300*MenuScale,240*MenuScale)
 						DrawOptionsTooltip(tx,ty,tw,th,"controls")

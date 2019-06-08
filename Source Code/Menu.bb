@@ -384,9 +384,9 @@ Function UpdateMainMenu()
 					
 					;Other factor's difficulty
 					Color 255,255,255
-					DrawImage ArrowIMG(1),x + 155 * MenuScale, y+285*MenuScale
+					DrawImage ArrowIMG(1),x + 155 * MenuScale, y+281*MenuScale ;285
 					If MouseHit1
-						If ImageRectOverlap(ArrowIMG(1),x + 155 * MenuScale, y+285*MenuScale, ScaledMouseX(),ScaledMouseY(),0,0)
+						If ImageRectOverlap(ArrowIMG(1),x + 155 * MenuScale, y+281*MenuScale, ScaledMouseX(),ScaledMouseY(),0,0) ;285
 							If SelectedDifficulty\otherFactors < HARD
 								SelectedDifficulty\otherFactors = SelectedDifficulty\otherFactors + 1
 							Else
@@ -398,11 +398,11 @@ Function UpdateMainMenu()
 					Color 255,255,255
 					Select SelectedDifficulty\otherFactors
 						Case EASY
-							AAText(x + 200 * MenuScale, y + 255 * MenuScale, "Другие факторы сложности: Легко") ;Other difficulty factors: Easy
+							AAText(x + 200 * MenuScale, y + 285 * MenuScale, "Другие факторы сложности: Легко") ;Other difficulty factors: Easy
 						Case NORMAL
-							AAText(x + 200 * MenuScale, y + 255 * MenuScale, "Другие факторы сложности: Нормально") ;Other difficulty factors: Normal
+							AAText(x + 200 * MenuScale, y + 285 * MenuScale, "Другие факторы сложности: Нормально") ;Other difficulty factors: Normal
 						Case HARD
-							AAText(x + 200 * MenuScale, y + 255 * MenuScale, "Другие факторы сложности: Сложно") ;Other difficulty factors: Hard
+							AAText(x + 200 * MenuScale, y + 285 * MenuScale, "Другие факторы сложности: Сложно") ;Other difficulty factors: Hard
 					End Select
 				Else
 					RowText(SelectedDifficulty\description, x+160*MenuScale, y+160*MenuScale, (440-20)*MenuScale, 200)					
@@ -948,28 +948,28 @@ Function UpdateMainMenu()
 					y = y + 10*MenuScale
 					
 					AAText(x + 20 * MenuScale, y + 20 * MenuScale, "Идти вперёд") ;Move Forward
-					InputBox(x + 160 * MenuScale, y + 20 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_UP,210)),5)		
+					InputBox(x + 160 * MenuScale, y + 20 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_UP,210)),5) ;100
 					AAText(x + 20 * MenuScale, y + 40 * MenuScale, "Идти влево") ;Strafe Left
-					InputBox(x + 160 * MenuScale, y + 40 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_LEFT,210)),3)	
+					InputBox(x + 160 * MenuScale, y + 40 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_LEFT,210)),3) ;100
 					AAText(x + 20 * MenuScale, y + 60 * MenuScale, "Идти назад") ;Move Backward
-					InputBox(x + 160 * MenuScale, y + 60 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_DOWN,210)),6)				
+					InputBox(x + 160 * MenuScale, y + 60 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_DOWN,210)),6) ;100
 					AAText(x + 20 * MenuScale, y + 80 * MenuScale, "Идти вправо") ;Strafe Right
-					InputBox(x + 160 * MenuScale, y + 80 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_RIGHT,210)),4)	
+					InputBox(x + 160 * MenuScale, y + 80 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_RIGHT,210)),4) ;100
 					AAText(x + 20 * MenuScale, y + 100 * MenuScale, "Быстрое сохр.") ;Quick Save
-					InputBox(x + 160 * MenuScale, y + 100 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_SAVE,210)),11)
+					InputBox(x + 160 * MenuScale, y + 100 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_SAVE,210)),11) ;100
 					
-					AAText(x + 280 * MenuScale, y + 20 * MenuScale, "Моргнуть") ;Manual Blink
-					InputBox(x + 470 * MenuScale, y + 20 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_BLINK,210)),7)				
-					AAText(x + 280 * MenuScale, y + 40 * MenuScale, "Бежать") ;Sprint
-					InputBox(x + 470 * MenuScale, y + 40 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_SPRINT,210)),8)
-					AAText(x + 280 * MenuScale, y + 60 * MenuScale, "Предметы") ;Open/Close Inventory
-					InputBox(x + 470 * MenuScale, y + 60 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_INV,210)),9)
-					AAText(x + 280 * MenuScale, y + 80 * MenuScale, "Ползти") ;Crouch
-					InputBox(x + 470 * MenuScale, y + 80 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_CROUCH,210)),10)	
-					AAText(x + 280 * MenuScale, y + 100 * MenuScale, "Консоль") ;Open/Close Console
-					InputBox(x + 470 * MenuScale, y + 100 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_CONSOLE,210)),12)
-					AAText(x + 280 * MenuScale, y + 120 * MenuScale, "Сделать скриншот") ;Take Screenshot
-					InputBox(x + 470 * MenuScale, y + 120 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_SCREENSHOT,210)),13)
+					AAText(x + 320 * MenuScale, y + 20 * MenuScale, "Моргнуть") ;Manual Blink ;280
+					InputBox(x + 430 * MenuScale, y + 20 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_BLINK,210)),7) ;470 ;100
+					AAText(x + 320 * MenuScale, y + 40 * MenuScale, "Бежать") ;Sprint ;280
+					InputBox(x + 430 * MenuScale, y + 40 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_SPRINT,210)),8) ;470 ;100
+					AAText(x + 320 * MenuScale, y + 60 * MenuScale, "Предметы") ;Open/Close Inventory ;280
+					InputBox(x + 430 * MenuScale, y + 60 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_INV,210)),9) ;470 ;100
+					AAText(x + 320 * MenuScale, y + 80 * MenuScale, "Ползти") ;Crouch ;280
+					InputBox(x + 430 * MenuScale, y + 80 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_CROUCH,210)),10)  ;470 ;100
+					AAText(x + 320 * MenuScale, y + 100 * MenuScale, "Консоль") ;Open/Close Console ;280
+					InputBox(x + 430 * MenuScale, y + 100 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_CONSOLE,210)),12) ;470 ;100
+					AAText(x + 320 * MenuScale, y + 120 * MenuScale, "Скриншот") ;Take Screenshot ;280
+					InputBox(x + 430 * MenuScale, y + 120 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_SCREENSHOT,210)),13) ;470 ;100
 					
 					If MouseOn(x+20*MenuScale,y,width-40*MenuScale,140*MenuScale)
 						DrawOptionsTooltip(tx,ty,tw,th,"controls")

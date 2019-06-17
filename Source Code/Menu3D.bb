@@ -634,8 +634,6 @@ Function Update3DMenu()
 			Else
 				m3d\State2=m3d\State2-fs\FPSfactor[0]
 			EndIf
-			
-			;DebugLog m3d\State2
 					
 			If (m3d\State2=3.0) Then
 				;If BumpEnabled Then
@@ -849,8 +847,7 @@ Function LoadRMesh_3DMenu(file$) ;this ignores some stuff that we don't need
 	EndIf
 		
 	;If ReadString(f)<>"RoomMesh" Then RuntimeError Chr(34)+file+Chr(34)+" is not RMESH"
-	
-	DebugLog file
+
 	file=StripFilename(file)
 	
 	Local count%,count2%
@@ -895,7 +892,6 @@ Function LoadRMesh_3DMenu(file$) ;this ignores some stuff that we don't need
 					If tex[j]<>0 Then
 						If temp1i=1 Then TextureBlend tex[j],5
 						AddTextureToCache(tex[j])
-						DebugLog StripPath(TextureName(tex[j]))
 					EndIf
 					
 				EndIf
@@ -988,33 +984,6 @@ Function LoadRMesh_3DMenu(file$) ;this ignores some stuff that we don't need
 	Next
 	
 	If BumpEnabled Then; And 0 Then
-;		For i = 1 To CountSurfaces(Opaque)
-;			surf = GetSurface(Opaque,i)
-;			brush = GetSurfaceBrush(surf)
-;			tex[0] = GetBrushTexture(brush,1)
-;			temp1s$ =  StripPath(TextureName(tex[0]))
-;			DebugLog temp1s$
-;			If temp1s$<>0 Then 
-;				mat.Materials=GetCache(temp1s)
-;				If mat<>Null Then
-;					If mat\Bump<>0 Then
-;						tex[1] = GetBrushTexture(brush,0)
-;						
-;						BrushTexture brush, tex[1], 0, 2	
-;						BrushTexture brush, mat\Bump, 0, 1
-;						BrushTexture brush, tex[0], 0, 0					
-;						
-;						PaintSurface surf,brush
-;						
-;						;If tex[1]<>0 Then DebugLog "lkmlkm" : FreeTexture tex[1] : tex[1]=0
-;					EndIf
-;				EndIf
-;				
-;				;If tex[0]<>0 Then DebugLog "sdfsf" : FreeTexture tex[0] : tex[0]=0
-;			EndIf
-;			If brush<>0 Then FreeBrush brush : brush=0
-;		Next
-;		
 		For i = 2 To CountSurfaces(Opaque)
 			sf = GetSurface(Opaque,i)
 			b = GetSurfaceBrush( sf )
@@ -1280,7 +1249,6 @@ Function LoadRMesh_3DMenu(file$) ;this ignores some stuff that we don't need
 			Case "model"
 				file = ReadString(f)
 				If file<>""
-					DebugLog "file: "+file
 					Local model = CreatePropObj("GFX\Map\Props\"+file);LoadMesh("GFX\Map\Props\"+file)		
 					
 					temp1=ReadFloat(f) : temp2=ReadFloat(f) : temp3=ReadFloat(f)
@@ -1291,15 +1259,12 @@ Function LoadRMesh_3DMenu(file$) ;this ignores some stuff that we don't need
 					
 					temp1=ReadFloat(f) : temp2=ReadFloat(f) : temp3=ReadFloat(f)
 					ScaleEntity model,temp1,temp2,temp3
-					DebugLog "size: "+temp1+", "+temp2+", "+temp3
 					
 					EntityParent model,Opaque
 					EntityType model,HIT_MAP
 					;EntityPickMode model,2
 				Else
-					DebugLog "file = 0"
 					temp1=ReadFloat(f) : temp2=ReadFloat(f) : temp3=ReadFloat(f)
-					DebugLog temp1+", "+temp2+", "+temp3
 										
 					;Stop
 				EndIf

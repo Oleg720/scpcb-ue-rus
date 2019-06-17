@@ -517,7 +517,7 @@ Function UpdateMainMenu()
 						If i <= SaveGameAmount Then
 							;DrawFrame(x,y,540* MenuScale, 70* MenuScale)
 							
-							If SaveGameVersion(i - 1) <> CompatibleNumber Then ; And SaveGameVersion(i - 1) <> "5.1.2"
+							If SaveGameVersion(i - 1) <> ModCompatibleNumber Then ;And SaveGameVersion(i - 1) <> "5.3" Then
 								Color 255,0,0
 							Else
 								Color 255,255,255
@@ -529,7 +529,7 @@ Function UpdateMainMenu()
 							AAText(x + 20 * MenuScale, y + (10+36) * MenuScale, SaveGameVersion(i - 1))
 							
 							If SaveMSG = "" Then
-								If SaveGameVersion(i - 1) <> CompatibleNumber Then ; And SaveGameVersion(i - 1) <> "5.1.2"
+								If SaveGameVersion(i - 1) <> ModCompatibleNumber Then ;And SaveGameVersion(i - 1) <> "5.3" Then
 									DrawFrame(x + 280 * MenuScale, y + 20 * MenuScale, 100 * MenuScale, 30 * MenuScale)
 									Color(255, 0, 0)
 									AAText(x + 330 * MenuScale, y + 34 * MenuScale, "Загрузить", True, True) ;Load
@@ -551,7 +551,7 @@ Function UpdateMainMenu()
 								EndIf
 							Else
 								DrawFrame(x + 280 * MenuScale, y + 20 * MenuScale, 100 * MenuScale, 30 * MenuScale)
-								If SaveGameVersion(i - 1) <> CompatibleNumber Then ; And SaveGameVersion(i - 1) <> "5.1.2"
+								If SaveGameVersion(i - 1) <> ModCompatibleNumber Then ;And SaveGameVersion(i - 1) <> "5.3" Then
 									Color(255, 0, 0)
 								Else
 									Color(100, 100, 100)

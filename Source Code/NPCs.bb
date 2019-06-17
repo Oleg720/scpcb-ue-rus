@@ -1,7 +1,9 @@
 ;[Block]
 
 Global Curr173.NPCs, Curr106.NPCs, Curr096.NPCs, Curr5131.NPCs
+;MOD
 Global Curr650.NPCs
+;END
 
 ;[End Block]
 
@@ -92,7 +94,6 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			n\Gravity = True
 			
 			n\obj = CopyEntity(o\NPCModelID[0])
-			;n\obj = LoadAnimMesh_Strict("GFX\npcs\scp173.b3d")
 			
 			;On Halloween set jack-o-latern texture.
 			If (Left(CurrentDate(), 7) = "31 Oct ") Then
@@ -121,7 +122,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			
 			n\CollRadius = 0.32
 			;[End Block]
-		Case NPCtypeOldMan
+		Case NPCtype106
 			;[Block]
 			n\NVName = "SCP-106"
 			n\Collider = CreatePivot()
@@ -130,7 +131,6 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			EntityRadius n\Collider, 0.2
 			EntityType n\Collider, HIT_PLAYER
 			n\obj = CopyEntity(o\NPCModelID[1])
-			;n\obj = LoadAnimMesh_Strict("GFX\npcs\scp106.b3d")
 			
 			temp# = (GetINIFloat("Data\NPCs.ini", "SCP-106", "scale") / 2.2)		
 			ScaleEntity n\obj, temp, temp, temp
@@ -153,10 +153,8 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			n\NVName = "Human"
 			n\Collider = CreatePivot()
 			EntityRadius n\Collider, 0.2
-			;EntityRadius Collider, 0.15, 0.30
 			EntityType n\Collider, HIT_PLAYER
 			n\obj = CopyEntity(o\NPCModelID[2]) 
-			;n\obj = LoadAnimMesh_Strict("GFX\npcs\guard.b3d")
 			
 			n\Speed = (GetINIFloat("Data\NPCs.ini", "Guard", "speed") / 100.0)
 			temp# = (GetINIFloat("Data\NPCs.ini", "Guard", "scale") / 2.5)
@@ -173,7 +171,6 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			EntityType n\Collider, HIT_PLAYER
 			
 			n\obj = CopyEntity(o\NPCModelID[3])
-			;n\obj = LoadAnimMesh_Strict("GFX\npcs\classd.b3d")
 			
 			temp# = 0.5 / MeshWidth(n\obj)
 			ScaleEntity n\obj, temp, temp, temp
@@ -190,8 +187,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			n\Collider = CreatePivot()
 			EntityRadius n\Collider, 0.2
 			n\obj = CopyEntity(o\NPCModelID[4])
-			;n\obj = LoadAnimMesh_Strict("GFX\npcs\scp372.b3d")
-			
+
 			temp# = 0.35 / MeshWidth(n\obj)
 			ScaleEntity n\obj, temp, temp, temp
 			;[End Block]
@@ -204,10 +200,8 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			n\Collider = CreatePivot()
 			EntityRadius n\Collider, 0.2
 			n\obj = CopyEntity(o\NPCModelID[5])
-			;n\obj = LoadAnimMesh_Strict("GFX\apache.b3d")
 			
 			n\obj2 = CopyEntity(o\NPCModelID[6])
-			;n\obj2 = LoadAnimMesh_Strict("GFX\apacherotor.b3d",n\obj)
 			EntityParent n\obj2, n\obj
 			
 			For i = -1 To 1 Step 2
@@ -217,7 +211,6 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			Next
 			
 			n\obj3 = CopyEntity(o\NPCModelID[27])
-			;n\obj3 = LoadAnimMesh_Strict("GFX\apacherotor2.b3d",n\obj)
 			EntityParent n\obj3, n\obj
 			PositionEntity n\obj3, 0.0, 2.15, -5.48
 			
@@ -226,7 +219,6 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			
 			For i = -1 To 1 Step 2
 				Local Light1 = CreateLight(2,n\obj)
-				;room\LightDist[i] = range
 				LightRange(Light1,2.0)
 				LightColor(Light1,255,255,255)
 				PositionEntity(Light1, 1.65*i, 1.17, -0.25)
@@ -248,11 +240,8 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			n\NVName = "Human"
 			n\Collider = CreatePivot()
 			EntityRadius n\Collider, 0.2
-			;EntityRadius Collider, 0.15, 0.30
 			EntityType n\Collider, HIT_PLAYER
-			;EntityPickMode n\Collider, 1
 			n\obj = CopyEntity(o\NPCModelID[7]) 
-			;n\obj = LoadAnimMesh_Strict("GFX\npcs\MTF.b3d")
 			
 			n\Speed = (GetINIFloat("Data\NPCs.ini", "MTF", "speed") / 100.0)
 			
@@ -299,7 +288,6 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			EntityRadius n\Collider, 0.26
 			EntityType n\Collider, HIT_PLAYER
 			n\obj = CopyEntity(o\NPCModelID[8])
-			;n\obj = LoadAnimMesh_Strict("GFX\npcs\scp096.b3d")
 			
 			n\Speed = (GetINIFloat("Data\NPCs.ini", "SCP-096", "speed") / 100.0)
 			
@@ -318,7 +306,6 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			EntityRadius n\Collider, 0.2
 			EntityType n\Collider, HIT_PLAYER
 			n\obj = CopyEntity(o\NPCModelID[9])
-			;n\obj = LoadAnimMesh_Strict("GFX\npcs\scp049.b3d")
 			
 			n\Speed = (GetINIFloat("Data\NPCs.ini", "SCP-049", "speed") / 100.0)
 			
@@ -331,16 +318,15 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			
 			n\CanUseElevator = True
 			;[End Block]
-		Case NPCtypeZombie
+		Case NPCtype0492
 			;[Block]
-			n\NVName = "Zombie"
+			n\NVName = "SCP-049-2"
 			n\Collider = CreatePivot()
 			EntityRadius n\Collider, 0.2
 			EntityType n\Collider, HIT_PLAYER
 			
 			If n\obj = 0 Then 
 				n\obj = CopyEntity(o\NPCModelID[10])
-				;n\obj = LoadAnimMesh_Strict("GFX\npcs\zombie1.b3d")
 				
 				temp# = (GetINIFloat("Data\NPCs.ini", "SCP-049-2", "scale") / 2.5)
 				ScaleEntity n\obj, temp, temp, temp
@@ -352,7 +338,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			
 			SetAnimTime(n\obj, 107)
 			
-			n\Sound = LoadSound_Strict("SFX\SCP\049\0492Breath.ogg")
+			n\Sound = LoadSound_Strict("SFX\SCP\049_2\Breath.ogg")
 			
 			n\HP = 100
 			;[End Block]
@@ -362,7 +348,6 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			n\Collider = CreatePivot()
 			EntityRadius n\Collider, 0.2
 		    n\obj = CopyEntity(o\NPCModelID[11])
-			;n\obj = LoadAnimMesh_Strict("GFX\npcs\scp513_1.b3d")
 			
 			n\obj2 = CopyEntity (n\obj)
 			EntityAlpha n\obj2, 0.6
@@ -372,7 +357,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			ScaleEntity n\obj2, temp, temp, temp
 			;[End Block]
 
-		Case NPCtypeTentacle
+		Case NPCtype035Tentacle
 			;[Block]
 			n\NVName = "Unidentified"
 			
@@ -387,7 +372,6 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			
 			If n\obj = 0 Then
 			    n\obj = CopyEntity(o\NPCModelID[12])
-				;n\obj = LoadAnimMesh_Strict("GFX\NPCs\scp035_tentacle.b3d")
 				ScaleEntity n\obj, 0.065,0.065,0.065
 			EndIf
 			
@@ -395,7 +379,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			
 			n\HP = 150
 			;[End Block]
-		Case NPCtype860
+		Case NPCtype8602
 			;[Block]
 			n\NVName = "Unidentified"
 			
@@ -403,7 +387,6 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			EntityRadius n\Collider, 0.25
 			EntityType n\Collider, HIT_PLAYER
 			n\obj = CopyEntity(o\NPCModelID[13])
-			;n\obj = LoadAnimMesh_Strict("GFX\npcs\scp860_2.b3d")
 			
 			EntityFX(n\obj, 1)
 			
@@ -453,7 +436,6 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			
 			If n\obj = 0 Then 
 			    n\obj = CopyEntity(o\NPCModelID[14])
-				;n\obj = LoadAnimMesh_Strict("GFX\npcs\scp939.b3d")
 							
 				temp# = GetINIFloat("Data\NPCs.ini", "SCP-939", "scale")/2.5
 				ScaleEntity n\obj, temp, temp, temp		
@@ -471,7 +453,6 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			EntityType n\Collider, HIT_PLAYER
 			
 			n\obj = CopyEntity(o\NPCModelID[15])
-			;n\obj = LoadAnimMesh_Strict("GFX\npcs\scp066.b3d")
 			temp# = GetINIFloat("Data\NPCs.ini", "SCP-066", "scale")/2.5
 			ScaleEntity n\obj, temp, temp, temp		
 			
@@ -497,16 +478,13 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			
 			If n\obj = 0 Then 
 			    n\obj = CopyEntity(o\NPCModelID[16])
-				;n\obj = LoadAnimMesh_Strict("GFX\npcs\scp966.b3d")
 			EndIf
 			
 			EntityFX n\obj,1
 			
 			temp# = GetINIFloat("Data\NPCs.ini", "SCP-966", "scale")/40.0
 			ScaleEntity n\obj, temp, temp, temp		
-			
-			;EntityColor n\obj,Rnd(0,50),0,Rnd(50,100)
-			
+
 			SetAnimTime n\obj,15.0
 			
 			EntityType n\Collider,HIT_PLAYER
@@ -517,13 +495,13 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			;[Block]
 			n\NVName = "SCP-1048-A"
 			n\obj = CopyEntity(o\NPCModelID[17])
-			;n\obj = LoadAnimMesh_Strict("GFX\npcs\scp1048a.b3d")
 			ScaleEntity n\obj, 0.05,0.05,0.05
 			SetAnimTime(n\obj, 2)
 			
 			n\Sound = LoadSound_Strict("SFX\SCP\1048A\Shriek.ogg")
 			n\Sound2 = LoadSound_Strict("SFX\SCP\1048A\Growth.ogg")
 			;[End Block]
+
 		Case NPCtype1499
 			;[Block]
 			n\NVName = "Unidentified"
@@ -537,29 +515,26 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 				EndIf
 			Next
 			
-			If n\obj = 0 Then 
-			    n\obj = CopyEntity(o\NPCModelID[18])
-				;n\obj = LoadAnimMesh_Strict("GFX\npcs\scp1499_1.b3d")
-			EndIf
-			
-			n\Speed = (GetINIFloat("Data\NPCs.ini", "SCP-1499-1", "speed") / 100.0) * Rnd(0.9,1.1)
-			temp# = (GetINIFloat("Data\NPCs.ini", "SCP-1499-1", "scale") / 4.0) * Rnd(0.8,1.0)
-			
+			If n\obj = 0 Then n\obj = CopyEntity(o\NPCModelID[18])
+
+			n\Speed = (GetINIFloat("DATA\NPCs.ini", "SCP-1499-1", "speed") / 100.0) * Rnd(0.9,1.1)
+			temp# = (GetINIFloat("DATA\NPCs.ini", "SCP-1499-1", "scale") / 4.0) * Rnd(0.8,1.0)
+
 			ScaleEntity n\obj, temp, temp, temp
 			
 			EntityFX n\obj,1
 			
 			EntityAutoFade n\obj,HideDistance*2.5,HideDistance*2.95
 			;[End Block]
-		Case NPCtype008
+
+		Case NPCtype0081
 			;[Block]
-			n\NVName = "Zombie"
+			n\NVName = "SCP-008-1"
 			n\Collider = CreatePivot()
 			EntityRadius n\Collider, 0.2
 			EntityType n\Collider, HIT_PLAYER
 			
 			n\obj = CopyEntity(o\NPCModelID[19])
-			;n\obj = LoadAnimMesh_Strict("GFX\npcs\zombieinfected1.b3d")
 			
 			temp# = 0.5 / MeshWidth(n\obj)
 			ScaleEntity n\obj, temp, temp, temp
@@ -570,7 +545,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			
 			SetNPCFrame n, 11
 			
-			n\Sound = LoadSound_Strict("SFX\SCP\008\0081Breath.ogg")
+			n\Sound = LoadSound_Strict("SFX\SCP\008_1\Breath.ogg")
 			
 			n\HP = 120
 			;[End Block]
@@ -596,14 +571,13 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 		;MODS
 		Case NPCtype0082
 			;[Block]
-			n\NVName = "Zombie"
+			n\NVName = "SCP-008-2"
 			n\Collider = CreatePivot()
 			EntityRadius n\Collider, 0.2
 			EntityType n\Collider, HIT_PLAYER
 			
 			If n\obj = 0 Then 
 				n\obj = CopyEntity(o\NPCModelID[21]) 
-				;n\obj = LoadAnimMesh_Strict("GFX\npcs\zombieinfected2.b3d")
 				
 				temp# = (GetINIFloat("Data\NPCs.ini", "SCP-049-2", "scale") / 2.5)
 				ScaleEntity n\obj, temp, temp, temp
@@ -615,7 +589,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			
 			SetAnimTime(n\obj, 107)
 			
-			n\Sound = LoadSound_Strict("SFX\SCP\008\0081Breath.ogg")
+			n\Sound = LoadSound_Strict("SFX\SCP\008_1\Breath.ogg")
 			
 			n\HP = 120
 			;[End Block]
@@ -631,8 +605,6 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			n\Gravity = True
 			
 			n\obj = CopyEntity(o\NPCModelID[22])
-			;n\obj = LoadAnimMesh_Strict("GFX\npcs\scp650.b3d")
-			
 			
 			temp# = (GetINIFloat("Data\NPCs.ini", "SCP-650", "scale") / MeshDepth(n\obj))			
 			ScaleEntity n\obj, temp,temp,temp
@@ -651,7 +623,6 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			EntityType n\Collider,HIT_PLAYER
 			
 			n\obj = CopyEntity(o\NPCModelID[23])
-			;n\obj = LoadAnimMesh_Strict("GFX\npcs\scp457.b3d")
 			
 			temp# = (GetINIFloat("Data\NPCs.ini", "SCP-457", "scale") / 2.2)		
 			ScaleEntity n\obj, temp, temp, temp
@@ -663,9 +634,9 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			n\Sound = LoadSound_Strict("SFX\SCP\457\Sighting.ogg")
             n\CollRadius = 0.32
 	        ;[End Block]
-	    Case NPCtypeZombie2
+	    Case NPCtype0493
             ;[Block]
-            n\NVName = "Zombie"
+            n\NVName = "SCP-049-3"
 			n\Collider = CreatePivot()
 			EntityRadius n\Collider, 0.2
 			EntityType n\Collider, HIT_PLAYER
@@ -679,7 +650,6 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			
 			If n\obj = 0 Then 
 				n\obj = CopyEntity(o\NPCModelID[24]) 
-				;n\obj = LoadAnimMesh_Strict("GFX\npcs\zombie2.b3d")
 				
 				MeshCullBox (n\obj, -MeshWidth(n\obj), -MeshHeight(n\obj), -MeshDepth(n\obj), MeshWidth(n\obj)*2, MeshHeight(n\obj)*2, MeshDepth(n\obj)*2)
 				
@@ -692,7 +662,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			
 			SetAnimTime(n\obj, 3.0)
 			
-			n\Sound = LoadSound_Strict("SFX\SCP\049\0492Breath.ogg")
+			n\Sound = LoadSound_Strict("SFX\SCP\049_2\Breath.ogg")
 			
 			n\HP = 100
 			;[End Block]
@@ -710,10 +680,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 				EndIf
 			Next
 			
-			If n\obj = 0 Then 
-				n\obj = CopyEntity(o\NPCModelID[25])
-				;n\obj = LoadAnimMesh_Strict("GFX\npcs\scp178.b3d")
-			EndIf
+			If n\obj = 0 Then n\obj = CopyEntity(o\NPCModelID[25])
 			
 			temp# = Rnd(0.09,0.125)
 			
@@ -721,8 +688,6 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			
 			temp# = Rnd(0.6,0.8) / MeshWidth(n\obj)
 			ScaleEntity n\obj, temp, temp, temp
-			
-			;EntityColor n\obj,Rnd(0,50),0,Rnd(50,100)
 			
 			SetAnimTime n\obj,15.0
 			
@@ -737,7 +702,6 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			EntityRadius n\Collider, 0.2
 			EntityType n\Collider, HIT_PLAYER
 			n\obj = CopyEntity(o\NPCModelID[26])
-			;n\obj = LoadAnimMesh_Strict("GFX\npcs\MTF2.b3d") 
 			
 			n\Speed = (GetINIFloat("Data\NPCs.ini", "MTF2", "speed") / 100.0)
 			
@@ -786,7 +750,6 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			EntityType n\Collider, HIT_PLAYER
 			
 			n\obj = CopyEntity(o\NPCModelID[32])
-			;n\obj = LoadAnimMesh_Strict("GFX\npcs\CI.b3d") 
 			
 			temp# = 0.55 / MeshWidth(n\obj)
 			ScaleEntity n\obj, temp, temp, temp
@@ -808,8 +771,6 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 	
 	n\ID = 0
 	n\ID = FindFreeNPCID()
-	
-	DebugLog ("Created NPC "+n\NVName+" (ID: "+n\ID+")")
 	
 	NPCSpeedChange(n)
 	
@@ -975,7 +936,6 @@ Function UpdateNPCs()
 													If x < 25.0 And x > 15.0 Then
 														z = Abs(EntityZ(Collider)-EntityZ(w\obj,True))
 														If z < 25 And z > 15.0 Then
-															DebugLog "MOVING 173 TO "+w\room\roomtemplate\name
 															PositionEntity n\Collider, EntityX(w\obj,True), EntityY(w\obj,True)+0.25,EntityZ(w\obj,True)
 															ResetEntity n\Collider
 															Exit
@@ -1119,7 +1079,7 @@ Function UpdateNPCs()
 				EndIf
 				
 				;[End block]
-			Case NPCtypeOldMan ;------------------------------------------------------------------------------------------------------------------
+			Case NPCtype106
 				;[Block]
 				If Contained106 Then
 					n\Idle = True
@@ -1380,13 +1340,11 @@ Function UpdateNPCs()
 											n\SoundChn2 = PlaySound2(OldManSFX(6+Rand(0,2)),Camera,n\Collider)
                                             n\PathTimer = 0
                                             n\Reload = (70*10.0)/(SelectedDifficulty\otherFactors+1)
-                                            DebugLog "Teleported 106 (Distance: "+EntityDistance(n\Collider,Collider)+")"
                                         EndIf
                                     EndIf
                                 EndIf
                             EndIf
                             n\Reload = Max(0, n\Reload - fs\FPSfactor[0])
-                            DebugLog "106 in... "+n\Reload 
 							
 							UpdateSoundOrigin(n\SoundChn2,Camera,n\Collider)
 						Else ;idling outside the map
@@ -1695,7 +1653,6 @@ Function UpdateNPCs()
 										If x < 28.0 And x > 20.0 Then
 											z = Abs(EntityZ(n\Collider)-EntityZ(w\obj,True))
 											If z < 28 And z > 20.0 Then
-												DebugLog "TELEPORTING 096 - "+w\room\roomtemplate\name
 												n\PathStatus = 0 : n\PathTimer = 0 : n\PathLocation = 0
 												PositionEntity n\Collider, EntityX(w\obj,True), EntityY(w\obj,True)+0.25,EntityZ(w\obj,True)
 												ResetEntity n\Collider
@@ -1908,7 +1865,6 @@ Function UpdateNPCs()
 								EndIf
 							Next
 							n\Idle = 0.0
-							DebugLog "SCP-049 not idle"
 						EndIf
 					EndIf
 					
@@ -2137,7 +2093,6 @@ Function UpdateNPCs()
 													EndIf
 												Next
 												n\PathStatus = FindPath(n,EntityX(closestRoom\obj),0.5,EntityZ(closestRoom\obj))
-												DebugLog "Find path for 049 in another room (pathstatus: "+n\PathStatus+")"
 											EndIf
 											
 											;Making 3 attempts at finding a path
@@ -2148,13 +2103,11 @@ Function UpdateNPCs()
 														If n\Path[2]=Null And EntityDistance(n\Path[1]\obj,n\Collider)<0.4 Then
 															n\PathLocation = 0
 															n\PathStatus = 0
-															DebugLog "Breaking up path for 049 because no waypoint number 2 has been found and waypoint number 1 is too close."
 														EndIf
 													EndIf
 													If n\Path[0]<>Null And n\Path[1]=Null Then
 														n\PathLocation = 0
 														n\PathStatus = 0
-														DebugLog "Breaking up path for 049 because no waypoint number 1 has been found."
 													EndIf
 												EndIf
 												
@@ -2180,7 +2133,6 @@ Function UpdateNPCs()
 														EndIf
 													Next
 													n\PathStatus = FindPath(n,EntityX(closestRoom\obj),0.5,EntityZ(closestRoom\obj))
-													DebugLog "Find path for 049 in another further away room (pathstatus: "+n\PathStatus+")"
 												EndIf
 												
 												;Making 049 skip waypoints for doors he can't interact with, but only if the actual path is behind him
@@ -2196,7 +2148,6 @@ Function UpdateNPCs()
 																	EndIf
 																	If n\Path[n\PathLocation]<>Null Then
 																		If Abs(DeltaYaw(n\Collider,n\Path[n\PathLocation]\obj))>(45.0-Abs(DeltaYaw(n\Collider,n\Path[1]\obj))) Then
-																			DebugLog "Skip until waypoint number "+n\PathLocation
 																			n\State3 = 3
 																			Exit
 																		EndIf
@@ -2236,10 +2187,8 @@ Function UpdateNPCs()
 								If PlayerInReachableRoom(True) And InFacility=1 Then ;Player is in a room where SCP-049 can teleport to
 									If Rand(1,3-SelectedDifficulty\otherFactors)=1 Then
 										TeleportCloser(n)
-										DebugLog "SCP-049 teleported closer due to distance"
 									Else
 										n\Idle = 60*70
-										DebugLog "SCP-049 is now idle"
 									EndIf
 								EndIf
 							EndIf
@@ -2382,7 +2331,7 @@ Function UpdateNPCs()
 				n\State2 = Max(n\State2-fs\FPSfactor[0],0)
 				
 				;[End Block]
-			Case NPCtypeZombie
+			Case NPCtype0492
 				;[Block]
 				
 				If Abs(EntityY(Collider)-EntityY(n\Collider))<4.0 Then
@@ -2628,7 +2577,6 @@ Function UpdateNPCs()
 								RotateEntity(pvt, Min(EntityPitch(pvt), 40), EntityYaw(n\Collider), 0)
 								
 								If n\Reload = 0 ;And n\Frame>1550 Then
-									DebugLog "entitypick"
 									EntityPick(pvt, dist)
 									If PickedEntity() = Collider Or n\State3=1 Then
 										Local instaKillPlayer% = False
@@ -2685,7 +2633,6 @@ Function UpdateNPCs()
 					Case 2 ;shoots
 						;[Block]
 						AnimateNPC(n,245,248,0.35,True)
-						;DebugLog "shoot"
 						;Animate2(n\obj, AnimTime(n\obj), 1539, 1553, 0.35, False)
 						If n\Reload = 0 ;And n\Frame > 1545 Then 
 							PlaySound2(GunshotSFX, Camera, n\Collider, 20)
@@ -2817,7 +2764,6 @@ Function UpdateNPCs()
 								RotateEntity(pvt, Min(EntityPitch(pvt), 40), EntityYaw(n\Collider), 0)
 								
 								If n\Reload = 0
-									DebugLog "entitypick"
 									EntityPick(pvt, dist)
 									If PickedEntity() = Collider Or n\State3=1 Then
 										instaKillPlayer% = False
@@ -3459,7 +3405,7 @@ Function UpdateNPCs()
 				PositionEntity(n\obj, EntityX(n\Collider), EntityY(n\Collider), EntityZ(n\Collider))
 				RotateEntity n\obj, EntityPitch(n\Collider), EntityYaw(n\Collider), EntityRoll(n\Collider), True
 				;[End Block]
-			Case NPCtypeTentacle
+			Case NPCtype035Tentacle
 				;[Block]
 				dist = EntityDistance(n\Collider,Collider)
 				
@@ -3595,7 +3541,7 @@ Function UpdateNPCs()
 				
 				ResetEntity n\Collider
 				;[End Block]
-			Case NPCtype860
+			Case NPCtype8602
 				;[Block]
 				If PlayerRoom\RoomTemplate\Name = "room860" Then
 					Local fr.Forest=PlayerRoom\fr;Object.Forest(e\room\Objects[1])
@@ -3647,9 +3593,7 @@ Function UpdateNPCs()
 											;in view -> nope, keep searching for a more suitable cell
 											If EntityInView(n\Collider, Camera) Then
 												PositionEntity n\Collider, 0, -110, 0
-												DebugLog("spawned monster in view -> hide")
 											Else ; not in view -> all good
-												DebugLog("spawned monster successfully")
 												
 												PositionEntity n\Collider, TFormedX(), EntityY(fr\Forest_Pivot,True)+2.3, TFormedZ()
 												
@@ -3800,9 +3744,7 @@ Function UpdateNPCs()
 											TFormPoint(x2*12.0, 0,z2*12.0, fr\Forest_Pivot,0)
 											
 											PositionEntity n\Collider, TFormedX(), EntityY(fr\Forest_Pivot,True)+1.0,TFormedZ()
-											
-											DebugLog(TFormedX()+", "+TFormedZ())
-											
+
 											If EntityInView(n\Collider, Camera) Then
 												BlinkTimer=-10
 											Else
@@ -4881,7 +4823,7 @@ Function UpdateNPCs()
 									EndIf
 								EndIf
 								
-								If (n\ID Mod 2 = 0) And (Not chs\NoTarget) Then
+								If (n\ID Mod 2 = 0) And (Not NoTarget) Then
 									dist = EntityDistance(n\Collider,Collider)
 									If dist < 10.0 Then
 										If EntityVisible(n\Collider,Collider) Then
@@ -4913,7 +4855,7 @@ Function UpdateNPCs()
 								EndIf
 							ElseIf n\PrevState=1 Then
 								dist = EntityDistance(n\Collider,Collider)
-								If (Not chs\NoTarget) Then
+								If (Not NoTarget) Then
 									If dist < 4.0 Then
 										If EntityVisible(n\Collider,Collider) Then
 											If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
@@ -4930,7 +4872,7 @@ Function UpdateNPCs()
 							;[End Block]
 						Case 1 ;attacking the player
 							;[Block]
-							If chs\NoTarget Then n\State = 0
+							If NoTarget Then n\State = 0
 							
 							If PlayerRoom\RoomTemplate\Name = "dimension1499" And n\PrevState=0 Then
 								ShouldPlay = 19
@@ -4991,12 +4933,8 @@ Function UpdateNPCs()
 									If dist > 0.85 Or Abs(DeltaYaw(n\Collider,Collider))>60.0
 										;Miss
 									Else
-									    PlaySound2(LoadTempSound("SFX\General\Slash"+Rand(1,2)+".ogg"), Camera, n\Collider)
-									    If I_1033RU\HP = 0
-										    Injuries = Injuries + Rnd(0.75,1.5)
-										Else
-											Damage1033RU(20+(5*SelectedDifficulty\aggressiveNPCs))
-										EndIf
+										Injuries = Injuries + Rnd(0.75,1.5)
+										PlaySound2(LoadTempSound("SFX\General\Slash"+Rand(1,2)+".ogg"), Camera, n\Collider)
 										If Injuries > 10.0
 											Kill(True)
 											If PlayerRoom\RoomTemplate\Name$ = "dimension1499"
@@ -5020,12 +4958,8 @@ Function UpdateNPCs()
 									If dist > 0.85 Or Abs(DeltaYaw(n\Collider,Collider))>60.0
 										;Miss
 									Else
-									    PlaySound2(LoadTempSound("SFX\General\Slash"+Rand(1,2)+".ogg"), Camera, n\Collider)
-									    If I_1033RU\HP = 0
-										    Injuries = Injuries + Rnd(0.75,1.5)
-										Else
-											Damage1033RU(20+(5*SelectedDifficulty\aggressiveNPCs))
-                                        EndIf
+										Injuries = Injuries + Rnd(0.75,1.5)
+										PlaySound2(LoadTempSound("SFX\General\Slash"+Rand(1,2)+".ogg"), Camera, n\Collider)
 										If Injuries > 10.0
 											Kill(True)
 											If PlayerRoom\RoomTemplate\Name$ = "dimension1499"
@@ -5075,7 +5009,8 @@ Function UpdateNPCs()
 				EndIf
 				
 				;[End Block]
-			Case NPCtype008
+
+			Case NPCtype0081
 				;[Block]
 				;n\State: Main State
 				;n\State2: A timer used for the player detection
@@ -5181,7 +5116,6 @@ Function UpdateNPCs()
 									If n\State3 < 70*(15+(10*SelectedDifficulty\aggressiveNPCs))
 										n\State3 = n\State3+fs\FPSfactor[0]
 									Else
-										DebugLog "SCP-008-1 IDLE"
 										n\State3 = 70*(6*60)
 										n\State = 4
 									EndIf
@@ -5242,7 +5176,6 @@ Function UpdateNPCs()
 														z = Abs(EntityZ(n\Collider)-EntityZ(w\obj,True))
 														If z < 12 And z > 4.0 Then
 															If w\room\dist > 4
-																DebugLog "MOVING 008-1 TO "+w\room\roomtemplate\name
 																PositionEntity n\Collider, EntityX(w\obj,True), EntityY(w\obj,True)+0.25,EntityZ(w\obj,True)
 																ResetEntity n\Collider
 																n\PathStatus = 0
@@ -5516,8 +5449,7 @@ Function UpdateNPCs()
 				
 				;Nullified teleportation behind player due to issues. If someone could do a hotfix, credits given.
 				If n\Idle = False Then
-				     	
-				    DebugLog dist#							
+
 					If dist < 15 Then
 						If dist < 10.0 Then 
 							If EntityVisible(n\Collider, Collider) Then
@@ -5793,7 +5725,7 @@ Function UpdateNPCs()
 				EndIf
 				
 	            ;[End Block]
-	        Case NPCtypeZombie2
+	        Case NPCtype0493
 				;[Block]
 				If Abs(EntityY(Collider)-EntityY(n\Collider))<4.0 Then
 
@@ -6158,12 +6090,12 @@ Function UpdateNPCs()
 		End Select
 		
 		If n\IsDead
-			EntityType n\Collider, HIT_DEAD
+			EntityType n\Collider,HIT_DEAD
 		EndIf
 		
 		Local gravityDist = Distance(EntityX(Collider),EntityZ(Collider),EntityX(n\Collider),EntityZ(n\Collider))
 		
-		If gravityDist < HideDistance * 0.7 Or n\NPCtype = NPCtype1499 Then
+		If gravityDist<HideDistance*0.7 Or n\NPCtype = NPCtype1499 Then
 			If n\InFacility = InFacility
 				TranslateEntity n\Collider, 0, n\DropSpeed, 0
 				
@@ -6176,16 +6108,7 @@ Function UpdateNPCs()
 					n\DropSpeed# = 0
 				Else
 					If ShouldEntitiesFall
-;						If n\FallingPickDistance>0
-;							Local pick = LinePick(EntityX(n\Collider),EntityY(n\Collider),EntityZ(n\Collider),0,-n\FallingPickDistance,0)
-;							If pick
-;								n\DropSpeed# = Max(n\DropSpeed - 0.005*fs\FPSfactor[0]*n\GravityMult,-n\MaxGravity)
-;							Else
-;								n\DropSpeed# = 0
-;							EndIf
-;						Else
-;							n\DropSpeed# = Max(n\DropSpeed - 0.005*fs\FPSfactor[0]*n\GravityMult,-n\MaxGravity)
-;						EndIf
+
 						Local UpdateGravity% = False
 						Local MaxX#,MinX#,MaxZ#,MinZ#
 						If n\InFacility=1
@@ -6258,7 +6181,6 @@ Function UpdateNPCs()
 		EndIf
 		
 		CatchErrors(Chr(34)+n\NVName+Chr(34)+" NPC")
-		
 	Next
 	
 	If MTF_CameraCheckTimer>0.0 And MTF_CameraCheckTimer<70*90
@@ -6421,9 +6343,6 @@ Function TeleportMTFGroup(n.NPCs)
 		EndIf
 	Next
 
-	
-	DebugLog "Teleported MTF Group (dist:"+EntityDistance(n\Collider,Collider)+")"
-	
 End Function
 
 Function UpdateMTFUnit(n.NPCs)
@@ -6435,7 +6354,7 @@ Function UpdateMTFUnit(n.NPCs)
 		Select n\NPCtype
 			Case NPCtype173
                 realType = "173"
-			Case NPCtypeOldMan
+			Case NPCtype106
                 realType = "106"
 			Case NPCtypeGuard
                 realType = "guard"
@@ -6449,14 +6368,14 @@ Function UpdateMTFUnit(n.NPCs)
                 realType = "096"
 			Case NPCtype049
                 realType = "049"
-			Case NPCtypeZombie
-                realType = "zombie"
+			Case NPCtype0492
+                realType = "0492"
 			Case NPCtype5131
                 realType = "513-1"
-			Case NPCtypeTentacle
-                realType = "tentacle"
-			Case NPCtype860
-                realType = "860"
+			Case NPCtype035Tentacle
+                realType = "035tentacle"
+			Case NPCtype8602
+                realType = "860-2"
 			Case NPCtype939
                 realType = "939"
 			Case NPCtype066
@@ -6474,8 +6393,8 @@ Function UpdateMTFUnit(n.NPCs)
                 realType = "650"
             Case NPCtype457
                 realType = "457"
-            Case NPCtypeZombie2
-                realType = "zombie2"
+            Case NPCtype0493
+                realType = "0493"
             Case NPCtype0082
 			    realType = "0082"
 			Case NPCtype178
@@ -6550,7 +6469,6 @@ Function UpdateMTFUnit(n.NPCs)
 									x = r\x
 									y = 0.1
 									z = r\z
-									DebugLog r\RoomTemplate\Name
 									Exit
 								EndIf
 							Next
@@ -6571,7 +6489,6 @@ Function UpdateMTFUnit(n.NPCs)
 										
 										If Distance(EntityX(pvt%),EntityZ(pvt%),EntityX(n\Collider),EntityZ(n\Collider))<3.5
 											foundChamber% = True
-											DebugLog Distance(EntityX(pvt%),EntityZ(pvt%),EntityX(n\Collider),EntityZ(n\Collider))
 										EndIf
 										
 										If Curr173\Idle = 3 And Distance(EntityX(pvt%),EntityZ(pvt%),EntityX(n\Collider),EntityZ(n\Collider)) > 4.0
@@ -6584,12 +6501,10 @@ Function UpdateMTFUnit(n.NPCs)
 											x = EntityX(r\obj,True)+4736*RoomScale
 											y = 0.1
 											z = EntityZ(r\obj,True)+1692*RoomScale
-											DebugLog "Move to 173's chamber"
 											Exit
 										ElseIf Distance(EntityX(n\Collider),EntityZ(n\Collider),EntityX(r\obj,True)+4736*RoomScale,EntityZ(r\obj,True)+1692*RoomScale)>1.6 And foundChamber
 											n\PathX = EntityX(r\obj,True)+4736*RoomScale
 											n\PathZ = EntityZ(r\obj,True)+1692*RoomScale
-											DebugLog "Move inside 173's chamber"
 											Exit
 										Else
 											Curr173\Idle = 3
@@ -6602,7 +6517,6 @@ Function UpdateMTFUnit(n.NPCs)
 											r\RoomDoors[1]\MTFClose = True
                                          	UseDoor(r\RoomDoors[1],False)
 											r\RoomDoors[1]\open = False
-											DebugLog "173 contained"
 											Exit
 										EndIf
 									EndIf
@@ -6611,7 +6525,6 @@ Function UpdateMTFUnit(n.NPCs)
 								x = EntityX(Curr173\Collider)
 								y = 0.1
 								z = EntityZ(Curr173\Collider)
-								DebugLog "Going back to 173's cage"
 							EndIf
 						EndIf
 						If n\PathX=0 Then n\PathStatus = FindPath(n,x,y,z) ;we're going to this room for no particular reason
@@ -6774,7 +6687,6 @@ Function UpdateMTFUnit(n.NPCs)
 					n\EnemyY = EntityY(Collider,True)
 					n\EnemyZ = EntityZ(Collider,True)
 					n\State2 = 70.0*(15.0*temp) ;give up after 15 seconds (30 seconds if detected by loud noise, over camera: 45)
-					DebugLog "player spotted :"+n\State2
 					n\PathTimer=0.0
 					n\PathStatus=0
 					n\Reload = 200-(100*SelectedDifficulty\aggressiveNPCs)
@@ -6797,7 +6709,6 @@ Function UpdateMTFUnit(n.NPCs)
 							n\State3 = 0.0
 							n\PathTimer=0.0
 							n\PathStatus=0
-							DebugLog "173 spotted :"+n\State2
 							If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 							n\Sound = LoadSound_Strict("SFX\Character\MTF\173\Spotted"+Rand(1,2)+".ogg")
 							PlayMTFSound(n\Sound, n)
@@ -6817,7 +6728,6 @@ Function UpdateMTFUnit(n.NPCs)
 							n\PathTimer = 0.0
 							n\PathStatus = 0
 							n\Target = Curr106
-							DebugLog "106 spotted :"+n\State2
 							;If n\MTFLeader=Null
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 								n\Sound = LoadSound_Strict("SFX\Character\MTF\106\Spotted"+Rand(1,3)+".ogg")
@@ -6838,12 +6748,9 @@ Function UpdateMTFUnit(n.NPCs)
 							n\State3 = 0.0
 							n\PathTimer = 0.0
 							n\PathStatus = 0
-							DebugLog "096 spotted :"+n\State2
-							;If n\MTFLeader=Null
-								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF\096\Spotted"+Rand(1,2)+".ogg")
-								PlayMTFSound(n\Sound, n)
-							;EndIf
+							If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
+							n\Sound = LoadSound_Strict("SFX\Character\MTF\096\Spotted"+Rand(1,2)+".ogg")
+							PlayMTFSound(n\Sound, n)
 						EndIf
 					EndIf
 				EndIf
@@ -6861,14 +6768,13 @@ Function UpdateMTFUnit(n.NPCs)
 								n\PathTimer = 0.0
 								n\PathStatus = 0
 								n\Target = n2
-								DebugLog "049 spotted :"+n\State2
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 								n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Spotted"+Rand(1,5)+".ogg")
 								PlayMTFSound(n\Sound, n)
 								Exit
 							EndIf
 						EndIf
-					ElseIf n2\NPCtype = NPCtypeZombie And n2\IsDead = False
+					ElseIf n2\NPCtype = NPCtype0492 And n2\IsDead = False
 						If OtherNPCSeesMeNPC(n2,n) Then
 							If EntityVisible(n\Collider,n2\Collider)
 								n\State = 9
@@ -6881,14 +6787,13 @@ Function UpdateMTFUnit(n.NPCs)
 								n\PathStatus = 0
 								n\Target = n2
 								n\Reload = 70*5
-								DebugLog "049-2 spotted :"+n\State2
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 								n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Player0492_1.ogg")
 								PlayMTFSound(n\Sound, n)
 								Exit
 							EndIf
 						EndIf
-					ElseIf n2\NPCtype = NPCtype008 And n2\IsDead = False
+					ElseIf n2\NPCtype = NPCtype0081 And n2\IsDead = False
 						If OtherNPCSeesMeNPC(n2,n) Then
 							If EntityVisible(n\Collider,n2\Collider)
 								n\State = 9
@@ -6901,7 +6806,6 @@ Function UpdateMTFUnit(n.NPCs)
 								n\PathStatus = 0
 								n\Target = n2
 								n\Reload = 70*5
-								DebugLog "008 spotted :"+n\State2
 								;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 								;n\Sound = LoadSound_Strict("SFX\Character\MTF\008\008_1spotted.ogg")
 								;PlayMTFSound(n\Sound, n)
@@ -6909,7 +6813,7 @@ Function UpdateMTFUnit(n.NPCs)
 							EndIf
 						EndIf
 					;MODS
-					ElseIf n2\NPCtype = NPCtypeZombie2 And n2\IsDead = False
+					ElseIf n2\NPCtype = NPCtype0493 And n2\IsDead = False
 						If OtherNPCSeesMeNPC(n2,n) Then
 							If EntityVisible(n\Collider,n2\Collider)
 								n\State = 9
@@ -6922,7 +6826,6 @@ Function UpdateMTFUnit(n.NPCs)
 								n\PathStatus = 0
 								n\Target = n2
 								n\Reload = 70*5
-								DebugLog "049-2 spotted :"+n\State2
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 								n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Player0492_1.ogg")
 								PlayMTFSound(n\Sound, n)
@@ -6942,14 +6845,13 @@ Function UpdateMTFUnit(n.NPCs)
 								n\PathStatus = 0
 								n\Target = n2
 								n\Reload = 70*5
-								DebugLog "008 spotted :"+n\State2
 								;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 								;n\Sound = LoadSound_Strict("SFX\Character\MTF\008\008_1spotted.ogg")
 								;PlayMTFSound(n\Sound, n)
 								Exit
 							EndIf
 						EndIf
-					ElseIf n2\NPCtype = NPCtypeTentacle And n2\IsDead = False
+					ElseIf n2\NPCtype = NPCtype035Tentacle And n2\IsDead = False
 						If OtherNPCSeesMeNPC(n2,n) Then
 							If EntityVisible(n\Collider,n2\Collider)
 								n\State = 9
@@ -6962,7 +6864,6 @@ Function UpdateMTFUnit(n.NPCs)
 								n\PathStatus = 0
 								n\Target = n2
 								n\Reload = 70*5
-								DebugLog "Tentacle spotted :"+n\State2
 								;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 								;n\Sound = LoadSound_Strict("SFX\Character\MTF\008\008_1spotted.ogg")
 								;PlayMTFSound(n\Sound, n)
@@ -7190,7 +7091,6 @@ Function UpdateMTFUnit(n.NPCs)
                 
                 If n\State2<=0.0 And n\State2+fs\FPSfactor[0] >0.0 Then
 					If n\MTFLeader = Null Then
-						DebugLog "targetlost: "+n\State2
 						PlayMTFSound(LoadTempSound("SFX\Character\MTF\Targetlost"+Rand(1,3)+".ogg"),n)
 						If MTF_CameraCheckTimer=0.0
 							If Rand(15-(7*SelectedDifficulty\aggressiveNPCs))=1 ;Maybe change this to another chance - ENDSHN
@@ -7212,7 +7112,6 @@ Function UpdateMTFUnit(n.NPCs)
 							n\EnemyY = EntityY(Curr173\Collider,True)
 							n\EnemyZ = EntityZ(Curr173\Collider,True)
 							n\State2 = 70.0*15.0 ;give up after 15 seconds
-							DebugLog "173 spotted :"+n\State2
 							If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 							n\Sound = LoadSound_Strict("SFX\Character\MTF\173\Spotted3.ogg")
 							PlayMTFSound(n\Sound, n)
@@ -7235,7 +7134,6 @@ Function UpdateMTFUnit(n.NPCs)
 							n\PathTimer = 0.0
 							n\PathStatus = 0
 							n\Target = Curr106
-							DebugLog "106 spotted :"+n\State2
 							If n\MTFLeader=Null
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 								n\Sound = LoadSound_Strict("SFX\Character\MTF\106\Spotted4.ogg")
@@ -7256,7 +7154,6 @@ Function UpdateMTFUnit(n.NPCs)
 							n\State3 = 0.0
 							n\PathTimer = 0.0
 							n\PathStatus = 0
-							DebugLog "096 spotted :"+n\State2
 							If n\MTFLeader=Null
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 								n\Sound = LoadSound_Strict("SFX\Character\MTF\096\Spotted"+Rand(1,2)+".ogg")
@@ -7279,14 +7176,13 @@ Function UpdateMTFUnit(n.NPCs)
 								n\PathTimer = 0.0
 								n\PathStatus = 0
 								n\Target = n2
-								DebugLog "049 spotted :"+n\State2
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 								n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Spotted"+Rand(1,5)+".ogg")
 								PlayMTFSound(n\Sound, n)
 								Exit
 							EndIf
 						EndIf
-					ElseIf n2\NPCtype = NPCtypeZombie And n2\IsDead = False
+					ElseIf n2\NPCtype = NPCtype0492 And n2\IsDead = False
 						If OtherNPCSeesMeNPC(n2,n) Then
 							If EntityVisible(n\Collider,n2\Collider)
 								n\State = 9
@@ -7299,20 +7195,15 @@ Function UpdateMTFUnit(n.NPCs)
 								n\PathStatus = 0
 								n\Target = n2
 								n\Reload = 70*5
-								DebugLog "049-2 spotted :"+n\State2
-								;If n\MTFLeader=Null
-									If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-									n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Player0492_1.ogg")
-									PlayMTFSound(n\Sound, n)
-								;EndIf
+								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
+								n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Player0492_1.ogg")
+								PlayMTFSound(n\Sound, n)
 								Exit
 							EndIf
 						EndIf
 					EndIf
 				Next
-				
-                ;DebugLog Distance(EntityX(n\Collider,True),EntityZ(n\Collider,True),n\EnemyX,n\EnemyZ)
-                
+
                 ;[End Block]
 			Case 2 ;searching for/looking at 173
                 ;[Block]
@@ -7338,7 +7229,6 @@ Function UpdateMTFUnit(n.NPCs)
 						If curr173Dist<tempDist Then
 							If n\MTFLeader = Null Then
 								n\State3=n\State3+fs\FPSfactor[0]
-								DebugLog "CONTAINING 173: "+n\State3
 								;If n\State3>=70.0*10.0 Then
 								If n\State3>=70.0*15.0 Then
 									Curr173\Idle = 2
@@ -7596,7 +7486,6 @@ Function UpdateMTFUnit(n.NPCs)
 										x = r\x
 										y = 0.1
 										z = r\z
-										DebugLog r\RoomTemplate\Name
 										Exit
 									EndIf
 								EndIf
@@ -7793,7 +7682,6 @@ Function UpdateMTFUnit(n.NPCs)
 								x = r\x
 								y = 0.1
 								z = r\z
-								DebugLog r\RoomTemplate\Name
 								Exit
 							EndIf
 						Next
@@ -7954,10 +7842,10 @@ Function UpdateMTFUnit(n.NPCs)
 							Else
 								If (Not n\Target\IsDead)
 									If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-									If n\NPCtype = NPCtypeZombie Or n\NPCtype = NPCtypeZombie2
+									If n\NPCtype = NPCtype0492 Or n\NPCtype = NPCtype0493
 										n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Player0492_2.ogg")
 										PlayMTFSound(n\Sound, n)
-									Else;If n\NPCtype = NPCtype008 Or n\NPCtype = NPCtype0082
+									Else;If n\NPCtype = NPCtype0081 Or n\NPCtype = NPCtype0082
 									    ;n\Sound = LoadSound_Strict("SFX\Character\MTF\008\0081.ogg")
 									    ;PlayMTFSound(n\Sound, n)
 									EndIf
@@ -8102,7 +7990,7 @@ Function UpdateMTF2Unit(n.NPCs)
 		Select n\NPCtype
 			Case NPCtype173
                 realType = "173"
-			Case NPCtypeOldMan
+			Case NPCtype106
                 realType = "106"
 			Case NPCtypeGuard
                 realType = "guard"
@@ -8116,14 +8004,14 @@ Function UpdateMTF2Unit(n.NPCs)
                 realType = "096"
 			Case NPCtype049
                 realType = "049"
-			Case NPCtypeZombie
-                realType = "zombie"
+			Case NPCtype0492
+                realType = "0492"
 			Case NPCtype5131
                 realType = "513-1"
-			Case NPCtypeTentacle
-                realType = "tentacle"
-			Case NPCtype860
-                realType = "860"
+			Case NPCtype035Tentacle
+                realType = "035tentacle"
+			Case NPCtype8602
+                realType = "860-2"
 			Case NPCtype939
                 realType = "939"
 			Case NPCtype066
@@ -8136,15 +8024,15 @@ Function UpdateMTF2Unit(n.NPCs)
                 realType = "1048-A"
 			Case NPCtype1499
 				realType = "1499-1"
-			Case NPCtype008
+			Case NPCtype0081
 			    realType = "008"
 			;MODS
             Case NPCtype178
                 realType = "178"
             Case NPCtype0082
 			    realType = "0082"
-			Case NPCtypeZombie2
-			    realType = "zombie2"
+			Case NPCtype0493
+			    realType = "0493"
 		    Case NPCtype650
                 realType = "650"
             Case NPCtype457
@@ -8214,7 +8102,6 @@ Function UpdateMTF2Unit(n.NPCs)
 									x = r\x
 									y = 0.1
 									z = r\z
-									DebugLog r\RoomTemplate\Name
 									Exit
 								EndIf
 							Next
@@ -8235,7 +8122,6 @@ Function UpdateMTF2Unit(n.NPCs)
 										
 										If Distance(EntityX(pvt%),EntityZ(pvt%),EntityX(n\Collider),EntityZ(n\Collider))<3.5
 											foundChamber% = True
-											DebugLog Distance(EntityX(pvt%),EntityZ(pvt%),EntityX(n\Collider),EntityZ(n\Collider))
 										EndIf
 										
 										If Curr173\Idle = 3 And Distance(EntityX(pvt%),EntityZ(pvt%),EntityX(n\Collider),EntityZ(n\Collider)) > 4.0
@@ -8248,12 +8134,10 @@ Function UpdateMTF2Unit(n.NPCs)
 											x = EntityX(r\obj,True)+4736*RoomScale
 											y = 0.1
 											z = EntityZ(r\obj,True)+1692*RoomScale
-											DebugLog "Move to 173's chamber"
 											Exit
 										ElseIf Distance(EntityX(n\Collider),EntityZ(n\Collider),EntityX(r\obj,True)+4736*RoomScale,EntityZ(r\obj,True)+1692*RoomScale)>1.6 And foundChamber
 											n\PathX = EntityX(r\obj,True)+4736*RoomScale
 											n\PathZ = EntityZ(r\obj,True)+1692*RoomScale
-											DebugLog "Move inside 173's chamber"
 											Exit
 										Else
 											Curr173\Idle = 3
@@ -8266,7 +8150,6 @@ Function UpdateMTF2Unit(n.NPCs)
 											r\RoomDoors[1]\MTFClose = True
                                          	UseDoor(r\RoomDoors[1],False)
 											r\RoomDoors[1]\open = False
-											DebugLog "173 contained"
 											Exit
 										EndIf
 									EndIf
@@ -8275,7 +8158,6 @@ Function UpdateMTF2Unit(n.NPCs)
 								x = EntityX(Curr173\Collider)
 								y = 0.1
 								z = EntityZ(Curr173\Collider)
-								DebugLog "Going back to 173's cage"
 							EndIf
 						EndIf
 						If n\PathX=0 Then n\PathStatus = FindPath(n,x,y,z) ;we're going to this room for no particular reason
@@ -8438,14 +8320,10 @@ Function UpdateMTF2Unit(n.NPCs)
 					n\EnemyY = EntityY(Collider,True)
 					n\EnemyZ = EntityZ(Collider,True)
 					n\State2 = 70.0*(15.0*temp) ;give up after 15 seconds (30 seconds if detected by loud noise, over camera: 45)
-					DebugLog "player spotted :"+n\State2
 					n\PathTimer=0.0
 					n\PathStatus=0
 					n\Reload = 200-(100*SelectedDifficulty\aggressiveNPCs)
 					
-					;If EntityDistance(n\Collider,Collider)>HideDistance*0.7
-					;	TeleportMTFGroup(n)
-					;EndIf
                 EndIf
 				
 				;B3D doesn't do short-circuit evaluation, so this retarded nesting is an optimization
@@ -8461,7 +8339,6 @@ Function UpdateMTF2Unit(n.NPCs)
 							n\State3 = 0.0
 							n\PathTimer=0.0
 							n\PathStatus=0
-							DebugLog "173 spotted :"+n\State2
 							If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 							n\Sound = LoadSound_Strict("SFX\Character\MTF2\173\Spotted"+Rand(1,4)+".ogg")
 							PlayMTFSound(n\Sound, n)
@@ -8481,7 +8358,6 @@ Function UpdateMTF2Unit(n.NPCs)
 							n\PathTimer = 0.0
 							n\PathStatus = 0
 							n\Target = Curr106
-							DebugLog "106 spotted :"+n\State2
 							;If n\MTF2Leader=Null
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 								n\Sound = LoadSound_Strict("SFX\Character\MTF2\106\Spotted"+Rand(1,6)+".ogg")
@@ -8502,12 +8378,9 @@ Function UpdateMTF2Unit(n.NPCs)
 							n\State3 = 0.0
 							n\PathTimer = 0.0
 							n\PathStatus = 0
-							DebugLog "096 spotted :"+n\State2
-							;If n\MTF2Leader=Null
-								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF2\096\Spotted"+Rand(1,2)+".ogg")
-								PlayMTFSound(n\Sound, n)
-							;EndIf
+							If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
+							n\Sound = LoadSound_Strict("SFX\Character\MTF2\096\Spotted"+Rand(1,2)+".ogg")
+							PlayMTFSound(n\Sound, n)
 						EndIf
 					EndIf
 				EndIf
@@ -8525,14 +8398,13 @@ Function UpdateMTF2Unit(n.NPCs)
 								n\PathTimer = 0.0
 								n\PathStatus = 0
 								n\Target = n2
-								DebugLog "049 spotted :"+n\State2
 								;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 								;n\Sound = LoadSound_Strict("SFX\Character\MTF2\049\Spotted"+Rand(1,?)+".ogg")
 								;PlayMTFSound(n\Sound, n)
 								Exit
 							EndIf
 						EndIf
-					ElseIf n2\NPCtype = NPCtypeZombie And n2\IsDead = False
+					ElseIf n2\NPCtype = NPCtype0493 And n2\IsDead = False
 						If OtherNPCSeesMeNPC(n2,n) Then
 							If EntityVisible(n\Collider,n2\Collider)
 								n\State = 9
@@ -8545,14 +8417,13 @@ Function UpdateMTF2Unit(n.NPCs)
 								n\PathStatus = 0
 								n\Target = n2
 								n\Reload = 70*5
-								DebugLog "049-2 spotted :"+n\State2
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 								n\Sound = LoadSound_Strict("SFX\Character\MTF2\049\Player0492_1.ogg")
 								PlayMTFSound(n\Sound, n)
 								Exit
 							EndIf
 						EndIf
-					ElseIf n2\NPCtype = NPCtype008 And n2\IsDead = False
+					ElseIf n2\NPCtype = NPCtype0081 And n2\IsDead = False
 						If OtherNPCSeesMeNPC(n2,n) Then
 							If EntityVisible(n\Collider,n2\Collider)
 								n\State = 9
@@ -8565,7 +8436,6 @@ Function UpdateMTF2Unit(n.NPCs)
 								n\PathStatus = 0
 								n\Target = n2
 								n\Reload = 70*5
-								DebugLog "008 spotted :"+n\State2
 								;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 								;n\Sound = LoadSound_Strict("SFX\Character\MTF2\008\008_1spotted.ogg")
 								;PlayMTFSound(n\Sound, n)
@@ -8586,14 +8456,13 @@ Function UpdateMTF2Unit(n.NPCs)
 								n\PathStatus = 0
 								n\Target = n2
 								n\Reload = 70*5
-								DebugLog "008 spotted :"+n\State2
 								;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 								;n\Sound = LoadSound_Strict("SFX\Character\MTF2\008\008_1spotted.ogg")
 								;PlayMTFSound(n\Sound, n)
 								Exit
 							EndIf
 						EndIf
-					ElseIf n2\NPCtype = NPCtypeZombie2 And n2\IsDead = False
+					ElseIf n2\NPCtype = NPCtype0492 And n2\IsDead = False
 						If OtherNPCSeesMeNPC(n2,n) Then
 							If EntityVisible(n\Collider,n2\Collider)
 								n\State = 9
@@ -8606,14 +8475,13 @@ Function UpdateMTF2Unit(n.NPCs)
 								n\PathStatus = 0
 								n\Target = n2
 								n\Reload = 70*5
-								DebugLog "049-2 spotted :"+n\State2
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 								n\Sound = LoadSound_Strict("SFX\Character\MTF2\049\Player0492_1.ogg")
 								PlayMTFSound(n\Sound, n)
 								Exit
 							EndIf
 						EndIf
-					ElseIf n2\NPCtype = NPCtypeTentacle And n2\IsDead = False
+					ElseIf n2\NPCtype = NPCtype035Tentacle And n2\IsDead = False
 						If OtherNPCSeesMeNPC(n2,n) Then
 							If EntityVisible(n\Collider,n2\Collider)
 								n\State = 9
@@ -8626,7 +8494,6 @@ Function UpdateMTF2Unit(n.NPCs)
 								n\PathStatus = 0
 								n\Target = n2
 								n\Reload = 70*5
-								DebugLog "Tentacle spotted :"+n\State2
 								;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 								;n\Sound = LoadSound_Strict("SFX\Character\MTF\008\008_1spotted.ogg")
 								;PlayMTFSound(n\Sound, n)
@@ -8854,7 +8721,6 @@ Function UpdateMTF2Unit(n.NPCs)
                 
                 If n\State2<=0.0 And n\State2+fs\FPSfactor[0] >0.0 Then
 					If n\MTF2Leader = Null Then
-						DebugLog "targetlost: "+n\State2
 						PlayMTFSound(LoadTempSound("SFX\Character\MTF2\Targetlost"+Rand(1,4)+".ogg"),n)
 						If MTF2_CameraCheckTimer=0.0
 							If Rand(15-(7*SelectedDifficulty\aggressiveNPCs))=1 ;Maybe change this to another chance - ENDSHN
@@ -8876,7 +8742,6 @@ Function UpdateMTF2Unit(n.NPCs)
 							n\EnemyY = EntityY(Curr173\Collider,True)
 							n\EnemyZ = EntityZ(Curr173\Collider,True)
 							n\State2 = 70.0*15.0 ;give up after 15 seconds
-							DebugLog "173 spotted :"+n\State2
 							If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 							n\Sound = LoadSound_Strict("SFX\Character\MTF2\173\Spotted3.ogg")
 							PlayMTFSound(n\Sound, n)
@@ -8899,7 +8764,6 @@ Function UpdateMTF2Unit(n.NPCs)
 							n\PathTimer = 0.0
 							n\PathStatus = 0
 							n\Target = Curr106
-							DebugLog "106 spotted :"+n\State2
 							If n\MTF2Leader=Null
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 								n\Sound = LoadSound_Strict("SFX\Character\MTF2\106\Spotted4.ogg")
@@ -8920,7 +8784,6 @@ Function UpdateMTF2Unit(n.NPCs)
 							n\State3 = 0.0
 							n\PathTimer = 0.0
 							n\PathStatus = 0
-							DebugLog "096 spotted :"+n\State2
 							If n\MTF2Leader=Null
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 								n\Sound = LoadSound_Strict("SFX\Character\MTF2\096\Spotted"+Rand(1,2)+".ogg")
@@ -8943,14 +8806,13 @@ Function UpdateMTF2Unit(n.NPCs)
 								n\PathTimer = 0.0
 								n\PathStatus = 0
 								n\Target = n2
-								DebugLog "049 spotted :"+n\State2
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 								n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Spotted"+Rand(1,5)+".ogg")
 								PlayMTFSound(n\Sound, n)
 								Exit
 							EndIf
 						EndIf
-					ElseIf n2\NPCtype = NPCtypeZombie And n2\IsDead = False
+					ElseIf n2\NPCtype = NPCtype0492 And n2\IsDead = False
 						If OtherNPCSeesMeNPC(n2,n) Then
 							If EntityVisible(n\Collider,n2\Collider)
 								n\State = 9
@@ -8963,7 +8825,6 @@ Function UpdateMTF2Unit(n.NPCs)
 								n\PathStatus = 0
 								n\Target = n2
 								n\Reload = 70*5
-								DebugLog "049-2 spotted :"+n\State2
 								;If n\MTF2Leader=Null
 									If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 									n\Sound = LoadSound_Strict("SFX\Character\MTF2\049\Player0492_1.ogg")
@@ -8974,9 +8835,7 @@ Function UpdateMTF2Unit(n.NPCs)
 						EndIf
 					EndIf
 				Next
-				
-                ;DebugLog Distance(EntityX(n\Collider,True),EntityZ(n\Collider,True),n\EnemyX,n\EnemyZ)
-                
+
                 ;[End Block]
 			Case 2 ;searching for/looking at 173
                 ;[Block]
@@ -9002,7 +8861,6 @@ Function UpdateMTF2Unit(n.NPCs)
 						If curr173Dist<tempDist Then
 							If n\MTF2Leader = Null Then
 								n\State3=n\State3+fs\FPSfactor[0]
-								DebugLog "CONTAINING 173: "+n\State3
 								;If n\State3>=70.0*10.0 Then
 								If n\State3>=70.0*15.0 Then
 									Curr173\Idle = 2
@@ -9260,7 +9118,6 @@ Function UpdateMTF2Unit(n.NPCs)
 										x = r\x
 										y = 0.1
 										z = r\z
-										DebugLog r\RoomTemplate\Name
 										Exit
 									EndIf
 								EndIf
@@ -9440,7 +9297,6 @@ Function UpdateMTF2Unit(n.NPCs)
 								x = r\x
 								y = 0.1
 								z = r\z
-								DebugLog r\RoomTemplate\Name
 								Exit
 							EndIf
 						Next
@@ -9601,10 +9457,10 @@ Function UpdateMTF2Unit(n.NPCs)
 							Else
 								If (Not n\Target\IsDead)
 									If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-									If n\NPCtype = NPCtypeZombie Or n\NPCtype = NPCtypeZombie2
+									If n\NPCtype = NPCtype0492 Or n\NPCtype = NPCtype0493
 										n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Player0492_2.ogg")
 										PlayMTFSound(n\Sound, n)
-									Else;If n\NPCtype = NPCtype008 Or n\NPCtype = NPCtype0082
+									Else;If n\NPCtype = NPCtype0081 Or n\NPCtype = NPCtype0082
 									    ;n\Sound = LoadSound_Strict("SFX\Character\MTF2\008\0081.ogg")
 									    ;PlayMTFSound(n\Sound, n)
 									EndIf
@@ -10070,7 +9926,7 @@ Function Console_SpawnNPC(c_input$, c_state$ = "")
 	
 	Select c_input$ 
 		Case "008", "008zombie"
-			n.NPCs = CreateNPC(NPCtype008, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
+			n.NPCs = CreateNPC(NPCtype0081, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
 			n\State = 1
 			consoleMSG = "Заражённый SCP-008, человек создан." ;SCP-008 infected human spawned.
 			
@@ -10080,7 +9936,7 @@ Function Console_SpawnNPC(c_input$, c_state$ = "")
 			consoleMSG = "SCP-049 создан." ;SCP-049 spawned.
 			
 		Case "049-2", "0492", "scp-049-2", "scp049-2", "049zombie"
-			n.NPCs = CreateNPC(NPCtypeZombie, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
+			n.NPCs = CreateNPC(NPCtype0492, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
 			n\State = 1
 			consoleMSG = "SCP-049-2 создан." ;SCP-049-2 spawned.
 			
@@ -10095,7 +9951,7 @@ Function Console_SpawnNPC(c_input$, c_state$ = "")
 			consoleMSG = "SCP-096 создан." ;SCP-096 spawned.
 			
 		Case "106", "scp106", "scp-106", "larry"
-			n.NPCs = CreateNPC(NPCtypeOldMan, EntityX(Collider), EntityY(Collider) - 0.5, EntityZ(Collider))
+			n.NPCs = CreateNPC(NPCtype106, EntityX(Collider), EntityY(Collider) - 0.5, EntityZ(Collider))
 			n\State = -1
 			consoleMSG = "SCP-106 создан." ;SCP-106 spawned.
 			
@@ -10146,7 +10002,7 @@ Function Console_SpawnNPC(c_input$, c_state$ = "")
 			consoleMSG = "Вертолёт Апач создан." ;Apache spawned.
 			
 		Case "tentacle"
-			n.NPCs = CreateNPC(NPCtypeTentacle, EntityX(Collider), EntityY(Collider), EntityZ(Collider))
+			n.NPCs = CreateNPC(NPCtype035Tentacle, EntityX(Collider), EntityY(Collider), EntityZ(Collider))
 			consoleMSG = "Щупалец SCP-035 создан." ;SCP-035 tentacle spawned.
 			
 		Case "clerk"
@@ -10166,7 +10022,7 @@ Function Console_SpawnNPC(c_input$, c_state$ = "")
 		    CreateConsoleMsg("SCP-457 не может быть создан с помощью консоли. Простите!", 255, 0, 0) ;SCP-457 cannot be spawned with the console. Sorry!
 			
 		Case "zombie2", "04922", "0492-2", "scp0492-2", "scp04922", "scp049-2-2", "049zombie2", "049-2-2"
-			n.NPCs = CreateNPC(NPCtypeZombie2, EntityX(Collider),EntityY(Collider)+0.2,EntityZ(Collider))			
+			n.NPCs = CreateNPC(NPCtype0493, EntityX(Collider),EntityY(Collider)+0.2,EntityZ(Collider))			
 			n\state = 1
 			consoleMSG = "SCP-049-2 создан." ;SCP-049-2 spawned.
 			
@@ -10311,7 +10167,7 @@ End Function
 Function NPCSpeedChange(n.NPCs)
 	
 	Select n\NPCtype
-		Case NPCtype173, NPCtypeOldMan, NPCtype096, NPCtype049, NPCtype939, NPCtypeMTF, NPCtype457, NPCtypeMTF2
+		Case NPCtype173, NPCtype106, NPCtype096, NPCtype049, NPCtype939, NPCtypeMTF, NPCtype457, NPCtypeMTF2
 			Select SelectedDifficulty\otherFactors
 				Case NORMAL
 					n\Speed = n\Speed * 1.1
@@ -10388,7 +10244,6 @@ Function FindNextElevator(n.NPCs)
 								If EntityDistance(eo2\obj,n\Collider)<EntityDistance(eo\obj,n\Collider)
 									n\PathStatus = FindPath(n, EntityX(eo2\obj,True),EntityY(eo2\obj,True),EntityZ(eo2\obj,True))
 									n\CurrElevator = eo2
-									DebugLog "eo2 found for "+n\NPCtype
 									Exit
 								EndIf
 							EndIf
@@ -10398,11 +10253,9 @@ Function FindNextElevator(n.NPCs)
 				If n\CurrElevator = Null
 					n\PathStatus = FindPath(n, EntityX(eo\obj,True),EntityY(eo\obj,True),EntityZ(eo\obj,True))
 					n\CurrElevator = eo
-					DebugLog "eo found for "+n\NPCtype
 				EndIf
 				If n\PathStatus <> 1
 					n\CurrElevator = Null
-					DebugLog "Unable to find elevator path: Resetting CurrElevator"
 				EndIf
 				Exit
 			EndIf
@@ -10431,14 +10284,12 @@ Function GoToElevator(n.NPCs)
 		If n\CurrElevator\door\open
 			If (dist# > 0.4 And dist# < 0.7) And inside%
 				UseDoor(n\CurrElevator\door,False)
-				DebugLog n\NPCtype+" used elevator"
 			EndIf
 		Else
 			If dist# < 0.7
 				n\CurrSpeed = 0.0
 				If n\CurrElevator\door\NPCCalledElevator=False
 					n\CurrElevator\door\NPCCalledElevator = True
-					DebugLog n\NPCtype+" called elevator"
 				EndIf
 			EndIf
 		EndIf

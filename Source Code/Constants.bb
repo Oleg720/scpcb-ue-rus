@@ -20,21 +20,32 @@ Const HIT_LADDER% = 7
 Const INFINITY# = (999.0) ^ (99999.0)
 Const NAN# = (-1.0) ^ (0.5)
 
-;[TEXTURES FOR CLASS-D MODEL]
+Const ClrR = 50
+Const ClrG = 50
+Const ClrB = 50
+
+;[TEXTURES]
 
 Const MaxDTextures = 16
+
+Const MaxDecalTextureIDAmount = 24
+Const MaxOtherTextureIDAmount = 15
+Const MaxParticleTextureIDAmount = 10
+Const MaxLightSpriteTextureIDAmount = 11
+Const MaxOverlayIDAmount = 16
+Const MaxOverlayTextureIDAmount = 22
 
 ;[OBJECTS]
 
 Const MaxOBJTunnelAmount = 7
 Const MaxMonitorAmount = 3
-Const MaxDoorIDAmount = 10
+Const MaxDoorIDAmount = 11
 Const MaxButtonIDAmount = 4
 Const MaxLeverIDAmount = 2
 Const MaxCamIDAmount = 2
 Const MaxOtherModelsIDAmount = 2
 
-;[FOREST]
+;[FOREST GENERATION]
 
 Const gridsize% = 10
 Const deviation_chance% = 40 ;out of 100
@@ -83,13 +94,16 @@ Const MAXACHIEVEMENTS = 57
 Const Achv008% = 0, Achv012% = 1, Achv035% = 2, Achv049% = 3, Achv055 = 4,  Achv079% = 5, Achv096% = 6, Achv106% = 7, Achv148% = 8
 Const Achv205 = 9, Achv294% = 10, Achv372% = 11, Achv420% = 12, Achv427=13, Achv500% = 14, Achv513% = 15, Achv714% = 16
 Const Achv789% = 17, Achv860% = 18, Achv895% = 19, Achv914% = 20, Achv939% = 21, Achv966% = 22, Achv970 = 23
-Const Achv1025% = 24, Achv1048 = 25, Achv1123 = 26, AchvMaynard% = 27, AchvHarp% = 28, AchvSNAV% = 29, AchvOmni% = 30
+Const Achv1025% = 24, Achv1048 = 25, Achv1123 = 26
+
+Const AchvMaynard% = 27, AchvHarp% = 28, AchvSNAV% = 29, AchvOmni% = 30
 Const AchvConsole% = 31, AchvTesla% = 32, AchvPD% = 33, Achv1162% = 34, Achv1499% = 35, AchvKeter% = 36
 
 ;MODS
 
 Const Achv005% = 37, Achv009% = 38, Achv109% = 39, Achv178% = 40, Achv198% = 41, Achv207% = 42, Achv215% = 43, Achv357% = 44
 Const Achv402% = 45, Achv409% = 46, Achv447% = 47, Achv457% = 48, Achv650% = 49, Achv1033RU% = 50, Achv1079% = 51
+
 Const AchvDuck% = 52, AchvMTF% = 53, AchvO5% = 54, AchvKeyCard6% = 55, AchvThaumiel% = 56
 
 ;END
@@ -98,15 +112,15 @@ Const AchvDuck% = 52, AchvMTF% = 53, AchvO5% = 54, AchvKeyCard6% = 55, AchvThaum
 
 Const MaxNPCModelIDAmount = 35
 
-Const NPCtype173% = 1, NPCtypeOldMan% = 2, NPCtypeGuard% = 3, NPCtypeD% = 4
+Const NPCtype173% = 1, NPCtype106% = 2, NPCtypeGuard% = 3, NPCtypeD% = 4
 Const NPCtype372% = 5, NPCtypeApache% = 6, NPCtypeMTF% = 7, NPCtype096% = 8
-Const NPCtype049% = 9, NPCtypeZombie% = 10, NPCtype5131% = 11, NPCtypeTentacle% = 12
-Const NPCtype860% = 13, NPCtype939% = 14, NPCtype066% = 15, NPCtypePdPlane% = 16
-Const NPCtype966% = 17, NPCtype1048a = 18, NPCtype1499% = 19, NPCtype008% = 20, NPCtypeClerk% = 21
+Const NPCtype049% = 9, NPCtype0492% = 10, NPCtype5131% = 11, NPCtype035Tentacle% = 12
+Const NPCtype8602% = 13, NPCtype939% = 14, NPCtype066% = 15, NPCtypePdPlane% = 16
+Const NPCtype966% = 17, NPCtype1048a = 18, NPCtype1499% = 19, NPCtype0081% = 20, NPCtypeClerk% = 21
 
 ;MODS
 
-Const NPCtype0083% = 22, NPCtype650% = 23, NPCtype457% = 24, NPCtypeZombie2% = 25, NPCtype0082% = 26
+Const NPCtype0083% = 22, NPCtype650% = 23, NPCtype457% = 24, NPCtype0493% = 25, NPCtype0082% = 26
 Const NPCtype178% = 27, NPCtypeMTF2% = 28, NPCtypeCI% = 29
 
 ;END
@@ -121,10 +135,10 @@ Const EASY = 0, NORMAL = 1, HARD = 2
 
 ;[FMOD]
 
-Const Freq = 44100	;Hz
-Const Channels = 64		;Standartwert
+Const Freq = 44100 ;Hz
+Const Channels = 64	;Standartwert
 Const Flags	= 0
-Const Mode	= 2		;Mode = 2 means that the sounds play in a loop
+Const Mode	= 2	;Mode = 2 means that the sounds play in a loop
 Const F_Offset = 0
 Const Lenght = 0
 Const MaxVol = 255
@@ -135,7 +149,7 @@ Const PanMid = -1
 Const AllChannel = -3
 Const FreeChannel = -1
 
-;[DECLARE WINDOWS API]
+;[FULLSCREEN_FIX]
 
 Const C_GWL_STYLE = -16
 Const C_WS_POPUP = $80000000
@@ -150,19 +164,9 @@ Const MusicPath2$ = "SFX\Radio\UserTracks\"
 ;[VERSIONS]
 
 Const GameVersionNumber$ = "1.3.11"
-Const ModVersionNumber$ = "5.4 [Rus v1.0-Dev]"
-Const CompatibleNumber$ = "5.4 [Rus v1.0-Dev]"
+Const ModVersionNumber$ = "5.4 [Rus v1.0-Dev]" ;Полностью отпадает возможность использовать обратную совместимость
 
 ;[OPTIONS]
 
 Const OptionFile$ = "options.ini"
-
-;[TEXTURES]
-
-Const MaxDecalTextureIDAmount = 24
-Const MaxOtherTextureIDAmount = 15
-Const MaxParticleTextureIDAmount = 10
-Const MaxLightSpriteTextureIDAmount = 11
-Const MaxOverlayIDAmount = 16
-Const MaxOverlayTextureIDAmount = 22
 

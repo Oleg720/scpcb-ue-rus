@@ -235,7 +235,6 @@ Function AALoadFont%(file$="Arial Cyr", height=13, bold=0, italic=0, underline=0
 		LockBuffer TextureBuffer(tImage)
 		
 		Local miy% = newFont\mH*((newFont\mW*95/1024)+2)
-		DebugLog miy
 		
 		newFont\mW = 0
 		

@@ -60,7 +60,6 @@ Function GetINIString$(file$, section$, parameter$, defaultvalue$="")
 	Next
 	
 	If lfile = Null Then
-		DebugLog "CREATE BANK FOR "+file
 		lfile = New INIFile
 		lfile\name = Lower2(file)
 		lfile\bank = 0

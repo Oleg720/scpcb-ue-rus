@@ -19,7 +19,6 @@ Function LoadImage_Strict(file$)
 	Return tmp
 	;attempt to load the image again
 	If tmp = 0 Then tmp2 = LoadImage(file)
-	DebugLog "Attempting to load again: "+file
 	Return tmp2
 End Function
 
@@ -299,7 +298,6 @@ Function UpdateStreamSoundOrigin(streamHandle%,cam%,entity%,range#=10,volume#=1.
 End Function
 
 Function LoadMesh_Strict(File$,parent=0)
-	DebugLog "Load mesh: "+File
 	If FileType(File$) <> 1 Then RuntimeError "3D Mesh " + File$ + " не найдена." ;3D Mesh not found.
 	tmp = LoadMesh(File$, parent)
 	If tmp = 0 Then RuntimeError "Не удалось загрузить 3D Mesh " + File$ ;Failed to load 3D Mesh: 
@@ -307,7 +305,6 @@ Function LoadMesh_Strict(File$,parent=0)
 End Function   
 
 Function LoadAnimMesh_Strict(File$,parent=0)
-	DebugLog "Load animated Mesh: "+File
 	If FileType(File$) <> 1 Then RuntimeError "Анимированная 3D Mesh " + File$ + " не найдена." ;3D Animated Mesh not found.
 	tmp = LoadAnimMesh(File$, parent)
 	If tmp = 0 Then RuntimeError "Не удалось загрузить анимированную 3D Mesh: " + File$ ;Failed to load 3D Animated Mesh: 

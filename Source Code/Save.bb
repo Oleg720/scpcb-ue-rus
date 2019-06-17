@@ -40,7 +40,7 @@ Function SaveGame(file$)
 	;WriteString f, ModVersionNumber
 	;WriteString f, SubjectName
 	;END
-	WriteString f, CompatibleNumber
+	WriteString f, ModCompatibleNumber
 	
 	WriteFloat f, BlinkTimer
 	WriteFloat f, BlinkEffect
@@ -203,7 +203,6 @@ Function SaveGame(file$)
 	
 	WriteInt f, temp
 	For n.NPCs = Each NPCs
-		DebugLog("Saving NPC " +n\NVName+ " (ID "+n\ID+")")
 		
 		WriteByte f, n\NPCtype
 		WriteFloat f, EntityX(n\Collider,True)
@@ -391,7 +390,6 @@ Function SaveGame(file$)
 	Next
 	
 	WriteInt f, 1845
-	DebugLog 1845
 	
 	Local d.Decals
 	temp = 0
@@ -508,7 +506,6 @@ Function SaveGame(file$)
 	
 	If UsedConsole
 		WriteInt f, 100
-		DebugLog "Used Console"
 	Else
 		WriteInt f, 994
 	EndIf
@@ -538,7 +535,6 @@ Function LoadGame(file$)
 	Local version$ = ""
 	
 	CatchErrors("Uncaught (LoadGame)")
-	DebugLog "---------------------------------------------------------------------------"
 	
 	DropSpeed=0.0
 	
@@ -733,7 +729,7 @@ Function LoadGame(file$)
 		Select NPCtype
 			Case NPCtype173
 				Curr173 = n
-			Case NPCtypeOldMan
+			Case NPCtype106
 				Curr106 = n
 			Case NPCtype096
 				Curr096 = n
@@ -767,9 +763,7 @@ Function LoadGame(file$)
 		
 		ForceSetNPCID(n, ReadInt(f))
 		n\TargetID = ReadInt(f)
-		
-		DebugLog("Loading NPC " +n\NVName+ " (ID "+n\ID+")")
-		
+
 		n\EnemyX = ReadFloat(f)
 		n\EnemyY = ReadFloat(f)
 		n\EnemyZ = ReadFloat(f)
@@ -782,7 +776,7 @@ Function LoadGame(file$)
 		
 		Local frame# = ReadFloat(f)
 		Select NPCtype
-			Case NPCtypeOldMan, NPCtypeD, NPCtype096, NPCtypeMTF, NPCtypeGuard, NPCtype049, NPCtypeZombie, NPCtypeClerk, NPCtype650, NPCtypeZombie2, NPCtypeMTF2, NPCtype457, NPCtype0082, NPCtypeCI
+			Case NPCtype106, NPCtypeD, NPCtype096, NPCtypeMTF, NPCtypeGuard, NPCtype049, NPCtype0492, NPCtypeClerk, NPCtype650, NPCtype0493, NPCtypeMTF2, NPCtype457, NPCtype0082, NPCtypeCI, NPCtypeTentacle
 				SetAnimTime(n\obj, frame)
 		End Select
 		
@@ -840,7 +834,7 @@ Function LoadGame(file$)
 	room2gw_x = ReadFloat(f)
 	room2gw_z = ReadFloat(f)
 	
-	If version = CompatibleNumber Then
+	If version = ModCompatibleNumber Then
 		I_Zone\Transition[0] = ReadByte(f)
 		I_Zone\Transition[1] = ReadByte(f)
 		I_Zone\HasCustomForest = ReadByte(f)
@@ -943,7 +937,6 @@ Function LoadGame(file$)
 					r\fr\grid[x+(y*gridsize)]=ReadByte(f)
 					sssss=sssss+Str(r\fr\grid[x+(y*gridsize)])
 				Next
-				DebugLog sssss
 			Next
 			lx# = ReadFloat(f)
 			ly# = ReadFloat(f)
@@ -1132,7 +1125,6 @@ Function LoadGame(file$)
 		EntityBlend d\obj, d\blendmode
 		EntityFX d\obj, d\fx
 		
-		DebugLog "Created Decal @"+x+","+y+","+z
 	Next
 	UpdateDecals()
 	
@@ -1163,7 +1155,6 @@ Function LoadGame(file$)
 		If e\EventName = "room2sl"
 			e\EventState = 0.0
 			e\EventStr = ""
-			DebugLog "Reset Eventstate in "+e\EventName
 		;Reset dimension1499
 		ElseIf e\EventName = "dimension1499"
 			If e\EventState > 0.0
@@ -1178,6 +1169,10 @@ Function LoadGame(file$)
 						EndIf
 					EndIf
 				Next
+				Local du.Dummy1499
+                For du.Dummy1499 = Each Dummy1499
+                    Delete du
+                Next
 				DebugLog "Reset Eventstate in "+e\EventName
 			EndIf
 		;Reset the forest event to make it loading properly
@@ -1268,7 +1263,6 @@ Function LoadGame(file$)
 		Next
 		For j%=0 To it\invSlots-1
 			o_i=ReadInt(f)
-			DebugLog "secondinv "+o_i
 			If o_i<>-1 Then
 				For ij.Items=Each Items
 					If ij\ID=o_i Then
@@ -1304,7 +1298,6 @@ Function LoadGame(file$)
 	
 	If ReadInt(f)<>994
 		UsedConsole = True
-		DebugLog "Used Console"
 	EndIf
 	
 	CameraFogFar = ReadFloat(f)
@@ -1404,7 +1397,6 @@ Function LoadGameQuick(file$)
 	Local version$ = ""
 	
 	CatchErrors("Uncaught (LoadGameQuick)")
-	DebugLog "---------------------------------------------------------------------------"
 	
 	DebugHUD = False
 	GameSaved = True
@@ -1613,8 +1605,6 @@ Function LoadGameQuick(file$)
 	
 	MapWidth = ReadInt(f)
 	MapHeight = ReadInt(f)
-	DebugLog MapWidth
-	DebugLog MapHeight
 	For x = 0 To MapWidth
 		For y = 0 To MapHeight
 			MapTemp(x, y) = ReadInt(f)
@@ -1639,7 +1629,7 @@ Function LoadGameQuick(file$)
 		Select NPCtype
 			Case NPCtype173
 				Curr173 = n
-			Case NPCtypeOldMan
+			Case NPCtype106
 				Curr106 = n
 			Case NPCtype096
 				Curr096 = n
@@ -1686,7 +1676,7 @@ Function LoadGameQuick(file$)
 		
 		Local frame# = ReadFloat(f)
 		Select NPCtype
-			Case NPCtypeOldMan, NPCtypeD, NPCtype096, NPCtypeMTF, NPCtypeGuard, NPCtype049, NPCtypeZombie, NPCtypeClerk, NPCtype650, NPCtypeZombie2, NPCtypeMTF2, NPCtype457, NPCtype0082, NPCtypeCI
+			Case NPCtype106, NPCtypeD, NPCtype096, NPCtypeMTF, NPCtypeGuard, NPCtype049, NPCtype0492, NPCtypeClerk, NPCtype650, NPCtype0493, NPCtypeMTF2, NPCtype457, NPCtype0082, NPCtypeCI, NPCtype035Tentacle
 				SetAnimTime(n\obj, frame)
 		End Select		
 		
@@ -1744,7 +1734,7 @@ Function LoadGameQuick(file$)
 	room2gw_x = ReadFloat(f)
 	room2gw_z = ReadFloat(f)
 	
-	If version = CompatibleNumber Then
+	If version = ModCompatibleNumber Then
 		I_Zone\Transition[0] = ReadByte(f)
 		I_Zone\Transition[1] = ReadByte(f)
 		I_Zone\HasCustomForest = ReadByte(f)
@@ -1932,7 +1922,6 @@ Function LoadGameQuick(file$)
 		EntityBlend d\obj, d\blendmode
 		EntityFX d\obj, d\fx
 		
-		DebugLog "Created Decal @"+x+","+y+","+z
 	Next
 	UpdateDecals()
 	
@@ -2087,7 +2076,6 @@ Function LoadGameQuick(file$)
 	
 	If ReadInt(f)<>994
 		UsedConsole = True
-		DebugLog "Used Console"
 	EndIf
 	
 	If 0 Then 
@@ -2239,11 +2227,10 @@ Function LoadSaveGames()
 	Dim SaveGameDate$(SaveGameAmount + 1)
 	Dim SaveGameVersion$(SaveGameAmount + 1)
 	For i = 1 To SaveGameAmount
-		DebugLog (SavePath + SaveGames(i - 1) + "\save.txt")
 		Local f% = ReadFile(SavePath + SaveGames(i - 1) + "\save.txt")
 		SaveGameTime(i - 1) = ReadString(f)
 		SaveGameDate(i - 1) = ReadString(f)
-		;Skip all data until the CompatibleVersion number
+		;Skip all data until the ModCompatibleVersion number
 		ReadInt(f)
 		For j = 0 To 5
 			ReadFloat(f)
@@ -2274,11 +2261,8 @@ Function LoadSavedMaps()
 	Dir=ReadDir("Map Creator\Maps")
 	Repeat
 		file$=NextFile$(Dir)
-		
-		DebugLog file
-		
+
 		If file$="" Then Exit
-		DebugLog (CurrentDir()+"Map Creator\Maps\"+file$)
 		If FileType(CurrentDir()+"Map Creator\Maps\"+file$) = 1 Then 
 			If file <> "." And file <> ".." Then
 				If Right(file,6)="cbmap2" Or Right(file,5)="cbmap" Then
@@ -2297,10 +2281,7 @@ Function LoadSavedMaps()
 	Repeat
 		file$=NextFile$(Dir)
 		
-		DebugLog file
-		
 		If file$="" Then Exit
-		DebugLog (CurrentDir()+"Map Creator\Maps\"+file$)
 		If FileType(CurrentDir()+"Map Creator\Maps\"+file$) = 1 Then 
 			If file <> "." And file <> ".." Then
 				If Right(file,6)="cbmap2" Or Right(file,5)="cbmap" Then
@@ -2328,7 +2309,6 @@ Function LoadMap(file$)
 	Local roomamount%,forestpieceamount%,mtpieceamount%,i%
 	
 	f% = ReadFile(file)
-	DebugLog file
 	
 	Dim MapTemp%(MapWidth+1, MapHeight+1)
 	Dim MapFound%(MapWidth+1, MapHeight+1)
@@ -2365,14 +2345,10 @@ Function LoadMap(file$)
 			
 			angle = ReadByte(f)*90.0
 			
-			DebugLog x+", "+y+": "+name
-			DebugLog "angle: "+angle
-			
 			For rt.RoomTemplates=Each RoomTemplates
 				If Lower(rt\Name) = name Then
 					
 					r.Rooms = CreateRoom(0, rt\Shape, (MapWidth-x) * 8.0, 0, y * 8.0, name)
-					DebugLog "createroom"
 					
 					r\angle = angle
 					If r\angle<>90 And r\angle<>270
@@ -2426,9 +2402,6 @@ Function LoadMap(file$)
 			
 			angle = ReadByte(f)
 			
-			DebugLog x+", "+y+": "+name
-			DebugLog "angle: "+angle
-			
 			If angle <> 0 And angle <> 2 Then
 				angle = angle + 2
 			EndIf
@@ -2460,7 +2433,6 @@ Function LoadMap(file$)
 					Case "scp-860-1 door"
 						fr\grid[(y*gridsize)+x] = 21+angle
 				End Select
-				DebugLog "created forest piece "+Chr(34)+name+Chr(34)+" successfully"
 			EndIf
 		Next
 		
@@ -2488,9 +2460,6 @@ Function LoadMap(file$)
 			name$ = Lower(ReadString(f))
 			
 			angle = ReadByte(f)
-			
-			DebugLog x+", "+y+": "+name
-			DebugLog "angle: "+angle
 			
 			If angle<>1 And angle<>3 Then
 				angle = angle + 2
@@ -2522,7 +2491,6 @@ Function LoadMap(file$)
 						MTRoom\grid\grid[x+(y*gridsz)]=ROOM4+2
 				End Select
 				MTRoom\grid\angles[x+(y*gridsz)]=angle
-				DebugLog "created mtunnel piece "+Chr(34)+name+Chr(34)+" successfully"
 			EndIf
 		Next
 		
@@ -2540,15 +2508,11 @@ Function LoadMap(file$)
 			name$ = Lower(ReadString(f))
 			
 			angle = ReadByte(f)*90.0
-			
-			DebugLog x+", "+y+": "+name
-			DebugLog "angle: "+angle
-			
+
 			For rt.RoomTemplates=Each RoomTemplates
 				If Lower(rt\Name) = name Then
 					
 					r.Rooms = CreateRoom(0, rt\Shape, (MapWidth-x) * 8.0, 0, y * 8.0, name)
-					DebugLog "createroom"
 					
 					r\angle = angle
 					If r\angle<>90 And r\angle<>270
@@ -2718,25 +2682,6 @@ Function LoadMap(file$)
 		Next
 	Next
 	
-	For x = 0 To MapWidth+1
-		For y = 0 To MapHeight+1
-			If MapTemp(x,y)>0 Then
-				DebugLog "MapTemp("+x+","+y+") = True"
-			Else
-				DebugLog "MapTemp("+x+","+y+") = False"
-			EndIf
-		Next
-	Next
-	
 	CatchErrors("LoadMap")
 End Function
 
-
-
-
-
-
-
-
-;~IDEal Editor Parameters:
-;~C#Blitz3D

@@ -57,7 +57,7 @@ Function CreateItemTemplate.ItemTemplates(name$, tempname$, objpath$, invimgpath
 				Exit
 			EndIf
 		Next
-		If texture=0 Then texture=LoadTexture_Strict(texturepath,texflags%) : it\texpath = texturepath; : DebugLog texturepath
+		If texture=0 Then texture=LoadTexture_Strict(texturepath,texflags%) : it\texpath = texturepath
 		EntityTexture it\obj, texture
 		it\tex = texture
 	EndIf  
@@ -92,14 +92,6 @@ Function CreateItemTemplate.ItemTemplates(name$, tempname$, objpath$, invimgpath
 	
 	it\imgpath = imgpath
 	
-	;If imgpath<>"" Then
-	;	it\img=LoadImage(imgpath)
-	;	
-	;	;DebugLog imgpath
-	;	
-	;	If it\img<>0 Then ResizeImage(it\img, ImageWidth(it\img) * MenuScale, ImageHeight(it\img) * MenuScale)
-	;EndIf
-	
 	it\tempname = tempname
 	it\name = name
 	
@@ -113,6 +105,8 @@ End Function
 
 Function InitItemTemplates()
 	Local it.ItemTemplates,it2.ItemTemplates
+
+	;---SCP:CB Items---
 	
 	it = CreateItemTemplate("Немного SCP-420-J", "scp420j", "GFX\items\scp420J.x", "GFX\items\INVscp420J.png", "", 0.0005) ;Some SCP-420-J
 	it\sound = 2
@@ -160,14 +154,14 @@ Function InitItemTemplates()
 	
 	it = CreateItemTemplate("Рисунок", "paper", "GFX\items\paper.x", "GFX\items\INVpaper.png", "GFX\items\doc1048.png", 0.003) : it\sound = 0 ;Drawing
 	
-	it = CreateItemTemplate("Листовка", "paper", "GFX\items\paper.x", "GFX\items\INVpaper.png", "GFX\items\leaflet.png", 0.003, "GFX\items\notetexture.jpg") : it\sound = 0 ;Leaflet
+	it = CreateItemTemplate("Листовка", "paper", "GFX\items\paper.x", "GFX\items\INVpaper.png", "GFX\items\leaflet.png", 0.003, "GFX\items\note1.png") : it\sound = 0 ;Leaflet
 	
-	it = CreateItemTemplate("Записка д-ра Л.", "paper", "GFX\items\paper.x", "GFX\items\INVnote.png", "GFX\items\docL1.png", 0.0025, "GFX\items\notetexture.jpg") : it\sound = 0 ;Dr. L's Note
-	it = CreateItemTemplate("Записка д-ра Л", "paper", "GFX\items\paper.x", "GFX\items\INVnote.png", "GFX\items\docL2.png", 0.0025, "GFX\items\notetexture.jpg") : it\sound = 0 ;Dr L's Note
-	it = CreateItemTemplate("Записка с кровавым следом", "paper", "GFX\items\paper.x", "GFX\items\INVnote.png", "GFX\items\docL3.png", 0.0025, "GFX\items\notetexture.jpg") : it\sound = 0 ;Blood-stained Note
-	it = CreateItemTemplate("Обгоревшая записка д-ра Л.", "paper", "GFX\items\paper.x", "GFX\items\INVbn.png", "GFX\items\docL4.png", 0.0025, "GFX\items\BurntNoteTexture.jpg") : it\sound = 0 ;Dr. L's Burnt Note
-	it = CreateItemTemplate("Обгоревшая записка д-ра Л", "paper", "GFX\items\paper.x", "GFX\items\INVbn.png", "GFX\items\docL5.png", 0.0025, "GFX\items\BurntNoteTexture.jpg") : it\sound = 0 ;Dr L's Burnt Note
-	it = CreateItemTemplate("Выжженная записка", "paper", "GFX\items\paper.x", "GFX\items\INVbn.png", "GFX\items\docL6.png", 0.0025, "GFX\items\BurntNoteTexture.jpg") : it\sound = 0 ;Scorched Note
+	it = CreateItemTemplate("Записка д-ра Л.", "paper", "GFX\items\paper.x", "GFX\items\INVnote.png", "GFX\items\docL1.png", 0.0025, "GFX\items\note1.png") : it\sound = 0 ;Dr. L's Note
+	it = CreateItemTemplate("Записка д-ра Л", "paper", "GFX\items\paper.x", "GFX\items\INVnote.png", "GFX\items\docL2.png", 0.0025, "GFX\items\note1.png") : it\sound = 0 ;Dr L's Note
+	it = CreateItemTemplate("Записка с кровавым следом", "paper", "GFX\items\paper.x", "GFX\items\INVnote.png", "GFX\items\docL3.png", 0.0025, "GFX\items\note1.png") : it\sound = 0 ;Blood-stained Note
+	it = CreateItemTemplate("Обгоревшая записка д-ра Л.", "paper", "GFX\items\paper.x", "GFX\items\INVbn.png", "GFX\items\docL4.png", 0.0025, "GFX\items\burnt_note.png") : it\sound = 0 ;Dr. L's Burnt Note
+	it = CreateItemTemplate("Обгоревшая записка д-ра Л", "paper", "GFX\items\paper.x", "GFX\items\INVbn.png", "GFX\items\docL5.png", 0.0025, "GFX\items\burnt_note.png") : it\sound = 0 ;Dr L's Burnt Note
+	it = CreateItemTemplate("Выжженная записка", "paper", "GFX\items\paper.x", "GFX\items\INVbn.png", "GFX\items\docL6.png", 0.0025, "GFX\items\burnt_note.png") : it\sound = 0 ;Scorched Note
 	
 	it = CreateItemTemplate("Страница из дневника", "paper", "GFX\items\paper.x", "GFX\items\INVpaper.png", "GFX\items\docGonzales.png", 0.0025) : it\sound = 0 ;Journal Page
 	
@@ -175,24 +169,24 @@ Function InitItemTemplates()
 	it = CreateItemTemplate("Запись №2", "paper", "GFX\items\paper.x", "GFX\items\INVpaper.png", "GFX\items\f5.png", 0.004, "GFX\items\f4.png") : it\sound = 0 ;Log #2
 	it = CreateItemTemplate("Запись №3", "paper", "GFX\items\paper.x", "GFX\items\INVpaper.png", "GFX\items\f6.png", 0.004, "GFX\items\f4.png") : it\sound = 0 ;Log #3
 	
-	it = CreateItemTemplate("Странная записка", "paper", "GFX\items\paper.x", "GFX\items\INVnote.png", "GFX\items\docStrange.png", 0.0025, "GFX\items\notetexture.jpg") : it\sound = 0 ;Strange Note
+	it = CreateItemTemplate("Странная записка", "paper", "GFX\items\paper.x", "GFX\items\INVnote.png", "GFX\items\docStrange.png", 0.0025, "GFX\items\note1.png") : it\sound = 0 ;Strange Note
 	
 	it = CreateItemTemplate("Документ о ядерных устройствах", "paper", "GFX\items\paper.x", "GFX\items\INVpaper.png", "GFX\items\docNDP.png", 0.003) : it\sound = 0 ;Nuclear Device Document
 	it = CreateItemTemplate("Информационная листовка для персонала класса D", "paper", "GFX\items\paper.x", "GFX\items\INVpaper.png", "GFX\items\docORI.png", 0.003) : it\sound = 0 ;Class D Orientation Leaflet
 	
 	it = CreateItemTemplate("Записка от Даниэля", "paper", "GFX\items\note.x", "GFX\items\INVnote2.png", "GFX\items\docdan.png", 0.0025) : it\sound = 0 ;Note from Daniel
 	
-	it = CreateItemTemplate("Обгоревший документ", "paper", "GFX\items\paper.x", "GFX\items\INVbn.png", "GFX\items\bn.it", 0.003, "GFX\items\BurntNoteTexture.jpg") ;Burnt Note
+	it = CreateItemTemplate("Обгоревший документ", "paper", "GFX\items\paper.x", "GFX\items\INVbn.png", "GFX\items\bn.it", 0.003, "GFX\items\burnt_note.png") ;Burnt Note
 	it\img = BurntNote : it\sound = 0
 	
-	it = CreateItemTemplate("Загадочная записка", "paper", "GFX\items\paper.x", "GFX\items\INVnote.png", "GFX\items\sn.it", 0.003, "GFX\items\notetexture.jpg") : it\sound = 0	;Mysterious Note
+	it = CreateItemTemplate("Загадочная записка", "paper", "GFX\items\paper.x", "GFX\items\INVnote.png", "GFX\items\sn.it", 0.003, "GFX\items\note1.png") : it\sound = 0	;Mysterious Note
 	
 	it = CreateItemTemplate("Мобильные оперативные группы", "paper", "GFX\items\paper.x", "GFX\items\INVpaper.png", "GFX\items\docMTF.png", 0.003) : it\sound = 0 ;Mobile Task Forces
 	it = CreateItemTemplate("Уровни допуска", "paper", "GFX\items\paper.x", "GFX\items\INVpaper.png", "GFX\items\docSC.png", 0.003) : it\sound = 0 ;Security Clearance Levels
 	it = CreateItemTemplate("Классы объектов", "paper", "GFX\items\paper.x", "GFX\items\INVpaper.png", "GFX\items\docOBJC.png", 0.003) : it\sound = 0 ;Object Classes
 	it = CreateItemTemplate("Документ", "paper", "GFX\items\paper.x", "GFX\items\INVpaper.png", "GFX\items\docRAND3.png", 0.003) : it\sound = 0 ;Document
-	it = CreateItemTemplate("Дополнение: Протокол исследований 5/14", "paper", "GFX\items\paper.x", "GFX\items\INVnote.png", "GFX\items\docRAND2.png", 0.003, "GFX\items\notetexture.jpg") : it\sound = 0 ;Addendum: 5/14 Test Log
-	it = CreateItemTemplate("Уведомление", "paper", "GFX\items\paper.x", "GFX\items\INVnote.png", "GFX\items\docRAND1.png", 0.003, "GFX\items\notetexture.jpg") :it\sound = 0 ;Notification
+	it = CreateItemTemplate("Дополнение: Протокол исследований 5/14", "paper", "GFX\items\paper.x", "GFX\items\INVnote.png", "GFX\items\docRAND2.png", 0.003, "GFX\items\note1.png") : it\sound = 0 ;Addendum: 5/14 Test Log
+	it = CreateItemTemplate("Уведомление", "paper", "GFX\items\paper.x", "GFX\items\INVnote.png", "GFX\items\docRAND1.png", 0.003, "GFX\items\note1.png") :it\sound = 0 ;Notification
 	it = CreateItemTemplate("Отчёт об инциденте SCP-106-0204", "paper", "GFX\items\paper.x", "GFX\items\INVpaper.png", "GFX\items\docIR106.png", 0.003) : it\sound = 0 ;Incident Report SCP-106-0204
 	
 	it = CreateItemTemplate("Бронежилет", "vest", "GFX\items\vest.x", "GFX\items\INVvest.png", "", 0.02,"GFX\items\vest.png") : it\sound = 4 ;Ballistic Vest
@@ -267,9 +261,7 @@ Function InitItemTemplates()
 	
 	it = CreateItemTemplate("SCP-513", "scp513", "GFX\items\scp513.x", "GFX\items\INVscp513.png", "", 0.1)
 	it\sound = 2
-	
-	;BoH items (ported to original game)
-	
+
 	it = CreateItemTemplate("Планшет", "clipboard", "GFX\items\clipboard.b3d", "GFX\items\INVclipboard.png", "", 0.003, "", "GFX\items\INVclipboard2.png", 1) ;Clipboard
 	
 	it = CreateItemTemplate("SCP-1123", "scp1123", "GFX\items\scp1123.b3d", "GFX\items\INVscp1123.png", "", 0.015) : it\sound = 2
@@ -281,11 +273,7 @@ Function InitItemTemplates()
 	it = CreateItemTemplate("Шприц", "syringe", "GFX\items\syringe.b3d", "GFX\items\INVsyringe.png", "", 0.005) : it\sound = 2 ;Syringe
 	it = CreateItemTemplate("Шприц", "finesyringe", "GFX\items\syringe.b3d", "GFX\items\INVsyringe.png", "", 0.005) : it\sound = 2 ;Syringe
 	it = CreateItemTemplate("Шприц", "veryfinesyringe", "GFX\items\syringe.b3d", "GFX\items\INVsyringe.png", "", 0.005) : it\sound = 2 ;Syringe
-	
-	;END
-	
-	;new Items in SCP:CB 1.3 - ENDSHN
-	
+
 	it = CreateItemTemplate("SCP-1499","scp1499","GFX\items\scp1499.b3d","GFX\items\INVscp1499.png", "", 0.023) : it\sound = 2
 	it = CreateItemTemplate("SCP-1499","super1499","GFX\items\scp1499.b3d","GFX\items\INVscp1499.png", "", 0.023) : it\sound = 2
 	CreateItemTemplate("Бейдж Эмили Росс", "badge", "GFX\items\badge.x", "GFX\items\INVbadge.png", "GFX\items\badge1.png", 0.0001, "GFX\items\badge1_tex.png") ;Emily Ross' Badge
@@ -324,7 +312,7 @@ Function InitItemTemplates()
     it = CreateItemTemplate("Журнал полевого агента #235-001-CO5", "paper", "GFX\items\paper.x", "GFX\items\INVpaper.png", "GFX\items\docO5_1.png", 0.003) : it\sound = 0 ;Field Agent Log #235-001-CO5
     it = CreateItemTemplate("Записки групп интересов", "paper", "GFX\items\paper.x", "GFX\items\INVpaper.png", "GFX\items\docO5_2.png", 0.003) : it\sound = 0 ;Groups Of Interest Log
     it = CreateItemTemplate("Неизвестный документ", "paper", "GFX\items\paper.x", "GFX\items\INVpaper.png", "GFX\items\docphoto.png", 0.003) : it\sound = 0 ;Unknown Document
-    it = CreateItemTemplate("Неизвестная записка", "paper", "GFX\items\paper.x", "GFX\items\INVnote.png", "GFX\items\unknownnote.png", 0.003, "GFX\items\notetexture.jpg") : it\sound = 0 ;Unknown Note
+    it = CreateItemTemplate("Неизвестная записка", "paper", "GFX\items\paper.x", "GFX\items\INVnote.png", "GFX\items\unknownnote.png", 0.003, "GFX\items\note1.png") : it\sound = 0 ;Unknown Note
 
     CreateItemTemplate("SCP-215", "scp215", "GFX\items\scp215.b3d", "GFX\items\INVscp215.png", "", 0.022,"","",1)
     CreateItemTemplate("Футляр для очков", "glassescase", "GFX\items\glassescase.b3d", "GFX\items\INVglassescase.png","",0.022,"","",1) ;Glasses Case
@@ -338,13 +326,16 @@ Function InitItemTemplates()
     it = CreateItemTemplate("Документ об SCP-198", "paper", "GFX\items\paper.x", "GFX\items\INVpaper.png", "GFX\items\doc198.png", 0.003) : it\sound = 0 ;Document SCP-198
     it = CreateItemTemplate("Документ об SCP-447", "paper", "GFX\items\paper.x", "GFX\items\INVpaper.png", "GFX\items\doc447.png", 0.003) : it\sound = 0 ;Document SCP-447
 
-    it = CreateItemTemplate("Инцидент O5-14", "paper", "GFX\items\paper.x", "GFX\items\INVbn.png", "GFX\items\docO5_14.png", 0.003, "GFX\items\BurntNoteTexture.jpg") : it\sound = 0 ;Incident O5-14
+    it = CreateItemTemplate("Инцидент O5-14", "paper", "GFX\items\paper.x", "GFX\items\INVbn.png", "GFX\items\docO5_14.png", 0.003, "GFX\items\burnt_note.png") : it\sound = 0 ;Incident O5-14
 
     it = CreateItemTemplate("SCP-500", "scp500", "GFX\items\scp500_bottle.b3d","GFX\items\INVscp500bottle.png","",0.05) : it\sound = 2
 
     it = CreateItemTemplate("SCP-402", "scp402", "GFX\items\scp402.b3d","GFX\items\INVscp402.png","",0.075) : it\sound = 3
 
     it = CreateItemTemplate("SCP-357", "scp357", "GFX\items\scp357.b3d","GFX\items\INVscp357.png","",0.04) : it\sound = 2
+
+    CreateItemTemplate("Мятная 9V-батарейка", "mintbat", "GFX\items\battery.x", "GFX\items\INVscp447battery9v.png", "", 0.008, "GFX\items\scp447battery_9V.png") ;Minty 9V Battery
+	CreateItemTemplate("Мятная 18V-батарейка", "mint18vbat", "GFX\items\battery.x", "GFX\items\INVscp447battery18v.png", "", 0.01, "GFX\items\scp447battery_18V.png") ;Minty 18V Battery
 
 	;END
 	
@@ -360,14 +351,14 @@ Function InitItemTemplates()
     CreateItemTemplate("SCP-178", "scp178", "GFX\items\scp178.b3d", "GFX\items\INVscp178.png", "", 0.02,"","",1)
 
     it = CreateItemTemplate("Документ об SCP-005", "paper", "GFX\items\paper.x", "GFX\items\INVpaper.png", "GFX\items\doc005.png", 0.003) : it\sound = 0 ;Document SCP-005
-    it = CreateItemTemplate("Записка от Мэйнарда", "paper", "GFX\items\paper.x", "GFX\items\INVnote.png", "GFX\items\maynard005note.png", 0.0025, "GFX\items\notetexture.jpg") : it\sound = 0 ;Note from Maynard
+    it = CreateItemTemplate("Записка от Мэйнарда", "paper", "GFX\items\paper.x", "GFX\items\INVnote.png", "GFX\items\maynard005note.png", 0.0025, "GFX\items\note1.png") : it\sound = 0 ;Note from Maynard
 
     ;END
 
     ;----SCP-914 Expansion Items----
 	
 	it = CreateItemTemplate("Мятный SCP-500-01", "mintscp500pill", "GFX\items\pill.b3d", "GFX\items\INVscp447pill.png", "", 0.0001) : it\sound = 2 ;Minty SCP-500-01
-	EntityColor it\obj,0,140,0
+	EntityColor it\obj, 0, 140, 0
 	
 	it = CreateItemTemplate("Мятная аптечка первой помощи", "mintfirstaid", "GFX\items\firstaid.x", "GFX\items\INVscp447firstaid.png", "", 0.05, "GFX\items\scp447_firstaid_kit.png") ;Minty First Aid Kit
 	it = CreateItemTemplate("Мятная маленькая аптечка первой помощи", "mintfinefirstaid", "GFX\items\firstaid.x", "GFX\items\INVscp447firstaid.png", "", 0.03, "GFX\items\scp447_firstaid_kit.png") ;Minty Small First Aid Kit
@@ -541,7 +532,6 @@ Function RemoveItem(i.Items)
 	
 	For n% = 0 To MaxItemAmount - 1
 		If Inventory(n) = i
-			DebugLog "Removed "+i\itemtemplate\name+" from slot "+n
 			Inventory(n) = Null
 			ItemAmount = ItemAmount-1
 			Exit
@@ -685,8 +675,6 @@ Function UpdateItems()
 						EndIf
 					Next
 				EndIf
-				
-				If EntityY(i\collider) < - 35.0 Then DebugLog "remove: " + i\itemtemplate\name:RemoveItem(i):deletedItem=True
 			Else
 				HideEntity i\collider
 			EndIf
@@ -853,6 +841,8 @@ Function PickItem(item.Items)
 				        GiveAchievement(AchvKeyCard6)
 				    Case "scp005"
 				   	    GiveAchievement(Achv005)
+				    Case "scp207"
+				        GiveAchievement(Achv207)
 				    Case "scp198"
 					    GiveAchievement(Achv198)
 						Msg = "Вы чувствуете лёгкую боль, а SCP-198 теперь привязан к вам." ;You feel slight pain and SCP-198 is now attached at you.
@@ -884,8 +874,6 @@ Function PickItem(item.Items)
 						Msg = Chr(34)+"Я не настолько глуп, чтобы подбирать это."+Chr(34) ;I'm not stupid enough to pick it up.
 						MsgTimer = 70*6
 						Exit
-					Case "scp207"
-					    GiveAchievement(Achv207)
 				    ;END
 				End Select
 				
@@ -985,16 +973,13 @@ Function Update294()
 	EndIf
 	
 	If VomitTimer > 0 Then
-		DebugLog VomitTimer
 		VomitTimer = VomitTimer - (fs\FPSfactor[0]/70)
 		
 		If (MilliSecs2() Mod 1600) < Rand(200, 400) Then
 			If BlurTimer = 0 Then BlurTimer = Rnd(10, 20)*70
 			CameraShake = Rnd(0, 2)
 		EndIf
-		
-;		If (MilliSecs2() Mod 1000) < Rand(1200) Then 
-		
+
 		If Rand(50) = 50 And (MilliSecs2() Mod 4000) < 200 Then PlaySound_Strict(CoughSFX(Rand(0,2)))
 		
 		;Regurgitate when timer is below 10 seconds. (ew)

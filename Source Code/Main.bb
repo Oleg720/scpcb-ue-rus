@@ -1,3 +1,5 @@
+;SCP - Containment Breach Ultimate Edition (Расширенное издание) v5.4 Русская версия
+
 Include "Source Code\Math.bb"
 Include "Source Code\INI_Details.bb"
 
@@ -14,10 +16,9 @@ Include "Source Code\FMod.bb"
 Include "Source Code\StrictLoads.bb"
 Include "Source Code\fullscreen_window_fix.bb"
 Include "Source Code\KeyName.bb"
-;Include "Source Code\Blitz_Basic_Bank.bb"
-;Include "Source Code\Blitz_File_FileName.bb"
-
 Include "Source Code\DevilParticleSystem.bb"
+
+Global ModCompatibleNumber$ = "5.4 [Rus v1.0-Dev]"
 
 Global ErrorFile$ = "error_log_"
 Local ErrorFileInd% = 0
@@ -81,7 +82,6 @@ If LauncherEnabled Then
 	
 	;New "fake fullscreen" - ENDSHN Psst, it's called borderless windowed mode --Love Mark,
 	If BorderlessWindowed
-		DebugLog "Using Borderless Windowed Mode"
 		Graphics3DExt G_viewport_width, G_viewport_height, 0, 2
 		
 		; -- Change the window style to 'WS_POPUP' and then set the window position to force the style to update.
@@ -124,7 +124,6 @@ Else
 	
 	;New "fake fullscreen" - ENDSHN Psst, it's called borderless windowed mode --Love Mark,
 	If BorderlessWindowed
-		DebugLog "Using Faked Fullscreen"
 		Graphics3DExt G_viewport_width, G_viewport_height, 0, 2
 		
 		; -- Change the window style to 'WS_POPUP' and then set the window position to force the style to update.
@@ -346,7 +345,7 @@ Global AccessCode%, KeypadInput$, KeypadTimer#, KeypadMSG$
 Global DrawHandIcon%
 Dim DrawArrowIcon%(4)
 
-;misc ---------------------------------------------------------------------------------------------------------------
+;----------------------------------------------  Misc -----------------------------------------------------
 
 Include "Source Code\Difficulty.bb"
 
@@ -368,9 +367,6 @@ Global IsNVGBlinking% = False
 Global MTF2timer#, MTF2rooms.Rooms[10], MTF2roomState%[10]
 
 ;END
-
-;[End block]
-
 
 ;----------------------------------------------  Console -----------------------------------------------------
 
@@ -1908,12 +1904,12 @@ Music(3) = "PD"
 Music(4) = "Room079"
 Music(5) = "GateB1"
 Music(6) = "GateB2"
-Music(7) = "Room2Tunnel"
+Music(7) = "Room3Storage"
 Music(8) = "Room049"
-Music(9) = "8601"
+Music(9) = "Forest"
 Music(10) = "106Chase"
 Music(11) = "Menu"
-Music(12) = "8601Cancer"
+Music(12) = "860_2Chase"
 Music(13) = "Intro"
 Music(14) = "Using178"
 Music(15) = "PDTrench"
@@ -1928,7 +1924,7 @@ Music(23) = "Ending"
 Music(24) = "Credits"
 Music(25) = "SaveMeFrom"
 ;MOD
-Music(26) = "Room3Storage" 
+Music(26) = "Room2Tunnel" 
 Music(27) = "650Chase" 
 Music(28) = "Room457" 
 Music(29) = "Room409" 
@@ -2025,7 +2021,7 @@ DrawLoading(25, True)
 
 Dim IntroSFX%(20)
 
-Dim AlarmSFX%(6) ;5
+Dim AlarmSFX%(5)
 
 Dim CommotionState%(25)
 
@@ -2352,7 +2348,8 @@ Function CreateDoor.Doors(lvl, x#, y#, z#, angle#, room.Rooms, dopen% = False,  
 			EndIf
 		Next
 		If d\DoorHitOBJ=0 Then
-			d\DoorHitOBJ = LoadMesh_Strict("GFX\doorhit.b3d",d\frameobj)
+			d\DoorHitOBJ = CopyEntity(o\DoorID[10])
+			EntityParent d\DoorHitOBJ, d\frameobj
 			EntityAlpha d\DoorHitOBJ,0.0
 			EntityFX d\DoorHitOBJ,1
 			EntityType d\DoorHitOBJ,HIT_MAP
@@ -3379,432 +3376,7 @@ Repeat
 		UpdateMainMenu()
 		FPSMainMenu()
 	Else
-		UpdateStreamSounds()
-		
-		ShouldPlay = Min(PlayerZone,2)
-		
-		DrawHandIcon = False
-		
-		RestoreSanity = True
-		ShouldEntitiesFall = True
-		
-		If fs\FPSfactor[0] > 0 And PlayerRoom\RoomTemplate\Name <> "dimension1499" Then UpdateSecurityCams()
-		
-		If PlayerRoom\RoomTemplate\Name <> "pocketdimension" And PlayerRoom\RoomTemplate\Name <> "gatea" And PlayerRoom\RoomTemplate\Name <> "exit1" And (Not ms\MenuOpen) And (Not ConsoleOpen) And (Not InvOpen) Then 
-			
-			If Rand(1500) = 1 Then
-				For i = 0 To 5
-					If AmbientSFX(i,CurrAmbientSFX)<>0 Then
-						If ChannelPlaying(AmbientSFXCHN)=0 Then FreeSound_Strict AmbientSFX(i,CurrAmbientSFX) : AmbientSFX(i,CurrAmbientSFX) = 0
-					EndIf			
-				Next
-				
-				PositionEntity (SoundEmitter, EntityX(Camera) + Rnd(-1.0, 1.0), 0.0, EntityZ(Camera) + Rnd(-1.0, 1.0))
-				
-				If Rand(3)=1 Then PlayerZone = 3
-				
-				If PlayerRoom\RoomTemplate\Name = "173" Then 
-					PlayerZone = 4
-				ElseIf PlayerRoom\RoomTemplate\Name = "room860"
-					For e.Events = Each Events
-						If e\EventName = "room860"
-							If e\EventState = 1.0
-								PlayerZone = 5
-								PositionEntity (SoundEmitter, EntityX(SoundEmitter), 30.0, EntityZ(SoundEmitter))
-							EndIf
-							
-							Exit
-						EndIf
-					Next
-				EndIf
-				
-				CurrAmbientSFX = Rand(0,AmbientSFXAmount(PlayerZone)-1)
-				
-				Select PlayerZone
-					Case 0,1,2
-						If AmbientSFX(PlayerZone,CurrAmbientSFX)=0 Then AmbientSFX(PlayerZone,CurrAmbientSFX)=LoadSound_Strict("SFX\Ambient\Zone"+(PlayerZone+1)+"\ambient"+(CurrAmbientSFX+1)+".ogg")
-					Case 3
-						If AmbientSFX(PlayerZone,CurrAmbientSFX)=0 Then AmbientSFX(PlayerZone,CurrAmbientSFX)=LoadSound_Strict("SFX\Ambient\General\ambient"+(CurrAmbientSFX+1)+".ogg")
-					Case 4
-						If AmbientSFX(PlayerZone,CurrAmbientSFX)=0 Then AmbientSFX(PlayerZone,CurrAmbientSFX)=LoadSound_Strict("SFX\Ambient\Pre-breach\ambient"+(CurrAmbientSFX+1)+".ogg")
-					Case 5
-						If AmbientSFX(PlayerZone,CurrAmbientSFX)=0 Then AmbientSFX(PlayerZone,CurrAmbientSFX)=LoadSound_Strict("SFX\Ambient\Forest\ambient"+(CurrAmbientSFX+1)+".ogg")
-				End Select
-				
-				AmbientSFXCHN = PlaySound2(AmbientSFX(PlayerZone,CurrAmbientSFX), Camera, SoundEmitter)
-			EndIf
-			UpdateSoundOrigin(AmbientSFXCHN,Camera, SoundEmitter)
-			
-			If Rand(50000) = 3 Then
-				Local RN$ = PlayerRoom\RoomTemplate\Name$
-				If RN$ <> "room860" And RN$ <> "room1123" And RN$ <> "173" And RN$ <> "dimension1499" Then
-					If fs\FPSfactor[0] > 0 Then LightBlink = Rnd(1.0,2.0)
-					PlaySound_Strict  LoadTempSound("SFX\SCP\079\Broadcast"+Rand(1,7)+".ogg")
-				EndIf 
-			EndIf
-		EndIf
-		
-		UpdateCheckpoint1 = False
-		UpdateCheckpoint2 = False
-		
-		If (Not ms\MenuOpen) And (Not InvOpen) And (OtherOpen=Null) And (SelectedDoor = Null) And (ConsoleOpen = False) And (Using294 = False) And (SelectedScreen = Null) And I_END\Timer => 0 Then
-			LightVolume = CurveValue(TempLightVolume, LightVolume, 50.0)
-			CameraFogRange(Camera, CameraFogNear*LightVolume,CameraFogFar*LightVolume)
-			CameraFogColor(Camera, 0,0,0)
-			CameraFogMode Camera,1
-			CameraRange(Camera, 0.05, Min(CameraFogFar*LightVolume*1.5,28))	
-			If PlayerRoom\RoomTemplate\Name<>"pocketdimension" Then
-				CameraClsColor(Camera, 0,0,0)
-			EndIf
-			
-			AmbientLight Brightness, Brightness, Brightness	
-			PlayerSoundVolume = CurveValue(0.0, PlayerSoundVolume, 5.0)
-			
-			CanSave% = True
-			UpdateDeafPlayer()
-			UpdateEmitters()
-			MouseLook()
-			If PlayerRoom\RoomTemplate\Name = "dimension1499" And QuickLoadPercent > 0 And QuickLoadPercent < 100
-				ShouldEntitiesFall = False
-			EndIf
-			MovePlayer()
-			InFacility = CheckForPlayerInFacility()
-			If PlayerRoom\RoomTemplate\Name = "dimension1499"
-				If QuickLoadPercent = -1 Or QuickLoadPercent = 100
-					UpdateDimension1499()
-				EndIf
-				UpdateLeave1499()
-			ElseIf PlayerRoom\RoomTemplate\Name = "gatea" Or (PlayerRoom\RoomTemplate\Name="exit1" And EntityY(Collider)>1040.0*RoomScale)
-				UpdateDoors()
-				If QuickLoadPercent = -1 Or QuickLoadPercent = 100
-					UpdateEndings()
-				EndIf
-				UpdateScreens()
-				UpdateRoomLights(Camera)
-			Else
-				UpdateDoors()
-				If QuickLoadPercent = -1 Or QuickLoadPercent = 100
-					UpdateEvents()
-				EndIf
-				UpdateScreens()
-				TimeCheckpointMonitors()
-				Update294()
-				UpdateRoomLights(Camera)
-			EndIf
-			UpdateDecals()
-			UpdateMTF()
-			UpdateMTF2()
-			UpdateNPCs()
-			UpdateItems()
-			UpdateParticles()
-			Use427()
-			Use215()
-	        Use207()
-	        Use402()
-	        Use357()
-			UpdateMonitorSaving()
-			;Added a simple code for updating the Particles function depending on the fs\FPSfactor[0] (still WIP, might not be the final version of it) - ENDSHN
-			UpdateParticles_Time# = Min(1,UpdateParticles_Time#+fs\FPSfactor[0])
-			If UpdateParticles_Time#=1
-				UpdateDevilEmitters()
-				UpdateParticles_Devil()
-				UpdateParticles_Time#=0
-			EndIf
-		EndIf
-		
-		If chs\InfiniteStamina% Then Stamina = Min(100, Stamina + (100.0-Stamina)*0.01*fs\FPSfactor[0])
-		
-		If fs\FPSfactor[0]=0
-			UpdateWorld(0)
-		Else
-			UpdateWorld()
-			ManipulateNPCBones()
-		EndIf
-		RenderWorld2()
-		
-		BlurVolume = Min(CurveValue(0.0, BlurVolume, 20.0),0.95)
-		If BlurTimer > 0.0 Then
-			BlurVolume = Max(Min(0.95, BlurTimer / 1000.0), BlurVolume)
-			BlurTimer = Max(BlurTimer - fs\FPSfactor[0], 0.0)
-		End If
-		
-		UpdateBlur(BlurVolume)
-		
-		;[Block]
-		
-		Local darkA# = 0.0
-		If (Not ms\MenuOpen)  Then
-			If Sanity < 0 Then
-				If RestoreSanity Then Sanity = Min(Sanity + fs\FPSfactor[0], 0.0)
-				If Sanity < (-200) Then 
-					darkA = Max(Min((-Sanity - 200) / 700.0, 0.6), darkA)
-					If KillTimer => 0 Then 
-						HeartBeatVolume = Min(Abs(Sanity+200)/500.0,1.0)
-						HeartBeatRate = Max(70 + Abs(Sanity+200)/6.0, HeartBeatRate)
-					EndIf
-				EndIf
-			End If
-			
-			If EyeStuck > 0 Then 
-				BlinkTimer = BLINKFREQ
-				EyeStuck = Max(EyeStuck-fs\FPSfactor[0],0)
-				
-				If EyeStuck < 9000 Then BlurTimer = Max(BlurTimer, (9000-EyeStuck)*0.5)
-				If EyeStuck < 6000 Then darkA = Min(Max(darkA, (6000-EyeStuck)/5000.0),1.0)
-				If EyeStuck < 9000 And EyeStuck+fs\FPSfactor[0] =>9000 Then 
-					Msg = "От глазных капель у вас текут слёзы." ;The eyedrops are causing your eyes to tear up.
-					MsgTimer = 70*6
-				EndIf
-			EndIf
-			
-			If BlinkTimer < 0 Then
-				If BlinkTimer > - 5 Then
-					darkA = Max(darkA, Sin(Abs(BlinkTimer * 18.0)))
-				ElseIf BlinkTimer > - 15
-					darkA = 1.0
-				Else
-					darkA = Max(darkA, Abs(Sin(BlinkTimer * 18.0)))
-				EndIf
-				
-				If BlinkTimer <= - 20 Then
-					;Randomizes the frequency of blinking. Scales with difficulty.
-					Select SelectedDifficulty\otherFactors
-						Case EASY
-							BLINKFREQ = Rnd(490,700)
-						Case NORMAL
-							BLINKFREQ = Rnd(455,665)
-						Case HARD
-							BLINKFREQ = Rnd(420,630)
-					End Select 
-					BlinkTimer = BLINKFREQ
-				EndIf
-				
-				BlinkTimer = BlinkTimer - fs\FPSfactor[0]
-			Else
-				BlinkTimer = BlinkTimer - fs\FPSfactor[0] * 0.6 * BlinkEffect
-				If EyeIrritation > 0 Then BlinkTimer = BlinkTimer-Min(EyeIrritation / 100.0 + 1.0, 4.0) * fs\FPSfactor[0]
-				
-				darkA = Max(darkA, 0.0)
-			End If
-			
-			EyeIrritation = Max(0, EyeIrritation - fs\FPSfactor[0])
-			
-			If BlinkEffectTimer > 0 Then
-				BlinkEffectTimer = BlinkEffectTimer - (fs\FPSfactor[0]/70)
-			Else
-				If BlinkEffect <> 1.0 Then BlinkEffect = 1.0
-			EndIf
-			
-			LightBlink = Max(LightBlink - (fs\FPSfactor[0] / 35.0), 0)
-			If LightBlink > 0 Then darkA = Min(Max(darkA, LightBlink * Rnd(0.3, 0.8)), 1.0)
-			
-			If Using294 Then darkA=1.0
-			
-			If (Not WearingNightVision) Then darkA = Max((1.0-SecondaryLightOn)*0.9, darkA)
-			
-			If KillTimer < 0 Then
-				InvOpen = False
-				SelectedItem = Null
-				SelectedScreen = Null
-				SelectedMonitor = Null
-				BlurTimer = Abs(KillTimer*5)
-				KillTimer = KillTimer-(fs\FPSfactor[0]*0.8)
-				If KillTimer < - 360 Then 
-					ms\MenuOpen = True 
-					If I_END\SelectedEnding <> "" Then I_END\Timer = Min(KillTimer,-0.1)
-				EndIf
-				darkA = Max(darkA, Min(Abs(KillTimer / 400.0), 1.0))
-			EndIf
-			
-			If FallTimer < 0 Then
-				If SelectedItem <> Null Then
-					If Instr(SelectedItem\itemtemplate\tempname,"hazmatsuit") Or Instr(SelectedItem\itemtemplate\tempname,"vest") Then
-						If WearingHazmat=0 And WearingVest=0 Then
-							DropItem(SelectedItem)
-						EndIf
-					EndIf
-				EndIf
-				InvOpen = False
-				SelectedItem = Null
-				SelectedScreen = Null
-				SelectedMonitor = Null
-				BlurTimer = Abs(FallTimer*10)
-				FallTimer = FallTimer-fs\FPSfactor[0]
-				darkA = Max(darkA, Min(Abs(FallTimer / 400.0), 1.0))				
-			EndIf
-			
-			If SelectedItem <> Null Then
-				If SelectedItem\itemtemplate\tempname = "navigator" Or SelectedItem\itemtemplate\tempname = "nav" Then darkA = Max(darkA, 0.5)
-			End If
-			If SelectedScreen <> Null Then darkA = Max(darkA, 0.5)
-			
-			EntityAlpha(at\OverlayID[13], darkA)	
-		EndIf
-		
-		If LightFlash > 0 Then
-			ShowEntity at\OverlayID[14]
-			EntityAlpha(at\OverlayID[14], Max(Min(LightFlash + Rnd(-0.2, 0.2), 1.0), 0.0))
-			LightFlash = Max(LightFlash - (fs\FPSfactor[0] / 70.0), 0)
-		Else
-			HideEntity at\OverlayID[14]
-			;EntityAlpha(at\OverlayID[14], LightFlash)
-		EndIf
-		
-		EntityColor at\OverlayID[14],255,255,255
-		
-		;[End block]
-		
-		If KeyHit(KEY_INV) And VomitTimer >= 0 Then
-			If (Not UnableToMove) And (Not I_008\Zombie) And (Not Using294) Then
-				Local W$ = ""
-				Local V# = 0
-				If SelectedItem<>Null
-					W$ = SelectedItem\itemtemplate\tempname
-					V# = SelectedItem\state
-				EndIf
-				If (W<>"vest" And W<>"finevest" And W<>"hazmatsuit" And W<>"hazmatsuit2" And W<>"hazmatsuit3") Or V=0 Or V=100
-					If InvOpen Then
-						ResumeSounds()
-						MouseXSpeed() : MouseYSpeed() : MouseZSpeed() : mouse_x_speed_1#=0.0 : mouse_y_speed_1#=0.0
-					Else
-						PauseSounds()
-					EndIf
-					InvOpen = Not InvOpen
-					If OtherOpen<>Null Then OtherOpen=Null
-					SelectedItem = Null
-				EndIf
-			EndIf
-		EndIf
-		
-		If KeyHit(KEY_SAVE) Then
-			If SelectedDifficulty\saveType = SAVEANYWHERE Then
-				RN$ = PlayerRoom\RoomTemplate\Name$
-				If RN$ = "173" Or (RN$ = "exit1" And EntityY(Collider)>1040.0*RoomScale) Or RN$ = "gatea"
-					Msg = "Вы не можете сохраниться в этой локации." ;You cannot save in this location.
-					MsgTimer = 70 * 4
-				ElseIf (Not CanSave) Or QuickLoadPercent > -1
-					Msg = "Вы не можете сохраниться сейчас." ;You cannot save at this moment.
-					MsgTimer = 70 * 4
-					If QuickLoadPercent > -1
-						Msg = Msg + " (игра загружается)" ;game is loading
-					EndIf
-				Else
-					SaveGame(SavePath + CurrSave + "\")
-				EndIf
-			ElseIf SelectedDifficulty\saveType = SAVEONSCREENS
-				If SelectedScreen=Null And SelectedMonitor=Null Then
-					Msg = "Сохраняться можно только у мониторов компьютеров, размещённых по всему комплексу." ;Saving is only permitted on clickable monitors scattered throughout the facility.
-					MsgTimer = 70 * 4
-				Else
-					RN$ = PlayerRoom\RoomTemplate\Name$
-					If RN$ = "173" Or (RN$ = "exit1" And EntityY(Collider)>1040.0*RoomScale) Or RN$ = "gatea"
-						Msg = "Вы не можете сохраниться в этой локации." ;You cannot save in this location.
-						MsgTimer = 70 * 4
-					ElseIf (Not CanSave) Or QuickLoadPercent > -1
-						Msg = "Вы не можете сохраниться сейчас." ;You cannot save at this moment.
-						MsgTimer = 70 * 4
-						If QuickLoadPercent > -1
-							Msg = Msg + " (игра загружается)" ;game is loading
-						EndIf
-					Else
-						If SelectedScreen<>Null
-							GameSaved = False
-							Playable = True
-							DropSpeed = 0
-						EndIf
-						SaveGame(SavePath + CurrSave + "\")
-					EndIf
-				EndIf
-			Else
-				Msg = "Быстрое сохранение отключено." ;Quick saving is disabled.
-				MsgTimer = 70 * 4
-			EndIf
-		Else If SelectedDifficulty\saveType = SAVEONSCREENS And (SelectedScreen<>Null Or SelectedMonitor<>Null)
-			If (Msg<>"Игра сохранена." And Msg<>"Вы не можете сохраниться в этой локации."And Msg<>"Вы не можете сохраниться сейчас.") Or MsgTimer<=0 Then ;Game progress saved. ;You cannot save in this location. ;You cannot save at this moment.
-				Msg = "Нажмите "+KeyName(KEY_SAVE)+", чтобы сохранить игру." ;Press ;to save.
-				MsgTimer = 70*4
-			EndIf
-			
-			If MouseHit2 Then SelectedMonitor = Null
-		EndIf
-		
-		If KeyHit(KEY_CONSOLE) Then
-			If CanOpenConsole
-				If ConsoleOpen Then
-					UsedConsole = True
-					ResumeSounds()
-					MouseXSpeed() : MouseYSpeed() : MouseZSpeed() : mouse_x_speed_1#=0.0 : mouse_y_speed_1#=0.0
-				Else
-					PauseSounds()
-				EndIf
-				ConsoleOpen = (Not ConsoleOpen)
-				FlushKeys()
-			EndIf
-		EndIf
-		
-		DrawGUI()
-		
-		If I_END\Timer < 0 Then
-			If I_END\SelectedEnding <> "" Then DrawEnding()
-		Else
-			DrawMenu()			
-		EndIf
-		
-		UpdateConsole()
-		
-		If PlayerRoom <> Null Then
-			If PlayerRoom\RoomTemplate\Name = "173" Then
-				For e.Events = Each Events
-					If e\EventName = "173" Then
-						If e\EventState3 => 40 And e\EventState3 < 50 Then
-							If InvOpen Then
-								Msg = "Дважды щёлкните по документу, чтобы посмотреть его." ;Double click on the document to view it.
-								MsgTimer=70*7
-								e\EventState3 = 50
-							EndIf
-						EndIf
-					EndIf
-				Next
-			EndIf
-		EndIf
-		
-		If MsgTimer > 0 Then
-			Local temp% = False
-			If (Not InvOpen%)
-				If SelectedItem <> Null
-					If SelectedItem\itemtemplate\tempname = "paper" Or SelectedItem\itemtemplate\tempname = "oldpaper"
-						temp% = True
-					EndIf
-				EndIf
-			EndIf
-			
-			If (Not temp%)
-				Color 0,0,0
-				AAText((GraphicWidth / 2)+1, (GraphicHeight / 2) + 201, Msg, True, False, Min(MsgTimer / 2, 255)/255.0)
-				Color 255,255,255;Min(MsgTimer / 2, 255), Min(MsgTimer / 2, 255), Min(MsgTimer / 2, 255)
-				If Left(Msg,14)="Ошибка Blitz3D!" Then ;Error
-					Color 255,0,0
-				EndIf
-				AAText((GraphicWidth / 2), (GraphicHeight / 2) + 200, Msg, True, False, Min(MsgTimer / 2, 255)/255.0)
-			Else
-				Color 0,0,0
-				AAText((GraphicWidth / 2)+1, (GraphicHeight * 0.94) + 1, Msg, True, False, Min(MsgTimer / 2, 255)/255.0)
-				Color 255,255,255;Min(MsgTimer / 2, 255), Min(MsgTimer / 2, 255), Min(MsgTimer / 2, 255)
-				If Left(Msg,14)="Ошибка Blitz3D!" Then ;Error
-					Color 255,0,0
-				EndIf
-				AAText((GraphicWidth / 2), (GraphicHeight * 0.94), Msg, True, False, Min(MsgTimer / 2, 255)/255.0)
-			EndIf
-			MsgTimer=MsgTimer-fs\FPSfactor[1]
-		End If
-		
-		Color 255, 255, 255
-		If ShowFPS Then AASetFont fo\ConsoleFont : AAText 20, 20, "FPS: " + fs\FPS : AASetFont fo\Font[0]
-		
-		DrawQuickLoading()
-		
-		UpdateAchievementMsg()
-		RenderAchievementMsg()
+	    MainLoop()
 	End If
 	
 	If BorderlessWindowed Then
@@ -3862,6 +3434,435 @@ Repeat
 	EndIf
 Forever
 
+Function MainLoop()
+
+    Local fs.FPS_Settings = First FPS_Settings
+    Local fo.Fonts = First Fonts
+
+    UpdateStreamSounds()
+		
+	ShouldPlay = Min(PlayerZone,2)
+		
+	DrawHandIcon = False
+		
+	RestoreSanity = True
+	ShouldEntitiesFall = True
+		
+	If fs\FPSfactor[0] > 0 And PlayerRoom\RoomTemplate\Name <> "dimension1499" Then UpdateSecurityCams()
+	
+	If PlayerRoom\RoomTemplate\Name <> "pocketdimension" And PlayerRoom\RoomTemplate\Name <> "gatea" And PlayerRoom\RoomTemplate\Name <> "exit1" And (Not ms\MenuOpen) And (Not ConsoleOpen) And (Not InvOpen) Then 
+			
+		If Rand(1500) = 1 Then
+			For i = 0 To 5
+				If AmbientSFX(i,CurrAmbientSFX)<>0 Then
+					If ChannelPlaying(AmbientSFXCHN)=0 Then FreeSound_Strict AmbientSFX(i,CurrAmbientSFX) : AmbientSFX(i,CurrAmbientSFX) = 0
+				EndIf			
+			Next
+				
+			PositionEntity (SoundEmitter, EntityX(Camera) + Rnd(-1.0, 1.0), 0.0, EntityZ(Camera) + Rnd(-1.0, 1.0))
+				
+			If Rand(3)=1 Then PlayerZone = 3
+				
+			If PlayerRoom\RoomTemplate\Name = "173" Then 
+				PlayerZone = 4
+			ElseIf PlayerRoom\RoomTemplate\Name = "room860"
+				For e.Events = Each Events
+					If e\EventName = "room860"
+						If e\EventState = 1.0
+							PlayerZone = 5
+							PositionEntity (SoundEmitter, EntityX(SoundEmitter), 30.0, EntityZ(SoundEmitter))
+						EndIf
+							
+						Exit
+					EndIf
+				Next
+			EndIf
+				
+			CurrAmbientSFX = Rand(0,AmbientSFXAmount(PlayerZone)-1)
+			
+			Select PlayerZone
+				Case 0,1,2
+					If AmbientSFX(PlayerZone,CurrAmbientSFX)=0 Then AmbientSFX(PlayerZone,CurrAmbientSFX)=LoadSound_Strict("SFX\Ambient\Zone"+(PlayerZone+1)+"\ambient"+(CurrAmbientSFX+1)+".ogg")
+				Case 3
+					If AmbientSFX(PlayerZone,CurrAmbientSFX)=0 Then AmbientSFX(PlayerZone,CurrAmbientSFX)=LoadSound_Strict("SFX\Ambient\General\ambient"+(CurrAmbientSFX+1)+".ogg")
+				Case 4
+					If AmbientSFX(PlayerZone,CurrAmbientSFX)=0 Then AmbientSFX(PlayerZone,CurrAmbientSFX)=LoadSound_Strict("SFX\Ambient\Pre-breach\ambient"+(CurrAmbientSFX+1)+".ogg")
+				Case 5
+					If AmbientSFX(PlayerZone,CurrAmbientSFX)=0 Then AmbientSFX(PlayerZone,CurrAmbientSFX)=LoadSound_Strict("SFX\Ambient\Forest\ambient"+(CurrAmbientSFX+1)+".ogg")
+			End Select
+				
+			AmbientSFXCHN = PlaySound2(AmbientSFX(PlayerZone,CurrAmbientSFX), Camera, SoundEmitter)
+		EndIf
+		UpdateSoundOrigin(AmbientSFXCHN,Camera, SoundEmitter)
+			
+		If Rand(50000) = 3 Then
+			Local RN$ = PlayerRoom\RoomTemplate\Name$
+			If RN$ <> "room860" And RN$ <> "room1123" And RN$ <> "173" And RN$ <> "dimension1499" Then
+				If fs\FPSfactor[0] > 0 Then LightBlink = Rnd(1.0,2.0)
+				PlaySound_Strict  LoadTempSound("SFX\SCP\079\Broadcast"+Rand(1,7)+".ogg")
+			EndIf 
+		EndIf
+	EndIf
+		
+	UpdateCheckpoint1 = False
+	UpdateCheckpoint2 = False
+		
+	If (Not ms\MenuOpen) And (Not InvOpen) And (OtherOpen=Null) And (SelectedDoor = Null) And (ConsoleOpen = False) And (Using294 = False) And (SelectedScreen = Null) And I_END\Timer => 0 Then
+		LightVolume = CurveValue(TempLightVolume, LightVolume, 50.0)
+		CameraFogRange(Camera, CameraFogNear*LightVolume,CameraFogFar*LightVolume)
+		CameraFogColor(Camera, 0,0,0)
+		CameraFogMode Camera,1
+		CameraRange(Camera, 0.05, Min(CameraFogFar*LightVolume*1.5,28))	
+		If PlayerRoom\RoomTemplate\Name<>"pocketdimension" Then
+			CameraClsColor(Camera, 0,0,0)
+		EndIf
+			
+		AmbientLight Brightness, Brightness, Brightness	
+		PlayerSoundVolume = CurveValue(0.0, PlayerSoundVolume, 5.0)
+			
+		CanSave% = True
+		UpdateDeafPlayer()
+		UpdateEmitters()
+		MouseLook()
+		If PlayerRoom\RoomTemplate\Name = "dimension1499" And QuickLoadPercent > 0 And QuickLoadPercent < 100
+			ShouldEntitiesFall = False
+		EndIf
+		MovePlayer()
+		InFacility = CheckForPlayerInFacility()
+		If PlayerRoom\RoomTemplate\Name = "dimension1499"
+			If QuickLoadPercent = -1 Or QuickLoadPercent = 100
+				UpdateDimension1499()
+			EndIf
+			UpdateLeave1499()
+		ElseIf PlayerRoom\RoomTemplate\Name = "gatea" Or (PlayerRoom\RoomTemplate\Name="exit1" And EntityY(Collider)>1040.0*RoomScale)
+			UpdateDoors()
+			If QuickLoadPercent = -1 Or QuickLoadPercent = 100
+				UpdateEndings()
+			EndIf
+			UpdateScreens()
+			UpdateRoomLights(Camera)
+		Else
+			UpdateDoors()
+			If QuickLoadPercent = -1 Or QuickLoadPercent = 100
+			    UpdateEvents()
+			EndIf
+			UpdateScreens()
+			TimeCheckpointMonitors()
+			Update294()
+			UpdateRoomLights(Camera)
+		EndIf
+		UpdateDecals()
+		UpdateMTF()
+		UpdateMTF2()
+		UpdateNPCs()
+		UpdateItems()
+		UpdateParticles()
+		Use427()
+		Use215()
+	    Use207()
+	    Use402()
+	    Use357()
+	    UpdateMonitorSaving()
+		;Added a simple code for updating the Particles function depending on the fs\FPSfactor[0] (still WIP, might not be the final version of it) - ENDSHN
+		UpdateParticles_Time# = Min(1,UpdateParticles_Time#+fs\FPSfactor[0])
+		If UpdateParticles_Time#=1
+			UpdateDevilEmitters()
+			UpdateParticles_Devil()
+			UpdateParticles_Time#=0
+		EndIf
+	EndIf
+		
+	If chs\InfiniteStamina% Then Stamina = Min(100, Stamina + (100.0-Stamina)*0.01*fs\FPSfactor[0])
+		
+	If fs\FPSfactor[0]=0
+		UpdateWorld(0)
+	Else
+		UpdateWorld()
+		ManipulateNPCBones()
+	EndIf
+	RenderWorld2()
+		
+	BlurVolume = Min(CurveValue(0.0, BlurVolume, 20.0),0.95)
+	If BlurTimer > 0.0 Then
+		BlurVolume = Max(Min(0.95, BlurTimer / 1000.0), BlurVolume)
+		BlurTimer = Max(BlurTimer - fs\FPSfactor[0], 0.0)
+	End If
+		
+	UpdateBlur(BlurVolume)
+		
+	Local darkA# = 0.0
+	If (Not ms\MenuOpen)  Then
+		If Sanity < 0 Then
+			If RestoreSanity Then Sanity = Min(Sanity + fs\FPSfactor[0], 0.0)
+			If Sanity < (-200) Then 
+				darkA = Max(Min((-Sanity - 200) / 700.0, 0.6), darkA)
+				If KillTimer => 0 Then 
+					HeartBeatVolume = Min(Abs(Sanity+200)/500.0,1.0)
+					HeartBeatRate = Max(70 + Abs(Sanity+200)/6.0, HeartBeatRate)
+				EndIf
+			EndIf
+		End If
+			
+		If EyeStuck > 0 Then 
+			BlinkTimer = BLINKFREQ
+			EyeStuck = Max(EyeStuck-fs\FPSfactor[0],0)
+				
+			If EyeStuck < 9000 Then BlurTimer = Max(BlurTimer, (9000-EyeStuck)*0.5)
+			If EyeStuck < 6000 Then darkA = Min(Max(darkA, (6000-EyeStuck)/5000.0),1.0)
+			If EyeStuck < 9000 And EyeStuck+fs\FPSfactor[0] =>9000 Then 
+				Msg = "От глазных капель у вас текут слёзы." ;The eyedrops are causing your eyes to tear up.
+				MsgTimer = 70*6
+			EndIf
+		EndIf
+			
+		If BlinkTimer < 0 Then
+			If BlinkTimer > - 5 Then
+				darkA = Max(darkA, Sin(Abs(BlinkTimer * 18.0)))
+			ElseIf BlinkTimer > - 15
+				darkA = 1.0
+			Else
+				darkA = Max(darkA, Abs(Sin(BlinkTimer * 18.0)))
+			EndIf
+				
+			If BlinkTimer <= - 20 Then
+				;Randomizes the frequency of blinking. Scales with difficulty.
+				Select SelectedDifficulty\otherFactors
+					Case EASY
+						BLINKFREQ = Rnd(490,700)
+					Case NORMAL
+						BLINKFREQ = Rnd(455,665)
+					Case HARD
+						BLINKFREQ = Rnd(420,630)
+				End Select 
+				BlinkTimer = BLINKFREQ
+			EndIf
+				
+			BlinkTimer = BlinkTimer - fs\FPSfactor[0]
+		Else
+			BlinkTimer = BlinkTimer - fs\FPSfactor[0] * 0.6 * BlinkEffect
+			If EyeIrritation > 0 Then BlinkTimer = BlinkTimer-Min(EyeIrritation / 100.0 + 1.0, 4.0) * fs\FPSfactor[0]
+				
+			darkA = Max(darkA, 0.0)
+		End If
+			
+		EyeIrritation = Max(0, EyeIrritation - fs\FPSfactor[0])
+			
+		If BlinkEffectTimer > 0 Then
+			BlinkEffectTimer = BlinkEffectTimer - (fs\FPSfactor[0]/70)
+		Else
+			If BlinkEffect <> 1.0 Then BlinkEffect = 1.0
+		EndIf
+			
+		LightBlink = Max(LightBlink - (fs\FPSfactor[0] / 35.0), 0)
+		If LightBlink > 0 Then darkA = Min(Max(darkA, LightBlink * Rnd(0.3, 0.8)), 1.0)
+			
+		If Using294 Then darkA=1.0
+			
+		If (Not WearingNightVision) Then darkA = Max((1.0-SecondaryLightOn)*0.9, darkA)
+			
+		If KillTimer < 0 Then
+			InvOpen = False
+			SelectedItem = Null
+			SelectedScreen = Null
+			SelectedMonitor = Null
+			BlurTimer = Abs(KillTimer*5)
+			KillTimer = KillTimer-(fs\FPSfactor[0]*0.8)
+			If KillTimer < - 360 Then 
+				ms\MenuOpen = True 
+				If I_END\SelectedEnding <> "" Then I_END\Timer = Min(KillTimer,-0.1)
+			EndIf
+			darkA = Max(darkA, Min(Abs(KillTimer / 400.0), 1.0))
+		EndIf
+			
+		If FallTimer < 0 Then
+			If SelectedItem <> Null Then
+				If Instr(SelectedItem\itemtemplate\tempname,"hazmatsuit") Or Instr(SelectedItem\itemtemplate\tempname,"vest") Then
+					If WearingHazmat=0 And WearingVest=0 Then
+						DropItem(SelectedItem)
+					EndIf
+				EndIf
+			EndIf
+			InvOpen = False
+			SelectedItem = Null
+			SelectedScreen = Null
+			SelectedMonitor = Null
+			BlurTimer = Abs(FallTimer*10)
+			FallTimer = FallTimer-fs\FPSfactor[0]
+			darkA = Max(darkA, Min(Abs(FallTimer / 400.0), 1.0))				
+		EndIf
+			
+		If SelectedItem <> Null Then
+			If SelectedItem\itemtemplate\tempname = "navigator" Or SelectedItem\itemtemplate\tempname = "nav" Then darkA = Max(darkA, 0.5)
+		End If
+		If SelectedScreen <> Null Then darkA = Max(darkA, 0.5)
+			
+		EntityAlpha(at\OverlayID[13], darkA)	
+	EndIf
+		
+	If LightFlash > 0 Then
+		ShowEntity at\OverlayID[14]
+		EntityAlpha(at\OverlayID[14], Max(Min(LightFlash + Rnd(-0.2, 0.2), 1.0), 0.0))
+		LightFlash = Max(LightFlash - (fs\FPSfactor[0] / 70.0), 0)
+	Else
+		HideEntity at\OverlayID[14]
+	EndIf
+		
+	EntityColor at\OverlayID[14],255,255,255
+		
+	If KeyHit(KEY_INV) And VomitTimer >= 0 Then
+		If (Not UnableToMove) And (Not I_008\Zombie) And (Not Using294) Then
+			Local W$ = ""
+			Local V# = 0
+			If SelectedItem<>Null
+				W$ = SelectedItem\itemtemplate\tempname
+				V# = SelectedItem\state
+			EndIf
+			If (W<>"vest" And W<>"finevest" And W<>"hazmatsuit" And W<>"hazmatsuit2" And W<>"hazmatsuit3") Or V=0 Or V=100
+				If InvOpen Then
+					ResumeSounds()
+					MouseXSpeed() : MouseYSpeed() : MouseZSpeed() : mouse_x_speed_1#=0.0 : mouse_y_speed_1#=0.0
+				Else
+					PauseSounds()
+				EndIf
+				InvOpen = Not InvOpen
+				If OtherOpen<>Null Then OtherOpen=Null
+				SelectedItem = Null
+			EndIf
+		EndIf
+	EndIf
+		
+	If KeyHit(KEY_SAVE) Then
+		If SelectedDifficulty\saveType = SAVEANYWHERE Then
+			RN$ = PlayerRoom\RoomTemplate\Name$
+			If RN$ = "173" Or (RN$ = "exit1" And EntityY(Collider)>1040.0*RoomScale) Or RN$ = "gatea"
+				Msg = "Вы не можете сохраниться в этой локации." ;You cannot save in this location.
+				MsgTimer = 70 * 4
+			ElseIf (Not CanSave) Or QuickLoadPercent > -1
+				Msg = "Вы не можете сохраниться сейчас." ;You cannot save at this moment.
+				MsgTimer = 70 * 4
+				If QuickLoadPercent > -1
+					Msg = Msg + " (игра загружается)" ;game is loading
+				EndIf
+			Else
+				SaveGame(SavePath + CurrSave + "\")
+			EndIf
+		ElseIf SelectedDifficulty\saveType = SAVEONSCREENS
+			If SelectedScreen=Null And SelectedMonitor=Null Then
+				Msg = "Сохраняться можно только у мониторов компьютеров, размещённых по всему комплексу." ;Saving is only permitted on clickable monitors scattered throughout the facility.
+				MsgTimer = 70 * 4
+			Else
+				RN$ = PlayerRoom\RoomTemplate\Name$
+				If RN$ = "173" Or (RN$ = "exit1" And EntityY(Collider)>1040.0*RoomScale) Or RN$ = "gatea"
+					Msg = "Вы не можете сохраниться в этой локации." ;You cannot save in this location.
+					MsgTimer = 70 * 4
+				ElseIf (Not CanSave) Or QuickLoadPercent > -1
+					Msg = "Вы не можете сохраниться сейчас." ;You cannot save at this moment.
+					MsgTimer = 70 * 4
+					If QuickLoadPercent > -1
+						Msg = Msg + " (игра загружается)" ;game is loading
+					EndIf
+				Else
+					If SelectedScreen<>Null
+						GameSaved = False
+						Playable = True
+						DropSpeed = 0
+					EndIf
+					SaveGame(SavePath + CurrSave + "\")
+				EndIf
+			EndIf
+		Else
+			Msg = "Быстрое сохранение отключено." ;Quick saving is disabled.
+			MsgTimer = 70 * 4
+		EndIf
+	Else If SelectedDifficulty\saveType = SAVEONSCREENS And (SelectedScreen<>Null Or SelectedMonitor<>Null)
+		If (Msg<>"Игра сохранена." And Msg<>"Вы не можете сохраниться в этой локации."And Msg<>"Вы не можете сохраниться сейчас.") Or MsgTimer<=0 Then ;Game progress saved. ;You cannot save in this location. ;You cannot save at this moment.
+			Msg = "Нажмите "+KeyName(KEY_SAVE)+", чтобы сохранить игру." ;Press ;to save.
+			MsgTimer = 70*4
+		EndIf
+			
+		If MouseHit2 Then SelectedMonitor = Null
+	EndIf
+		
+	If KeyHit(KEY_CONSOLE) Then
+		If CanOpenConsole
+			If ConsoleOpen Then
+				UsedConsole = True
+				ResumeSounds()
+				MouseXSpeed() : MouseYSpeed() : MouseZSpeed() : mouse_x_speed_1#=0.0 : mouse_y_speed_1#=0.0
+			Else
+				PauseSounds()
+			EndIf
+			ConsoleOpen = (Not ConsoleOpen)
+			FlushKeys()
+		EndIf
+	EndIf
+		
+	DrawGUI()
+		
+	If I_END\Timer < 0 Then
+		If I_END\SelectedEnding <> "" Then DrawEnding()
+	Else
+		DrawMenu()			
+	EndIf
+		
+	UpdateConsole()
+		
+	If PlayerRoom <> Null Then
+		If PlayerRoom\RoomTemplate\Name = "173" Then
+			For e.Events = Each Events
+				If e\EventName = "173" Then
+					If e\EventState3 => 40 And e\EventState3 < 50 Then
+						If InvOpen Then
+							Msg = "Дважды щёлкните по документу, чтобы посмотреть его." ;Double click on the document to view it.
+							MsgTimer=70*7
+							e\EventState3 = 50
+						EndIf
+					EndIf
+				EndIf
+			Next
+		EndIf
+	EndIf
+		
+	If MsgTimer > 0 Then
+		Local temp% = False
+		If (Not InvOpen%)
+			If SelectedItem <> Null
+				If SelectedItem\itemtemplate\tempname = "paper" Or SelectedItem\itemtemplate\tempname = "oldpaper"
+					temp% = True
+				EndIf
+			EndIf
+		EndIf
+			
+		If (Not temp%)
+			Color 0,0,0
+			AAText((GraphicWidth / 2)+1, (GraphicHeight / 2) + 201, Msg, True, False, Min(MsgTimer / 2, 255)/255.0)
+			Color 255,255,255;Min(MsgTimer / 2, 255), Min(MsgTimer / 2, 255), Min(MsgTimer / 2, 255)
+			If Left(Msg,14)="Ошибка Blitz3D!" Then ;Blitz3D Error!
+				Color 255,0,0
+			EndIf
+			AAText((GraphicWidth / 2), (GraphicHeight / 2) + 200, Msg, True, False, Min(MsgTimer / 2, 255)/255.0)
+		Else
+			Color 0,0,0
+			AAText((GraphicWidth / 2)+1, (GraphicHeight * 0.94) + 1, Msg, True, False, Min(MsgTimer / 2, 255)/255.0)
+			Color 255,255,255;Min(MsgTimer / 2, 255), Min(MsgTimer / 2, 255), Min(MsgTimer / 2, 255)
+			If Left(Msg,14)="Ошибка Blitz3D!" Then ;Blitz3D Error!
+				Color 255,0,0
+			EndIf
+			AAText((GraphicWidth / 2), (GraphicHeight * 0.94), Msg, True, False, Min(MsgTimer / 2, 255)/255.0)
+		EndIf
+		MsgTimer = MsgTimer-fs\FPSfactor[1]
+	End If
+		
+	Color 255, 255, 255
+	If ShowFPS Then AASetFont fo\ConsoleFont : AAText 20, 20, "FPS: " + fs\FPS : AASetFont fo\Font[0]
+		
+	DrawQuickLoading()
+		
+	UpdateAchievementMsg()
+	RenderAchievementMsg()
+
+End Function
+
 ;----------------------------------------------------------------------------------------------------------------------------------------------------
 ;----------------------------------------------------------------------------------------------------------------------------------------------------
 ;----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -3913,10 +3914,6 @@ Function QuickLoadEvents()
 							RotateEntity e\room\NPC[0]\Collider,0,e\room\angle+180,0
 							e\room\NPC[0]\State = 0
 							e\room\NPC[0]\PrevState = 2
-							
-							DebugLog(EntityX(e\room\Objects[7],True)+", "+EntityY(e\room\Objects[7],True)+", "+EntityZ(e\room\Objects[7],True))
-						Else
-							DebugLog "Skipped 049 spawning in room2sl"
 						EndIf
 					EndIf
 					QuickLoadPercent = 80
@@ -3991,19 +3988,19 @@ Function QuickLoadEvents()
 			;[Block]
 			If e\EventState = 0 Then
 				If e\EventStr = "load0"
-					n.NPCs = CreateNPC(NPCtypeZombie, EntityX(e\room\Objects[4],True),EntityY(e\room\Objects[4],True),EntityZ(e\room\Objects[4],True))
+					n.NPCs = CreateNPC(NPCtype0492, EntityX(e\room\Objects[4],True),EntityY(e\room\Objects[4],True),EntityZ(e\room\Objects[4],True))
 					PointEntity n\Collider, e\room\obj
 					TurnEntity n\Collider, 0, 190, 0
 					QuickLoadPercent = 20
 					e\EventStr = "load1"
 				ElseIf e\EventStr = "load1"
-					n.NPCs = CreateNPC(NPCtypeZombie2, EntityX(e\room\Objects[5],True),EntityY(e\room\Objects[5],True),EntityZ(e\room\Objects[5],True))
+					n.NPCs = CreateNPC(NPCtype0493, EntityX(e\room\Objects[5],True),EntityY(e\room\Objects[5],True),EntityZ(e\room\Objects[5],True))
 					PointEntity n\Collider, e\room\obj
 					TurnEntity n\Collider, 0, -90, 0
 					QuickLoadPercent = 40
 					e\EventStr = "load2"
 				ElseIf e\EventStr = "load2"
-					n.NPCs = CreateNPC(NPCtypeZombie, EntityX(e\room\Objects[13],True),EntityY(e\room\Objects[13],True),EntityZ(e\room\Objects[13],True))
+					n.NPCs = CreateNPC(NPCtype0492, EntityX(e\room\Objects[13],True),EntityY(e\room\Objects[13],True),EntityZ(e\room\Objects[13],True))
 					PointEntity n\Collider, e\room\obj
 					TurnEntity n\Collider, 0, 20, 0
 					QuickLoadPercent = 60
@@ -4096,7 +4093,7 @@ Function QuickLoadEvents()
 				e\EventStr = "load2"
 			ElseIf e\EventStr = "load2"
 				QuickLoadPercent = 100
-				If e\room\NPC[0]=Null Then e\room\NPC[0]=CreateNPC(NPCtype860, 0,0,0)
+				If e\room\NPC[0]=Null Then e\room\NPC[0]=CreateNPC(NPCtype8602, 0,0,0)
 				e\EventStr = "loaddone"
 			EndIf
 			;[End Block]
@@ -4516,7 +4513,6 @@ Function DrawCredits()
 				CreditsTimer=-1.0
 			EndIf
 		EndIf
-		DebugLog CreditsTimer
 	EndIf
 	If CreditsTimer<>0.0
 		For cl = Each CreditsLine
@@ -4964,7 +4960,6 @@ Function MovePlayer()
 	EndIf
 	
 	If HealTimer > 0 Then
-		DebugLog HealTimer
 		HealTimer = HealTimer - (fs\FPSfactor[0] / 70)
 		Bloodloss = Min(Bloodloss + (2 / 400.0) * fs\FPSfactor[0], 100)
 		Injuries = Max(Injuries - (fs\FPSfactor[0] / 70) / 30, 0.0)
@@ -5878,7 +5873,6 @@ Function DrawGUI()
 			If OtherOpen\SecondInv[n] <> Null Then
 				If (SelectedItem <> OtherOpen\SecondInv[n] Or isMouseOn) Then DrawImage(OtherOpen\SecondInv[n]\invimg, x + width / 2 - 32, y + height / 2 - 32)
 			EndIf
-			DebugLog "otheropen: "+(OtherOpen<>Null)
 			If OtherOpen\SecondInv[n] <> Null And SelectedItem <> OtherOpen\SecondInv[n] Then
 			;drawimage(OtherOpen\SecondInv[n].InvIMG, x + width / 2 - 32, y + height / 2 - 32)
 				If isMouseOn Then
@@ -5953,7 +5947,7 @@ Function DrawGUI()
 							For z% = 0 To OtherSize - 1
 								If OtherOpen\SecondInv[z]<>Null
 									Local name$=OtherOpen\SecondInv[z]\itemtemplate\tempname
-									If name$<>"25ct" And name$<>"coin" And name$<>"key" And name$<>"scp860" And name$<>"scp005" And name$<>"scp500pill" And name$<>"pill" And name$<>"mintscp500pill" Then
+									If name$<>"25ct" And name$<>"coin" And name$<>"key" And name$<>"scp860" And name$<>"scp005" And name$<>"scp500pill" And name$<>"pill" And name$<>"mintscp500pill" And name$<>"scp500pilldeath" Then
 										isEmpty=False
 										Exit
 									EndIf
@@ -6245,14 +6239,14 @@ Function DrawGUI()
 						SelectedItem = Null
 					ElseIf Inventory(MouseSlot) <> SelectedItem
 						Select SelectedItem\itemtemplate\tempname
-							Case "paper", "key0", "key1", "key2", "key3", "key4", "key5", "key6", "key7", "misc", "oldpaper", "badge", "ticket", "25ct", "coin", "key", "scp860", "scp500pill", "scp005", "pill", "paperstrips", "mintscp500pill"
+							Case "paper", "key0", "key1", "key2", "key3", "key4", "key5", "key6", "key7", "misc", "oldpaper", "badge", "ticket", "25ct", "coin", "key", "scp860", "scp500pill", "scp005", "pill", "paperstrips", "mintscp500pill", "scp500pilldeath"
 								;[Block]
 								If Inventory(MouseSlot)\itemtemplate\tempname = "clipboard" Then
 									;Add an item to clipboard
 									Local added.Items = Null
 									Local b$ = SelectedItem\itemtemplate\tempname
 									Local b2$ = SelectedItem\itemtemplate\name
-									If (b<>"misc" And b<>"25ct" And b<>"coin" And b<>"key" And b<>"scp860" And b<>"scp005" And b<>"scp500pill" And b<>"pill" And b<>"mintscp500pill") Or (b2="Игральная карта" Or b2="Mastercard") Then ;Playing Card
+									If (b<>"misc" And b<>"25ct" And b<>"coin" And b<>"key" And b<>"scp860" And b<>"scp005" And b<>"scp500pill" And b<>"pill" And b<>"mintscp500pill" And b<>"scp500pilldeath") Or (b2="Игральная карта" Or b2="Mastercard") Then ;Playing Card
 										For c% = 0 To Inventory(MouseSlot)\invSlots-1
 											If (Inventory(MouseSlot)\SecondInv[c] = Null)
 												If SelectedItem <> Null Then
@@ -6300,7 +6294,7 @@ Function DrawGUI()
 												If SelectedItem <> Null Then
 													Inventory(MouseSlot)\SecondInv[c] = SelectedItem
 													Inventory(MouseSlot)\state = 1.0
-													If b<>"25ct" And b<>"coin" And b<>"key" And b<>"scp860" And b<>"scp005" And b<>"mintscp500pill" And b<>"scp500pill" And b<>"pill"
+													If b<>"25ct" And b<>"coin" And b<>"key" And b<>"scp860" And b<>"scp005" And b<>"mintscp500pill" And b<>"scp500pill" And b<>"pill" And b<>"scp500pilldeath"
 														SetAnimTime Inventory(MouseSlot)\model,3.0
 													EndIf
 													Inventory(MouseSlot)\invimg = Inventory(MouseSlot)\itemtemplate\invimg
@@ -6334,7 +6328,7 @@ Function DrawGUI()
 								
 								;[End Block]							            
 
-							Case "battery", "bat"
+							Case "battery", "bat", "mintbat"
 								;[Block]
 								Select Inventory(MouseSlot)\itemtemplate\name
 									Case "Навигатор S-NAV", "Навигатор S-NAV 300", "Навигатор S-NAV 310" ;S-NAV Navigator ;S-NAV 300 Navigator ;S-NAV 310 Navigator
@@ -6381,7 +6375,7 @@ Function DrawGUI()
 										MsgTimer = 70 * 5	
 								End Select
 								;[End Block]
-							Case "18vbat"
+							Case "18vbat", "mint18vbat"
 								;[Block]
 								Select Inventory(MouseSlot)\itemtemplate\name
 									Case "Навигатор S-NAV", "Навигатор S-NAV 300", "Навигатор S-NAV 310" ;S-NAV Navigator ;S-NAV 300 Navigator ;S-NAV 310 Navigator
@@ -7118,8 +7112,6 @@ Function DrawGUI()
 											If CurrUserTrack%<>0 Then FreeSound_Strict(CurrUserTrack%) : CurrUserTrack% = 0
 											CurrUserTrack% = LoadSound_Strict("SFX\Radio\UserTracks\"+UserTrackName$(RadioState(0)))
 											RadioCHN(0) = PlaySound_Strict(CurrUserTrack%)
-											DebugLog "CurrTrack: "+RadioState(0)
-											DebugLog UserTrackName$(RadioState(0))
 										Else
 											strtemp = strtemp + Upper(UserTrackName$(RadioState(0))) + "          "
 											UserTrackFlag = False
@@ -7142,12 +7134,9 @@ Function DrawGUI()
 											If CurrUserTrack%<>0 Then FreeSound_Strict(CurrUserTrack%) : CurrUserTrack% = 0
 											CurrUserTrack% = LoadSound_Strict("SFX\Radio\UserTracks\"+UserTrackName$(RadioState(0)))
 											RadioCHN(0) = PlaySound_Strict(CurrUserTrack%)
-											DebugLog "CurrTrack: "+RadioState(0)
-											DebugLog UserTrackName$(RadioState(0))
 										EndIf
 									EndIf
 								Case 1 ;h?¤lytyskanava
-									DebugLog RadioState(1) 
 									
 									ResumeChannel(RadioCHN(1))
 									strtemp = "        ВНИМАНИЕ - НАРУШЕНИЕ УСЛОВИЙ СОДЕРЖАНИЯ          " ;WARNING - CONTAINMENT BREACH
@@ -8767,9 +8756,7 @@ Function DrawMenu()
         Delay 1000 ;Reduce the CPU take while game is not in focus
     EndIf
 	If ms\MenuOpen Then
-		
-		;DebugLog AchievementsMenu+"|"+OptionsMenu+"|"+QuitMSG
-		
+
 		If PlayerRoom\RoomTemplate\Name$ <> "exit1" And PlayerRoom\RoomTemplate\Name$ <> "gatea"
 			If ms\StopHidingTimer = 0 Then
 				If EntityDistance(Curr173\Collider, Collider)<4.0 Or EntityDistance(Curr106\Collider, Collider)<4.0 Then 
@@ -9305,7 +9292,6 @@ Function DrawMenu()
 			EndIf
 			
 			If AchievementsMenu>0 Then
-				;DebugLog AchievementsMenu
 				If AchievementsMenu <= Floor(Float(MAXACHIEVEMENTS-1)/12.0) Then 
 					If DrawButton(x+341*MenuScale, y + 344*MenuScale, 50*MenuScale, 60*MenuScale, ">") Then
 						AchievementsMenu = AchievementsMenu+1
@@ -9511,6 +9497,7 @@ End Type
 ;----------------------------------------------------------------------------------------------
 
 Include "Source Code\LoadAllSounds.bb"
+
 Function LoadEntities()
 	CatchErrors("Uncaught (LoadEntities)")
 	DrawLoading(0)
@@ -9744,11 +9731,11 @@ Function LoadEntities()
 				
 	at\OverlayTextureID[15] = LoadTexture_Strict("GFX\map\tesla.png", 1+2) ;TESLA
 	
-	at\OverlayTextureID[16] = LoadTexture_Strict("GFX\monitoroverlay.png") ;MONITOR #1
-	at\OverlayTextureID[17] = LoadTexture_Strict("GFX\map\LockdownScreen2.png") ;MONITOR #2
-	at\OverlayTextureID[18] = LoadTexture_Strict("GFX\map\LockdownScreen.png") ;MONITOR #3 
-	at\OverlayTextureID[19] = LoadTexture_Strict("GFX\map\LockdownScreen3.png") ;MONITOR #4
-	at\OverlayTextureID[20] = CreateTexture(1,1) ;MONITOR #5
+	at\OverlayTextureID[16] = LoadTexture_Strict("GFX\monitoroverlay.png") ;MONITOR
+	at\OverlayTextureID[17] = LoadTexture_Strict("GFX\map\LockdownScreen2.png") ;MONITOR #1
+	at\OverlayTextureID[18] = LoadTexture_Strict("GFX\map\LockdownScreen.png") ;MONITOR #2
+	at\OverlayTextureID[19] = LoadTexture_Strict("GFX\map\LockdownScreen3.png") ;MONITOR #3
+	at\OverlayTextureID[20] = CreateTexture(1,1) ;MONITOR OFF
 	SetBuffer TextureBuffer(at\OverlayTextureID[20])
 	ClsColor 0,0,0
 	Cls
@@ -9765,83 +9752,79 @@ Function LoadEntities()
 	
 	;[NPCs]
 	
-	o\NPCModelID[0] = LoadMesh_Strict("GFX\npcs\scp173.b3d") ;173
+	o\NPCModelID[0] = LoadMesh_Strict("GFX\npcs\scp173.b3d") ;SCP-173
 
-    o\NPCModelID[1] = LoadAnimMesh_Strict("GFX\npcs\scp106.b3d") ;106
+    o\NPCModelID[1] = LoadAnimMesh_Strict("GFX\npcs\scp106.b3d") ;SCP-106
 	
-	o\NPCModelID[2] = LoadAnimMesh_Strict("GFX\npcs\guard.b3d") ;guard
+	o\NPCModelID[2] = LoadAnimMesh_Strict("GFX\npcs\guard.b3d") ;Guard
 
-    o\NPCModelID[3] = LoadAnimMesh_Strict("GFX\npcs\classd.b3d") ;D
+    o\NPCModelID[3] = LoadAnimMesh_Strict("GFX\npcs\class_d.b3d") ;Class-D
 	
-	o\NPCModelID[4] = LoadAnimMesh_Strict("GFX\npcs\scp372.b3d") ;372
+	o\NPCModelID[4] = LoadAnimMesh_Strict("GFX\npcs\scp372.b3d") ;SCP-372
 	
-	o\NPCModelID[5] = LoadAnimMesh_Strict("GFX\npcs\apache.b3d") ;helicopter
+	o\NPCModelID[5] = LoadAnimMesh_Strict("GFX\npcs\apache.b3d") ;Apache Helicopter
 	
-	o\NPCModelID[6] = LoadAnimMesh_Strict("GFX\npcs\apacherotor.b3d") ;helicopter's rotor #1
+	o\NPCModelID[6] = LoadAnimMesh_Strict("GFX\npcs\apache_rotor.b3d") ;Helicopter's Rotor #1
 	
 	o\NPCModelID[7] = LoadAnimMesh_Strict("GFX\npcs\MTF.b3d") ;MTF
 	
-	o\NPCModelID[8] = LoadAnimMesh_Strict("GFX\npcs\scp096.b3d") ;096
+	o\NPCModelID[8] = LoadAnimMesh_Strict("GFX\npcs\scp096.b3d") ;SCP-096
 	
-	o\NPCModelID[9] = LoadAnimMesh_Strict("GFX\npcs\scp049.b3d") ;049
+	o\NPCModelID[9] = LoadAnimMesh_Strict("GFX\npcs\scp049.b3d") ;SCP-049
 	
-	o\NPCModelID[10] = LoadAnimMesh_Strict("GFX\npcs\zombie1.b3d") ;zombie1
+	o\NPCModelID[10] = LoadAnimMesh_Strict("GFX\npcs\scp049_2.b3d") ;SCP-049-2
 	
-	o\NPCModelID[11] = LoadAnimMesh_Strict("GFX\npcs\scp513_1.b3d") ;513-1
+	o\NPCModelID[11] = LoadAnimMesh_Strict("GFX\npcs\scp513_1.b3d") ;SCP-513-1
 	
-	o\NPCModelID[12] = LoadAnimMesh_Strict("GFX\npcs\scp035_tentacle.b3d") ;tentacle
+	o\NPCModelID[12] = LoadAnimMesh_Strict("GFX\npcs\scp035_tentacle.b3d") ;SCP-035's Tentacle
 	
-	o\NPCModelID[13] = LoadAnimMesh_Strict("GFX\npcs\scp860_2.b3d") ;860
+	o\NPCModelID[13] = LoadAnimMesh_Strict("GFX\npcs\scp860_2.b3d") ;SCP-860-2
 	
-	o\NPCModelID[14] = LoadAnimMesh_Strict("GFX\npcs\scp939.b3d") ;939
+	o\NPCModelID[14] = LoadAnimMesh_Strict("GFX\npcs\scp939.b3d") ;SCP-939
 	
-	o\NPCModelID[15] = LoadAnimMesh_Strict("GFX\npcs\scp066.b3d") ;066
+	o\NPCModelID[15] = LoadAnimMesh_Strict("GFX\npcs\scp066.b3d") ;SCP-066
 	
-	o\NPCModelID[16] = LoadAnimMesh_Strict("GFX\npcs\scp966.b3d") ;966
+	o\NPCModelID[16] = LoadAnimMesh_Strict("GFX\npcs\scp966.b3d") ;SCP-966
 	
-	o\NPCModelID[17] = LoadAnimMesh_Strict("GFX\npcs\scp1048a.b3d") ;1048A
+	o\NPCModelID[17] = LoadAnimMesh_Strict("GFX\npcs\scp1048_a.b3d") ;SCP-1048-A
 	
-	o\NPCModelID[18] = LoadAnimMesh_Strict("GFX\npcs\scp1499_1.b3d") ;1499-1
+	o\NPCModelID[18] = LoadAnimMesh_Strict("GFX\npcs\scp1499_1.b3d") ;SCP-1499-1
 	
-	o\NPCModelID[19] = LoadAnimMesh_Strict("GFX\npcs\zombieinfected1.b3d") ;008-1
+	o\NPCModelID[19] = LoadAnimMesh_Strict("GFX\npcs\scp008_1.b3d") ;SCP-008-1
 	
 	o\NPCModelID[20] = LoadAnimMesh_Strict("GFX\npcs\clerk.b3d") ;clerk
 	
-	o\NPCModelID[21] = LoadAnimMesh_Strict("GFX\npcs\zombieinfected2.b3d") ;008-2                     
+	o\NPCModelID[21] = LoadAnimMesh_Strict("GFX\npcs\scp008_2.b3d") ;SCP-008-2
 	
-	o\NPCModelID[22] = LoadAnimMesh_Strict("GFX\npcs\scp650.b3d") ;650                                   
+	o\NPCModelID[22] = LoadAnimMesh_Strict("GFX\npcs\scp650.b3d") ;SCP-650                                   
 
-    o\NPCModelID[23] = LoadAnimMesh_Strict("GFX\npcs\scp457.b3d") ;457
+    o\NPCModelID[23] = LoadAnimMesh_Strict("GFX\npcs\scp457.b3d") ;SCP-457
                     
-	o\NPCModelID[24] = LoadAnimMesh_Strict("GFX\npcs\zombie2.b3d") ;zombie2                 
+	o\NPCModelID[24] = LoadAnimMesh_Strict("GFX\npcs\scp049_3.b3d") ;SCP-049-3
 	
-	o\NPCModelID[25] = LoadAnimMesh_Strict("GFX\npcs\scp178_1.b3d") ;178-1
+	o\NPCModelID[25] = LoadAnimMesh_Strict("GFX\npcs\scp178_1.b3d") ;SCP-178-1
 	
 	o\NPCModelID[26] = LoadAnimMesh_Strict("GFX\npcs\MTF2.b3d") ;MTF2
 	
-	o\NPCModelID[27] = LoadAnimMesh_Strict("GFX\npcs\apacherotor2.b3d") ;helicopter's rotor #2
+	o\NPCModelID[27] = LoadAnimMesh_Strict("GFX\npcs\apache_rotor2.b3d") ;Helicopter's Rotor #2
 	
-	o\NPCModelID[28] = LoadAnimMesh_Strict("GFX\npcs\naziofficer.b3d") ;naziofficer
+	o\NPCModelID[28] = LoadAnimMesh_Strict("GFX\npcs\nazi_officer.b3d") ;Nazi Officer
 	
-	o\NPCModelID[29] = LoadAnimMesh_Strict("GFX\npcs\scp1048.b3d") ;1048 #1
+	o\NPCModelID[29] = LoadAnimMesh_Strict("GFX\npcs\scp1048.b3d") ;SCP-1048 #1
 	
-	o\NPCModelID[30] = LoadAnimMesh_Strict("GFX\npcs\scp1048_p.b3d") ;1048 #2
+	o\NPCModelID[30] = LoadAnimMesh_Strict("GFX\npcs\scp1048_p.b3d") ;SCP-1048 #2
 	
-	o\NPCModelID[31] = LoadAnimMesh_Strict("GFX\npcs\duck.b3d") ;duck
+	o\NPCModelID[31] = LoadAnimMesh_Strict("GFX\npcs\duck.b3d") ;Anomalous Duck
 	
 	o\NPCModelID[32] = LoadAnimMesh_Strict("GFX\npcs\CI.b3d") ;CI
 	
-	o\NPCModelID[33] = LoadAnimMesh_Strict("GFX\npcs\scp035.b3d") ;035
+	o\NPCModelID[33] = LoadAnimMesh_Strict("GFX\npcs\scp035.b3d") ;SCP-035
 	
-	o\NPCModelID[34] = LoadMesh_Strict("GFX\npcs\scp682_arm.b3d") ;682's arm
+	o\NPCModelID[34] = LoadMesh_Strict("GFX\npcs\scp682_arm.b3d") ;SCP-682's arm
 		
     For i = 0 To MaxNPCModelIDAmount-1
         HideEntity o\NPCModelID[i]
     Next
-	
-	at\LightSpriteTextureID[0] = LoadTexture_Strict("GFX\light1.png", 1)
-	at\LightSpriteTextureID[1] = LoadTexture_Strict("GFX\light2.png", 1)
-	at\LightSpriteTextureID[2] = LoadTexture_Strict("GFX\lightsprite.png",1)
 	
 	DrawLoading(10)
 	
@@ -9866,6 +9849,8 @@ Function LoadEntities()
 	o\DoorID[8] = LoadMesh_Strict("GFX\map\forest\door_frame.b3d") ;frame #2
 	
 	o\DoorID[9] = LoadMesh_Strict("GFX\map\forest\door.b3d") ;wooden door
+	
+	o\DoorID[10] = LoadMesh_Strict("GFX\doorhit.b3d") ;door's hitbox
 
 	For i = 0 To MaxDoorIDAmount-1
 	    HideEntity o\DoorID[i]
@@ -9903,7 +9888,7 @@ Function LoadEntities()
 	For i = 5 To 14
 		at\OtherTextureID[i] = LoadTexture_Strict("GFX\895pics\pic" + (i - 5) + ".png")
 	Next
-	
+
 	;[OTHER MODELS]
 	
 	o\OtherModelsID[0] = LoadMesh_Strict("GFX\items\cupliquid.x") ;cup's liquid
@@ -9913,7 +9898,20 @@ Function LoadEntities()
 	For i=0 To MaxOtherModelsIDAmount-1
         HideEntity o\OtherModelsID[i]
     Next	
+
+	DrawLoading(15)
 	
+	at\LightSpriteTextureID[0] = LoadTexture_Strict("GFX\light1.png", 1)
+	at\LightSpriteTextureID[1] = LoadTexture_Strict("GFX\light2.png", 1)
+	at\LightSpriteTextureID[2] = LoadTexture_Strict("GFX\lightsprite.png",1)
+	
+	at\OtherTextureID[3] = LoadTexture_Strict("GFX\AIface.png")
+	at\OtherTextureID[4] = LoadTexture_Strict("GFX\AIface2.png")
+	
+	For i = 5 To 14
+		at\OtherTextureID[i] = LoadTexture_Strict("GFX\895pics\pic" + (i - 5) + ".png")
+	Next
+		
 	DrawLoading(20)
 	
 	For i = 0 To 6
@@ -9931,11 +9929,11 @@ Function LoadEntities()
 	Next
 	at\DecalTextureID[17] = LoadTexture_Strict("GFX\decal8.png", 1 + 2)	
 	at\DecalTextureID[18] = LoadTexture_Strict("GFX\decalpd6.dc", 1 + 2)	
-	at\DecalTextureID[19] = LoadTexture_Strict("GFX\decal19.png", 1 + 2)
+	at\DecalTextureID[19] = LoadTexture_Strict("GFX\decal409.png", 1 + 2)
 	at\DecalTextureID[20] = LoadTexture_Strict("GFX\decal427.png", 1 + 2)
-	at\DecalTextureID[21] = LoadTexture_Strict("GFX\decal21.png", 1 + 2)
-	at\DecalTextureID[22] = LoadTexture_Strict("GFX\bubblescentdrop1.png", 1 + 2)
-	at\DecalTextureID[23] = LoadTexture_Strict("GFX\bubblescentdrop2.png", 1 + 2)
+	at\DecalTextureID[21] = LoadTexture_Strict("GFX\decal008.png", 1 + 2)
+	at\DecalTextureID[22] = LoadTexture_Strict("GFX\decal10791.png", 1 + 2)
+	at\DecalTextureID[23] = LoadTexture_Strict("GFX\decal10792.png", 1 + 2)
 
 	DrawLoading(25)
 	
@@ -10032,9 +10030,7 @@ Function LoadEntities()
 	at\ParticleTextureID[9] = LoadTexture_Strict("GFX\fire_particle.png", 1 + 2)
 	
 	SetChunkDataValues()
-	
-	;NPCtypeD - different models with different textures (loaded using "CopyEntity") - ENDSHN
-	;[Block]
+
 	For i=1 To MaxDTextures
 		DTextures[i] = CopyEntity(o\NPCModelID[3])
 		HideEntity DTextures[i]
@@ -10055,27 +10051,27 @@ Function LoadEntities()
 	tex = LoadTexture_Strict("GFX\npcs\scientist2.png")
 	EntityTexture DTextures[4],tex
 	FreeTexture tex
-	;janitor
+	;Janitor
 	tex = LoadTexture_Strict("GFX\npcs\janitor.png")
 	EntityTexture DTextures[5],tex
 	FreeTexture tex
-	;2nd classD
-	tex = LoadTexture_Strict("GFX\npcs\classd2.png")
+	;2nd Class-D
+	tex = LoadTexture_Strict("GFX\npcs\class_d2.png")
 	EntityTexture DTextures[6],tex
 	FreeTexture tex
-	;035 victim
+	;SCP-035 Victim
 	tex = LoadTexture_Strict("GFX\npcs\scp035_victim.png")
 	EntityTexture DTextures[7],tex
 	FreeTexture tex
-	;106 victim
+	;SCP-106 Victim
 	tex = LoadTexture_Strict("GFX\npcs\scp106_victim1.png")
 	EntityTexture DTextures[8],tex
 	FreeTexture tex
-	;1st classD victim
+	;1st Class-D Victim
 	tex = LoadTexture_Strict("GFX\npcs\scp106_victim2.png")
 	EntityTexture DTextures[9],tex
 	FreeTexture tex
-	;2nd classD victim
+	;2nd Class-D Victim
 	tex = LoadTexture_Strict("GFX\npcs\scp106_victim3.png")
 	EntityTexture DTextures[10],tex
 	FreeTexture tex
@@ -10083,44 +10079,42 @@ Function LoadEntities()
 	tex = LoadTexture_Strict("GFX\npcs\scp106_victim4.png")
 	EntityTexture DTextures[11],tex
 	FreeTexture tex
-	;1st body
+	;1st Body
 	tex = LoadTexture_Strict("GFX\npcs\body1.png")
 	EntityTexture DTextures[12],tex
 	FreeTexture tex
-	;2nd body
+	;2nd Body
 	tex = LoadTexture_Strict("GFX\npcs\body2.png")
 	EntityTexture DTextures[13],tex
 	FreeTexture tex
-	;3d body
+	;3d Body
     tex = LoadTexture_Strict("GFX\npcs\body3.png")
 	EntityTexture DTextures[14],tex
 	FreeTexture tex
-	;4th body
+	;4th Body
     tex = LoadTexture_Strict("GFX\npcs\body4.png")
 	EntityTexture DTextures[15],tex
 	FreeTexture tex
-	;d9341
-	tex = LoadTexture_Strict("GFX\npcs\d9341.png")
+	;D-9341
+	tex = LoadTexture_Strict("GFX\npcs\d_9341.png")
 	EntityTexture DTextures[16],tex
 	FreeTexture tex
-
-	;[End Block]
 	
 	LoadMaterials("DATA\materials.ini")
 	
-	o\OBJTunnel[0] = LoadRMesh("GFX\map\mt1.rmesh",Null) ;tunnel #1
+	o\OBJTunnel[0] = LoadRMesh("GFX\map\mt1.rmesh", Null) ;tunnel #1
 			
-	o\OBJTunnel[1] = LoadRMesh("GFX\map\mt2.rmesh",Null)	;tunnel #2
+	o\OBJTunnel[1] = LoadRMesh("GFX\map\mt2.rmesh", Null) ;tunnel #2
 
-	o\OBJTunnel[2] = LoadRMesh("GFX\map\mt2c.rmesh",Null)	;tunnel #3
+	o\OBJTunnel[2] = LoadRMesh("GFX\map\mt2c.rmesh", Null) ;tunnel #2 (corner)
 				
-	o\OBJTunnel[3] = LoadRMesh("GFX\map\mt3.rmesh",Null)	;tunnel #4
+	o\OBJTunnel[3] = LoadRMesh("GFX\map\mt3.rmesh", Null) ;tunnel #3
 	
-	o\OBJTunnel[4] = LoadRMesh("GFX\map\mt4.rmesh",Null) ;tunnel #5
+	o\OBJTunnel[4] = LoadRMesh("GFX\map\mt4.rmesh", Null) ;tunnel #4
 				
-	o\OBJTunnel[5] = LoadRMesh("GFX\map\mt_elevator.rmesh",Null) ;elevator
+	o\OBJTunnel[5] = LoadRMesh("GFX\map\mt_elevator.rmesh", Null) ;elevator
 
-	o\OBJTunnel[6] = LoadRMesh("GFX\map\mt_generator.rmesh",Null) ;generator
+	o\OBJTunnel[6] = LoadRMesh("GFX\map\mt_generator.rmesh", Null) ;generator
 
 	For i = 0 To MaxObjTunnelAmount-1
         HideEntity o\OBJTunnel[i]
@@ -10130,8 +10124,6 @@ Function LoadEntities()
 	TextureLodBias TextureFloat#
 	;Devil Particle System
 	;ParticleEffect[] numbers:
-	;	0 - electric spark
-	;	1 - smoke effect
 	
 	Local t0
 	
@@ -10238,7 +10230,7 @@ Function InitNewGame()
 	DrawLoading(79)
 	
 	Curr173 = CreateNPC(NPCtype173, 0, -30.0, 0)
-	Curr106 = CreateNPC(NPCtypeOldMan, 0, -30.0, 0)
+	Curr106 = CreateNPC(NPCtype106, 0, -30.0, 0)
 	Curr106\State = 70 * 60 * Rand(12,17)
 	
 	For d.Doors = Each Doors
@@ -10344,15 +10336,12 @@ Function InitNewGame()
 	For e.Events = Each Events
 		If e\EventName = "room2nuke"
 			e\EventState = 1
-			DebugLog "room2nuke"
 		EndIf
 		If e\EventName = "room106"
 			e\EventState2 = 1
-			DebugLog "room106"
 		EndIf	
 		If e\EventName = "room2sl"
 			e\EventState3 = 1
-			DebugLog "room2sl"
 		EndIf
 	Next
 	
@@ -10467,10 +10456,6 @@ Function InitLoadGame()
 				Next
 				DrawLoading(98)
 				UpdateChunks(e\room,15,False)
-				;MoveEntity Collider,0,10,0
-				;ResetEntity Collider
-				
-				DebugLog "Loaded dimension1499 successful"
 				
 				Exit
 				;[End Block]
@@ -10494,7 +10479,7 @@ Function NullGame(playbuttonsfx%=True)
 	Local i%, x%, y%, lvl
 	Local itt.ItemTemplates, s.Screens, lt.LightTemplates, d.Doors, m.Materials
 	Local wp.WayPoints, twp.TempWayPoints, r.Rooms, it.Items
-	Local o.Objects
+	Local o.Objects = First Objects
 	
 	KillSounds()
 	If playbuttonsfx Then PlaySound_Strict ButtonSFX
@@ -10660,7 +10645,7 @@ Function NullGame(playbuttonsfx%=True)
 	I_215\Limit = 0
 	
 	I_1033RU\Using = 0
-	I_1033RU\HP = 100
+	I_1033RU\HP = 0
 	I_1033RU\DHP = 0
 	
 	I_1079\Foam = 0
@@ -10678,8 +10663,6 @@ Function NullGame(playbuttonsfx%=True)
 	I_357\Timer = 0
 
     diceroll = Rnd(3)
-    
-    IfKey005 = False
 
     MTF2timer = 0
     For i = 0 To 9
@@ -11180,9 +11163,7 @@ Function KillSounds()
 			EndIf
 		Next
 	Next
-	
-	DebugLog "Terminated all sounds"
-	
+
 End Function
 
 Function GetStepSound(entity%)
@@ -11398,7 +11379,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 					d\Size = 0.12 : ScaleSprite(d\obj, d\Size, d\Size)
 					RemoveItem(item)
 				Case "1:1"
-					it2 = CreateItem("Противогаз", "gasmask" , x, y, z) ;Gas Mask
+					it2 = CreateItem("Противогаз", "gasmask", x, y, z) ;Gas Mask
 					RemoveItem(item)
 				Case "fine"
 					it2 = CreateItem("SCP-1499", "super1499", x, y, z)
@@ -11681,9 +11662,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 									CurrAchvAmount=CurrAchvAmount+1
 								EndIf
 							Next
-							
-							DebugLog CurrAchvAmount
-							
+
 							Select SelectedDifficulty\otherFactors
 								Case EASY
 									If Rand(0,((MAXACHIEVEMENTS-1)*3)-((CurrAchvAmount-1)*3))=0
@@ -11741,9 +11720,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 							CurrAchvAmount=CurrAchvAmount+1
 						EndIf
 					Next
-					
-					DebugLog CurrAchvAmount
-					
+
 					Select SelectedDifficulty\otherFactors
 						Case EASY
 							If Rand(0,((MAXACHIEVEMENTS-1)*3)-((CurrAchvAmount-1)*3))=0
@@ -11995,7 +11972,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 						Case "rough", "coarse", "1:1", "fine"
 							it2 = CreateItem("Электронные компоненты", "misc", x, y, z) ;Electronical components
 						Case "very fine"
-							n.NPCs = CreateNPC(NPCtype008,x,y,z)
+							n.NPCs = CreateNPC(NPCtype0081,x,y,z)
 							n\State = 2
 					End Select
 				Case "syringeinf"
@@ -12004,7 +11981,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 					        d.Decals = CreateDecal(21, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
 							d\Size = 0.07 : ScaleSprite(d\obj, d\Size, d\Size)
 						Case "1:1"
-						    n.NPCs = CreateNPC(NPCtype008,x,y,z)
+						    n.NPCs = CreateNPC(NPCtype0081,x,y,z)
 							n\State = 2	
 						Case "fine"
 						    it2 = CreateItem("Шприц", "syringe", x, y, z) ;Syringe
@@ -12040,8 +12017,8 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 					If it2<>Null Then
 						Select it2\itemtemplate\tempname
 							Case "scp500"
-								RemoveItem (it2)
-								RemoveItem (item)
+								RemoveItem(it2)
+								RemoveItem(item)
 								
 								it2 = CreateItem("Мятный SCP-500-01", "mintscp500", x, y, z) ;Minty SCP-500-01
 								
@@ -12051,7 +12028,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 							    d\Size = 0.2 : EntityAlpha(d\obj, 0.6) : ScaleSprite(d\obj, d\Size, d\Size)
 
 							Case "firstaid"
-								RemoveItem (it2)
+								RemoveItem(it2)
 								RemoveItem(item)
 								
 								it2 = CreateItem("Мятная аптечка первой помощи", "mintfirstaid", x, y, z) ;Minty First Aid Kit
@@ -12062,7 +12039,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 							    d\Size = 0.2 : EntityAlpha(d\obj, 0.6) : ScaleSprite(d\obj, d\Size, d\Size)
 
 							Case "finefirstaid"
-								RemoveItem (it2)
+								RemoveItem(it2)
 								RemoveItem(item)
 								
 								it2 = CreateItem("Мятная маленькая аптечка первой помощи", "mintfinefirstaid", x, y, z) ;Minty Small First Aid Kit
@@ -12073,7 +12050,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 							    d\Size = 0.2 : EntityAlpha(d\obj, 0.6) : ScaleSprite(d\obj, d\Size, d\Size)
 
 							Case "firstaid2"
-								RemoveItem (it2)
+								RemoveItem(it2)
 								RemoveItem(item)
 								
 								it2 = CreateItem("Мятная синяя аптечка первой помощи", "mintfirstaid2", x, y, z) ;Minty Blue First Aid Kit
@@ -12084,7 +12061,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 							    d\Size = 0.2 : EntityAlpha(d\obj, 0.6) : ScaleSprite(d\obj, d\Size, d\Size)
 
 							Case "veryfinefirstaid"
-								RemoveItem (it2)
+								RemoveItem(it2)
 								RemoveItem(item)
 								
 								GiveAchievement(Achv447)
@@ -12095,7 +12072,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 							    d\Size = 0.2 : EntityAlpha(d\obj, 0.6) : ScaleSprite(d\obj, d\Size, d\Size)
 
 							Case "eyedrops"
-								RemoveItem (it2)
+								RemoveItem(it2)
 								RemoveItem(item)
 								
 								GiveAchievement(Achv447)
@@ -12106,7 +12083,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 							    d\Size = 0.2 : EntityAlpha(d\obj, 0.6) : ScaleSprite(d\obj, d\Size, d\Size)
 								
 							Case "eyedrops2"
-								RemoveItem (it2)
+								RemoveItem(it2)
 								RemoveItem(item)
 								
 								GiveAchievement(Achv447)
@@ -12117,7 +12094,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 							    d\Size = 0.2 : EntityAlpha(d\obj, 0.6) : ScaleSprite(d\obj, d\Size, d\Size)
 							
 							Case "fineeyedrops"
-								RemoveItem (it2)
+								RemoveItem(it2)
 								RemoveItem(item)
 								
 								GiveAchievement(Achv447)
@@ -12128,7 +12105,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 							    d\Size = 0.2 : EntityAlpha(d\obj, 0.6) : ScaleSprite(d\obj, d\Size, d\Size)
 
 							Case "supereyedrops"
-								RemoveItem (it2)
+								RemoveItem(it2)
 								RemoveItem(item)
 								
 								GiveAchievement(Achv447)
@@ -12137,10 +12114,155 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 								
 								d.Decals = CreateDecal(7, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
 							    d\Size = 0.2 : EntityAlpha(d\obj, 0.6) : ScaleSprite(d\obj, d\Size, d\Size)
+							
+							Case "bat"
+								RemoveItem(it2)
+								RemoveItem(item)
+								
+								GiveAchievement(Achv447)
+								
+								it2 = CreateItem("Мятная 9V-батарейка", "mintbat", x, y, z) ;Minty 9V Battery
+								
+								d.Decals = CreateDecal(7, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
+							    d\Size = 0.2 : EntityAlpha(d\obj, 0.6) : ScaleSprite(d\obj, d\Size, d\Size)
+							
+							Case "18vbat"
+								RemoveItem(it2)
+								RemoveItem(item)
+								
+								GiveAchievement(Achv447)
+								
+								it2 = CreateItem("Мятная 18V-батарейка", "mint18vbat", x, y, z) ;Minty 18V Battery
+								
+								d.Decals = CreateDecal(7, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
+							    d\Size = 0.2 : EntityAlpha(d\obj, 0.6) : ScaleSprite(d\obj, d\Size, d\Size)
+							
+						    Case "key0"
+								RemoveItem(it2)
+								RemoveItem(item)
+								
+								GiveAchievement(Achv447)
+								
+								If Rand(10) = 1 Then
+								    it2 = CreateItem("Mastercard", "misc", x, y, z)
+                                Else
+								    it2 = CreateItem("Ключ-карта 2-го уровня", "key2", x, y, z) ;Level 2 Key Card
+								EndIf
+								
+								d.Decals = CreateDecal(7, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
+							    d\Size = 0.2 : EntityAlpha(d\obj, 0.6) : ScaleSprite(d\obj, d\Size, d\Size)
+							
+							Case "key1"
+								RemoveItem(it2)
+								RemoveItem(item)
+								
+								GiveAchievement(Achv447)
+								
+								If Rand(8) = 1 Then
+								    it2 = CreateItem("Mastercard", "misc", x, y, z)
+                                Else
+								    it2 = CreateItem("Ключ-карта 3-го уровня", "key3", x, y, z) ;Level 3 Key Card
+								EndIf
+								
+								d.Decals = CreateDecal(7, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
+							    d\Size = 0.2 : EntityAlpha(d\obj, 0.6) : ScaleSprite(d\obj, d\Size, d\Size)
+							
+							Case "key2"
+								RemoveItem(it2)
+								RemoveItem(item)
+								
+								GiveAchievement(Achv447)
+								
+								If Rand(6) = 1 Then
+								    it2 = CreateItem("Mastercard", "misc", x, y, z)
+                                Else
+								    it2 = CreateItem("Ключ-карта 4-го уровня", "key4", x, y, z) ;Level 4 Key Card
+								EndIf
+								
+								d.Decals = CreateDecal(7, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
+							    d\Size = 0.2 : EntityAlpha(d\obj, 0.6) : ScaleSprite(d\obj, d\Size, d\Size)
+							
+							Case "key3"
+								RemoveItem(it2)
+								RemoveItem(item)
+								
+								GiveAchievement(Achv447)
+								
+								If Rand(4) = 1 Then
+								    it2 = CreateItem("Mastercard", "misc", x, y, z)
+                                Else
+								    it2 = CreateItem("Ключ-карта 5-го уровня", "key5", x, y, z) ;Level 5 Key Card
+								EndIf
 
+								 
+								d.Decals = CreateDecal(7, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
+							    d\Size = 0.2 : EntityAlpha(d\obj, 0.6) : ScaleSprite(d\obj, d\Size, d\Size)
+							
+							Case "key4"
+								RemoveItem(it2)
+								RemoveItem(item)
+								
+								GiveAchievement(Achv447)
+								
+								If Rand(2) = 1 Then
+								    it2 = CreateItem("Mastercard", "misc", x, y, z)
+                                Else
+								    it2 = CreateItem("Ключ-карта 6-го уровня", "key6", x, y, z) ;Level 6 Key Card
+								EndIf
+								
+								d.Decals = CreateDecal(7, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
+							    d\Size = 0.2 : EntityAlpha(d\obj, 0.6) : ScaleSprite(d\obj, d\Size, d\Size)
+							
+							Case "key5"
+						        RemoveItem(it2)
+								RemoveItem(item)
+								
+								GiveAchievement(Achv447)
+								
+								d.Decals = CreateDecal(7, x, 8 * RoomScale + 0.005, z, 90, Rand(360), 0)
+							    d\Size = 0.2 : EntityAlpha(d\obj, 0.6) : ScaleSprite(d\obj, d\Size, d\Size)
+							
+							    For i = 0 To MAXACHIEVEMENTS-1
+								    If Achievements(i)=True
+								    	CurrAchvAmount=CurrAchvAmount+1
+								    EndIf
+							    Next
+							
+							    Select SelectedDifficulty\otherFactors
+								    Case EASY
+									    If Rand(0,((MAXACHIEVEMENTS-1)*3)-((CurrAchvAmount-1)*3))=0
+									    	it2 = CreateItem("Ключ-карта Омни", "key7", x, y, z) ;Key Card Omni
+									    Else
+										    If Rand(4)=1 Then
+					                            it2 = CreateItem("Игральная карта", "misc", x, y, z) ;Playing Card
+					                        Else
+				  	                            it2 = CreateItem("Mastercard", "misc", x, y, z)
+					                        EndIf
+									    EndIf
+								    Case NORMAL
+									    If Rand(0,((MAXACHIEVEMENTS-1)*4)-((CurrAchvAmount-1)*3))=0
+										    it2 = CreateItem("Ключ-карта Омни", "key7", x, y, z) ;Key Card Omni
+									    Else
+										    If Rand(5)=1 Then
+					                            it2 = CreateItem("Игральная карта", "misc", x, y, z) ;Playing Card
+					                        Else
+					                            it2 = CreateItem("Mastercard", "misc", x, y, z)
+						                    EndIf
+									    EndIf
+								    Case HARD
+									    If Rand(0,((MAXACHIEVEMENTS-1)*5)-((CurrAchvAmount-1)*3))=0
+									    	it2 = CreateItem("Ключ-карта Омни", "key7", x, y, z) ;Key Card Omni
+									    Else
+									    	If Rand(6)=1 Then
+					                            it2 = CreateItem("Игральная карта", "misc", x, y, z) ;Playing Card
+					                        Else
+				  	                            it2 = CreateItem("Mastercard", "misc", x, y, z)
+					                        EndIf
+									    EndIf
+                                End Select
 						End Select
 					Else 
-						If item\itemtemplate\name="Слиток SCP-148" Then ;SCP-148 Ingot
+						If item\itemtemplate\name = "Слиток SCP-148" Then ;SCP-148 Ingot
 							it2 = CreateItem("Металлическая панель", "scp148", x, y, z) ;Metal Panel
 							RemoveItem(item)
 						Else
@@ -13837,8 +13959,8 @@ Function UpdateLeave1499()
 				UpdateDoors()
 				UpdateRooms()
 				If PlayerRoom\RoomTemplate\Name = "room3storage"
-					If EntityY(Collider) < - 4600.0 * RoomScale
-						For i = 0 To 3
+					If EntityY(Collider)<-4600*RoomScale
+						For i = 0 To 2
 							PlayerRoom\NPC[i]\State = 2
 							PositionEntity(PlayerRoom\NPC[i]\Collider, EntityX(PlayerRoom\Objects[PlayerRoom\NPC[i]\State2],True),EntityY(PlayerRoom\Objects[PlayerRoom\NPC[i]\State2],True)+0.2,EntityZ(PlayerRoom\Objects[PlayerRoom\NPC[i]\State2],True))
 							ResetEntity PlayerRoom\NPC[i]\Collider
@@ -13846,16 +13968,6 @@ Function UpdateLeave1499()
 							If PlayerRoom\NPC[i]\State2 > PlayerRoom\NPC[i]\PrevState Then PlayerRoom\NPC[i]\State2 = (PlayerRoom\NPC[i]\PrevState-3)
 						Next
 					EndIf
-				ElseIf PlayerRoom\RoomTemplate\Name = "room457"
-				    If EntityY(Collider) < - 2676.0 * RoomScale
-				        PlayerRoom\NPC[0]\State = 2
-				        If (Not Contained457) Then
-				            PositionEntity(PlayerRoom\NPC[0]\Collider, EntityX(PlayerRoom\Objects[0], True), EntityY(PlayerRoom\Objects[0], True)- 0.5, EntityZ(PlayerRoom\Objects[0], True))
-				        Else
-				            PositionEntity(PlayerRoom\NPC[0]\Collider, EntityX(PlayerRoom\Objects[9], True), EntityY(PlayerRoom\Objects[9], True)- 0.4, EntityZ(PlayerRoom\Objects[9], True))
-                        EndIf 
-                        ResetEntity PlayerRoom\NPC[0]\Collider
-                    EndIf
 				ElseIf PlayerRoom\RoomTemplate\Name = "pocketdimension"
 					CameraFogColor Camera, 0,0,0
 					CameraClsColor Camera, 0,0,0
@@ -13963,17 +14075,11 @@ Function UpdateDeafPlayer()
 		If SFXVolume# > 0.0
 			ControlSoundVolume()
 		EndIf
-		DebugLog DeafTimer
 	Else
 		DeafTimer = 0
-		;If SFXVolume# < PrevSFXVolume#
-		;	SFXVolume# = Min(SFXVolume# + (0.001*PrevSFXVolume)*fs\FPSfactor[0],PrevSFXVolume#)
-		;	ControlSoundVolume()
-		;Else
-			SFXVolume# = PrevSFXVolume#
-			If DeafPlayer Then ControlSoundVolume()
-			DeafPlayer = False
-		;EndIf
+		SFXVolume# = PrevSFXVolume#
+		If DeafPlayer Then ControlSoundVolume()
+		DeafPlayer = False
 	EndIf
 	
 End Function
@@ -14030,7 +14136,7 @@ Function CatchErrors(location$)
 			WriteLine errF,"В SCP - Containment Breach Ultimate Edition произошла ошибка!" ;An error occured in SCP - Containment Breach Ultimate Edition!
 			WriteLine errF,"Версия игры: "+GameVersionNumber ;Game Version:
 			WriteLine errF,"Версия модификации: "+ModVersionNumber ;Mod Version:
-			WriteLine errF,"Версия (Совместимость сохранений): "+CompatibleNumber ;Save compatible version:
+			WriteLine errF,"Версия (Совместимость сохранений): "+ModCompatibleNumber ;Save compatible version:
 			WriteLine errF,"Дата и время: "+CurrentDate()+" в "+CurrentTime() ;Date and time:
 			WriteLine errF,"Всего видеопамяти (MБ): "+TotalVidMem()/1024/1024 ;Total video memory (MB):
 			WriteLine errF,"Доступно видеопамяти (MБ): "+AvailVidMem()/1024/1024 ;Available video memory (MB):
@@ -14059,7 +14165,6 @@ Function CatchErrors(location$)
 			WriteLine errF,location+" ***************"
 			While Len(errStr)>0
 				WriteLine errF,errStr
-				DebugLog errStr
 				errStr = ErrorLog()
 			Wend
 		EndIf
@@ -14175,14 +14280,11 @@ Function TeleportEntity(entity%,x#,y#,z#,customradius#=0.3,isglobal%=False,pickr
 		Else
 			PositionEntity(entity, x,PickedY()+customradius#-0.02,z,isglobal)
 		EndIf
-		DebugLog "Entity teleported successfully"
 	Else
 		PositionEntity(entity,x,y,z,isglobal)
-		DebugLog "Warning: no ground found when teleporting an entity"
 	EndIf
 	FreeEntity pvt
 	ResetEntity entity
-	DebugLog "Teleported entity to: "+EntityX(entity)+"/"+EntityY(entity)+"/"+EntityZ(entity)
 	
 End Function
 
@@ -14204,10 +14306,8 @@ Function PlayStartupVideos()
 	Local Ratio# = Float(RealGraphicWidth)/Float(RealGraphicHeight)
 	If Ratio>1.76 And Ratio<1.78
 		ScaledGraphicHeight = RealGraphicHeight
-		DebugLog "Not Scaled"
 	Else
 		ScaledGraphicHeight% = Float(RealGraphicWidth)/(16.0/9.0)
-		DebugLog "Scaled: "+ScaledGraphicHeight
 	EndIf
 	
 	Local moviefile$ = "GFX\menu\startup_Undertow"

@@ -389,7 +389,7 @@ Global PlayStartUp% = GetINIInt(OptionFile,"options","play startup video")
 ;Save options to .ini.
 Function SaveOptionsINI()
 	
-	PutINIValue(OptionFile, "controls", "mouse sensitivity", MouseSens)
+	PutINIValue(OptionFile, "controls", "mouse sensitivity", MouseSensitivity)
 	PutINIValue(OptionFile, "controls", "invert mouse y", InvertMouse)
 	PutINIValue(OptionFile, "graphics", "bump mapping enabled", BumpEnabled)			
 	PutINIValue(OptionFile, "advanced", "HUD enabled", HUDenabled)

@@ -22,7 +22,6 @@ ms\MenuBlinkTimer%[1] = 1
 
 Global SelectedInputBox%
 
-Global SavePath$ = "Saves\"
 Global SaveMSG$
 
 ;nykyisen tallennuksen nimi ja samalla miss?¤ kansiossa tallennustiedosto sijaitsee saves-kansiossa
@@ -75,33 +74,33 @@ Function UpdateMainMenu()
 			
 			Select Rand(0, 23)
 				Case 0, 2, 3
-					MenuStr = "НЕ МОРГАЙ" ;DON'T BLINK
+					ms\MenuStr = "НЕ МОРГАЙ" ;DON'T BLINK
 				Case 4, 5
-					MenuStr = "Обезопасить. Удержать. Сохранить." ;Secure. Contain. Protect.
+					ms\MenuStr = "Обезопасить. Удержать. Сохранить." ;Secure. Contain. Protect.
 				Case 6, 7, 8
-					MenuStr = "Хочешь счастливую концовку? Хер тебе!" ;You want happy endings? Fuck you.
+					ms\MenuStr = "Хочешь счастливую концовку? Хер тебе!" ;You want happy endings? Fuck you.
 				Case 9, 10, 11
-					MenuStr = "Иногда у нас могло бы быть время кричать." ;Sometimes we would have had time to scream.
+					ms\MenuStr = "Иногда у нас могло бы быть время кричать." ;Sometimes we would have had time to scream.
 				Case 12, 19
-					MenuStr = "НИЧТО" ;NIL
+					ms\MenuStr = "НИЧТО" ;NIL
 				Case 13
-					MenuStr = "НЕТ" ;NO
+					ms\MenuStr = "НЕТ" ;NO
 				Case 14
-					MenuStr = "чёрный белый чёрный белый чёрный белый серый" ;black white black white black white gray
+					ms\MenuStr = "чёрный белый чёрный белый чёрный белый серый" ;black white black white black white gray
 				Case 15
-					MenuStr = "Камень не волнует" ;Stone does not care
+					ms\MenuStr = "Камень не волнует" ;Stone does not care
 				Case 16
-					MenuStr = "9341"
+					ms\MenuStr = "9341"
 				Case 17
-					MenuStr = "Он управляет дверьми" ;It controls the doors
+					ms\MenuStr = "Он управляет дверьми" ;It controls the doors
 				Case 18
-					MenuStr = "e8m106]af173o+079m895w914"
+					ms\MenuStr = "e8m106]af173o+079m895w914"
 				Case 20
-					MenuStr = "Он захватил всё" ;It has taken over everything
+					ms\MenuStr = "Он захватил всё" ;It has taken over everything
 				Case 21
-					MenuStr = "Спираль растёт" ;The spiral is growing
+					ms\MenuStr = "Спираль растёт" ;The spiral is growing
 				Case 22
-					MenuStr = Chr(34)+"Что-то вроде эффекта гештальта из-за массивного повреждения реальности."+Chr(34) ;Some kind of gestalt effect due to massive reality damage.
+					ms\MenuStr = Chr(34)+"Что-то вроде эффекта гештальта из-за массивного повреждения реальности."+Chr(34) ;Some kind of gestalt effect due to massive reality damage.
 				Case 23
 				    ms\MenuStr = "Jabka"
 			End Select
@@ -237,16 +236,20 @@ Function UpdateMainMenu()
 
 		Local back%
 		If ms\MainMenuTab<>8
-			Color 0,0,0
-			AAText(GraphicWidth/2)+(420*MenuScale)+(3*MenuScale)-StringWidth("НАЗАД"), y+(3*MenuScale),"НАЗАД",False,False ;BACK
-			If MouseOn((GraphicWidth/2)+(420*MenuScale)-StringWidth("НАЗАД"), y, StringWidth("НАЗАД"), StringHeight("НАЗАД")) Then ;BACK
-				Color 100,100,150
+		    If MouseOn((GraphicWidth/2)+(330*MenuScale), y, 130, 60) And (Rand(20)=1) Then
+		        Color 100+Rand(50),100,100
+                AAText(GraphicWidth/2)+(330*MenuScale)+(3*MenuScale)+Rand(-10*MenuScale,10*MenuScale), y+(3*MenuScale)+Rand(-10*MenuScale,10*MenuScale),"НАЗАД",False,False ;BACK
+            EndIf
+            Color 0,0,0
+			AAText(GraphicWidth/2)+(330*MenuScale)+(3*MenuScale), y+(3*MenuScale),"НАЗАД",False,False ;BACK
+			If MouseOn((GraphicWidth/2)+(330*MenuScale), y, 130, 60)  Then
+				Color 100, 100, 150
 				If MouseHit1 Then back = True : PlaySound_Strict(ButtonSFX)
 			Else
 				Color 255,255,255
 			EndIf
 			
-			AAText(GraphicWidth/2)+(420*MenuScale)-StringWidth("НАЗАД"),y,"НАЗАД",False,False ;BACK
+			AAText(GraphicWidth/2)+(330*MenuScale),y,"НАЗАД",False,False ;BACK
 		EndIf
 	
 		If back Then		
@@ -1223,10 +1226,10 @@ Function UpdateMainMenu()
 		
 	End If
 	
-	Color 255,255,255
+	Color 255, 255, 255
 	AASetFont fo\ConsoleFont
-	AAText 20,GraphicHeight-50,"v"+ModVersionNumber
-	AAText 20,GraphicHeight-30,"Запущено на SCP:CB v"+GameVersionNumber ;Running on
+	AAText 20, GraphicHeight-50, "v" + ModVersionNumber
+	AAText 20, GraphicHeight-30, "Запущено на SCP:CB v" + GameVersionNumber ;Running on
 
 	If Fullscreen Then DrawImage CursorIMG, ScaledMouseX(),ScaledMouseY()
 	

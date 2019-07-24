@@ -1,6 +1,4 @@
-
 Function SaveGame(file$)
-	CatchErrors("Uncaught (SaveGame)")
 	Local fs.FPS_Settings = First FPS_Settings
 	
 	If Not Playable Then Return ;don't save if the player can't move at all
@@ -79,14 +77,14 @@ Function SaveGame(file$)
 	;MOD
 	
 	WriteByte f, Binoculars
-	WriteFloat f, I_447\Using
-	WriteByte f, I_447\UsingPill
-	WriteFloat f, I_447\UsingPillTimer
-	WriteByte f, I_447\UsingAid
-	WriteFloat f, I_447\UsingAidTimer
+
 	WriteByte f, I_447\UsingEyeDrops
 	WriteFloat f, I_447\UsingEyeDropsTimer
-	
+	WriteByte f, I_447\UsingFirstAid
+	WriteFloat f, I_447\UsingFirstAidTimer
+	WriteByte f, I_447\UsingPill
+	WriteFloat f, I_447\UsingPillTimer
+
 	WriteByte f, UsedMorphine
 	WriteFloat f, MorphineTimer
 	WriteFloat f, MorphineHealAmount
@@ -514,7 +512,7 @@ Function SaveGame(file$)
 	WriteByte f, I_427\Using
 	WriteFloat f, I_427\Timer
 	
-	WriteByte f, Wearing714
+	WriteByte f, I_714\Using
 	CloseFile f
 	
 	If Not ms\MenuOpen Then
@@ -527,15 +525,11 @@ Function SaveGame(file$)
 		Msg = "Игра сохранена." ;Game progress saved.
 		MsgTimer = 70 * 4
 	EndIf
-	
-	CatchErrors("SaveGame")
 End Function
 
 Function LoadGame(file$)
 	Local version$ = ""
-	
-	CatchErrors("Uncaught (LoadGame)")
-	
+
 	DropSpeed=0.0
 	
 	DebugHUD = False
@@ -612,13 +606,12 @@ Function LoadGame(file$)
 	
 	Binoculars = ReadByte(f)
 	
-	I_447\Using = ReadFloat(f)
-	I_447\UsingPill = ReadByte(f)
-	I_447\UsingPillTimer = ReadFloat(f)
-	I_447\UsingAid = ReadByte(f)
-	I_447\UsingAidTimer = ReadFloat(f)
 	I_447\UsingEyeDrops = ReadByte(f)
 	I_447\UsingEyeDropsTimer = ReadFloat(f)
+	I_447\UsingFirstAid = ReadByte(f)
+	I_447\UsingFirstAidTimer = ReadFloat(f)
+	I_447\UsingPill = ReadByte(f)
+	I_447\UsingPillTimer = ReadFloat(f)
 	
 	UsedMorphine = ReadByte(f)
 	MorphineTimer = ReadFloat(f)
@@ -733,10 +726,12 @@ Function LoadGame(file$)
 				Curr106 = n
 			Case NPCtype096
 				Curr096 = n
-			Case NPCtype5131
+			Case NPCtype513_1
 				Curr5131 = n
 			Case NPCtype650
 			    Curr650 = n
+			Case NPCtype066
+			    Curr066 = n
 		End Select
 		
 		x = ReadFloat(f)
@@ -776,7 +771,7 @@ Function LoadGame(file$)
 		
 		Local frame# = ReadFloat(f)
 		Select NPCtype
-			Case NPCtype106, NPCtypeD, NPCtype096, NPCtypeMTF, NPCtypeGuard, NPCtype049, NPCtype0492, NPCtypeClerk, NPCtype650, NPCtype0493, NPCtypeMTF2, NPCtype457, NPCtype0082, NPCtypeCI, NPCtypeTentacle
+			Case NPCtype106, NPCtypeD, NPCtype096, NPCtypeMTF, NPCtypeGuard, NPCtype049, NPCtype049_2, NPCtypeClerk, NPCtype650, NPCtype049_3, NPCtypeMTF2, NPCtype457, NPCtype008_2, NPCtype035_Tentacle, NPCtype008_1
 				SetAnimTime(n\obj, frame)
 		End Select
 		
@@ -1163,7 +1158,7 @@ Function LoadGame(file$)
 				HideChunks()
 				DeleteChunks()
 				For n.NPCs = Each NPCs
-					If n\NPCtype = NPCtype1499
+					If n\NPCtype = NPCtype1499_1
 						If n\InFacility = 0
 							RemoveNPC(n)
 						EndIf
@@ -1182,7 +1177,7 @@ Function LoadGame(file$)
 			e\EventStr = ""
 		ElseIf e\EventName = "room106"
 			If e\EventState2 = False Then
-				PositionEntity (e\room\Objects[6],EntityX(e\room\Objects[6],True),-1280.0*RoomScale,EntityZ(e\room\Objects[6],True),True)
+				PositionEntity(e\room\Objects[6],EntityX(e\room\Objects[6],True),-1280.0*RoomScale,EntityZ(e\room\Objects[6],True),True)
 			EndIf
 		EndIf
 	Next
@@ -1308,14 +1303,14 @@ Function LoadGame(file$)
 	I_427\Using = ReadByte(f)
 	I_427\Timer = ReadFloat(f)
 	
-	If version = "5.3" Then
+	If version = "5.4" Then
 		I_Zone\Transition[0] = ReadByte(f)
 		I_Zone\Transition[1] = ReadByte(f)
 		I_Zone\HasCustomForest = ReadByte(f)
 		I_Zone\HasCustomMT = ReadByte(f)
 	EndIf
 	
-	Wearing714 = ReadByte(f)
+	I_714\Using = ReadByte(f)
 	
 	CloseFile f
 	
@@ -1389,15 +1384,12 @@ Function LoadGame(file$)
 	EndIf
 	
 	UpdateDoorsTimer = 0
-	
-	CatchErrors("LoadGame")
+
 End Function
 
 Function LoadGameQuick(file$)
 	Local version$ = ""
-	
-	CatchErrors("Uncaught (LoadGameQuick)")
-	
+
 	DebugHUD = False
 	GameSaved = True
 	chs\NoTarget = False
@@ -1506,13 +1498,12 @@ Function LoadGameQuick(file$)
 	
 	Binoculars = ReadByte(f)
 	
-	I_447\Using = ReadFloat(f)
-	I_447\UsingPill = ReadByte(f)
-	I_447\UsingPillTimer = ReadFloat(f)
-	I_447\UsingAid = ReadByte(f)
-	I_447\UsingAidTimer = ReadFloat(f)
 	I_447\UsingEyeDrops = ReadByte(f)
 	I_447\UsingEyeDropsTimer = ReadFloat(f)
+	I_447\UsingFirstAid = ReadByte(f)
+	I_447\UsingFirstAidTimer = ReadFloat(f)
+	I_447\UsingPill = ReadByte(f)
+	I_447\UsingPillTimer = ReadFloat(f)
 	
 	UsedMorphine = ReadByte(f)
 	MorphineTimer = ReadFloat(f)
@@ -1633,10 +1624,12 @@ Function LoadGameQuick(file$)
 				Curr106 = n
 			Case NPCtype096
 				Curr096 = n
-			Case NPCtype5131
+			Case NPCtype513_1
 				Curr5131 = n
 			Case NPCtype650
 			    Curr650 = n
+			Case NPCtype066
+			    Curr066 = n
 		End Select
 		
 		x = ReadFloat(f)
@@ -1676,7 +1669,7 @@ Function LoadGameQuick(file$)
 		
 		Local frame# = ReadFloat(f)
 		Select NPCtype
-			Case NPCtype106, NPCtypeD, NPCtype096, NPCtypeMTF, NPCtypeGuard, NPCtype049, NPCtype0492, NPCtypeClerk, NPCtype650, NPCtype0493, NPCtypeMTF2, NPCtype457, NPCtype0082, NPCtypeCI, NPCtype035Tentacle
+			Case NPCtype106, NPCtypeD, NPCtype096, NPCtypeMTF, NPCtypeGuard, NPCtype049, NPCtype049_2, NPCtypeClerk, NPCtype650, NPCtype049_3, NPCtypeMTF2, NPCtype457, NPCtype008_2, NPCtype035_Tentacle, NPCtype008_1
 				SetAnimTime(n\obj, frame)
 		End Select		
 		
@@ -2107,14 +2100,14 @@ Function LoadGameQuick(file$)
 	I_427\Using = ReadByte(f)
 	I_427\Timer = ReadFloat(f)
 	
-	If version = "5.3" Then
+	If version = "5.4" Then
 		I_Zone\Transition[0] = ReadByte(f)
 		I_Zone\Transition[1] = ReadByte(f)
 		I_Zone\HasCustomForest = ReadByte(f)
 		I_Zone\HasCustomMT = ReadByte(f)
 	EndIf
 	
-	Wearing714 = ReadByte(f)
+	I_714\Using = ReadByte(f)
 	CloseFile f
 	
 	If Collider <> 0 Then
@@ -2182,12 +2175,10 @@ Function LoadGameQuick(file$)
 	;Resetting some stuff (those get changed when going to the endings)
 	CameraFogMode(Camera, 1)
 	HideDistance# = 15.0
-	
-	CatchErrors("LoadGameQuick")
+
 End Function
 
 Function LoadSaveGames()
-	CatchErrors("Uncaught (LoadSaveGames)")
 	SaveGameAmount = 0
 	If FileType(SavePath)=1 Then RuntimeError "Can't create dir "+Chr(34)+SavePath+Chr(34)
 	If FileType(SavePath)=0 Then CreateDir(SavePath)
@@ -2243,13 +2234,11 @@ Function LoadSaveGames()
 		
 		CloseFile f
 	Next
-	
-	CatchErrors("LoadSaveGames")
+
 End Function
 
 
 Function LoadSavedMaps()
-	CatchErrors("Uncaught (LoadSavedMaps)")
 	Local i%, Dir, file$
 	
 	For i = 0 To SavedMapsAmount
@@ -2299,11 +2288,9 @@ Function LoadSavedMaps()
 		EndIf 
 	Forever 
 	CloseDir Dir 
-	CatchErrors("LoadSavedMaps")
 End Function
 
 Function LoadMap(file$)
-	CatchErrors("Uncaught (LoadMap)")
 	Local f%, x%, y%, name$, angle%, prob#
 	Local r.Rooms, rt.RoomTemplates, e.Events
 	Local roomamount%,forestpieceamount%,mtpieceamount%,i%
@@ -2681,7 +2668,5 @@ Function LoadMap(file$)
 			If (r\Adjacent[0]<>Null) And (r\Adjacent[1]<>Null) And (r\Adjacent[2]<>Null) And (r\Adjacent[3]<>Null) Then Exit
 		Next
 	Next
-	
-	CatchErrors("LoadMap")
 End Function
 

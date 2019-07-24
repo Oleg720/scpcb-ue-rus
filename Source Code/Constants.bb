@@ -1,9 +1,13 @@
 ;ALL CONSTANTS OF THE MOD
 
+;MOD
+
 ;[FONTS]
 
 Const MaxFontAmount = 5
 Const MaxCreditsFontAmount = 2
+
+;END
 
 ;[COLLISIONS]
 
@@ -13,7 +17,6 @@ Const HIT_ITEM% = 3
 Const HIT_APACHE% = 4
 Const HIT_178% = 5
 Const HIT_DEAD% = 6
-Const HIT_LADDER% = 7
 
 ;[?]
 
@@ -26,7 +29,9 @@ Const ClrB = 50
 
 ;[TEXTURES]
 
-Const MaxDTextures = 16
+Const MaxDTextures = 17
+
+;MOD
 
 Const MaxDecalTextureIDAmount = 24
 Const MaxOtherTextureIDAmount = 15
@@ -34,6 +39,7 @@ Const MaxParticleTextureIDAmount = 10
 Const MaxLightSpriteTextureIDAmount = 11
 Const MaxOverlayIDAmount = 16
 Const MaxOverlayTextureIDAmount = 22
+
 
 ;[OBJECTS]
 
@@ -44,6 +50,8 @@ Const MaxButtonIDAmount = 4
 Const MaxLeverIDAmount = 2
 Const MaxCamIDAmount = 2
 Const MaxOtherModelsIDAmount = 2
+
+;END
 
 ;[FOREST GENERATION]
 
@@ -72,6 +80,8 @@ Const ZONEAMOUNT = 3
 
 Const gridsz% = 19 ;Same size as the main map itself (better for the map creator)
 
+;MOD
+
 ;[3D MENU]
 
 Const MaxRenderingObjAmount = 3
@@ -87,47 +97,58 @@ Const MaxMenuLightSprites2Amount = 11
 Const SubjectName$ = "Субъект D-9341"
 Const SubjectName2$ = "Субъекта D-9341" ;Вариант в Родительном падеже
 
+;END
+
 ;[ACHIEVEMENTS]
 
-Const MAXACHIEVEMENTS = 57
+Const MAXACHIEVEMENTS = 58
 
 Const Achv008% = 0, Achv012% = 1, Achv035% = 2, Achv049% = 3, Achv055 = 4,  Achv079% = 5, Achv096% = 6, Achv106% = 7, Achv148% = 8
-Const Achv205 = 9, Achv294% = 10, Achv372% = 11, Achv420% = 12, Achv427=13, Achv500% = 14, Achv513% = 15, Achv714% = 16
+Const Achv205 = 9, Achv294% = 10, Achv372% = 11, Achv420% = 12, Achv427 = 13, Achv500% = 14, Achv513% = 15, Achv714% = 16
 Const Achv789% = 17, Achv860% = 18, Achv895% = 19, Achv914% = 20, Achv939% = 21, Achv966% = 22, Achv970 = 23
-Const Achv1025% = 24, Achv1048 = 25, Achv1123 = 26
+Const Achv1025% = 24, Achv1048 = 25, Achv1123 = 26, Achv1162% = 27, Achv1499% = 28
 
-Const AchvMaynard% = 27, AchvHarp% = 28, AchvSNAV% = 29, AchvOmni% = 30
-Const AchvConsole% = 31, AchvTesla% = 32, AchvPD% = 33, Achv1162% = 34, Achv1499% = 35, AchvKeter% = 36
+Const AchvConsole% = 29, AchvHarp% = 30, AchvKeter% = 31, AchvMaynard% = 32, AchvOmni% = 33
+Const AchvPD% = 34, AchvSNAV% = 35, AchvTesla% = 36
 
-;MODS
+;MOD
 
 Const Achv005% = 37, Achv009% = 38, Achv109% = 39, Achv178% = 40, Achv198% = 41, Achv207% = 42, Achv215% = 43, Achv357% = 44
 Const Achv402% = 45, Achv409% = 46, Achv447% = 47, Achv457% = 48, Achv650% = 49, Achv1033RU% = 50, Achv1079% = 51
 
-Const AchvDuck% = 52, AchvMTF% = 53, AchvO5% = 54, AchvKeyCard6% = 55, AchvThaumiel% = 56
-
+Const AchvDuck% = 52, AchvGears% = 53, AchvMTF% = 54, AchvO5% = 55, AchvKeyCard6% = 56, AchvThaumiel% = 57
 ;END
+
 
 ;[NPCs]
 
 Const MaxNPCModelIDAmount = 35
 
-Const NPCtype173% = 1, NPCtype106% = 2, NPCtypeGuard% = 3, NPCtypeD% = 4
-Const NPCtype372% = 5, NPCtypeApache% = 6, NPCtypeMTF% = 7, NPCtype096% = 8
-Const NPCtype049% = 9, NPCtype0492% = 10, NPCtype5131% = 11, NPCtype035Tentacle% = 12
-Const NPCtype8602% = 13, NPCtype939% = 14, NPCtype066% = 15, NPCtypePdPlane% = 16
-Const NPCtype966% = 17, NPCtype1048a = 18, NPCtype1499% = 19, NPCtype0081% = 20, NPCtypeClerk% = 21
+Const NPCtype008_1% = 1, NPCtype035_Tentacle% = 2, NPCtype049% = 3, NPCtype049_2% = 4, NPCtype066% = 5
+Const NPCtype096% = 6, NPCtype106% = 7, NPCtype173% = 8, NPCtype372% = 9, NPCtype513_1% = 10, NPCtype860_2% = 11
+Const NPCtype939% = 12, NPCtype966% = 13, NPCtype1048_A% = 14, NPCtype1499_1% = 15
 
-;MODS
+Const NPCtypeApache% = 16, NPCtypeClerk% = 17, NPCtypeD% = 18
+Const NPCtypeGuard% = 19, NPCtypeMTF% = 20, NPCtypePdPlane% = 21
 
-Const NPCtype0083% = 22, NPCtype650% = 23, NPCtype457% = 24, NPCtype0493% = 25, NPCtype0082% = 26
-Const NPCtype178% = 27, NPCtypeMTF2% = 28, NPCtypeCI% = 29
+;MOD
+
+Const NPCtype008_2% = 22, NPCtype049_3% = 23, NPCtype178_1% = 24, NPCtype457% = 25, NPCtype650% = 26
+
+Const NPCtypeCI% = 27, NPCtypeMTF2% = 28
+
 
 ;END
 
 ;[DIFFICULTY]
 
-Const SAFE = 0, EUCLID = 1, KETER = 2, THAUMIEL = 3, CUSTOM = 4
+Const SAFE = 0
+Const EUCLID = 1
+Const KETER = 2
+;MOD
+Const THAUMIEL = 3
+;END
+Const CUSTOM = 4
 
 Const SAVEANYWHERE = 0, SAVEONQUIT = 1, SAVEONSCREENS = 2, NOTSAVE = 3
 
@@ -164,9 +185,13 @@ Const MusicPath2$ = "SFX\Radio\UserTracks\"
 ;[VERSIONS]
 
 Const GameVersionNumber$ = "1.3.11"
-Const ModVersionNumber$ = "5.4 [Rus v1.0-Dev]" ;Полностью отпадает возможность использовать обратную совместимость
+Const ModVersionNumber$ = "5.4.1 [Rus vPre-1.0]"
 
 ;[OPTIONS]
 
-Const OptionFile$ = "options.ini"
+Const OptionFile$ = "Source Code\options.ini"
+
+;[SAVE]
+
+Const SavePath$ = "Saves\"
 

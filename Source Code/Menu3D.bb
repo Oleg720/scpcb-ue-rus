@@ -30,19 +30,16 @@ End Type
 AlarmSFX(0) = LoadSound_Strict("SFX\Alarm\Alarm.ogg")
 AlarmSFX(1) = LoadSound_Strict("SFX\Alarm\Alarm2.ogg") ; For 3D Menu only.
 TeslaIdleSFX = LoadSound_Strict("SFX\Room\Tesla\Idle.ogg")
-LightBlinkSFX% = LoadSound_Strict("SFX\Room\009Chamber\LightBlink.ogg")
 
 For i = 7 To 9
 	IntroSFX(i) = LoadSound_Strict("SFX\Room\Intro\Bang" + (i - 6) + ".ogg")
 Next
 
-For i = 0 To 2
+For i = 0 To 5
 	RustleSFX(i) = LoadSound_Strict("SFX\SCP\372\Rustle" + i + ".ogg")
 Next
 
 Function Init3DMenu()
-    CatchErrors("Uncaught (Init3DMenu)")
-
     SeedRnd MilliSecs()
 
     ;Rooms selection	
@@ -294,15 +291,13 @@ Function Init3DMenu()
 			AmbientLight Brightness,Brightness,Brightness
 			CameraFogRange m3d\Cam,0.1,6.0
 			CameraFogMode m3d\Cam,1
-		    ;MoveEntity m3d\Cam,0.0,1.0,-2.0	
-            MoveEntity m3d\Cam,0.0164874,2.76,0.0291088
-            ;RotateEntity m3d\Cam,88.3351,180.0,0
+            MoveEntity m3d\Cam, 0.0164874,2.0,0.8512 ;0.0164874 0.0291088
 	        PointEntity m3d\Cam,m3d\Mesh
 		
-			m3d\Misc[0] = LoadAnimMesh_Strict("GFX\npcs\classd.b3d")
+			m3d\Misc[0] = LoadAnimMesh_Strict("GFX\npcs\class_d.b3d")
 			ftemp# = 0.5 / MeshWidth(m3d\Misc[0])	
 			ScaleEntity m3d\Misc[0], ftemp, ftemp, ftemp	
-			PositionEntity m3d\Misc[0], - 400.0 * RoomScale, - 510.0 * RoomScale, 200.0 * RoomScale, True		
+			PositionEntity m3d\Misc[0], + 490.0 * RoomScale, - 500.0 * RoomScale, 0.0, True
 			RotateEntity m3d\Misc[0],0,0,0,True		
 			SetAnimTime m3d\Misc[0],19.0
 			
@@ -312,52 +307,23 @@ Function Init3DMenu()
 			m3d\Misc[1] = 0
 
 			m3d\Misc[2] = LoadMesh_Strict("GFX\map\DoorFrame.x")
-			m3d\Misc[3] = CopyEntity(m3d\Misc[2])
-			m3d\Misc[4] = CopyEntity(m3d\Misc[2])			
-			m3d\Misc[5] = CopyEntity(m3d\Misc[2])
+			m3d\Misc[3] = LoadMesh_Strict("GFX\map\heavydoor1.x")
+			m3d\Misc[4] = LoadMesh_Strict("GFX\map\heavydoor2.x")
 						
-			PositionEntity m3d\Misc[2],0,0,608.0 * RoomScale,True
-			PositionEntity m3d\Misc[3],0,0,-608.0 * RoomScale,True
-			PositionEntity m3d\Misc[4],608.0 * RoomScale,0,0,True
-			PositionEntity m3d\Misc[5],-608.0 * RoomScale,0,0,True
-			
-			RotateEntity m3d\Misc[4], 0, 90, 0
-			RotateEntity m3d\Misc[5], 0, 90, 0	 		
+			PositionEntity m3d\Misc[2],0,0, -640.0 * RoomScale,True
+			PositionEntity m3d\Misc[3],0,0, -640.0 * RoomScale,True
+			PositionEntity m3d\Misc[4],0,0, -640.0 * RoomScale,True		
 						
 			ScaleEntity m3d\Misc[2], RoomScale, RoomScale, RoomScale
 			ScaleEntity m3d\Misc[3], RoomScale, RoomScale, RoomScale
 			ScaleEntity m3d\Misc[4], RoomScale, RoomScale, RoomScale
-			ScaleEntity m3d\Misc[5], RoomScale, RoomScale, RoomScale
 						
-			EntityParent(m3d\Misc[2], m3d\Mesh)
-			EntityParent(m3d\Misc[3], m3d\Mesh)
-			EntityParent(m3d\Misc[4], m3d\Mesh)
-			EntityParent(m3d\Misc[5], m3d\Mesh)
+			RotateEntity m3d\Misc[3],0,0,0
+			RotateEntity m3d\Misc[4],0,180,0
 
-			m3d\Misc[6] = LoadMesh_Strict("GFX\map\heavydoor1.x")
-			m3d\Misc[7] = LoadMesh_Strict("GFX\map\heavydoor2.x")
-			;m3d\Misc[8] = CopyEntity(m3d\Misc[6])
-			;m3d\Misc[9] = CopyEntity(m3d\Misc[7])
-
-			ScaleEntity m3d\Misc[6], RoomScale, RoomScale, RoomScale
-			ScaleEntity m3d\Misc[7], RoomScale, RoomScale, RoomScale			
-			;ScaleEntity m3d\Misc[8], RoomScale, RoomScale, RoomScale
-			;ScaleEntity m3d\Misc[9], RoomScale, RoomScale, RoomScale
-
-			PositionEntity m3d\Misc[6], 608.0 * RoomScale, 0, 0,True
-			PositionEntity m3d\Misc[7], 608.0 * RoomScale, 0, 0,True
-			;PositionEntity m3d\Misc[8],-608.0 * RoomScale,0,0,True
-			;PositionEntity m3d\Misc[9],-608.0 * RoomScale,0,0,True
-
-			RotateEntity m3d\Misc[6], 0, 90, 0
-			RotateEntity m3d\Misc[7], 0, 270, 0
-			;RotateEntity m3d\Misc[8],0,90,0
-			;RotateEntity m3d\Misc[9],0,270,0
-
-			EntityParent m3d\Misc[6], m3d\Mesh
-			EntityParent m3d\Misc[7], m3d\Mesh
-			;EntityParent m3d\Misc[8],m3d\Mesh
-			;EntityParent m3d\Misc[9],m3d\Mesh																					
+			EntityParent m3d\Misc[2], m3d\Mesh
+			EntityParent m3d\Misc[3], m3d\Mesh
+			EntityParent m3d\Misc[4], m3d\Mesh																			
 																				
 			;[End Block]
 		Case "room3pit"
@@ -434,11 +400,9 @@ Function Init3DMenu()
 	End Select
 			
 	ClearTextureCache
-	CatchErrors("Init3DMenu")
 End Function
 
 Function Update3DMenu()
-    CatchErrors("Uncaught (Update3DMenu)")
 	Local fs.FPS_Settings = First FPS_Settings
 	
 	If ms\MainMenuTab=0 Then
@@ -599,9 +563,9 @@ Function Update3DMenu()
 			;[End Block]
 		Case "room372"
 			;[Block]		
-			If Rand(300)=1 Then 
+			If Rand(600)=1 Then 
 			    m3d\Dark = Max(m3d\Dark,0.6)
-			    m3d\SoundChn = PlaySound_Strict(RustleSFX(Rand(0,2)))
+			    m3d\SoundChn = PlaySound_Strict(RustleSFX(Rand(0,5)))
 			EndIf						
 			;[End Block]
 		Case "room914"
@@ -736,14 +700,10 @@ Function Update3DMenu()
 ;	RotateEntity m3d\Cam,m3d\State,m3d\State2,0
 	
 	RenderWorld ;Renders the world
-    CameraProjMode m3d\Cam,0 ;Disable the projector				
-	
-    CatchErrors("Update3DMenu")
+    CameraProjMode m3d\Cam,0 ;Disable the projector
 End Function
 
 Function DeInit3DMenu()
-    CatchErrors("Uncaught (DeInit3DMenu)")
-
     Local ml.Menu3DLights = First Menu3DLights
 	
 	ClearTextureCache
@@ -800,12 +760,10 @@ Function DeInit3DMenu()
 	For i=0 To 9
 		If TempSounds[i]<>0 Then FreeSound_Strict TempSounds[i] : TempSounds[i]=0
 	Next
-	
-	CatchErrors("DeInit3DMenu")
+
 End Function
 
 Function LoadRMesh_3DMenu(file$) ;this ignores some stuff that we don't need
-	CatchErrors("Uncaught (LoadRMesh_3DMenu)")
 	;generate a texture made of white
 	Local blankTexture%
 	blankTexture=CreateTexture(4,4,1,1)
@@ -1024,7 +982,6 @@ Function LoadRMesh_3DMenu(file$) ;this ignores some stuff that we don't need
 	
 ;	Local hiddenMesh%
 ;	hiddenMesh=CreateMesh()
-	Local ladder%
 		
 	count=ReadInt(f) ;invisible collision mesh
 	For i%=1 To count
@@ -1064,7 +1021,7 @@ Function LoadRMesh_3DMenu(file$) ;this ignores some stuff that we don't need
 		
 	count=ReadInt(f) ;point entities
 	
-	Local lightTex% = LoadTexture("GFX\light1.png", 1)
+	Local lightTex% = LoadTexture("GFX\light.png", 1)
 	Local lightSprite% = LoadTexture("GFX\lightsprite.png", 1)
 	
 	For i%=1 To count
@@ -1268,26 +1225,7 @@ Function LoadRMesh_3DMenu(file$) ;this ignores some stuff that we don't need
 										
 					;Stop
 				EndIf
-				
-			Case "ladder"
-				
-				count2=ReadInt(f)
-				
-				;If ladder = 0 Then ladder = CreateMesh() : EntityAlpha ladder,0
-				
-				;surf = CreateSurface(ladder)
-				
-				For j=1 To count2
-					temp1=ReadFloat(f) : temp2=ReadFloat(f) : temp3=ReadFloat(f)
-					;AddVertex surf,temp1,temp2,temp3
-				Next
-				
-				count2=ReadInt(f)
-				
-				For j=1 To count2
-					temp1i=ReadInt(f) : temp2i=ReadInt(f) : temp3i=ReadInt(f)
-					;AddTriangle(surf,temp1i,temp2i,temp3i)
-				Next
+
 		End Select
 	Next
 	
@@ -1322,16 +1260,10 @@ Function LoadRMesh_3DMenu(file$) ;this ignores some stuff that we don't need
 ;	CreatePivot(Room) ;skip "pointentites" object
 ;	CreatePivot(Room) ;skip "solidentites" object
 
-	If ladder<>0 Then
-		EntityParent ladder,obj
-		EntityAlpha ladder,0.0
-		EntityType ladder,HIT_LADDER
-	EndIf
-		
+
 	CloseFile f
 	
 	Return Opaque
-	CatchErrors("LoadRMesh_3DMenu")
 End Function
 
 ;~IDEal Editor Parameters:

@@ -1,11 +1,7 @@
-;[Block]
-
 Global Curr173.NPCs, Curr106.NPCs, Curr096.NPCs, Curr5131.NPCs
 ;MOD
 Global Curr650.NPCs
 ;END
-
-;[End Block]
 
 Type NPCs
 	Field obj%, obj2%, obj3%, obj4%, Collider%
@@ -98,7 +94,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			;On Halloween set jack-o-latern texture.
 			If (Left(CurrentDate(), 7) = "31 Oct ") Then
 				at\OtherTextureID[0] = True
-				Local texFestive = LoadTexture_Strict("GFX\npcs\scp173_h.pt", 1)
+				Local texFestive = LoadTexture_Strict("GFX\npcs\scp_173_h.pt", 1)
 				EntityTexture n\obj, texFestive, 0, 0
 				FreeTexture texFestive
 			EndIf
@@ -106,7 +102,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			;On Halloween set jack-o-latern texture.
 			If (Left(CurrentDate(), 7) = "1 Jan ") Then
 				at\OtherTextureID[1] = True
-				Local texFestive2 = LoadTexture_Strict("GFX\npcs\scp173_ny.pt", 1)
+				Local texFestive2 = LoadTexture_Strict("GFX\npcs\scp_173_ny.pt", 1)
 				EntityTexture n\obj, texFestive2, 0, 0
 				FreeTexture texFestive2
 			EndIf
@@ -116,7 +112,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			
 			n\Speed = (GetINIFloat("Data\NPCs.ini", "SCP-173", "speed") / 100.0)
 			
-			n\obj2 = LoadMesh_Strict("GFX\scp173_box.b3d")
+			n\obj2 = CopyEntity(o\NPCModelID[35])
 			ScaleEntity n\obj2, RoomScale, RoomScale, RoomScale
 			HideEntity n\obj2
 			
@@ -135,7 +131,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			temp# = (GetINIFloat("Data\NPCs.ini", "SCP-106", "scale") / 2.2)		
 			ScaleEntity n\obj, temp, temp, temp
 			
-			Local OldManEyes% = LoadTexture_Strict("GFX\npcs\scp106_eyes.png")
+			Local OldManEyes% = LoadTexture_Strict("GFX\npcs\scp_106_eyes.png")
 			
 			n\Speed = (GetINIFloat("Data\NPCs.ini", "SCP-106", "speed") / 100.0)
 			
@@ -188,7 +184,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			EntityRadius n\Collider, 0.2
 			n\obj = CopyEntity(o\NPCModelID[4])
 
-			temp# = 0.35 / MeshWidth(n\obj)
+			temp# = 0.3 / MeshWidth(n\obj)
 			ScaleEntity n\obj, temp, temp, temp
 			;[End Block]
 
@@ -271,7 +267,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 							MTFrooms[2] = r	
 						Case "room2poffices"
 							MTFrooms[3] = r	
-						Case "914"
+						Case "room914"
 							MTFrooms[4] = r	
 						Case "room895"
 							MTFrooms[5] = r	
@@ -390,7 +386,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			
 			EntityFX(n\obj, 1)
 			
-			tex = LoadTexture_Strict("GFX\npcs\scp860_2_eyes.png",1+2)
+			tex = LoadTexture_Strict("GFX\npcs\scp_860_2_eyes.png",1+2)
 			
 			n\obj2 = CreateSprite()
 			ScaleSprite(n\obj2, 0.1, 0.1)
@@ -731,7 +727,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 							MTF2rooms[2] = r	
 						Case "room2poffices"
 							MTF2rooms[3] = r	
-						Case "914"
+						Case "room914"
 							MTF2rooms[4] = r	
 						Case "room650"
 							MTF2rooms[5] = r	
@@ -1468,28 +1464,13 @@ Function UpdateNPCs()
 						CurrCameraZoom = CurveValue(Max(CurrCameraZoom, (Sin(Float(MilliSecs2())/20.0)+1.0) * 10.0),CurrCameraZoom,8.0)
 						
 						If n\Target = Null Then 
-							;If n\Sound = 0 Then
-							;	n\Sound = LoadSound_Strict("SFX\SCP\096\Scream.ogg")
-							;Else
-							;	n\SoundChn = LoopSound2(n\Sound, n\SoundChn, Camera, n\Collider, 7.5, 1.0)
-							;EndIf
 							If n\SoundChn = 0
 								n\SoundChn = StreamSound_Strict("SFX\SCP\096\Scream.ogg",0)
 								n\SoundChn_IsStream = True
 							Else
 								UpdateStreamSoundOrigin(n\SoundChn,Camera,n\Collider,7.5,1.0)
 							EndIf
-							
-							;If n\Sound2 = 0 Then
-							;	n\Sound2 = LoadSound_Strict("SFX\Music\096Chase.ogg")
-							;Else
-							;	If n\SoundChn2 = 0 Then
-							;		n\SoundChn2 = PlaySound_Strict (n\Sound2)
-							;	Else
-							;		If (Not ChannelPlaying(n\SoundChn2)) Then n\SoundChn2 = PlaySound_Strict(n\Sound2)
-							;		ChannelVolume(n\SoundChn2, Min(Max(8.0-dist,0.6),1.0)*SFXVolume#)
-							;	EndIf
-							;EndIf
+
 							If n\SoundChn2 = 0
 								n\SoundChn2 = StreamSound_Strict("SFX\Music\096Chase.ogg",0)
 								n\SoundChn2_IsStream = 2
@@ -1500,10 +1481,10 @@ Function UpdateNPCs()
 						
 						If chs\NoTarget And n\Target = Null Then n\State = 5
 						
-						If KillTimer =>0 Then
+						If KillTimer => 0 Then
 							
 							If MilliSecs2() > n\State3 Then
-								n\LastSeen=0
+								n\LastSeen = 0
 								If n\Target=Null Then
 									If EntityVisible(Collider, n\Collider) Then n\LastSeen=1
 								Else
@@ -1566,15 +1547,12 @@ Function UpdateNPCs()
 									
 									RotateEntity n\Collider, 0, CurveAngle(EntityYaw(n\obj), EntityYaw(n\Collider), 5.0), 0
 									
-									;1000
 									If n\Frame>847 Then n\CurrSpeed = CurveValue(n\Speed,n\CurrSpeed,20.0)
 									
-									If n\Frame<906 Then ;1058
+									If n\Frame<906 Then
 										AnimateNPC(n,737,906,n\Speed*8,False)
-										;AnimateNPC(n, 892,1058, n\Speed*8, False)
 									Else
 										AnimateNPC(n,907,935,n\CurrSpeed*8)
-										;AnimateNPC(n, 1059,1084, n\CurrSpeed*8)	
 									EndIf
 								EndIf
 								
@@ -1613,7 +1591,7 @@ Function UpdateNPCs()
 												If n\Path[n\PathLocation]\door\open = False Then
 													n\Path[n\PathLocation]\door\open = True
 													n\Path[n\PathLocation]\door\fastopen = 1
-													PlaySound2(OpenDoorFastSFX, Camera, n\Path[n\PathLocation]\door\obj)
+													PlaySound2(OpenDoorFastSFX(Rnd(0, 1)), Camera, n\Path[n\PathLocation]\door\obj)
 												EndIf
 											EndIf							
 											If dist2 < 0.7 Then n\PathLocation = n\PathLocation + 1 ;0.2
@@ -1622,7 +1600,7 @@ Function UpdateNPCs()
 									
 								Else
 									;AnimateNPC(n, 892,972, 0.2)
-									AnimateNPC(n,737,822,0.2)
+									AnimateNPC(n,1471,1556,0.1)
 									
 									n\PathTimer = Max(0, n\PathTimer-fs\FPSfactor[0])
 									If n\PathTimer=<0 Then
@@ -1653,6 +1631,7 @@ Function UpdateNPCs()
 										If x < 28.0 And x > 20.0 Then
 											z = Abs(EntityZ(n\Collider)-EntityZ(w\obj,True))
 											If z < 28 And z > 20.0 Then
+												DebugLog "TELEPORTING 096 - "+w\room\roomtemplate\name
 												n\PathStatus = 0 : n\PathTimer = 0 : n\PathLocation = 0
 												PositionEntity n\Collider, EntityX(w\obj,True), EntityY(w\obj,True)+0.25,EntityZ(w\obj,True)
 												ResetEntity n\Collider
@@ -1667,11 +1646,6 @@ Function UpdateNPCs()
 						;[End Block]
 					Case 1,2,3
 						;[Block]
-						;If n\Sound = 0 Then
-						;	n\Sound = LoadSound_Strict("SFX\Music\096Angered.ogg")
-						;Else
-						;	n\SoundChn = LoopSound2(n\Sound, n\SoundChn, Camera, n\Collider, 10.0, 1.0)
-						;EndIf
 						If n\SoundChn = 0
 							n\SoundChn = StreamSound_Strict("SFX\Music\096Angered.ogg",0)
 							n\SoundChn_IsStream = True
@@ -1690,29 +1664,22 @@ Function UpdateNPCs()
 								AnimateNPC(n,677,736,0.3,False)
 								If n\Frame > 735.9 Then n\State = 2 : n\Frame = 737
 							EndIf
-							;If n\Frame>1085 Then
-							;	AnimateNPC(n, 1085, 1412, 0.3,False)
-							;	If n\Frame> 1411.9 Then n\Frame = 307
-							;Else
-							;	AnimateNPC(n, 307, 424, 0.3, False)
-							;	If n\Frame > 423.9 Then n\State = 2 : n\Frame = 892
-							;EndIf
 						ElseIf n\State=2
-							AnimateNPC(n,737,822,0.3,False)
+							AnimateNPC(n,677,737,0.3,False)
 							If n\Frame=>822 Then n\State=3 : n\State2=0
 							;AnimateNPC(n, 833, 972, 0.3, False)
 							;If n\Frame=>972 Then n\State = 3 : n\State2=0
 						ElseIf n\State=3
 							n\State2 = n\State2+fs\FPSfactor[0]
-							If n\State2 > 70*18 Then
-								AnimateNPC(n,823,847,n\Speed*8,False)
+							If n\State2 > 70*26 Then
+								AnimateNPC(n,823,847,n\Speed*5,False)
 								;AnimateNPC(n, 973, 1001, 0.5, False)
 								If n\Frame>846.9 Then ;1000.9 
 									n\State = 4
 									StopStream_Strict(n\SoundChn) : n\SoundChn=0
 								EndIf
 							Else
-								AnimateNPC(n,737,822,0.3)
+								AnimateNPC(n,1471,1556,0.4)
 								;AnimateNPC(n, 892,978, 0.3)
 							EndIf
 						EndIf
@@ -1724,12 +1691,7 @@ Function UpdateNPCs()
 							If dist < 4.0 Then
 								GiveAchievement(Achv096)
 							EndIf
-							
-							;If n\Sound = 0 Then
-							;	n\Sound = LoadSound_Strict("SFX\Music\096.ogg")
-							;Else
-							;	n\SoundChn = LoopSound2(n\Sound, n\SoundChn, Camera, n\Collider, 14.0, 1.0)
-							;EndIf
+
 							If n\SoundChn = 0
 								n\SoundChn = StreamSound_Strict("SFX\Music\096.ogg",0)
 								n\SoundChn_IsStream = True
@@ -1941,15 +1903,6 @@ Function UpdateNPCs()
 												n\PrevState = 3
 											ElseIf BlurTimer => 500
 												Wearing714 = False
-											EndIf
-										ElseIf I_1033RU\Using > 0 And I_1033RU\HP > 0 Then
-											BlurTimer = BlurTimer+fs\FPSfactor[0]*2.5
-											If BlurTimer > 250 And BlurTimer - fs\FPSfactor[0] * 2.5 <= 250 And n\PrevState <> 3 Then
-												If n\SoundChn2 <> 0 Then StopChannel(n\SoundChn2)
-												n\SoundChn2 = PlaySound_Strict(LoadTempSound("SFX\SCP\049\714Equipped.ogg"))
-												n\PrevState = 3
-											ElseIf BlurTimer => 500
-												I_1033RU\Using = 0
 											EndIf
 										Else
 											CurrCameraZoom = 20.0
@@ -2361,7 +2314,7 @@ Function UpdateNPCs()
 									;Animate2(n\obj, AnimTime(n\obj), 926, 935, 0.3, False)
 									;If AnimTime(n\obj)=935 Then n\State = 2
 								Else
-									AnimateNPC(n, 155, 682, 1.5, False)
+									AnimateNPC(n, 155, 682, 1.6, False)
 									;Animate2(n\obj, AnimTime(n\obj), 155, 682, 1.5, False)
 								EndIf
 								;[End Block]
@@ -2485,7 +2438,11 @@ Function UpdateNPCs()
 											    If I_1033RU\HP = 0
 												    Injuries = Injuries+Rnd(0.4,1.0)
 												Else
-											        Damage1033RU(20+(5*SelectedDifficulty\aggressiveNPCs))
+											        Damage1033RU(20)
+											        n\HP = n\HP - 20
+											        If n\HP =< 0 Then
+							                            n\IsDead = True
+							                        EndIf
 											    EndIf
 											    If Injuries > 3.0
 												    DeathMSG = SubjectName$+". Причина смерти: множественные раны и травмы, нанесённые SCP-049-2." ;Subject D-9341. Cause of death: multiple lacerations and severe blunt force trauma caused by an instance of SCP-049-2.
@@ -2506,7 +2463,11 @@ Function UpdateNPCs()
 											    If I_1033RU\HP = 0
 												    Injuries = Injuries+Rnd(0.4,1.0)
 												Else
-											        Damage1033RU(20+(5*SelectedDifficulty\aggressiveNPCs))
+											        Damage1033RU(20)
+											        n\HP = n\HP - 20
+											        If n\HP =< 0 Then
+							                            n\IsDead = True
+							                        EndIf
                                                 EndIf
 												If Injuries > 3.0
 												    DeathMSG = SubjectName$+". Причина смерти: множественные раны и травмы, нанесённые SCP-049-2." ;Subject D-9341. Cause of death: multiple lacerations and severe blunt force trauma caused by an instance of SCP-049-2.
@@ -2521,7 +2482,11 @@ Function UpdateNPCs()
 								;[End Block]
 						End Select
 					Else
-						AnimateNPC(n, 133, 157, 0.5, False)
+					    ;If Rand(2) = 1 Then
+						    ;AnimateNPC(n, 133, 157, 0.5, False)
+						;Else
+						    AnimateNPC(n, 1035, 1072, 0.3, False)
+                        ;EndIf
 					EndIf
 					
 					PositionEntity(n\obj, EntityX(n\Collider), EntityY(n\Collider) - 0.2, EntityZ(n\Collider))
@@ -2713,11 +2678,11 @@ Function UpdateNPCs()
 						;[End Block]
 					Case 7
 						;[Block]
-						AnimateNPC(n,77,201,0.2)
+						AnimateNPC(n, 77, 201, 0.2)
 						;Animate2(n\obj, AnimTime(n\obj), 923, 1354, 0.2)
 						;[End Block]
 					Case 8
-						
+
 					Case 9
 						;[Block]
 						AnimateNPC(n,77,201,0.2)
@@ -2934,11 +2899,23 @@ Function UpdateNPCs()
 							PlaySound2(StepSFX(2,0,Rand(0,2)),Camera, n\Collider, 8.0, Rnd(0.5,0.7))
 						EndIf
 						;[End Block]
+					;Case 15
+					;    ;[Block]
+					;	AnimateNPC(n, 623, 747, 0.2)
+					;	;[End Block]
+					;Case 16
+					;   ;[Block]
+					;	AnimateNPC(n, 623, 747, 0.2)
+					;	n\BoneToManipulate = "head"
+					;	n\ManipulateBone = True
+					;	n\ManipulationType = 0
+					;	n\Angle = EntityYaw(n\Collider)
+					;	;[End Block]
 					Default
 						;[Block]
 						If Rand(400) = 1 Then n\PrevState = Rnd(-30, 30)
 						n\PathStatus = 0
-						AnimateNPC(n,77,201,0.2)
+						AnimateNPC(n, 77, 201, 0.2)
 						
 						RotateEntity(n\Collider, 0, CurveAngle(n\Angle + n\PrevState + Sin(MilliSecs2() / 50) * 2, EntityYaw(n\Collider), 50), 0, True)
 						;[End Block]
@@ -3218,10 +3195,7 @@ Function UpdateNPCs()
 					Else
 						PositionEntity(n\obj, EntityX(n\Collider) + Rnd(-0.005, 0.005), EntityY(n\Collider)+0.3+0.1*Sin(MilliSecs2()/2), EntityZ(n\Collider) + Rnd(-0.005, 0.005))
 						RotateEntity n\obj, 0, EntityYaw(n\Collider), ((MilliSecs2()/5) Mod 360)
-						
-						AnimateNPC(n, 32, 113, 0.4)
-						;Animate2(n\obj, AnimTime(n\obj), 32, 113, 0.4)
-						
+
 						If EntityInView(n\obj, Camera) Then
 							GiveAchievement(Achv372)
 							
@@ -3489,7 +3463,11 @@ Function UpdateNPCs()
 											        If I_1033RU\HP = 0
 												        Injuries = Injuries+Rnd(0.5)
 												    Else
-												        Damage1033RU(20+(5*SelectedDifficulty\aggressiveNPCs))
+												        Damage1033RU(20 + (5 * SelectedDifficulty\aggressiveNPCs))
+												        n\HP = n\HP - 30 + (5 * SelectedDifficulty\aggressiveNPCs)
+												        If n\HP =< 0 Then
+							                                n\IsDead = True
+							                            EndIf
 												    EndIf
 											    Else
 												    BlurTimer = 100
@@ -3498,6 +3476,10 @@ Function UpdateNPCs()
 												        Injuries = Injuries+Rnd(1.0,1.5)
 												    Else
 												        Damage1033RU(20+(5*SelectedDifficulty\aggressiveNPCs))
+												        n\HP = n\HP - 30 + (5 * SelectedDifficulty\aggressiveNPCs)
+												        If n\HP =< 0 Then
+							                                n\IsDead = True
+							                            EndIf
 												    EndIf
 												    If Injuries > 3.0 Then
 													    If PlayerRoom\RoomTemplate\Name = "room2offices" Then
@@ -5139,7 +5121,11 @@ Function UpdateNPCs()
 									    If I_1033RU\HP = 0
 										    Injuries = Injuries+Rnd(0.4,1.0)
 										Else
-											Damage1033RU(20+(5*SelectedDifficulty\aggressiveNPCs))
+											Damage1033RU(20)
+											n\HP = n\HP - 24
+											If n\HP =< 0 Then
+							                    n\IsDead = True
+							                EndIf
 										EndIf
 										DeathMSG = SubjectName$+". Причина смерти: многочисленные рваные раны и травмы от ударов тупым предметом, нанесённые [ДАННЫЕ УДАЛЕНЫ], который был заражён SCP-008. Данный субъект был обнаружен и ликвидирован подразделением Девятихвостая лиса." ;Subject D-9341. Cause of death: multiple lacerations and severe blunt force trauma caused by [DATA EXPUNGED], who was infected with SCP-008. Said subject was located by Nine-Tailed Fox and terminated.
 									EndIf
@@ -5237,7 +5223,7 @@ Function UpdateNPCs()
 									;Animate2(n\obj, AnimTime(n\obj), 926, 935, 0.3, False)
 									;If AnimTime(n\obj)=935 Then n\State = 2
 								Else
-									AnimateNPC(n, 155, 682, 1.5, False)
+									AnimateNPC(n, 155, 682, 1.6, False)
 									;Animate2(n\obj, AnimTime(n\obj), 155, 682, 1.5, False)
 								EndIf
 								;[End Block]
@@ -5359,7 +5345,11 @@ Function UpdateNPCs()
 												If I_1033RU\HP = 0
 												    Injuries = Injuries+Rnd(0.4,1.0)
 												Else
-											        Damage1033RU(20+(5*SelectedDifficulty\aggressiveNPCs))
+											        Damage1033RU(20)
+											        n\HP = n\HP - 24
+											        If n\HP =< 0 Then
+							                            n\IsDead = True
+							                        EndIf
                                                 EndIf
                                                 If Injuries > 3.0
 							                        DeathMSG = SubjectName$+". Причина смерти: многочисленные рваные раны и травмы от ударов тупым предметом, нанесённые [ДАННЫЕ УДАЛЕНЫ], который был заражён SCP-008. Данный субъект был обнаружен и ликвидирован подразделением Не Вижу Зла." ;Cause of death: multiple lacerations and severe blunt force trauma caused by [Data EXPUNGED], who was infected with SCP-008. Said subject was located by See No Evil And terminated."
@@ -5380,7 +5370,11 @@ Function UpdateNPCs()
 												If I_1033RU\HP = 0
 											        Injuries = Injuries+Rnd(0.4,1.0)
 										        Else
-											        Damage1033RU(20+(5*SelectedDifficulty\aggressiveNPCs))
+											        Damage1033RU(20)
+										            n\HP = n\HP - 24
+											        If n\HP =< 0 Then
+							                            n\IsDead = True
+							                        EndIf
                                                 EndIf
                                                 If Injuries > 3.0
 												    DeathMSG = SubjectName$+". Причина смерти: многочисленные рваные раны и травмы от ударов тупым предметом, нанесённые [ДАННЫЕ УДАЛЕНЫ], который был заражён SCP-008. Данный субъект был обнаружен и ликвидирован подразделением Девятихвостая лиса." ;Cause of death: multiple lacerations and severe blunt force trauma caused by [Data EXPUNGED], who was infected with SCP-008. Said subject was located by Nine Tailed Fox And terminated.
@@ -5395,7 +5389,11 @@ Function UpdateNPCs()
 								;[End Block]
 						End Select
 					Else
-						AnimateNPC(n, 133, 157, 0.5, False)
+						;If Rand(2) = 1 Then
+						    ;AnimateNPC(n, 133, 157, 0.5, False)
+						;Else
+						    AnimateNPC(n, 1035, 1072, 0.3, False)
+                        ;EndIf
 					EndIf
 					
 					PositionEntity(n\obj, EntityX(n\Collider), EntityY(n\Collider) - 0.2, EntityZ(n\Collider))
@@ -5842,7 +5840,11 @@ Function UpdateNPCs()
 						            		If I_1033RU\HP = 0
 							            		Injuries = Injuries+Rnd(0.4,1.0)
 							        		Else
-							            		Damage1033RU(20+(5*SelectedDifficulty\aggressiveNPCs))
+							            		Damage1033RU(20)
+							                    n\HP = n\HP - 20
+							                    If n\HP =< 0 Then
+							                        n\IsDead = True
+							                    EndIf
 							        		EndIf
 							                If Injuries > 3.0 Then
 							                    DeathMSG = SubjectName$+". Причина смерти: множественные раны и травмы, нанесённые SCP-049-2." ;Subject D-9341. Cause of death: multiple lacerations and severe blunt force trauma caused by an instance of SCP-049-2.
@@ -6826,9 +6828,9 @@ Function UpdateMTFUnit(n.NPCs)
 								n\PathStatus = 0
 								n\Target = n2
 								n\Reload = 70*5
-								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Player0492_1.ogg")
-								PlayMTFSound(n\Sound, n)
+								;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
+								;n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Player0492_1.ogg")
+								;PlayMTFSound(n\Sound, n)
 								Exit
 							EndIf
 						EndIf
@@ -7842,12 +7844,17 @@ Function UpdateMTFUnit(n.NPCs)
 							Else
 								If (Not n\Target\IsDead)
 									If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-									If n\NPCtype = NPCtype0492 Or n\NPCtype = NPCtype0493
+									If n\NPCtype = NPCtype0492
 										n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Player0492_2.ogg")
 										PlayMTFSound(n\Sound, n)
-									Else;If n\NPCtype = NPCtype0081 Or n\NPCtype = NPCtype0082
-									    ;n\Sound = LoadSound_Strict("SFX\Character\MTF\008\0081.ogg")
+									;ElseIf n\NPCtype = NPCtype0493
+									    ;n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Player049_3_2.ogg")
 									    ;PlayMTFSound(n\Sound, n)
+									;ElseIf n\NPCtype = NPCtype0082
+									    ;n\Sound = LoadSound_Strict("SFX\Character\MTF2\008\008_2.ogg")
+									    ;PlayMTFSound(n\Sound, n)
+									;Else;If n\NPCtype = NPCtype0081
+									    ;n\Sound = LoadSound_Strict("SFX\Character\MTF2\008\008_1.ogg")
 									EndIf
 								EndIf
 								SetNPCFrame(n\Target,133)
@@ -8417,9 +8424,9 @@ Function UpdateMTF2Unit(n.NPCs)
 								n\PathStatus = 0
 								n\Target = n2
 								n\Reload = 70*5
-								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF2\049\Player0492_1.ogg")
-								PlayMTFSound(n\Sound, n)
+								;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
+								;n\Sound = LoadSound_Strict("SFX\Character\MTF2\049\Player0492_1.ogg")
+								;PlayMTFSound(n\Sound, n)
 								Exit
 							EndIf
 						EndIf
@@ -9457,11 +9464,17 @@ Function UpdateMTF2Unit(n.NPCs)
 							Else
 								If (Not n\Target\IsDead)
 									If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-									If n\NPCtype = NPCtype0492 Or n\NPCtype = NPCtype0493
+									If n\NPCtype = NPCtype0492
 										n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Player0492_2.ogg")
 										PlayMTFSound(n\Sound, n)
-									Else;If n\NPCtype = NPCtype0081 Or n\NPCtype = NPCtype0082
-									    ;n\Sound = LoadSound_Strict("SFX\Character\MTF2\008\0081.ogg")
+									;ElseIf n\NPCtype = NPCtype0493
+									    ;n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Player049_3_2.ogg")
+									    ;PlayMTFSound(n\Sound, n)
+									;ElseIf n\NPCtype = NPCtype0082
+									    ;n\Sound = LoadSound_Strict("SFX\Character\MTF2\008\008_2.ogg")
+									    ;PlayMTFSound(n\Sound, n)
+									;Else;If n\NPCtype = NPCtype0081
+									    ;n\Sound = LoadSound_Strict("SFX\Character\MTF2\008\008_1.ogg")
 									    ;PlayMTFSound(n\Sound, n)
 									EndIf
 								EndIf
@@ -9611,13 +9624,7 @@ Function Shoot(x#, y#, z#, hitProb# = 1.0, particles% = True, instaKill% = False
 	LightVolume = TempLightVolume*1.2
 	
 	If (Not chs\GodMode) Then 
-	    If I_1033RU\HP = 0
-		    If instaKill Then Kill(True) : PlaySound_Strict BullethitSFX : Return
-	    Else
-            Damage1033RU(50+(5*SelectedDifficulty\aggressiveNPCs))
-            PlaySound_Strict BullethitSFX
-        EndIf
-	    
+		If instaKill Then Kill(True) : PlaySound_Strict BullethitSFX : Return	    
 		If Rnd(1.0) =< hitProb Then
 			TurnEntity Camera, Rnd(-3,3), Rnd(-3,3), 0
 			
@@ -9632,59 +9639,34 @@ Function Shoot(x#, y#, z#, hitProb# = 1.0, particles% = True, instaKill% = False
 						        Injuries = Injuries + Rnd(0.1,0.5)
 						        ShotMessageUpdate = "Пуля прошла сквозь жилет, Вы задыхаетесь." ;A bullet penetrated your vest, making you gasp.
                             Else
-                                Damage1033RU(2+(5*SelectedDifficulty\aggressiveNPCs))
-							    ShotMessageUpdate = "Пуля прошла сквозь жилет, но SCP-1033-RU поглотил большую часть урона." ;A bullet penetrated your vest, but SCP-1033-RU absorbed most of the damage.
-							EndIf
+							    ShotMessageUpdate = "Пуля прошла сквозь жилет, но SCP-1033-RU защитил Вас." ;A bullet penetrated your vest, but SCP-1033-RU protected you.
+								Damage1033RU(2+(5*SelectedDifficulty\aggressiveNPCs))
+								EndIf
 						Case 6
 						    BlurTimer = 500
 							Stamina = 0
-						    If I_1033RU\HP = 0
 						        Injuries = Injuries + Rnd(0.8,1.2)
 						        ShotMessageUpdate = "Пуля попала вам в левую ногу." ;A bullet hit your left leg.
-						    Else
-                                Damage1033RU(2+(5*SelectedDifficulty\aggressiveNPCs))
-							    ShotMessageUpdate = "Пуля попала вам в левую ногу, но SCP-1033-RU защитил Вас." ;A bullet hit your left leg, but SCP-1033-RU protects you.
-							EndIf
 						Case 7
 						    BlurTimer = 500
 							Stamina = 0
-						    If I_1033RU\HP = 0
 							    Injuries = Injuries + Rnd(0.8,1.2)
 							    ShotMessageUpdate = "Пуля попала вам в правую ногу." ;A bullet hit your right leg.
-							Else
-                                Damage1033RU(2+(5*SelectedDifficulty\aggressiveNPCs))
-							    ShotMessageUpdate = "Пуля попала вам в правую ногу, но SCP-1033-RU защитил Вас." ;A bullet hit your right leg, but SCP-1033-RU protects you.
-							EndIf
 						Case 8
 						    BlurTimer = 500
 							Stamina = 0
-						    If I_1033RU\HP = 0
 						        Injuries = Injuries + Rnd(1.2,1.6)
 						        ShotMessageUpdate = "Пуля попала вам в шею, Вы задыхаетесь." ;A bullet struck your neck, making you gasp.
-						    Else
-                                Damage1033RU(2+(5*SelectedDifficulty\aggressiveNPCs))
-							    ShotMessageUpdate = "Пуля попала вам в шею, но SCP-1033-RU защитил Вас." ;A bullet struck your neck, but SCP-1033-RU protects you.
-							EndIf
 					End Select	
 				Else
 					If Rand(10)=1 Then
 					    BlurTimer = 500
 					    Stamina = Stamina - 1
-						If I_1033RU\HP = 0
-						    Injuries = Injuries + Rnd(0.8,1.1)
-						    ShotMessageUpdate = "Поля попала вам в грудь. Жилет поглотил часть урона." ;A bullet hit your chest. The vest absorbed some of the damage.
-						Else
-                            Damage1033RU(2+(5*SelectedDifficulty\aggressiveNPCs))
-						    ShotMessageUpdate = "Поля попала вам в грудь, но SCP-1033-RU поглотил часть урона."
-						EndIf
+						Injuries = Injuries + Rnd(0.8,1.1)
+						ShotMessageUpdate = "Поля попала вам в грудь. Жилет поглотил часть урона." ;A bullet hit your chest. The vest absorbed some of the damage.
 					Else
-					    If I_1033RU\HP = 0
-					        Injuries = Injuries + Rnd(0.1,0.5)
-					        ShotMessageUpdate = "Поля попала вам в грудь. Жилет поглотил большую часть урона." ;A bullet hit your chest. The vest absorbed most of the damage.
-					    Else
-                            Damage1033RU(2+(5*SelectedDifficulty\aggressiveNPCs))
-						    ShotMessageUpdate = "Поля попала вам в грудь, но SCP-1033-RU поглотил большую часть урона." ;A bullet hit your chest. SCP-1033-RU absorbed most of the damage.
-						EndIf
+					    Injuries = Injuries + Rnd(0.1,0.5)
+					    ShotMessageUpdate = "Поля попала вам в грудь. Жилет поглотил большую часть урона." ;A bullet hit your chest. The vest absorbed most of the damage.
 					EndIf
 				EndIf
 				
@@ -9710,7 +9692,7 @@ Function Shoot(x#, y#, z#, hitProb# = 1.0, particles% = True, instaKill% = False
 					        ShotMessageUpdate = "Пуля попала вам в левую ногу." ;A bullet hit your left leg.
 					    Else
 					        Damage1033RU(2+(5*SelectedDifficulty\aggressiveNPCs))
-						    ShotMessageUpdate = "Пуля попала вам в левую ногу, но SCP-1033-RU защитил Вас." ;A bullet hit your left leg, but SCP-1033-RU protects you.
+						    ShotMessageUpdate = "Пуля попала вам в левую ногу, но SCP-1033-RU защитил Вас." ;A bullet hit your left leg, but SCP-1033-RU protected you.
 						EndIf
 					Case 3
 					    BlurTimer = 500
@@ -9719,7 +9701,7 @@ Function Shoot(x#, y#, z#, hitProb# = 1.0, particles% = True, instaKill% = False
 					        ShotMessageUpdate = "Пуля попала вам в правую ногу." ;A bullet hit your right leg.
 					    Else
 					        Damage1033RU(2+(5*SelectedDifficulty\aggressiveNPCs))
-						    ShotMessageUpdate = "Пуля попала вам в правую ногу, но SCP-1033-RU защитил Вас." ;A bullet hit your right leg, but SCP-1033-RU protects you.
+						    ShotMessageUpdate = "Пуля попала вам в правую ногу, но SCP-1033-RU защитил Вас." ;A bullet hit your right leg, but SCP-1033-RU protected you.
 						EndIf
 					Case 4
 					    BlurTimer = 500
@@ -9728,7 +9710,7 @@ Function Shoot(x#, y#, z#, hitProb# = 1.0, particles% = True, instaKill% = False
 					        ShotMessageUpdate = "Пуля попала вам в правое плечо." ;A bullet hit your right shoulder.
 					    Else
 					        Damage1033RU(2+(5*SelectedDifficulty\aggressiveNPCs))
-						    ShotMessageUpdate = "Пуля попала вам в правое плечо, но SCP-1033-RU защитил Вас." ;A bullet hit your right shoulder, but SCP-1033-RU protects you.
+						    ShotMessageUpdate = "Пуля попала вам в правое плечо, но SCP-1033-RU защитил Вас." ;A bullet hit your right shoulder, but SCP-1033-RU protected you.
 						EndIf	
 					Case 5
 					    BlurTimer = 500
@@ -9737,7 +9719,7 @@ Function Shoot(x#, y#, z#, hitProb# = 1.0, particles% = True, instaKill% = False
 			                ShotMessageUpdate = "Пуля попала вам в левое плечо." ;A bullet hit your left shoulder.
 			            Else
 			                Damage1033RU(2+(5*SelectedDifficulty\aggressiveNPCs))
-						    ShotMessageUpdate = "Пуля попала вам в левое плечо, но SCP-1033-RU защитил Вас." ;A bullet hit your left shoulder, but SCP-1033-RU protects you.
+						    ShotMessageUpdate = "Пуля попала вам в левое плечо, но SCP-1033-RU защитил Вас." ;A bullet hit your left shoulder, but SCP-1033-RU protected you.
 						EndIf
 					Case 6
 					    BlurTimer = 500
@@ -9746,7 +9728,7 @@ Function Shoot(x#, y#, z#, hitProb# = 1.0, particles% = True, instaKill% = False
 					        ShotMessageUpdate = "Пуля попала вам в правое плечо." ;A bullet hit your right shoulder.
 					    Else
 					        Damage1033RU(2+(5*SelectedDifficulty\aggressiveNPCs))
-						    ShotMessageUpdate = "Пуля попала вам в правое плечо, но SCP-1033-RU защитил Вас." ;A bullet hit your right shoulder, but SCP-1033-RU protects you.
+						    ShotMessageUpdate = "Пуля попала вам в правое плечо, но SCP-1033-RU защитил Вас." ;A bullet hit your right shoulder, but SCP-1033-RU protected you.
 						EndIf
 				End Select
 			EndIf
@@ -9925,23 +9907,24 @@ Function Console_SpawnNPC(c_input$, c_state$ = "")
 	Local consoleMSG$
 	
 	Select c_input$ 
-		Case "008", "008zombie"
+		Case "0081", "0081zombie", "scp008-1", "scp-008-1", "scp0081", "008-1"
 			n.NPCs = CreateNPC(NPCtype0081, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
 			n\State = 1
-			consoleMSG = "Заражённый SCP-008, человек создан." ;SCP-008 infected human spawned.
+			consoleMSG = "SCP-008-1 создан." ;SCP-008-1 spawned.
 			
 		Case "049", "scp049", "scp-049"
 			n.NPCs = CreateNPC(NPCtype049, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
 			n\State = 1
 			consoleMSG = "SCP-049 создан." ;SCP-049 spawned.
 			
-		Case "049-2", "0492", "scp-049-2", "scp049-2", "049zombie"
+		Case "049-2", "0492", "scp-049-2", "scp049-2", "049zombie", "zombie", "scp-0492"
 			n.NPCs = CreateNPC(NPCtype0492, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
 			n\State = 1
 			consoleMSG = "SCP-049-2 создан." ;SCP-049-2 spawned.
 			
 		Case "066", "scp066", "scp-066"
 			n.NPCs = CreateNPC(NPCtype066, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
+			If (Curr066 = Null) Curr066 = n
 			consoleMSG = "SCP-066 создан." ;SCP-066 spawned.
 			
 		Case "096", "scp096", "scp-096"
@@ -9960,6 +9943,7 @@ Function Console_SpawnNPC(c_input$, c_state$ = "")
 			Curr173 = n
 			If (Curr173\Idle = 3) Then Curr173\Idle = False
 			consoleMSG = "SCP-173 создан." ;SCP-173 spawned.
+
 		Case "372", "scp372", "scp-372"
 			n.NPCs = CreateNPC(NPCtype372, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
 			consoleMSG = "SCP-372 создан." ;SCP-372 spawned.
@@ -9978,7 +9962,7 @@ Function Console_SpawnNPC(c_input$, c_state$ = "")
 			n.NPCs = CreateNPC(NPCtype966, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
 			consoleMSG = "Особь SCP-966 создана." ;SCP-966 instance spawned.
 			
-		Case "1048-a", "scp1048-a", "scp-1048-a", "scp1048a", "scp-1048a"
+		Case "1048-a", "scp1048-a", "scp-1048-a", "scp1048a", "scp-1048a", "1048a"
 			CreateConsoleMsg("SCP-1048-A не может быть создан с помощью консоли. Простите!", 255, 0, 0) ;SCP-1048-A cannot be spawned with the console. Sorry!
 			
 		Case "1499-1", "14991", "scp-1499-1", "scp1499-1"
@@ -10013,7 +9997,7 @@ Function Console_SpawnNPC(c_input$, c_state$ = "")
 			
 		Case "650", "scp650", "scp-650", "black statue"
 			n.NPCs = CreateNPC(NPCtype650, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
-			Curr650 = n
+			If (Curr650 = Null) Curr650 = n
 			n\Idle = False
 			If (Curr650\Idle = 3) Then Curr650\Idle = False
 			consoleMSG = "SCP-650 создан." ;SCP-650 spawned.
@@ -10021,15 +10005,15 @@ Function Console_SpawnNPC(c_input$, c_state$ = "")
 		Case "scp-457","457","scp457"
 		    CreateConsoleMsg("SCP-457 не может быть создан с помощью консоли. Простите!", 255, 0, 0) ;SCP-457 cannot be spawned with the console. Sorry!
 			
-		Case "zombie2", "04922", "0492-2", "scp0492-2", "scp04922", "scp049-2-2", "049zombie2", "049-2-2"
+		Case "0493", "049-3", "scp049-3", "scp-049-3", "scp-0493", "scp0493", "049zombie2", "zombie2"
 			n.NPCs = CreateNPC(NPCtype0493, EntityX(Collider),EntityY(Collider)+0.2,EntityZ(Collider))			
 			n\state = 1
-			consoleMSG = "SCP-049-2 создан." ;SCP-049-2 spawned.
+			consoleMSG = "SCP-049-3 создан." ;SCP-049-2 spawned.
 			
 		Case "0082", "008-2", "scp-008-2", "scp008-2", "0082zombie"
 			n.NPCs = CreateNPC(NPCtype0082, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
 			n\State = 1
-			consoleMSG = "Заражённый SCP-008, человек создан." ;SCP-008 infected human spawned.
+			consoleMSG = "SCP-008-3 создан." ;SCP-008 infected human spawned.
 			
 		Case "178-1", "1781", "scp-178-1", "scp178-1"
 			n.NPCs = CreateNPC(NPCtype178, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))

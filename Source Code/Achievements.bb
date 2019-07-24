@@ -19,7 +19,7 @@ For i = 0 To MAXACHIEVEMENTS-1
 	AchvIMG(i) = ResizeImage2(AchvIMG(i),ImageWidth(AchvIMG(i))*GraphicHeight/768.0,ImageHeight(AchvIMG(i))*GraphicHeight/768.0)
 Next
 
-Global AchvLocked = LoadImage_Strict("GFX\menu\achievements\achvlocked.png")
+Global AchvLocked = LoadImage_Strict("GFX\menu\achievements\AchvLocked.png")
 AchvLocked = ResizeImage2(AchvLocked,ImageWidth(AchvLocked)*GraphicHeight/768.0,ImageHeight(AchvLocked)*GraphicHeight/768.0)
 
 Function GiveAchievement(achvname%, showMessage%=True)
@@ -157,12 +157,11 @@ Function RenderAchievementMsg()
      For amsg = Each AchievementMsg
 		If amsg\msgtime <> 0
             x=GraphicWidth+amsg\msgx
-			;y=(GraphicHeight-height)
 			y=0
 			For amsg2 = Each AchievementMsg
 				If amsg2 <> amsg
 					If amsg2\msgID > amsg\msgID
-						y=y-height
+						y=y+height
 					EndIf
 				EndIf
 			Next
@@ -179,9 +178,3 @@ Function RenderAchievementMsg()
 	Next
 End Function
 
-
-
-
-;~IDEal Editor Parameters:
-;~F#31#48
-;~C#Blitz3D

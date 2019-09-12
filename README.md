@@ -1,7 +1,7 @@
 # SCP - Containment Breach UE | Русская локализация
 
 Версия оригинальной игры: 1.3.11  
-Версия модификации Ultimate Edition: 5.4.1  
+Версия модификации Ultimate Edition: 5.5  
 Локализация за авторством команд [CreatorMasters] и [Trill Team].  
 Репозиторий с оригинальной игрой [Regalis11/scpcb][OriginalRep].  
 Репозиторий с модификацией Ultimate Edition отсутстует.  

@@ -17,10 +17,14 @@ For i = 0 To MAXACHIEVEMENTS-1
 	
 	AchvIMG(i) = LoadImage_Strict("GFX\menu\achievements\"+image+".png")
 	AchvIMG(i) = ResizeImage2(AchvIMG(i),ImageWidth(AchvIMG(i))*GraphicHeight/768.0,ImageHeight(AchvIMG(i))*GraphicHeight/768.0)
+	
+	BufferDirty ImageBuffer(AchvIMG(i))
 Next
 
 Global AchvLocked = LoadImage_Strict("GFX\menu\achievements\AchvLocked.png")
 AchvLocked = ResizeImage2(AchvLocked,ImageWidth(AchvLocked)*GraphicHeight/768.0,ImageHeight(AchvLocked)*GraphicHeight/768.0)
+
+BufferDirty ImageBuffer(AchvLocked)
 
 Function GiveAchievement(achvname%, showMessage%=True)
 	If Achievements(achvname)<>True Then
@@ -161,7 +165,7 @@ Function RenderAchievementMsg()
 			For amsg2 = Each AchievementMsg
 				If amsg2 <> amsg
 					If amsg2\msgID > amsg\msgID
-						y=y+height
+						y=y+height 
 					EndIf
 				EndIf
 			Next
@@ -173,7 +177,7 @@ Function RenderAchievementMsg()
 			Rect(x+10*scale,y+10*scale,64*scale,64*scale,False)
 			Color 255,255,255
 			AASetFont fo\Font[0]
-			RowText("Новое достижение:      "+amsg\txt,x+84*scale,y+10*scale,width-94*scale,y-20*scale) ;Achievement Unlocked - 
+			RowText("Новое достижение:      "+amsg\txt,x+84*scale,y+10*scale,width-94*scale,y-20*scale) ;Achievement Unlocked -    
 		EndIf
 	Next
 End Function

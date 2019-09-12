@@ -5,14 +5,19 @@ Type Difficulty
 	Field aggressiveNPCs
 	Field saveType%
 	Field otherFactors%
-	Field menu%
 	
 	Field r%
 	Field g%
 	Field b%
 	
 	Field customizable%
-	Field twoslots%
+	
+	;{~--<MOD>--~}
+	
+	Field menu%
+	Field TwoSlots%
+	
+	;{~--<END>--~}
 End Type
 
 Dim difficulties.Difficulty(4)
@@ -27,7 +32,7 @@ difficulties(SAFE)\permaDeath = False
 difficulties(SAFE)\aggressiveNPCs = False
 difficulties(SAFE)\saveType = SAVEANYWHERE
 difficulties(SAFE)\otherFactors = EASY
-difficulties(SAFE)\twoslots = False
+difficulties(SAFE)\TwoSlots = False
 difficulties(SAFE)\r = 120
 difficulties(SAFE)\g = 150
 difficulties(SAFE)\b = 50
@@ -41,7 +46,7 @@ difficulties(EUCLID)\permaDeath = False
 difficulties(EUCLID)\aggressiveNPCs = False
 difficulties(EUCLID)\saveType = SAVEONSCREENS
 difficulties(EUCLID)\otherFactors = NORMAL
-difficulties(EUCLID)\twoslots = False
+difficulties(EUCLID)\TwoSlots = False
 difficulties(EUCLID)\r = 200
 difficulties(EUCLID)\g = 200
 difficulties(EUCLID)\b = 0
@@ -50,15 +55,17 @@ difficulties(KETER) = New Difficulty
 difficulties(KETER)\menu = True
 difficulties(KETER)\name = "Кетер" ;Keter
 difficulties(KETER)\description = "Объекты класса Кетер - аномалии, которые настроены враждебно и представляют опасность для сотрудников Фонда. " ;Keter-class objects are considered the most dangerous ones in Foundation containment. 
-difficulties(KETER)\description = difficulties(KETER)\description +"К объектам класса Евклид относятся недостаточно изученные или непредсказуемые аномалии, надёжное содержание которых не всегда возможно." ;Euclid-class objects are inherently unpredictable, so that reliable containment is not always possible.
+difficulties(KETER)\description = difficulties(KETER)\description +"То же самое можно сказать и об этом уровне сложности: SCP более агрессивны, и у вас только одна жизнь. Погибли? Игра окончена." ;The same can be said for this difficulty level: the SCPs are more aggressive, and you have only one life - when you die, the game is over. 
 difficulties(KETER)\permaDeath = True
 difficulties(KETER)\aggressiveNPCs = True
 difficulties(KETER)\saveType = SAVEONQUIT
 difficulties(KETER)\otherFactors = HARD
-difficulties(KETER)\twoslots = False
+difficulties(KETER)\TwoSlots = False
 difficulties(KETER)\r = 200
 difficulties(KETER)\g = 0
 difficulties(KETER)\b = 0
+
+;{~--<MOD>--~}
 
 difficulties(THAUMIEL) = New Difficulty
 difficulties(THAUMIEL)\menu = False
@@ -67,12 +74,14 @@ difficulties(THAUMIEL)\description = "Объекты класса Таумиэль - аномалии, которы
 difficulties(THAUMIEL)\description = difficulties(THAUMIEL)\description +"и доступна только высокопоставленным сотрудникам Фонда. Примите меры предосторожности" ;is classified at the highest levels of the Foundation. Take your precautions.
 difficulties(THAUMIEL)\permaDeath = True
 difficulties(THAUMIEL)\aggressiveNPCs = True
-difficulties(THAUMIEL)\saveType = SAVEONSCREENS
+difficulties(THAUMIEL)\saveType = SAVEONQUIT
 difficulties(THAUMIEL)\otherFactors = HARD
-difficulties(THAUMIEL)\twoslots = True
+difficulties(THAUMIEL)\TwoSlots = True
 difficulties(THAUMIEL)\r = 100
 difficulties(THAUMIEL)\g = 100
 difficulties(THAUMIEL)\b = 100
+
+;{~--<END>--~}
 
 difficulties(CUSTOM) = New Difficulty
 difficulties(CUSTOM)\name = "Своя" ;Custom
@@ -82,7 +91,7 @@ difficulties(CUSTOM)\aggressiveNPCs = True
 difficulties(CUSTOM)\saveType = SAVEANYWHERE
 difficulties(CUSTOM)\customizable = True
 difficulties(CUSTOM)\otherFactors = EASY
-difficulties(CUSTOM)\twoslots = False
+difficulties(CUSTOM)\TwoSlots = False
 difficulties(CUSTOM)\r = 255
 difficulties(CUSTOM)\g = 255
 difficulties(CUSTOM)\b = 255

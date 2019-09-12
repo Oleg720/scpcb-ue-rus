@@ -27,16 +27,16 @@ Type Menu3DLights
     Field MenuLightSprites2%[MaxMenuLightSprites2Amount-1]
 End Type
 	
-AlarmSFX(0) = LoadSound_Strict("SFX\Alarm\Alarm.ogg")
-AlarmSFX(1) = LoadSound_Strict("SFX\Alarm\Alarm2.ogg") ; For 3D Menu only.
-TeslaIdleSFX = LoadSound_Strict("SFX\Room\Tesla\Idle.ogg")
+AlarmSFX(0) = LoadSound_Strict(SFXPath$+"Alarm\Alarm.ogg")
+AlarmSFX(1) = LoadSound_Strict(SFXPath$+"Alarm\Alarm2.ogg") ; For 3D Menu only.
+TeslaIdleSFX = LoadSound_Strict(SFXPath$+"Room\Tesla\Idle.ogg")
 
 For i = 7 To 9
-	IntroSFX(i) = LoadSound_Strict("SFX\Room\Intro\Bang" + (i - 6) + ".ogg")
+	IntroSFX(i) = LoadSound_Strict(SFXPath$+"Room\Intro\Bang" + (i - 6) + ".ogg")
 Next
 
-For i = 0 To 5
-	RustleSFX(i) = LoadSound_Strict("SFX\SCP\372\Rustle" + i + ".ogg")
+For i = 0 To 6
+	RustleSFX(i) = LoadSound_Strict(SFXPath$+"SCP\372\Rustle" + i + ".ogg")
 Next
 
 Function Init3DMenu()
@@ -46,13 +46,13 @@ Function Init3DMenu()
 	Select Lower(GetINIString$(OptionFile,"options","game progress"))
 		;Case "intro" ;'s chamber before breach (WIP)
 		    ;[Block]
-			;m3d\Room = "173"
+			;m3d\Room = "room173_intro"
 			;[End Block]
 		Case "lcz" ;Light Containment Zone rooms
 		    ;[Block]
 		    Select Rand(5) ;6
 				Case 1
-				    m3d\Room = "start"
+				    m3d\Room = "room173"
 				Case 2
 					m3d\Room = "lockroom"
 				Case 3
@@ -90,9 +90,9 @@ Function Init3DMenu()
 		If strMesh <> "" Then
 		    m3d\Mesh = LoadRMesh_3DMenu(strMesh)
 			ScaleEntity (m3d\Mesh, RoomScale, RoomScale, RoomScale)
-			If m3d\Mesh = 0 Then RuntimeError("Error loading "+m3d\Room+" (error 2)")
+			If m3d\Mesh = 0 Then RuntimeError("Ошибка загрузки "+m3d\Room+" (ошибка 2)") ;Error loading "+m3d\Room+" (error 2)
 		Else
-			RuntimeError("Ошибка загрузки "+m3d\Room+" (ошибка 1)") ;Error loading "+m3d\Room+" (error 1)")
+			RuntimeError("Ошибка загрузки "+m3d\Room+" (ошибка 1)") ;Error loading "+m3d\Room+" (error 1)
 		EndIf
 	EndIf
 
@@ -137,7 +137,7 @@ Function Init3DMenu()
 				
 	Select m3d\Room
 			;Intro
-		;Case "173"
+		;Case "room173_intro"
 		;	;[Block]
 		;	AmbientLight 200,200,200
 		;	TranslateEntity m3d\Cam, -16.0, -1.0, -8.0
@@ -146,16 +146,16 @@ Function Init3DMenu()
 		;	PointEntity m3d\Cam, m3d\Mesh
 		;	;[End Block]
 			;LCZ (Light Containment Zone)
-		Case "start"
+		Case "room173"
 			;[Block]
 			AmbientLight Brightness,Brightness,Brightness
 			TranslateEntity m3d\Cam,-1.6,2.5,-3.6
 			CameraFogRange m3d\Cam,0.1,6.0
 			CameraFogMode m3d\Cam,1
 			PointEntity m3d\Cam,m3d\Mesh
-			m3d\Misc[0] = LoadMesh_Strict("GFX\map\DoorFrame.x")
-			m3d\Misc[1] = LoadMesh_Strict("GFX\map\Door01.x")
-			;m3d\Misc[2] = LoadMesh_Strict("GFX\map\Button.x")
+			m3d\Misc[0] = LoadMesh_Strict(MapPath$+"DoorFrame.x")
+			m3d\Misc[1] = LoadMesh_Strict(MapPath$+"Door01.x")
+			;m3d\Misc[2] = LoadMesh_Strict(MapPath$+"Button.b3d")
 			PositionEntity m3d\Misc[0], -2.45, 1.5, 0.0,True
 			PositionEntity m3d\Misc[1], -2.45, 1.5, 0.0,True
 			;PositionEntity m3d\Misc[2], -0.6, 0.7, -3.9,True
@@ -172,7 +172,7 @@ Function Init3DMenu()
 		Case "lockroom"
 			;[Block]
 			AmbientLight Brightness,Brightness,Brightness
-			at\ParticleTextureID[0] = LoadTexture_Strict("GFX\smoke.png",1+2)
+			at\ParticleTextureID[0] = LoadTexture_Strict(GFXPath$+"smoke.png",1+2)
 			TranslateEntity m3d\Cam,-112.0 * RoomScale,1.4,112.0 * RoomScale
 			PointEntity m3d\Cam,m3d\Mesh
 			CameraFogRange m3d\Cam,0.1,6.0
@@ -191,8 +191,8 @@ Function Init3DMenu()
 			CameraFogMode m3d\Cam,1
 			TranslateEntity m3d\Cam,-1.61,0.2,0.1
 				
-			m3d\Misc[0] = LoadMesh_Strict("GFX\map\914key.x")
-			m3d\Misc[1] = LoadMesh_Strict("GFX\map\914knob.x")
+			m3d\Misc[0] = LoadMesh_Strict(MapPath$+"914key.x")
+			m3d\Misc[1] = LoadMesh_Strict(MapPath$+"914knob.x")
 			
 			For i% = 0 To 1
 				ScaleEntity(m3d\Misc[i], RoomScale, RoomScale, RoomScale)
@@ -204,7 +204,7 @@ Function Init3DMenu()
 			EntityParent(m3d\Misc[0], m3d\Mesh)
 			EntityParent(m3d\Misc[1], m3d\Mesh)
 			
-			m3d\Misc[2] = LoadMesh_Strict("GFX\map\DoorFrame.x")
+			m3d\Misc[2] = LoadMesh_Strict(MapPath$+"DoorFrame.x")
 			m3d\Misc[3] = CopyEntity(m3d\Misc[2])
 			PositionEntity m3d\Misc[2], - 1038.0 * RoomScale, 0, 528.0 * RoomScale, True
 			PositionEntity m3d\Misc[3], 401.0 * RoomScale, 0, 528.0 * RoomScale, True
@@ -222,7 +222,7 @@ Function Init3DMenu()
 		    MoveEntity m3d\Cam, 0.0, 1.0, -2.0
 		    TranslateEntity m3d\Cam, 0.4, 0.2, -1.8
 		    
-		    m3d\Misc[0] = LoadAnimMesh_Strict("GFX\npcs\clerk.b3d")
+		    m3d\Misc[0] = LoadAnimMesh_Strict(NPCsPath$+"clerk.b3d")
 		    ftemp# = 0.5 / MeshWidth(m3d\Misc[0])
 		    ScaleEntity m3d\Misc[0], ftemp, ftemp, ftemp
 		    PositionEntity m3d\Misc[0], 0.0 * RoomScale, 10.0 * RoomScale, 0.0 * RoomScale, True
@@ -230,7 +230,7 @@ Function Init3DMenu()
 		    SetAnimTime m3d\Misc[0], 60.0
 		    EntityParent(m3d\Misc[0], m3d\Mesh)
 		    
-		    m3d\Misc[1] = LoadAnimMesh_Strict("GFX\map\room2tesla_caution.b3d")
+		    m3d\Misc[1] = LoadAnimMesh_Strict(MapPath$+"room2tesla_caution.b3d")
 		    ftemp# = 1.8 / MeshWidth(m3d\Misc[1])
 		    ScaleEntity m3d\Misc[1], ftemp, ftemp, ftemp
 		    PositionEntity m3d\Misc[1], 0.0 * RoomScale, 0.0 * RoomScale, 0.0 * RoomScale
@@ -238,8 +238,8 @@ Function Init3DMenu()
 		    SetAnimTime m3d\Misc[1], 0.0
 		    EntityParent(m3d\Misc[1], m3d\Mesh)
 		
-		    m3d\Misc[2] = LoadMesh_Strict("GFX\map\DoorFrame.x")
-		    m3d\Misc[3] = LoadMesh_Strict("GFX\map\Door01.x")
+		    m3d\Misc[2] = LoadMesh_Strict(MapPath$+"DoorFrame.x")
+		    m3d\Misc[3] = LoadMesh_Strict(MapPath$+"Door01.x")
 		    PositionEntity m3d\Misc[2], 0.0 * RoomScale, 0.0 * RoomScale, 1000.0 * RoomScale, True
 		    PositionEntity m3d\Misc[3], 0.0 * RoomScale, 0.0 * RoomScale, 1000.0 * RoomScale, True
 		    RotateEntity m3d\Misc[3], 0, 180, 0, True
@@ -257,13 +257,13 @@ Function Init3DMenu()
 		;    TranslateEntity m3d\Cam, 0.4 * RoomScale, 0.2 * RoomScale, -1.8 * RoomScale
 		;    RotateEntity m3d\Cam, 0, 315, 0
 		;    
-		;    m3d\Misc[0] = LoadAnimMesh_Strict("GFX\npcs\clerk.b3d")
+		;    m3d\Misc[0] = LoadAnimMesh_Strict(NPCsPath$+"clerk.b3d")
         ;    ftemp# = 0.5 / MeshWidth(m3d\Misc[0])
         ;    PositionEntity m3d\Misc[0], 710.0 * RoomScale, 10.0 * RoomScale, -650.0 * RoomScale, True
         ;    RotateEntity m3d\Misc[0], 0, 90, 0, True
         ;    SetAnimTime m3d\Misc[0], 35.0
         ;    EntityParent(m3d\Misc[0], m3d\Mesh)
-        ;    tex1 = LoadTexture_Strict("GFX\npcs\bodyc1.png")
+        ;    tex1 = LoadTexture_Strict(NPCsPath$+"bodyc1.png")
         ;    EntityTexture m3d\Misc[0], tex1
         ;    FreeTexture tex1
         ;
@@ -274,8 +274,8 @@ Function Init3DMenu()
         ;    RotateEntity m3d\Misc[1], 0, 90, 0, True
         ;    EntityParent(m3d\Misc[1], m3d\Mesh)
         ;    
-        ;    m3d\Misc[2] = LoadMesh_Strict("GFX\map\DoorFrame.x")
-		;    m3d\Misc[3] = LoadMesh_Strict("GFX\map\Door01.x")
+        ;    m3d\Misc[2] = LoadMesh_Strict(MapPath$+"DoorFrame.x")
+		;    m3d\Misc[3] = LoadMesh_Strict(MapPath$+"Door01.x")
 		;    PositionEntity m3d\Misc[2], 0.0 * RoomScale, 0.0 * RoomScale, 1000.0 * RoomScale, True
 		;    PositionEntity m3d\Misc[3], 0.0 * RoomScale, 0.0 * RoomScale, 1000.0 * RoomScale, True
         ;    ScaleEntity m3d\Misc[2], RoomScale, RoomScale, RoomScale
@@ -290,45 +290,45 @@ Function Init3DMenu()
 			;[Block]
 			AmbientLight Brightness,Brightness,Brightness
 			CameraFogRange m3d\Cam,0.1,6.0
-			CameraFogMode m3d\Cam,1
+			CameraFogMode m3d\Cam, 1	
             MoveEntity m3d\Cam, 0.0164874,2.0,0.8512 ;0.0164874 0.0291088
 	        PointEntity m3d\Cam,m3d\Mesh
 		
-			m3d\Misc[0] = LoadAnimMesh_Strict("GFX\npcs\class_d.b3d")
+			m3d\Misc[0] = LoadAnimMesh_Strict(NPCsPath$+"class_d.b3d")
 			ftemp# = 0.5 / MeshWidth(m3d\Misc[0])	
 			ScaleEntity m3d\Misc[0], ftemp, ftemp, ftemp	
-			PositionEntity m3d\Misc[0], + 490.0 * RoomScale, - 500.0 * RoomScale, 0.0, True
+			PositionEntity m3d\Misc[0], + 490.0 * RoomScale, - 500.0 * RoomScale, 0.0, True		
 			RotateEntity m3d\Misc[0],0,0,0,True		
 			SetAnimTime m3d\Misc[0],19.0
 			
 			EntityParent(m3d\Misc[0], m3d\Mesh)
 						
 			m3d\Misc[0] = GetChild(m3d\Mesh,2)
-			m3d\Misc[1] = 0
-
-			m3d\Misc[2] = LoadMesh_Strict("GFX\map\DoorFrame.x")
-			m3d\Misc[3] = LoadMesh_Strict("GFX\map\heavydoor1.x")
-			m3d\Misc[4] = LoadMesh_Strict("GFX\map\heavydoor2.x")
-						
+			m3d\Misc[1] = 0		
+			
+			m3d\Misc[2] = LoadMesh_Strict(MapPath$+"DoorFrame.x")
+			m3d\Misc[3] = LoadMesh_Strict(MapPath$+"heavydoor1.x")
+			m3d\Misc[4] = LoadMesh_Strict(MapPath$+"heavydoor2.x")
+			
 			PositionEntity m3d\Misc[2],0,0, -640.0 * RoomScale,True
 			PositionEntity m3d\Misc[3],0,0, -640.0 * RoomScale,True
-			PositionEntity m3d\Misc[4],0,0, -640.0 * RoomScale,True		
-						
-			ScaleEntity m3d\Misc[2], RoomScale, RoomScale, RoomScale
-			ScaleEntity m3d\Misc[3], RoomScale, RoomScale, RoomScale
-			ScaleEntity m3d\Misc[4], RoomScale, RoomScale, RoomScale
-						
+			PositionEntity m3d\Misc[4],0,0, -640.0 * RoomScale,True
+
+			ScaleEntity m3d\Misc[2],RoomScale, RoomScale, RoomScale
+			ScaleEntity m3d\Misc[3],RoomScale, RoomScale, RoomScale			
+			ScaleEntity m3d\Misc[4],RoomScale, RoomScale, RoomScale
+			
 			RotateEntity m3d\Misc[3],0,0,0
 			RotateEntity m3d\Misc[4],0,180,0
 
 			EntityParent m3d\Misc[2], m3d\Mesh
 			EntityParent m3d\Misc[3], m3d\Mesh
-			EntityParent m3d\Misc[4], m3d\Mesh																			
-																				
+			EntityParent m3d\Misc[4], m3d\Mesh
+																													
 			;[End Block]
 		Case "room3pit"
 			;[Block]
-			at\ParticleTextureID[0] = LoadTexture_Strict("GFX\smoke.png",1+2)
+			at\ParticleTextureID[0] = LoadTexture_Strict(GFXPath$+"smoke.png",1+2)
 										
 			AmbientLight Brightness,Brightness,Brightness
 			CameraFogRange m3d\Cam,0.1,6.0
@@ -340,7 +340,7 @@ Function Init3DMenu()
 			;m3d\Misc[0]= CreatePivot(m3d\Mesh)
 			;PositionEntity(m3d\Misc[0], + 704.0 * RoomScale, 112.0 * RoomScale, -416.0 * RoomScale, True)
 
-			m3d\Misc[0] = LoadMesh_Strict("GFX\map\DoorFrame.x")
+			m3d\Misc[0] = LoadMesh_Strict(MapPath$+"DoorFrame.x")
 			m3d\Misc[1]=CopyEntity(m3d\Misc[0])
 
 			PositionEntity m3d\Misc[0],-1024.0 * RoomScale,0,0,True
@@ -355,8 +355,8 @@ Function Init3DMenu()
 			EntityParent(m3d\Misc[0], m3d\Mesh)
 			EntityParent(m3d\Misc[1], m3d\Mesh)
 			
-			m3d\Misc[2] = LoadMesh_Strict("GFX\map\heavydoor1.x")
-			m3d\Misc[3] = LoadMesh_Strict("GFX\map\heavydoor2.x")
+			m3d\Misc[2] = LoadMesh_Strict(MapPath$+"heavydoor1.x")
+			m3d\Misc[3] = LoadMesh_Strict(MapPath$+"heavydoor2.x")
 			m3d\Misc[4] = CopyEntity(m3d\Misc[2])
 			m3d\Misc[5] = CopyEntity(m3d\Misc[3])
 
@@ -380,7 +380,7 @@ Function Init3DMenu()
 			EntityParent m3d\Misc[4], m3d\Mesh
 			EntityParent m3d\Misc[5], m3d\Mesh
 
-			m3d\Misc[6] = LoadMesh_Strict("GFX\map\Button.x")
+			m3d\Misc[6] = LoadMesh_Strict(MapPath$+"Button.b3d")
 			m3d\Misc[7] = CopyEntity(m3d\Misc[6])
 
 	        ScaleEntity(m3d\Misc[6], 0.03, 0.03, 0.03)
@@ -415,7 +415,7 @@ Function Update3DMenu()
 		m3d\Dark=Min(m3d\Dark+fs\FPSfactor[0]*0.05,0.7)
 	EndIf
 	EntityAlpha m3d\Sprite[2], m3d\Dark
-
+	
     ShowEntity m3d\Cam
 	ShowEntity m3d\Sprite[0]
 	ShowEntity m3d\Sprite[1]
@@ -480,13 +480,13 @@ Function Update3DMenu()
     EndIf
 		
 	Select m3d\Room
-			;intro
-		Case "173"
-			;[Block]
-			
-			;[End Block]
+		;	;intro
+		;Case "room173_intro"
+		;	;[Block]
+		;	
+		;	;[End Block]
 			;LCZ
-		Case "start"
+		Case "room173"
 			;[Block]
 			PointEntity m3d\Cam,m3d\Mesh
 			
@@ -563,9 +563,9 @@ Function Update3DMenu()
 			;[End Block]
 		Case "room372"
 			;[Block]		
-			If Rand(600)=1 Then 
+			If Rand(2000)=1 Then 
 			    m3d\Dark = Max(m3d\Dark,0.6)
-			    m3d\SoundChn = PlaySound_Strict(RustleSFX(Rand(0,5)))
+			    m3d\SoundChn = PlaySound_Strict(RustleSFX(Rand(0, 6)))
 			EndIf						
 			;[End Block]
 		Case "room914"
@@ -700,7 +700,7 @@ Function Update3DMenu()
 ;	RotateEntity m3d\Cam,m3d\State,m3d\State2,0
 	
 	RenderWorld ;Renders the world
-    CameraProjMode m3d\Cam,0 ;Disable the projector
+    CameraProjMode m3d\Cam,0 ;Disable the projector				
 End Function
 
 Function DeInit3DMenu()
@@ -760,7 +760,7 @@ Function DeInit3DMenu()
 	For i=0 To 9
 		If TempSounds[i]<>0 Then FreeSound_Strict TempSounds[i] : TempSounds[i]=0
 	Next
-
+	
 End Function
 
 Function LoadRMesh_3DMenu(file$) ;this ignores some stuff that we don't need
@@ -805,7 +805,7 @@ Function LoadRMesh_3DMenu(file$) ;this ignores some stuff that we don't need
 	EndIf
 		
 	;If ReadString(f)<>"RoomMesh" Then RuntimeError Chr(34)+file+Chr(34)+" is not RMESH"
-
+	
 	file=StripFilename(file)
 	
 	Local count%,count2%
@@ -941,7 +941,7 @@ Function LoadRMesh_3DMenu(file$) ;this ignores some stuff that we don't need
 		
 	Next
 	
-	If BumpEnabled Then; And 0 Then
+	If BumpEnabled Then; And 0 Then	
 		For i = 2 To CountSurfaces(Opaque)
 			sf = GetSurface(Opaque,i)
 			b = GetSurfaceBrush( sf )
@@ -1021,8 +1021,8 @@ Function LoadRMesh_3DMenu(file$) ;this ignores some stuff that we don't need
 		
 	count=ReadInt(f) ;point entities
 	
-	Local lightTex% = LoadTexture("GFX\light.png", 1)
-	Local lightSprite% = LoadTexture("GFX\lightsprite.png", 1)
+	Local lightTex% = LoadTexture(GFXPath$+"light.png", 1)
+	Local lightSprite% = LoadTexture(GFXPath$+"lightsprite.png", 1)
 	
 	For i%=1 To count
 		temp1s=ReadString(f)
@@ -1206,7 +1206,7 @@ Function LoadRMesh_3DMenu(file$) ;this ignores some stuff that we don't need
 			Case "model"
 				file = ReadString(f)
 				If file<>""
-					Local model = CreatePropObj("GFX\Map\Props\"+file);LoadMesh("GFX\Map\Props\"+file)		
+					Local model = CreatePropObj(MapPath$+"Props\"+file);LoadMesh(MapPath$+"Props\"+file)		
 					
 					temp1=ReadFloat(f) : temp2=ReadFloat(f) : temp3=ReadFloat(f)
 					PositionEntity model,temp1,temp2,temp3			
@@ -1225,7 +1225,7 @@ Function LoadRMesh_3DMenu(file$) ;this ignores some stuff that we don't need
 										
 					;Stop
 				EndIf
-
+				
 		End Select
 	Next
 	
@@ -1259,13 +1259,12 @@ Function LoadRMesh_3DMenu(file$) ;this ignores some stuff that we don't need
 ;	EntityParent hiddenMesh,obj
 ;	CreatePivot(Room) ;skip "pointentites" object
 ;	CreatePivot(Room) ;skip "solidentites" object
-
-
+		
 	CloseFile f
 	
 	Return Opaque
 End Function
 
 ;~IDEal Editor Parameters:
-;~F#4D#6D#7F#86#D2#EF#111#143#147
+;~F#4D
 ;~C#Blitz3D

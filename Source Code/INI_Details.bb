@@ -27,7 +27,7 @@ End Function
 Function UpdateINIFile$(filename$)
 	Local file.INIFile = Null
 	For k.INIFile = Each INIFile
-		If k\name = Lower2(filename) Then
+		If k\name = lower2(filename) Then
 			file = k
 		EndIf
 	Next
@@ -54,31 +54,31 @@ Function GetINIString$(file$, section$, parameter$, defaultvalue$="")
 	
 	Local lfile.INIFile = Null
 	For k.INIFile = Each INIFile
-		If k\name = Lower2(file) Then
+		If k\name = lower2(file) Then
 			lfile = k
 		EndIf
 	Next
 	
 	If lfile = Null Then
 		lfile = New INIFile
-		lfile\name = Lower2(file)
+		lfile\name = lower2(file)
 		lfile\bank = 0
 		UpdateINIFile(lfile\name)
 	EndIf
 	
 	lfile\bankOffset = 0
 	
-	section = Lower2(section)
+	section = lower2(section)
 	
 	;While Not Eof(f)
 	While lfile\bankOffset<lfile\size
 		Local strtemp$ = ReadINILine(lfile)
 		If Left(strtemp,1) = "[" Then
-			strtemp$ = Lower2(strtemp)
+			strtemp$ = lower2(strtemp)
 			If Mid(strtemp, 2, Len(strtemp)-2)=section Then
 				Repeat
 					TemporaryString = ReadINILine(lfile)
-					If Lower2(trim2(Left(TemporaryString, Max(Instr(TemporaryString, "=") - 1, 0)))) = Lower2(parameter) Then
+					If lower2(trim2(Left(TemporaryString, Max(Instr(TemporaryString, "=") - 1, 0)))) = lower2(parameter) Then
 						;CloseFile f
 						Return trim2( Right(TemporaryString,Len(TemporaryString)-Instr(TemporaryString,"=")) )
 					EndIf
@@ -95,9 +95,9 @@ End Function
 
 Function GetINIInt%(file$, section$, parameter$, defaultvalue% = 0)
 	Local txt$ = GetINIString(file$, section$, parameter$, defaultvalue)
-	If Lower2(txt) = "true" Then
+	If lower2(txt) = "true" Then
 		Return 1
-	ElseIf Lower2(txt) = "false"
+	ElseIf lower2(txt) = "false"
 		Return 0
 	Else
 		Return Int(txt)
@@ -120,7 +120,7 @@ Function GetINIString2$(file$, start%, parameter$, defaultvalue$="")
 		If n=start Then 
 			Repeat
 				TemporaryString = ReadLine(f)
-				If Lower2(trim2(Left(TemporaryString, Max(Instr(TemporaryString, "=") - 1, 0)))) = Lower2(parameter) Then
+				If lower2(trim2(Left(TemporaryString, Max(Instr(TemporaryString, "=") - 1, 0)))) = lower2(parameter) Then
 					CloseFile f
 					Return trim2( Right(TemporaryString,Len(TemporaryString)-Instr(TemporaryString,"=")) )
 				EndIf
@@ -137,9 +137,9 @@ End Function
 
 Function GetINIInt2%(file$, start%, parameter$, defaultvalue$="")
 	Local txt$ = GetINIString2(file$, start%, parameter$, defaultvalue$)
-	If Lower2(txt) = "true" Then
+	If lower2(txt) = "true" Then
 		Return 1
-	ElseIf Lower2(txt) = "false"
+	ElseIf lower2(txt) = "false"
 		Return 0
 	Else
 		Return Int(txt)
@@ -150,14 +150,14 @@ Function GetINISectionLocation%(file$, section$)
 	Local Temp%
 	Local f% = ReadFile(file)
 	
-	section = Lower2(section)
+	section = lower2(section)
 	
 	Local n%=0
 	While Not Eof(f)
 		Local strtemp$ = ReadLine(f)
 		n=n+1
 		If Left(strtemp,1) = "[" Then
-			strtemp$ = Lower2(strtemp)
+			strtemp$ = lower2(strtemp)
 			Temp = Instr(strtemp, section)
 			If Temp>0 Then
 				If Mid(strtemp, Temp-1, 1)="[" Or Mid(strtemp, Temp-1, 1)="|" Then
@@ -306,7 +306,11 @@ Global TextureDetails% = GetINIInt(OptionFile, "graphics", "texture details")
 
 Global SaveTexturesInVRam% = GetINIInt(OptionFile, "graphics", "enable vram")
 
+;{~--<MOD>--~}
+
 Global FOV# = GetINIFloat(OptionFile, "graphics", "fov")
+
+;{~--<END>--~}
 
 ;[AUDIO]
 
@@ -324,7 +328,7 @@ Global MouseSensitivity# = GetINIFloat(OptionFile, "controls", "mouse sensitivit
 
 Global InvertMouse% = GetINIInt(OptionFile, "controls", "invert mouse y")
 
-Global MouseSmooth# = GetINIFloat(OptionFile,"controls", "mouse smoothing", 1.0)
+Global MouseSmooth# = GetINIFloat(OptionFile, "controls", "mouse smoothing", 1.0)
 
 Global KEY_RIGHT = GetINIInt(OptionFile, "controls", "Right key")
 Global KEY_LEFT = GetINIInt(OptionFile, "controls", "Left key")
@@ -337,7 +341,12 @@ Global KEY_INV = GetINIInt(OptionFile, "controls", "Inventory key")
 Global KEY_CROUCH = GetINIInt(OptionFile, "controls", "Crouch key")
 Global KEY_SAVE = GetINIInt(OptionFile, "controls", "Save key")
 Global KEY_CONSOLE = GetINIInt(OptionFile, "controls", "Console key")
+
+;{~--<MOD>--~}
+
 Global KEY_SCREENSHOT = GetINIInt(OptionFile, "controls", "Screenshot key")
+
+;{~--<END>--~}
 
 ;[ADVANCED]
 
@@ -363,7 +372,11 @@ Global Brightness% = GetINIFloat(OptionFile, "game", "brightness")
 Global CameraFogNear# = GetINIFloat(OptionFile, "game", "camera fog near")
 Global CameraFogFar# = GetINIFloat(OptionFile, "game", "camera fog far")
 
+;{~--<MOD>--~}
+
 Global UnlockThaumiel% = GetINIInt(OptionFile, "game", "th") ;th = Thaumiel Difficulty
+
+;{~--<END>--~}
 
 Global MapWidth% = GetINIInt(OptionFile, "game", "map size")
 Global MapHeight% = GetINIInt(OptionFile, "game", "map size")
@@ -407,9 +420,14 @@ Function SaveOptionsINI()
 	PutINIValue(OptionFile, "graphics", "particle amount", ParticleAmount)
 	PutINIValue(OptionFile, "graphics", "enable vram", SaveTexturesInVRam)
 	PutINIValue(OptionFile, "controls", "mouse smoothing", MouseSmooth)
+	
+	;{~--<MOD>--~}
+	
 	PutINIValue(OptionFile, "graphics", "fov", Int(FOV))
 	PutINIValue(OptionFile, "game", "th", UnlockThaumiel%)
 	PutINIValue(OptionFile, "advanced", "console version", ConsoleVersion%)
+	
+	;{~--<END>--~}
 
 	PutINIValue(OptionFile, "audio", "music volume", MusicVolume)
 	PutINIValue(OptionFile, "audio", "sound volume", PrevSFXVolume)
@@ -427,6 +445,50 @@ Function SaveOptionsINI()
 	PutINIValue(OptionFile, "controls", "Crouch key", KEY_CROUCH)
 	PutINIValue(OptionFile, "controls", "Save key", KEY_SAVE)
 	PutINIValue(OptionFile, "controls", "Console key", KEY_CONSOLE)
+	
+	;{~--<MOD>--~}
+	
 	PutINIValue(OptionFile, "controls", "Screenshot key", KEY_SCREENSHOT)
 	
+	;{~--<END>--~}
+	
 End Function
+
+;Фикс пропадающих кириллических букв
+Function Lower2$(txt$)
+	Local m$,nt$=""
+
+	For i=1 To Len(txt)
+		m=Mid(txt,i,1)
+		If Asc(m)<128
+			nt=nt+lower2(m)
+		Else
+			If Asc(m)>191 And Asc(m)<224
+				nt=nt+Chr(Asc(m)+32)
+			ElseIf Asc(m)=168
+				nt=nt+Chr(184)
+			Else
+				nt=nt+m
+			EndIf
+		EndIf
+	Next
+	Return nt
+End Function
+
+Function Trim2$(txt$)
+	txt0=Len(txt)
+	If txt0=0 Then Return txt
+
+	Local txt1 = 1
+	While Mid(txt,txt1,1)=" "
+		txt1=txt1+1
+		If txt1>txt0 Then Return ""
+	Wend
+	
+	Local txt2 = txt0
+	While Mid(txt, txt2, 1)=" "
+		txt2=txt2-1
+	Wend
+	Return Mid(txt,txt1,txt2+1-txt1)
+End Function
+

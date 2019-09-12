@@ -195,7 +195,7 @@ Function UpdateMainMenu()
 						ms\MainMenuTab = 2
 					EndIf
 				Case 2
-					txt = "НАСТРОЙКИ" ;OPTIONS
+					txt = "НАСТРОЙКА" ;OPTIONS
 					If temp Then ms\MainMenuTab = 3
 				Case 3
 					txt = "ВЫХОД" ;QUIT
@@ -238,7 +238,7 @@ Function UpdateMainMenu()
 		If ms\MainMenuTab<>8
 		    If MouseOn((GraphicWidth/2)+(330*MenuScale), y, 130, 60) And (Rand(20)=1) Then
 		        Color 100+Rand(50),100,100
-                AAText(GraphicWidth/2)+(330*MenuScale)+(3*MenuScale)+Rand(-10*MenuScale,10*MenuScale), y+(3*MenuScale)+Rand(-10*MenuScale,10*MenuScale),"НАЗАД",False,False ;BACK
+                AAText(GraphicWidth/2)+(330*MenuScale)+(3*MenuScale)+Rand(-10*MenuScale,10*MenuScale), y+(3*MenuScale)+Rand(-10*MenuScale,10*MenuScale),"BACK",False,False
             EndIf
             Color 0,0,0
 			AAText(GraphicWidth/2)+(330*MenuScale)+(3*MenuScale), y+(3*MenuScale),"НАЗАД",False,False ;BACK
@@ -339,7 +339,7 @@ Function UpdateMainMenu()
 				IntroEnabled = DrawTick(x + 280 * MenuScale, y + 110 * MenuScale, IntroEnabled)	
 				
 				;Local modeName$, modeDescription$, selectedDescription$
-				AAText (x + 20 * MenuScale, y + 150 * MenuScale, "Сложность:") ;Difficulty:			
+				AAText (x + 20 * MenuScale, y + 150 * MenuScale, "Сложность:") ;Difficulty:
 						
 				If DrawTick(x + 20 * MenuScale, y + (180+30*SAFE) * MenuScale, (SelectedDifficulty = difficulties(SAFE))) Then SelectedDifficulty = difficulties(SAFE)
 					Color(difficulties(SAFE)\r,difficulties(SAFE)\g,difficulties(SAFE)\b)
@@ -377,7 +377,7 @@ Function UpdateMainMenu()
 						SelectedDifficulty\saveType = SAVEONSCREENS
 					EndIf
 					
-					AAText(x + 200 * MenuScale, y + 195 * MenuScale, "Сохраняться в любом месте") ;Save anywhere
+					AAText(x + 200 * MenuScale, y + 195 * MenuScale, "Сохраняться в любом месте") ;Save anywhere	
 					
 					SelectedDifficulty\aggressiveNPCs =  DrawTick(x + 160 * MenuScale, y + 225 * MenuScale, SelectedDifficulty\aggressiveNPCs)
 					AAText(x + 200 * MenuScale, y + 225 * MenuScale, "Более агрессивные враги") ;Aggressive NPCs
@@ -387,9 +387,9 @@ Function UpdateMainMenu()
 					
 					;Other factor's difficulty
 					Color 255,255,255
-					DrawImage ArrowIMG(1),x + 155 * MenuScale, y+281*MenuScale ;285
+					DrawImage ArrowIMG(1),x + 155 * MenuScale, y+285*MenuScale
 					If MouseHit1
-						If ImageRectOverlap(ArrowIMG(1),x + 155 * MenuScale, y+281*MenuScale, ScaledMouseX(),ScaledMouseY(),0,0) ;285
+						If ImageRectOverlap(ArrowIMG(1),x + 155 * MenuScale, y+285*MenuScale, ScaledMouseX(),ScaledMouseY(),0,0)
 							If SelectedDifficulty\otherFactors < HARD
 								SelectedDifficulty\otherFactors = SelectedDifficulty\otherFactors + 1
 							Else
@@ -424,7 +424,7 @@ Function UpdateMainMenu()
 				
 				AASetFont fo\Font[1]
 				
-				If DrawButton(x + 450 * MenuScale, y + height + 20 * MenuScale, 160 * MenuScale, 70 * MenuScale, "НАЧАТЬ", False) Then ;START
+				If DrawButton(x + 450 * MenuScale, y + height + 20 * MenuScale, 160 * MenuScale, 70 * MenuScale, "START", False) Then
 					If CurrSave = "" Then CurrSave = "untitled"
 					
 					If RandomSeed = "" Then
@@ -520,7 +520,7 @@ Function UpdateMainMenu()
 						If i <= SaveGameAmount Then
 							;DrawFrame(x,y,540* MenuScale, 70* MenuScale)
 							
-							If SaveGameVersion(i - 1) <> ModCompatibleNumber Then ;And SaveGameVersion(i - 1) <> "5.3" Then
+							If SaveGameVersion(i - 1) <> ModCompatibleNumber Then ; And SaveGameVersion(i - 1) <> "5.4.1"
 								Color 255,0,0
 							Else
 								Color 255,255,255
@@ -528,11 +528,11 @@ Function UpdateMainMenu()
 							
 							AAText(x + 20 * MenuScale, y + 10 * MenuScale, SaveGames(i - 1))
 							AAText(x + 20 * MenuScale, y + (10+18) * MenuScale, SaveGameTime(i - 1)) ;y + (10+23) * MenuScale
-							AAText(x + 120 * MenuScale, y + (10+18) * MenuScale, SaveGameDateRus(i - 1)) ;SaveGameDate
+							AAText(x + 120 * MenuScale, y + (10+18) * MenuScale, SaveGameDateRus(i - 1)) ;(!)
 							AAText(x + 20 * MenuScale, y + (10+36) * MenuScale, SaveGameVersion(i - 1))
 							
 							If SaveMSG = "" Then
-								If SaveGameVersion(i - 1) <> ModCompatibleNumber Then ;And SaveGameVersion(i - 1) <> "5.3" Then
+								If SaveGameVersion(i - 1) <> ModCompatibleNumber And SaveGameVersion(i - 1) <> "5.4.1" Then
 									DrawFrame(x + 280 * MenuScale, y + 20 * MenuScale, 100 * MenuScale, 30 * MenuScale)
 									Color(255, 0, 0)
 									AAText(x + 330 * MenuScale, y + 34 * MenuScale, "Загрузить", True, True) ;Load
@@ -547,14 +547,13 @@ Function UpdateMainMenu()
 									EndIf
 								EndIf
 								
-								If DrawButton(x + 400 * MenuScale, y + 20 * MenuScale, 100 * MenuScale, 30 * MenuScale, "Удалить", False) Then ;Delete
+								If DrawButton(x + 400 * MenuScale, y + 20 * MenuScale, 100 * MenuScale, 30 * MenuScale, "Delete", False) Then
 									SaveMSG = SaveGames(i - 1)
-									DebugLog SaveMSG
 									Exit
 								EndIf
 							Else
 								DrawFrame(x + 280 * MenuScale, y + 20 * MenuScale, 100 * MenuScale, 30 * MenuScale)
-								If SaveGameVersion(i - 1) <> ModCompatibleNumber Then ;And SaveGameVersion(i - 1) <> "5.3" Then
+								If SaveGameVersion(i - 1) <> ModCompatibleNumber And SaveGameVersion(i - 1) <> "5.4.1" Then
 									Color(255, 0, 0)
 								Else
 									Color(100, 100, 100)
@@ -578,20 +577,18 @@ Function UpdateMainMenu()
 						DrawFrame(x, y, 420 * MenuScale, 200 * MenuScale)
 						RowText("Вы уверены, что хотите удалить это сохранение?", x + 20 * MenuScale, y + 15 * MenuScale, 400 * MenuScale, 200 * MenuScale) ;Are you sure you want to delete this save?
 						;AAText(x + 20 * MenuScale, y + 15 * MenuScale, "Are you sure you want to delete this save?")
-						If DrawButton(x + 50 * MenuScale, y + 150 * MenuScale, 100 * MenuScale, 30 * MenuScale, "Да", False) Then ;Yes
+						If DrawButton(x + 50 * MenuScale, y + 150 * MenuScale, 100 * MenuScale, 30 * MenuScale, "Yes", False) Then
 							DeleteFile(CurrentDir() + SavePath + SaveMSG + "\save.txt")
 							DeleteDir(CurrentDir() + SavePath + SaveMSG)
 							SaveMSG = ""
 							LoadSaveGames()
 						EndIf
-						If DrawButton(x + 250 * MenuScale, y + 150 * MenuScale, 100 * MenuScale, 30 * MenuScale, "Нет", False) Then ;No
+						If DrawButton(x + 250 * MenuScale, y + 150 * MenuScale, 100 * MenuScale, 30 * MenuScale, "No", False) Then
 							SaveMSG = ""
 						EndIf
 					EndIf
 				EndIf
-				
-				
-				
+			
 				;[End Block]
 			Case 3,5,6,7 ;options
 				;[Block]
@@ -605,7 +602,7 @@ Function UpdateMainMenu()
 				Color(255, 255, 255)
 				AASetFont fo\Font[1]
 								
-				AAText(GraphicWidth/2, y + height / 2, "НАСТРОЙКИ", True, True) ;OPTIONS
+				AAText(GraphicWidth/2, y + height / 2, "НАСТРОЙКА", True, True) ;OPTIONS	
 
 				x = (GraphicWidth/2)-(290*MenuScale)
 				y = y + height + 20 * MenuScale
@@ -699,30 +696,19 @@ Function UpdateMainMenu()
 					
 					y=y+30*MenuScale
 					
-					;Local prevGamma# = ScreenGamma
 					ScreenGamma = (SlideBar(x + 310*MenuScale, y+6*MenuScale, 150*MenuScale, ScreenGamma*50.0)/50.0)
 					Color 255,255,255
 					AAText(x + 20 * MenuScale, y, "Уровень гаммы:") ;Screen gamma
-					;If MouseOn(x+310*MenuScale,y+6*MenuScale,150*MenuScale,20) And OnSliderID=0
-					;	DrawOptionsTooltip(tx,ty,tw,th,"gamma")
-					;EndIf
 					
 					If MouseOn(x+310*MenuScale,y+6*MenuScale,150*MenuScale+14,20) And OnSliderID=0
 						DrawOptionsTooltip(tx,ty,tw,th,"gamma",ScreenGamma)
 					EndIf						
-					;Text(x + 20 * MenuScale, y + 15 * MenuScale, "(fullscreen mode only)")
-					
-					;If prevGamma<>ScreenGamma Then
-					;	UpdateScreenGamma()
-					;EndIf
-					
-					;y = y + 50*MenuScale
 					
 					y=y+50*MenuScale
 					
 					Color 255,255,255
 					AAText(x + 20 * MenuScale, y, "Количество частиц:") ;Particle amount:
-					ParticleAmount = Slider3(x+310*MenuScale,y+6*MenuScale,150*MenuScale,ParticleAmount,2,"МИНИМУМ","СРЕДНЕ","ВСЕ") ;MINIMAL REDUCED FULL
+					ParticleAmount = Slider3(x+310*MenuScale,y+6*MenuScale,150*MenuScale,ParticleAmount,2,"MINIMAL","REDUCED","FULL")
 					If (MouseOn(x + 310 * MenuScale, y-6*MenuScale, 150*MenuScale+14, 20) And OnSliderID=0) Or OnSliderID=2
 						DrawOptionsTooltip(tx,ty,tw,th,"particleamount",ParticleAmount)
 					EndIf
@@ -873,18 +859,17 @@ Function UpdateMainMenu()
 							DrawOptionsTooltip(tx,ty,tw,th,"usertrackmode")
 						EndIf
 						If DrawButton(x + 20 * MenuScale, y + 30 * MenuScale, 190 * MenuScale, 25 * MenuScale, "Поиск треков",False) ;Scan for User Tracks
-							DebugLog "User Tracks Check Started"
 							
 							UserTrackCheck% = 0
 							UserTrackCheck2% = 0
 							
-							Dir=ReadDir("SFX\Radio\UserTracks\")
+							Dir=ReadDir(MusicPath2$)
 							Repeat
 								file$=NextFile(Dir)
 								If file$="" Then Exit
-								If FileType("SFX\Radio\UserTracks\"+file$) = 1 Then
+								If FileType(MusicPath2$+file$) = 1 Then
 									UserTrackCheck = UserTrackCheck + 1
-									test = LoadSound("SFX\Radio\UserTracks\"+file$)
+									test = LoadSound(MusicPath2$+file$)
 									If test<>0
 										UserTrackCheck2 = UserTrackCheck2 + 1
 									EndIf
@@ -893,7 +878,6 @@ Function UpdateMainMenu()
 							Forever
 							CloseDir Dir
 							
-							DebugLog "User Tracks Check Ended"
 						EndIf
 						If MouseOn(x+20*MenuScale,y+30*MenuScale,190*MenuScale,25*MenuScale)
 							DrawOptionsTooltip(tx,ty,tw,th,"usertrackscan")
@@ -917,9 +901,6 @@ Function UpdateMainMenu()
 					MouseSensitivity = (SlideBar(x + 310*MenuScale, y-4*MenuScale, 150*MenuScale, (MouseSensitivity+0.5)*100.0)/100.0)-0.5
 					Color(255, 255, 255)
 					AAText(x + 20 * MenuScale, y, "Чувствительность мыши:") ;Mouse sensitivity:
-					;If MouseOn(x+310*MenuScale,y-4*MenuScale,150*MenuScale,20)
-					;	DrawOptionsTooltip(tx,ty,tw,th,"mousesensitivity")
-					;EndIf
 
 					If MouseOn(x+310*MenuScale,y-4*MenuScale,150*MenuScale+14,20)
 						DrawOptionsTooltip(tx,ty,tw,th,"mousesensitivity",MouseSensitivity)
@@ -943,9 +924,7 @@ Function UpdateMainMenu()
 						DrawOptionsTooltip(tx,ty,tw,th,"mousesmoothing",MouseSmooth)
 					EndIf
 					
-					Color(255, 255, 255)
-					
-										
+					Color(255, 255, 255)				
 					y = y + 30*MenuScale
 					AAText(x + 20 * MenuScale, y, "Настройка управления:") ;Control configuration:
 					y = y + 10*MenuScale
@@ -969,9 +948,11 @@ Function UpdateMainMenu()
 					InputBox(x + 430 * MenuScale, y + 60 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_INV,210)),9) ;470 ;100
 					AAText(x + 320 * MenuScale, y + 80 * MenuScale, "Ползти") ;Crouch ;280
 					InputBox(x + 430 * MenuScale, y + 80 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_CROUCH,210)),10)  ;470 ;100
-					AAText(x + 320 * MenuScale, y + 100 * MenuScale, "Консоль") ;Open/Close Console ;280
-					InputBox(x + 430 * MenuScale, y + 100 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_CONSOLE,210)),12) ;470 ;100
-					AAText(x + 320 * MenuScale, y + 120 * MenuScale, "Скриншот") ;Take Screenshot ;280
+					If CanOpenConsole	
+					    AAText(x + 320 * MenuScale, y + 100 * MenuScale, "Консоль") ;Open/Close Console ;280
+						InputBox(x + 430 * MenuScale, y + 100 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_CONSOLE,210)),12) ;470 ;100
+					EndIf
+					AAText(x + 320 * MenuScale, y + 120 * MenuScale, "Снимок экрана") ;Take Screenshot ;280
 					InputBox(x + 430 * MenuScale, y + 120 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_SCREENSHOT,210)),13) ;470 ;100
 					
 					If MouseOn(x+20*MenuScale,y,width-40*MenuScale,140*MenuScale)
@@ -1034,25 +1015,31 @@ Function UpdateMainMenu()
 					
 					y = y + 30*MenuScale
 					
-					Color 255,255,255
-					AAText(x + 20 * MenuScale, y, "Открыть консоль при ошибке:") ;Open console on error:
-					ConsoleOpening = DrawTick(x + 310 * MenuScale, y + MenuScale, ConsoleOpening)
-					If MouseOn(x+310*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
-						DrawOptionsTooltip(tx,ty,tw,th,"consoleerror")
+					If CanOpenConsole
+					    Color 255,255,255
+					    AAText(x + 20 * MenuScale, y, "Открыть консоль при ошибке:") ;Open console on error:
+					    ConsoleOpening = DrawTick(x + 310 * MenuScale, y + MenuScale, ConsoleOpening)
+					    If MouseOn(x+310*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
+						    DrawOptionsTooltip(tx,ty,tw,th,"consoleerror")
+					    EndIf
+					Else
+					    ConsoleOpening = 0
 					EndIf
 					
 					y = y + 30*MenuScale
 					
-					Color 255,255,255
-					AAText(x + 20 * MenuScale, y, "Версия консоли:") ;Console Version:
-					ConsoleVersion = DrawTick(x + 310 * MenuScale, y + MenuScale, ConsoleVersion)
-					If ConsoleVersion = 1 Then
-					    AAText(x + 350 * MenuScale, y, "Новая") ;New Version
-					Else
-					    AAText(x + 350 * MenuScale, y, "Старая") ;Old Version
-					EndIf    
-					If MouseOn(x+310*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
-						DrawOptionsTooltip(tx,ty,tw,th,"consoleversion")
+					If CanOpenConsole
+					    Color 255,255,255
+					    AAText(x + 20 * MenuScale, y, "Версия консоли:") ;Console Version:
+				        ConsoleVersion = DrawTick(x + 310 * MenuScale, y + MenuScale, ConsoleVersion)
+					    If ConsoleVersion = 1 Then
+					       AAText(x + 350 * MenuScale, y, "Новая") ;New Version
+					    Else
+					        AAText(x + 350 * MenuScale, y, "Старая") ;Old Version
+					    EndIf    
+					    If MouseOn(x+310*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
+						     DrawOptionsTooltip(tx,ty,tw,th,"consoleversion")
+					    EndIf
 					EndIf
 					
 					y = y + 50*MenuScale
@@ -1079,9 +1066,6 @@ Function UpdateMainMenu()
 					AAText(x + 20 * MenuScale, y, "Лимит кадров:") ;Framelimit:
 					Color 255,255,255
 					If DrawTick(x + 310 * MenuScale, y, CurrFrameLimit > 0.0) Then
-						;CurrFrameLimit# = (SlideBar(x + 150*MenuScale, y+30*MenuScale, 100*MenuScale, CurrFrameLimit#*50.0)/50.0)
-						;CurrFrameLimit = Max(CurrFrameLimit, 0.1)
-						;Framelimit% = CurrFrameLimit#*100.0
 						CurrFrameLimit# = (SlideBar(x + 150*MenuScale, y+30*MenuScale, 100*MenuScale, CurrFrameLimit#*99.0)/99.0)
 						CurrFrameLimit# = Max(CurrFrameLimit, 0.01)
 						Framelimit% = 19+(CurrFrameLimit*100.0)
@@ -1119,12 +1103,12 @@ Function UpdateMainMenu()
 							;Next
 						EndIf
 						InitAAFont()
-						fo\Font[0] = AALoadFont("GFX\font\cour\Courier New Rus.ttf", Int(18 * (GraphicHeight / 1024.0)), 0,0,0)
-						fo\Font[1] = AALoadFont("GFX\font\courbd\Courier New Rus.ttf", Int(58 * (GraphicHeight / 1024.0)), 0,0,0)
-						fo\Font[2] = AALoadFont("GFX\font\LCDNovaRus.ttf", Int(22 * (GraphicHeight / 1024.0)), 0,0,0)
-						fo\Font[3] = AALoadFont("GFX\font\LCDNovaRus.ttf", Int(60 * (GraphicHeight / 1024.0)), 0,0,0)
-						fo\Font[4] = AALoadFont("GFX\font\Journal\Journal.ttf", Int(58 * (GraphicHeight / 1024.0)), 0,0,0)
-						fo\ConsoleFont% = AALoadFont("Arial Cyr", Int(22 * (GraphicHeight / 1024.0)), 0,0,0,1) ;Blitz
+						fo\Font[0] = AALoadFont(FontPath$+"cour\Courier New Rus.ttf", Int(18 * (GraphicHeight / 1024.0)), 0,0,0)
+						fo\Font[1] = AALoadFont(FontPath$+"courbd\Courier New Rus.ttf", Int(58 * (GraphicHeight / 1024.0)), 0,0,0)
+						fo\Font[2] = AALoadFont(FontPath$+"LCDNovaRus.ttf", Int(22 * (GraphicHeight / 1024.0)), 0,0,0)
+						fo\Font[3] = AALoadFont(FontPath$+"LCDNovaRus.ttf", Int(58 * (GraphicHeight / 1024.0)), 0,0,0)
+						fo\Font[4] = AALoadFont(FontPath$+"Journal\Journal.ttf", Int(58 * (GraphicHeight / 1024.0)), 0,0,0)
+						fo\ConsoleFont% = AALoadFont("Arial Cyr", Int(22 * (GraphicHeight / 1024.0)), 0,0,0,1)
 						;ReloadAAFont()
 						AATextEnable_Prev% = AATextEnable
 					EndIf
@@ -1185,7 +1169,7 @@ Function UpdateMainMenu()
 				;DrawFrame(x+50*MenuScale,y+510*MenuScale,width-100*MenuScale,55*MenuScale)
 
 				Color(255, 255, 255)				
-				AAText(GraphicWidth/2.0,y+536*MenuScale,"Страница "+Int(Max((CurrLoadGamePage+1),1))+"/"+Int(Max((Int(Ceil(Float(SavedMapsAmount)/6.0))),1)),True,True)	;Page									
+				AAText(GraphicWidth/2.0,y+536*MenuScale,"Страница "+Int(Max((CurrLoadGamePage+1),1))+"/"+Int(Max((Int(Ceil(Float(SavedMapsAmount)/6.0))),1)),True,True)	;Page
 									
 				AASetFont fo\Font[0]
 				
@@ -1228,8 +1212,8 @@ Function UpdateMainMenu()
 	
 	Color 255, 255, 255
 	AASetFont fo\ConsoleFont
-	AAText 20, GraphicHeight-50, "v" + ModVersionNumber
-	AAText 20, GraphicHeight-30, "Запущено на SCP:CB v" + GameVersionNumber ;Running on
+	AAText 20, GraphicHeight - 50, "v" + ModVersionNumber
+	AAText 20, GraphicHeight - 30, "Запущено на SCP:CB v" + GameVersionNumber ;Running on
 
 	If Fullscreen Then DrawImage CursorIMG, ScaledMouseX(),ScaledMouseY()
 	
@@ -1258,14 +1242,13 @@ Function UpdateLauncher()
 	RealGraphicWidth = GraphicWidth
 	RealGraphicHeight = GraphicHeight
 
-	fo\Font[0] = LoadFont_Strict("GFX\font\cour\Courier New Rus.ttf", 18, 0,0,0)
+	fo\Font[0] = LoadFont_Strict(FontPath$+"cour\Courier New Rus.ttf", 18, 0,0,0)
 	SetFont fo\Font[0]
 	MenuWhite = LoadImage_Strict("GFX\menu\menuwhite.png")
 	MenuBlack = LoadImage_Strict("GFX\menu\menublack.png")	
 	MaskImage MenuBlack, 255,255,0
 	LauncherIMG = LoadImage_Strict("GFX\menu\launcher.png")		
-	ButtonSFX% = LoadSound_Strict("SFX\Interact\Button.ogg")	
-	
+	ButtonSFX% = LoadSound_Strict(SFXPath$+"Interact\Button.ogg")		
 	For i = 0 To 3
 		ArrowIMG(i) = LoadImage_Strict("GFX\menu\arrow.png")
 		RotateImage(ArrowIMG(i), 90 * i)
@@ -1285,7 +1268,7 @@ Function UpdateLauncher()
 		End If
 	Next
 	
-	BlinkMeterIMG% = LoadImage_Strict("GFX\blinkmeter.png")
+	BlinkMeterIMG% = LoadImage_Strict(GFXPath$+"blinkmeter.png")
 		
 	AppTitle "SCP - CB: Ultimate Edition/Расширенное издание Лаунчер" ;Launcher
 	
@@ -1370,7 +1353,7 @@ Function UpdateLauncher()
 
 		Text(40 + 430 + 15, 262 - 55 + 65 + 8, "16 Бит") ;16 Bit
 		Color 255, 255, 255
-		Text(40 + 430 + 15, 262 - 55 + 95 + -2, "Использовать") ;Use launcher
+		Text(40 + 430 + 15, 262 - 55 + 95 + 8, "Использовать") ;Use launcher
 		Text(40 + 430 + 15, 262 - 55 + 95 + 18, "лаунчер")
 		
 		If (Not BorderlessWindowed)
@@ -1380,7 +1363,7 @@ Function UpdateLauncher()
 				Text(40+ 260 + 15, 262 - 55 + 140, "Текущее разрешение: "+(GfxModeWidths(SelectedGFXMode) + "x" + GfxModeHeights(SelectedGFXMode) + ",32")) ;Current Resolution:
 			EndIf
 		Else
-			Text(40+ 260 + 15, 262 - 55 + 140, "Текущее разрешение: "+GfxModeWidths(SelectedGFXMode) + "x" + GfxModeHeights(SelectedGFXMode) + ",32") ;Current Resolution:
+	        Text(40+ 260 + 15, 262 - 55 + 140, "Текущее разрешение: "+GfxModeWidths(SelectedGFXMode) + "x" + GfxModeHeights(SelectedGFXMode) + ",32") ;Current Resolution:
 			If GfxModeWidths(SelectedGFXMode)<G_viewport_width Then
 				Text(40+ 260 + 65, 262 - 55 + 200, "(увеличено до "+G_viewport_width + "x" + G_viewport_height + ",32)") ;upscaled to
 			ElseIf GfxModeWidths(SelectedGFXMode)>G_viewport_width Then
@@ -1389,7 +1372,7 @@ Function UpdateLauncher()
 		EndIf
 		
 		If DrawButton(LauncherWidth - 275, LauncherHeight - 50 - 55, 150, 30, "НАШЕЛ ОШИБКУ!", False, False, False) Then ;REPORT A BUG!
-		    ExecFile("")
+		    ExecFile("https://vk.com/creatormteam") ;<- Перед релизом - создать обсуждение в группе для баг-репортов и отсавить здесь на него ссылку
 					
 			End
 		EndIf
@@ -1470,7 +1453,7 @@ Function InitLoadingScreens(file$)
 	Local f = OpenFile(file)
 	
 	While Not Eof(f)
-		TemporaryString = Trim2(ReadLine(f))
+		TemporaryString = trim2(ReadLine(f))
 		If Left(TemporaryString,1) = "[" Then
 			TemporaryString = Mid(TemporaryString, 2, Len(TemporaryString) - 2)
 			
@@ -1488,7 +1471,7 @@ Function InitLoadingScreens(file$)
 			
 			ls\disablebackground = GetINIInt(file, TemporaryString, "disablebackground")
 			
-			Select Lower2(GetINIString(file, TemporaryString, "align x"))
+			Select lower2(GetINIString(file, TemporaryString, "align x"))
 				Case "left"
 					ls\alignx = -1
 				Case "middle", "center"
@@ -1497,7 +1480,7 @@ Function InitLoadingScreens(file$)
 					ls\alignx = 1
 			End Select 
 			
-			Select Lower2(GetINIString(file, TemporaryString, "align y"))
+			Select lower2(GetINIString(file, TemporaryString, "align y"))
 				Case "top", "up"
 					ls\aligny = -1
 				Case "middle", "center"
@@ -1524,6 +1507,7 @@ Function DrawLoading(percent%, shortloading=False)
 		For ls.loadingscreens = Each LoadingScreens
 			If ls\id = temp Then
 				If ls\img=0 Then ls\img = LoadImage_Strict("Loadingscreens\"+ls\imgpath)
+				ls\img = ResizeImage2(ls\img, ImageWidth(ls\img) * MenuScale, ImageHeight(ls\img) * MenuScale)
 				SelectedLoadingScreen = ls 
 				Exit
 			EndIf
@@ -1531,6 +1515,7 @@ Function DrawLoading(percent%, shortloading=False)
 	EndIf	
 	
 	firstloop = True
+
 	Repeat 
 		
 		;Color 0,0,0
@@ -1554,7 +1539,6 @@ Function DrawLoading(percent%, shortloading=False)
 		If (Not SelectedLoadingScreen\disablebackground) Then
 			DrawImage LoadingBack, GraphicWidth/2 - ImageWidth(LoadingBack)/2, GraphicHeight/2 - ImageHeight(LoadingBack)/2
 		EndIf	
-		
 		If SelectedLoadingScreen\alignx = 0 Then
 			x = GraphicWidth/2 - ImageWidth(SelectedLoadingScreen\img)/2 
 		ElseIf  SelectedLoadingScreen\alignx = 1
@@ -1587,9 +1571,9 @@ Function DrawLoading(percent%, shortloading=False)
 			If Not shortloading Then 
 				If firstloop Then 
 					If percent = 0 Then
-						PlaySound_Strict LoadTempSound("SFX\SCP\990\cwm1.cwm")
+						PlaySound_Strict LoadTempSound(SFXPath$+"SCP\990\cwm1.cwm")
 					ElseIf percent = 100
-						PlaySound_Strict LoadTempSound("SFX\SCP\990\cwm2.cwm")
+						PlaySound_Strict LoadTempSound(SFXPath$+"SCP\990\cwm2.cwm")
 					EndIf
 				EndIf
 			EndIf
@@ -1669,7 +1653,7 @@ Function DrawLoading(percent%, shortloading=False)
 		AAText(GraphicWidth / 2, GraphicHeight / 2 - 100, "ЗАГРУЗКА - " + percent + " %", True, True) ;LOADING
 		
 		If percent = 100 Then 
-			If firstloop And SelectedLoadingScreen\title <> "CWM" Then PlaySound_Strict LoadTempSound(("SFX\Horror\Horror8.ogg"))
+			If firstloop And SelectedLoadingScreen\title <> "CWM" Then PlaySound_Strict LoadTempSound((SFXPath$+"Horror\Horror8.ogg"))
 			AAText(GraphicWidth / 2, GraphicHeight - 50, "НАЖМИТЕ ЛЮБУЮ КЛАВИШУ ДЛЯ ПРОДОЛЖЕНИЯ", True, True) ;PRESS ANY KEY TO CONTINUE
 		Else
 			FlushKeys()
@@ -1727,10 +1711,16 @@ Function DrawLoading(percent%, shortloading=False)
 		firstloop = False
 		If percent <> 100 Then Exit
 		
-	Until (GetKey()<>0 Or MouseHit(1))
+		Local close% = False
+		If (GetKey()<>0 Or MouseHit(1))
+			close=True
+			FlushKeys()
+			FlushMouse()
+			AASetFont fo\Font[0]
+		EndIf
+	Until close
+	
 End Function
-
-
 
 Function rInput$(aString$)
 	Local value% = GetKey()
@@ -1883,8 +1873,8 @@ Function SlideBar#(x%, y%, width%, value#)
 	DrawImage(BlinkMeterIMG, x + width * value / 100.0 +3, y+3)
 	
 	Color 170,170,170 
-	AAText (x - 50 * MenuScale, y + 4*MenuScale, "НИЗК") ;LOW				
-	AAText (x + width + 38 * MenuScale, y+4*MenuScale, "ВЫС") ;HIGH	
+	AAText (x - 50 * MenuScale, y + 4*MenuScale, "НИЗК") ;LOW
+	AAText (x + width + 38 * MenuScale, y+4*MenuScale, "ВЫС") ;HIGH
 	
 	Return value
 	
@@ -1904,7 +1894,7 @@ Function RowText(A$, X, Y, W, H, align% = 0, Leading#=1)
 		Local space = Instr(A$, " ")
 		If space = 0 Then space = Len(A$)
 		Local temp$ = Left(A$, space)
-		Local trimmed$ = Trim2(temp) ;we might ignore a final space 
+		Local trimmed$ = trim2(temp) ;we might ignore a final space 
 		Local extra = 0 ;we haven't ignored it yet
 		;ignore final space If doing so would make a word fit at End of Line:
 		If (AAStringWidth (b$ + temp$) > W) And (AAStringWidth (b$ + trimmed$) <= W) Then
@@ -1953,7 +1943,7 @@ Function RowText2(A$, X, Y, W, H, align% = 0, Leading#=1)
 		Local space = Instr(A$, " ")
 		If space = 0 Then space = Len(A$)
 		Local temp$ = Left(A$, space)
-		Local trimmed$ = Trim2(temp) ;we might ignore a final space 
+		Local trimmed$ = trim2(temp) ;we might ignore a final space 
 		Local extra = 0 ;we haven't ignored it yet
 		;ignore final space If doing so would make a word fit at End of Line:
 		If (StringWidth (b$ + temp$) > W) And (StringWidth (b$ + trimmed$) <= W) Then
@@ -2002,7 +1992,7 @@ Function GetLineAmount(A$, W, H, Leading#=1)
 		Local space = Instr(A$, " ")
 		If space = 0 Then space = Len(A$)
 		Local temp$ = Left(A$, space)
-		Local trimmed$ = Trim2(temp) ;we might ignore a final space 
+		Local trimmed$ = trim2(temp) ;we might ignore a final space 
 		Local extra = 0 ;we haven't ignored it yet
 		;ignore final space If doing so would make a word fit at End of Line:
 		If (AAStringWidth (b$ + temp$) > W) And (AAStringWidth (b$ + trimmed$) <= W) Then
@@ -2040,7 +2030,7 @@ Function GetLineAmount2(A$, W, H, Leading#=1)
 		Local space = Instr(A$, " ")
 		If space = 0 Then space = Len(A$)
 		Local temp$ = Left(A$, space)
-		Local trimmed$ = Trim2(temp) ;we might ignore a final space 
+		Local trimmed$ = trim2(temp) ;we might ignore a final space 
 		Local extra = 0 ;we haven't ignored it yet
 		;ignore final space If doing so would make a word fit at End of Line:
 		If (StringWidth (b$ + temp$) > W) And (StringWidth (b$ + trimmed$) <= W) Then
@@ -2149,7 +2139,7 @@ Function DrawOptionsTooltip(x%,y%,width%,height%,option$,value#=0,ingame%=False)
 	
 	AASetFont fo\Font[0]
 	Color 255,255,255
-	Select Lower2(option$)
+	Select lower2(option$)
 		;Graphic options
 			;[Block]
 		Case "bump"
@@ -2171,7 +2161,7 @@ Function DrawOptionsTooltip(x%,y%,width%,height%,option$,value#=0,ingame%=False)
 			R = 255
 			G = 255
 			B = 255
-			txt2 = "Текущее значение: "+Int(value*100)+"% (стандартно - 100%)" ;Current value:  ;% (default is 100%)
+			txt2 = "Текущее значение: "+Int(value*100)+"% (стандартно - 100%)" ;Current value:  ;% (default is 100%)	
 		Case "texquality"
 			txt = Chr(34)+"Детализация текстур"+Chr(34)+" устанавливает дистанцию, на которой будет изменяться детализация текстур. Измените этот параметр, если текстуры мерцают или выглядят слишком размытыми." ;Texture LOD Bias"+Chr(34)+" affects the distance at which texture detail will change to prevent aliasing. Change this option if textures flicker or look too blurry.
 		Case "particleamount"
@@ -2200,7 +2190,7 @@ Function DrawOptionsTooltip(x%,y%,width%,height%,option$,value#=0,ingame%=False)
 			R = 255
 			G = 255
 			B = 255
-			txt2 = "Текущее значение: "+Int(value*100)+"% (стандартно - 50%)" ;Current value:  ;% (default is 50%)
+			txt2 = "Текущее значение: "+Int(value*100)+"% (стандартно - 50%)" ;Current value:  ;% (default is 50%)		
 		Case "soundvol"
 			txt = "Громкость звуковых эффектов. Проведите слайдер влево до конца для полного отключения звука." ;Adjusts the volume of sound effects. Sliding the bar fully to the left will mute all sounds.
 			R = 255
@@ -2213,7 +2203,7 @@ Function DrawOptionsTooltip(x%,y%,width%,height%,option$,value#=0,ingame%=False)
 			txt2 = "Эта опция не может быть изменена во время игры." ;This option cannot be changed in-game.
 		Case "usertrack"
 			txt = "Включает возможность прослушивания пользовательский треков на 1-ом канале радио. Треки загружаются из " + Chr(34) + "SFX\Radio\UserTracks\" + Chr(34) ;Toggles the ability to play custom tracks over channel 1 of the radio. These tracks are loaded from the 
-			txt = txt + " Нажмите " + Chr(34) + "1" + Chr(34) + " когда выбрано радио, чтобы прослушать ваши треки." ; directory. Press  ;when the radio is selected to change track.
+			txt = txt + " Нажмите " + Chr(34) + "1" + Chr(34) + " когда выбрано радио, чтобы прослушать Ваши треки." ; directory. Press  ;when the radio is selected to change track.
 			R = 255
 			txt2 = "Эта опция не может быть изменена во время игры." ;This option cannot be changed in-game.
 		Case "usertrackmode"
@@ -2236,11 +2226,11 @@ Function DrawOptionsTooltip(x%,y%,width%,height%,option$,value#=0,ingame%=False)
 		Case "mouseinvert"
 			txt = "Не требует пояснений." ;Invert mouse Y-axis"+Chr(34)+" is self-explanatory.
 		Case "mousesmoothing"
-			txt = "Сглаживание указателя мыши." ;Adjusts the amount of smoothing of the mouse pointer.
+			txt = "Сглаживание движения указателя мыши." ;Adjusts the amount of smoothing of the mouse pointer.
 			R = 255
 			G = 255
 			B = 255
-			txt2 = "Текущее значение: "+Int(value*100)+"% (стандартно - 100%)" ;Current value:  ;% (default is 100%)
+			txt2 = "Текущее значение: "+Int(value*100)+"% (стандартно - 100%)" ;Current value:  ;% (default is 100%)		
 		Case "controls"
 			txt = "Настройка управления в игре." ;Configure the in-game control scheme.
 			;[End Block]
@@ -2266,7 +2256,9 @@ Function DrawOptionsTooltip(x%,y%,width%,height%,option$,value#=0,ingame%=False)
 		Case "antialiastext"
 			txt = "Сглаживает текст, делая его читабельным на мониторах с высоким разрешением экрана." ;Antialiased text"+Chr(34)+" smooths out the text before displaying. Makes text easier to read at high resolutions.
 			;[End Block]
-		;MODS
+			
+		;{~--<MOD>--~}
+		
 		    ;[Block]
 		Case "thaumiel" ;WIP
 			txt = "Этот уровень сложности откроется по завершению игры на Кетер. В будущих версиях этот уровень сложности будет изменён." ;This difficulty is unlocked at the End of the Keter difficulty. It is advisable to play consciously. This mode will be nerfed and upgraded in the future versions.
@@ -2279,7 +2271,9 @@ Function DrawOptionsTooltip(x%,y%,width%,height%,option$,value#=0,ingame%=False)
 			B = 255
 			txt2 = "Текущее значение: "+Int(FOV)+" (стандартно - 74%)" ;Current value: ;default is
 			;[End Block]
-        ;END
+			
+        ;{~--<END>--~}
+
 	End Select
 	
 	lines% = GetLineAmount(txt,fw,fh)
@@ -2389,7 +2383,7 @@ Function ChangeMenu_TestIMG(change$)
 	ClsColor 0,0,0
 	Cls
 	SetBuffer BackBuffer()
-	Menu_TestIMG = Create3DIcon(200,200,"GFX\map\room3z3_opt.rmesh",0,-0.75,1,0,0,0,menuroomscale#,menuroomscale#,menuroomscale#,True)
+	Menu_TestIMG = Create3DIcon(200,200,MapPath$+"room3z3_opt.rmesh",0,-0.75,1,0,0,0,menuroomscale#,menuroomscale#,menuroomscale#,True)
 	ScaleImage Menu_TestIMG,MenuScale,MenuScale
 	MaskImage Menu_TestIMG,255,0,255
 	FreeTexture AmbientLightRoomTex : AmbientLightRoomTex = 0
@@ -2761,7 +2755,7 @@ Function Button%(x,y,width,height,txt$, disabled%=False)
 	If Pushed And MouseHit1 Then PlaySound_Strict ButtonSFX : Return True
 End Function
 
-;Отображение даты на русском (CWM + сохр.)
+;Отображение даты на русском (Сохр. + CWM)
 Function SaveGameDateRus$(i$)
 	Local D$ = Left(SaveGameDate(i),2), M$, Y$ = Right(SaveGameDate(i),4)
 	Select Mid$(SaveGameDate(i),4,3)
@@ -2801,3 +2795,4 @@ Function CurrentDateRus$()
 	Local Date$ = D+" "+M+" "+Y
 	Return Date
 End Function
+

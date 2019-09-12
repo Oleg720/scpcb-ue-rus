@@ -7,7 +7,7 @@
 
 				  www.scpcbgame.ru
 
-			       v5.4.1 [Rus Pre-v1.0]
+			      	 v5.5 [Rus Indev]
 
 Данная игра базируется на работах Фонда SCP (http://scpfoundation.net).
 Смотрите "Credits.txt" для подробностей.

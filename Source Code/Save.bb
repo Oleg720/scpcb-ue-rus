@@ -34,10 +34,13 @@ Function SaveGame(file$)
 	WriteFloat f, EntityYaw(Collider)
 	
 	;WriteString f, GameVersionNumber
-	;MOD
+	;{~--<MOD>--~}
+	
 	;WriteString f, ModVersionNumber
 	;WriteString f, SubjectName
-	;END
+	
+	;{~--<END>--~}
+	
 	WriteString f, ModCompatibleNumber
 	
 	WriteFloat f, BlinkTimer
@@ -74,9 +77,7 @@ Function SaveGame(file$)
 	WriteFloat f, CameraShakeTimer
 	WriteFloat f, I_008\Timer
 	
-	;MOD
-	
-	WriteByte f, Binoculars
+	;{~--<MOD>--~}
 
 	WriteByte f, I_447\UsingEyeDrops
 	WriteFloat f, I_447\UsingEyeDropsTimer
@@ -84,7 +85,7 @@ Function SaveGame(file$)
 	WriteFloat f, I_447\UsingFirstAidTimer
 	WriteByte f, I_447\UsingPill
 	WriteFloat f, I_447\UsingPillTimer
-
+	
 	WriteByte f, UsedMorphine
 	WriteFloat f, MorphineTimer
 	WriteFloat f, MorphineHealAmount
@@ -109,15 +110,14 @@ Function SaveGame(file$)
 
     WriteFloat f, I_207\Timer
 
-    WriteByte f, Limit500
+    WriteByte f, I_500\Limit
 
     WriteByte f, I_402\Using
     WriteFloat f, I_402\Timer
 
     WriteFloat f, I_357\Timer
 
-    WriteByte f, IfKey005
-    WriteByte f, diceroll
+    WriteByte f, ChanceToSpawn005
 
     WriteFloat f, MTF2Timer
 
@@ -125,7 +125,9 @@ Function SaveGame(file$)
 
     WriteFloat f, GasmaskBlurTimer
 
-	;END
+    WriteByte f, WearingHelmet
+
+	;{~--<END>--~}
 	
 	For i = 0 To CUSTOM
 		If (SelectedDifficulty = difficulties(i)) Then
@@ -136,6 +138,14 @@ Function SaveGame(file$)
 				WriteByte f,SelectedDifficulty\permaDeath
 				WriteByte f,SelectedDifficulty\saveType
 				WriteByte f,SelectedDifficulty\otherFactors
+				
+				;{~--<MOD>--~}
+				
+				WriteByte f,SelectedDifficulty\TwoSlots
+				WriteByte f,SelectedDifficulty\menu
+				
+				;{~--<END>--~}
+				
 			EndIf
 		EndIf
 	Next
@@ -216,9 +226,11 @@ Function SaveGame(file$)
 		WriteFloat f, n\State3
 		WriteInt f, n\PrevState
 		
-		;MOD
+		;{~--<MOD>--~}
+		
 		WriteInt f, n\TargetEnt
-		;END
+		
+		;{~--<END>--~}
 		
 		WriteByte f, n\Idle
 		WriteFloat f, n\LastDist
@@ -427,9 +439,13 @@ Function SaveGame(file$)
 		WriteFloat f, e\EventState
 		WriteFloat f, e\EventState2	
 		WriteFloat f, e\EventState3	
-		;MOD
+		
+		;{~--<MOD>--~}
+		
 		WriteFloat f, e\EventState4
-		;END
+		
+		;{~--<END>--~}
+		
 		WriteFloat f, EntityX(e\room\obj)
 		WriteFloat f, EntityZ(e\room\obj)
 		WriteString f, e\EventStr
@@ -513,23 +529,24 @@ Function SaveGame(file$)
 	WriteFloat f, I_427\Timer
 	
 	WriteByte f, I_714\Using
+	
+	WriteByte f, MaxItemAmount
 	CloseFile f
 	
 	If Not ms\MenuOpen Then
-		If SelectedDifficulty\saveType = SAVEONSCREENS Then
-			PlaySound_Strict(LoadTempSound("SFX\General\Save2.ogg"))
+        If SelectedDifficulty\saveType = SAVEONSCREENS Then
+			PlaySound_Strict(LoadTempSound(SFXPath$+"General\Save2.ogg"))
 		Else
-			PlaySound_Strict(LoadTempSound("SFX\General\Save1.ogg"))
+			PlaySound_Strict(LoadTempSound(SFXPath$+"General\Save1.ogg"))
 		EndIf
-		
-		Msg = "Игра сохранена." ;Game progress saved.
+		Msg = "Game progress saved."
 		MsgTimer = 70 * 4
 	EndIf
 End Function
 
 Function LoadGame(file$)
 	Local version$ = ""
-
+	
 	DropSpeed=0.0
 	
 	DebugHUD = False
@@ -602,10 +619,8 @@ Function LoadGame(file$)
 	CameraShakeTimer = ReadFloat(f)
 	I_008\Timer = ReadFloat(f)
 	
-	;MOD
-	
-	Binoculars = ReadByte(f)
-	
+	;{~--<MOD>--~}
+
 	I_447\UsingEyeDrops = ReadByte(f)
 	I_447\UsingEyeDropsTimer = ReadFloat(f)
 	I_447\UsingFirstAid = ReadByte(f)
@@ -637,15 +652,14 @@ Function LoadGame(file$)
 	
 	I_207\Timer = ReadFloat(f)
 	
-	Limit500 = ReadByte(f)
+	I_500\Limit = ReadByte(f)
 	
 	I_402\Using = ReadByte(f)
 	I_402\Timer = ReadFloat(f)
 	
 	I_357\Timer = ReadFloat(f)
 	
-	IfKey005 = ReadByte(f)
-	diceroll = ReadByte(f)
+	ChanceToSpawn005 = ReadByte(f)
 	
 	MTF2Timer = ReadFloat(f)
 	
@@ -653,7 +667,9 @@ Function LoadGame(file$)
 	
 	GasmaskBlurTimer = ReadFloat(f)
 	
-	;END
+	WearingHelmet = ReadByte(f)
+	
+	;{~--<END>--~}
 	
 	Local difficultyIndex = ReadByte(f)
 	SelectedDifficulty = difficulties(difficultyIndex)
@@ -662,6 +678,14 @@ Function LoadGame(file$)
 		SelectedDifficulty\permaDeath = ReadByte(f)
 		SelectedDifficulty\saveType	= ReadByte(f)
 		SelectedDifficulty\otherFactors = ReadByte(f)
+		
+		;{~--<MOD>--~}
+		
+		SelectedDifficulty\TwoSlots = ReadByte(f)
+		SelectedDifficulty\menu = ReadByte(f)
+		
+		;{~--<END>--~}
+		
 	EndIf
 	
 	MonitorTimer = ReadFloat(f)
@@ -744,9 +768,11 @@ Function LoadGame(file$)
 		n\State3 = ReadFloat(f)			
 		n\PrevState = ReadInt(f)
 		
-		;MOD
+		;{~--<MOD>--~}
+		
 		n\TargetEnt = ReadInt(f)
-		;END
+		
+		;{~--<END>--~}
 		
 		n\Idle = ReadByte(f)
 		n\LastDist = ReadFloat(f)
@@ -758,7 +784,7 @@ Function LoadGame(file$)
 		
 		ForceSetNPCID(n, ReadInt(f))
 		n\TargetID = ReadInt(f)
-
+		
 		n\EnemyX = ReadFloat(f)
 		n\EnemyY = ReadFloat(f)
 		n\EnemyZ = ReadFloat(f)
@@ -771,7 +797,7 @@ Function LoadGame(file$)
 		
 		Local frame# = ReadFloat(f)
 		Select NPCtype
-			Case NPCtype106, NPCtypeD, NPCtype096, NPCtypeMTF, NPCtypeGuard, NPCtype049, NPCtype049_2, NPCtypeClerk, NPCtype650, NPCtype049_3, NPCtypeMTF2, NPCtype457, NPCtype008_2, NPCtype035_Tentacle, NPCtype008_1
+			Case NPCtype106, NPCtypeD, NPCtype096, NPCtypeMTF, NPCtypeGuard, NPCtype049, NPCtype049_2, NPCtypeClerk, NPCtype650, NPCtype049_3, NPCtypeMTF2, NPCtype457, NPCtype008_2, NPCtype035_Tentacle, NPCtype008_1, NPCtypeVehicle
 				SetAnimTime(n\obj, frame)
 		End Select
 		
@@ -1089,7 +1115,7 @@ Function LoadGame(file$)
 	
 	InitWayPoints()
 	
-	If ReadInt(f) <> 1845 Then RuntimeError("Не удалось загрузить игру, так как файл сохранения повреждён (ошибка 3).") ;Couldn't load the game, save file corrupted (error)
+	If ReadInt(f) <> 1845 Then RuntimeError("Не удалось загрузить игру, так как файл сохранения повреждён (ошибка 3).") ;Couldn't load the game, save file corrupted (error 3)
 	
 	Local d.Decals
 	For d.Decals = Each Decals
@@ -1131,9 +1157,13 @@ Function LoadGame(file$)
 		e\EventState = ReadFloat(f)
 		e\EventState2 = ReadFloat(f)		
 		e\EventState3 = ReadFloat(f)
-		;MOD
+		
+		;{~--<MOD>--~}
+		
 		e\EventState4 = ReadFloat(f)
-		;END
+		
+		;{~--<END>--~}
+		
 		x = ReadFloat(f)
 		z = ReadFloat(f)
 		For  r.Rooms = Each Rooms
@@ -1177,7 +1207,7 @@ Function LoadGame(file$)
 			e\EventStr = ""
 		ElseIf e\EventName = "room106"
 			If e\EventState2 = False Then
-				PositionEntity(e\room\Objects[6],EntityX(e\room\Objects[6],True),-1280.0*RoomScale,EntityZ(e\room\Objects[6],True),True)
+				PositionEntity(e\room\Objects[6], EntityX(e\room\Objects[6], True), -4512.0 * RoomScale, EntityZ(e\room\Objects[6], True), True)
 			EndIf
 		EndIf
 	Next
@@ -1194,7 +1224,7 @@ Function LoadGame(file$)
 		Local Name$ = ReadString(f)
 		
 		If tempName = "50ct" Then
-			ittName = "Quarter"
+			ittName = "Четвертак" ;Quarter
 			tempName = "25ct"
 		EndIf
 		
@@ -1303,7 +1333,7 @@ Function LoadGame(file$)
 	I_427\Using = ReadByte(f)
 	I_427\Timer = ReadFloat(f)
 	
-	If version = "5.4" Then
+	If version = "5.4.1" Then
 		I_Zone\Transition[0] = ReadByte(f)
 		I_Zone\Transition[1] = ReadByte(f)
 		I_Zone\HasCustomForest = ReadByte(f)
@@ -1311,6 +1341,8 @@ Function LoadGame(file$)
 	EndIf
 	
 	I_714\Using = ReadByte(f)
+	
+	MaxItemAmount = ReadByte(f)
 	
 	CloseFile f
 	
@@ -1389,7 +1421,7 @@ End Function
 
 Function LoadGameQuick(file$)
 	Local version$ = ""
-
+	
 	DebugHUD = False
 	GameSaved = True
 	chs\NoTarget = False
@@ -1429,6 +1461,7 @@ Function LoadGameQuick(file$)
 	
 	chs\GodMode = 0
 	chs\NoClip = 0
+	WireFrame 0
 	
 	PlayTime = ReadInt(f)
 	
@@ -1475,7 +1508,7 @@ Function LoadGameQuick(file$)
 	StaminaEffectTimer = ReadFloat(f)	
 
 	EyeStuck = ReadFloat(f)
-	EyeIrritation= ReadFloat(f)
+	EyeIrritation = ReadFloat(f)
 	
 	Injuries = ReadFloat(f)
 	Bloodloss = ReadFloat(f)
@@ -1494,9 +1527,7 @@ Function LoadGameQuick(file$)
 	CameraShakeTimer = ReadFloat(f)
 	I_008\Timer = ReadFloat(f)
 	
-	;MOD
-	
-	Binoculars = ReadByte(f)
+	;{~--<MOD>--~}
 	
 	I_447\UsingEyeDrops = ReadByte(f)
 	I_447\UsingEyeDropsTimer = ReadFloat(f)
@@ -1529,15 +1560,14 @@ Function LoadGameQuick(file$)
 	
 	I_207\Timer = ReadFloat(f)
 	
-	Limit500 = ReadByte(f)
+	I_500\Limit = ReadByte(f)
 	
 	I_402\Using = ReadByte(f)
 	I_402\Timer = ReadFloat(f)
 	
 	I_357\Timer = ReadFloat(f)
 	
-	IfKey005 = ReadByte(f)
-	diceroll = ReadByte(f)
+	ChanceToSpawn005 = ReadByte(f)
 	
 	MTF2Timer = ReadFloat(f)
 	
@@ -1546,8 +1576,11 @@ Function LoadGameQuick(file$)
 	GasmaskBlurTimer = ReadFloat(f)
 	
 	chs\Cheats = 0
+	chs\NoBlinking = 0
 	
-	;END
+	WearingHelmet = ReadByte(f)
+	
+	;{~--<END>--~}
 	
 	Local difficultyIndex = ReadByte(f)
 	SelectedDifficulty = difficulties(difficultyIndex)
@@ -1556,6 +1589,14 @@ Function LoadGameQuick(file$)
 		SelectedDifficulty\permaDeath = ReadByte(f)
 		SelectedDifficulty\saveType	= ReadByte(f)
 		SelectedDifficulty\otherFactors = ReadByte(f)
+		
+		;{~--<MOD>--~}
+		
+		SelectedDifficulty\TwoSlots = ReadByte(f)
+		SelectedDifficulty\menu = ReadByte(f)
+		
+		;{~--<END>--~}
+		
 	EndIf
 	
 	MonitorTimer = ReadFloat(f)
@@ -1642,9 +1683,11 @@ Function LoadGameQuick(file$)
 		n\State3 = ReadFloat(f)			
 		n\PrevState = ReadInt(f)
 		
-		;MOD
+		;{~--<MOD>--~}
+		
 		n\TargetEnt = ReadInt(f)
-		;END
+		
+		;{~--<END>--~}
 		
 		n\Idle = ReadByte(f)
 		n\LastDist = ReadFloat(f)
@@ -1669,7 +1712,7 @@ Function LoadGameQuick(file$)
 		
 		Local frame# = ReadFloat(f)
 		Select NPCtype
-			Case NPCtype106, NPCtypeD, NPCtype096, NPCtypeMTF, NPCtypeGuard, NPCtype049, NPCtype049_2, NPCtypeClerk, NPCtype650, NPCtype049_3, NPCtypeMTF2, NPCtype457, NPCtype008_2, NPCtype035_Tentacle, NPCtype008_1
+			Case NPCtype106, NPCtypeD, NPCtype096, NPCtypeMTF, NPCtypeGuard, NPCtype049, NPCtype049_2, NPCtypeClerk, NPCtype650, NPCtype049_3, NPCtypeMTF2, NPCtype457, NPCtype008_2, NPCtype035_Tentacle, NPCtype008_1, NPCtypeVehicle
 				SetAnimTime(n\obj, frame)
 		End Select		
 		
@@ -1932,9 +1975,13 @@ Function LoadGameQuick(file$)
 		e\EventState = ReadFloat(f)
 		e\EventState2 = ReadFloat(f)
 		e\EventState3 = ReadFloat(f)
-		;MOD
+		
+		;{~--<MOD>--~}
+		
 		e\EventState4 = ReadFloat(f)
-		;END		
+		
+		;{~--<END>--~}		
+		
 		x = ReadFloat(f)
 		z = ReadFloat(f)
 		For r.Rooms = Each Rooms
@@ -1945,7 +1992,7 @@ Function LoadGameQuick(file$)
 			EndIf
 		Next	
 		e\EventStr = ReadString(f)
-		If e\EventName = "alarm"
+		If e\EventName = "room173"
 			;A hacky fix for the case that the intro objects aren't loaded when they should
 			;Altough I'm too lazy to add those objects there because at the time where you can save, those objects are already in the ground anyway - ENDSHN
 			If e\room\Objects[0]=0
@@ -1971,7 +2018,7 @@ Function LoadGameQuick(file$)
 		Local Name$ = ReadString(f)
 		
 		If tempName = "50ct" Then
-			ittName = "Quarter"
+			ittName = "Четвертак" ;Quarter
 			tempName = "25ct"
 		EndIf
 		
@@ -2100,7 +2147,7 @@ Function LoadGameQuick(file$)
 	I_427\Using = ReadByte(f)
 	I_427\Timer = ReadFloat(f)
 	
-	If version = "5.4" Then
+	If version = "5.4.1" Then
 		I_Zone\Transition[0] = ReadByte(f)
 		I_Zone\Transition[1] = ReadByte(f)
 		I_Zone\HasCustomForest = ReadByte(f)
@@ -2108,6 +2155,9 @@ Function LoadGameQuick(file$)
 	EndIf
 	
 	I_714\Using = ReadByte(f)
+	
+	MaxItemAmount = ReadByte(f)
+	
 	CloseFile f
 	
 	If Collider <> 0 Then
@@ -2146,14 +2196,14 @@ Function LoadGameQuick(file$)
 				xtemp# = EntityX(r\Objects[13],True)
 				ztemp# = EntityZ(r\Objects[13],True)
 				FreeEntity r\Objects[13]
-				r\Objects[13]=LoadMesh_Strict("GFX\map\gateawall1.b3d",r\obj)
+				r\Objects[13]=LoadMesh_Strict(MapPath$+"gateawall1.b3d",r\obj)
 				PositionEntity(r\Objects[13], xtemp#, r\y-1045.0*RoomScale, ztemp#, True)
 				EntityColor r\Objects[13], 25,25,25
 				EntityType r\Objects[13],HIT_MAP
 				xtemp# = EntityX(r\Objects[14],True)
 				ztemp# = EntityZ(r\Objects[14],True)
 				FreeEntity r\Objects[14]
-				r\Objects[14]=LoadMesh_Strict("GFX\map\gateawall2.b3d",r\obj)
+				r\Objects[14]=LoadMesh_Strict(MapPath$+"gateawall2.b3d",r\obj)
 				PositionEntity(r\Objects[14], xtemp#, r\y-1045.0*RoomScale, ztemp#, True)	
 				EntityColor r\Objects[14], 25,25,25
 				EntityType r\Objects[14],HIT_MAP
@@ -2180,7 +2230,7 @@ End Function
 
 Function LoadSaveGames()
 	SaveGameAmount = 0
-	If FileType(SavePath)=1 Then RuntimeError "Can't create dir "+Chr(34)+SavePath+Chr(34)
+	If FileType(SavePath)=1 Then RuntimeError "Не удалось создать директорию"+Chr(34)+SavePath+Chr(34) ;Can't create dir
 	If FileType(SavePath)=0 Then CreateDir(SavePath)
 	myDir=ReadDir(SavePath) 
 	Repeat 
@@ -2234,7 +2284,7 @@ Function LoadSaveGames()
 		
 		CloseFile f
 	Next
-
+	
 End Function
 
 
@@ -2250,7 +2300,7 @@ Function LoadSavedMaps()
 	Dir=ReadDir("Map Creator\Maps")
 	Repeat
 		file$=NextFile$(Dir)
-
+				
 		If file$="" Then Exit
 		If FileType(CurrentDir()+"Map Creator\Maps\"+file$) = 1 Then 
 			If file <> "." And file <> ".." Then
@@ -2495,7 +2545,7 @@ Function LoadMap(file$)
 			name$ = Lower(ReadString(f))
 			
 			angle = ReadByte(f)*90.0
-
+			
 			For rt.RoomTemplates=Each RoomTemplates
 				If Lower(rt\Name) = name Then
 					
@@ -2627,15 +2677,12 @@ Function LoadMap(file$)
 		Next
 	Next
 	
-	;r = CreateRoom(0, ROOM1, 8, 0, (MapHeight-1) * 8, "173")
-	;r = CreateRoom(0, ROOM1, (MapWidth-1) * 8, 0, (MapHeight-1) * 8, "pocketdimension")
-	;r = CreateRoom(0, ROOM1, 0, 0, 8, "gatea")
-	If IntroEnabled Then r = CreateRoom(0, ROOM1, 8, 0, (MapHeight+2) * 8, "173")
+	If IntroEnabled Then r = CreateRoom(0, ROOM1, 8, 0, (MapHeight+2) * 8, "room173_intro")
 	r = CreateRoom(0, ROOM1, (MapWidth+2) * 8, 0, (MapHeight+2) * 8, "pocketdimension")
 	r = CreateRoom(0, ROOM1, 0, 500, -16, "gatea")
 	r = CreateRoom(0, ROOM1, -16, 800, 0, "dimension1499")
 	
-	CreateEvent("173", "173", 0)
+	CreateEvent("room173_intro", "room173_intro", 0)
 	CreateEvent("pocketdimension", "pocketdimension", 0)   
 	CreateEvent("gatea", "gatea", 0)
 	CreateEvent("dimension1499", "dimension1499", 0)

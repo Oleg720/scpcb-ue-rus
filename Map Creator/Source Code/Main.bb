@@ -1,13 +1,13 @@
 Global ResWidth% = 910
 Global ResHeight% = 660
-Global versionnumber$ = "2.1 [Rus]" ;2.1
+Global VersionNumber$ = "5.5 [Rus]"
 
 Loadingwindow=CreateWindow("", GraphicsWidth()/2-160,GraphicsHeight()/2-120,320,260,winhandle,8)
 panelloading = CreatePanel(0,0,320,260,Loadingwindow,0)
-SetPanelImage(panelloading,"Assets\map_logo.jpg")
+SetPanelImage(panelloading,"Assets\map_logo.png")
 
 ; create a window to put the toolbar in
-WinHandle=CreateWindow("SCP-CB Редактор карт "+versionnumber,GraphicsWidth()/2-ResWidth/2, GraphicsHeight()/2-ResHeight/2,ResWidth,ResHeight,0, 13) ;SCP-CB Map Creator
+WinHandle=CreateWindow("Редактор карт SCP-CB UE v"+VersionNumber,GraphicsWidth()/2-ResWidth/2, GraphicsHeight()/2-ResHeight/2,ResWidth,ResHeight,0, 13) ;SCP-CB Map Creator Ultimate Edition v 
 Global MainHwnd = GetActiveWindow();User32.dll
 HideGadget WinHandle
 
@@ -118,9 +118,9 @@ Dim MapAngle%(MapWidth, MapHeight)
 Dim MapEvent$(MapWidth, MapHeight)
 Dim MapEventProb#(MapWidth, MapHeight)
 ;For rt.RoomTemplates = Each RoomTemplates
-;	If rt\Name = "start" Then
+;	If rt\Name = "room173" Then
 ;		Map(MapWidth/2,MapHeight)=rt
-;		MapEvent(MapWidth/2,MapHeight)="alarm"
+;		MapEvent(MapWidth/2,MapHeight)="room173"
 ;		MapAngle(MapWidth/2,MapHeight)=180
 ;	EndIf
 ;Next
@@ -184,13 +184,14 @@ author_descr = CreateMenu("Изменить автора и описание",19,options) ;Edit Author 
 CreateMenu "",1000,options
 CreateMenu "Настройки камеры",17,options ;Edit Camera
 
-Local option_event = GetINIInt("options.INI","general","events_default")
+Const OptionFile$ = "Source Code\options.ini"
+Local option_event = GetINIInt(OptionFile,"general","events_default")
 If (Not option_event)
 	UncheckMenu event_default
 Else
 	CheckMenu event_default
 EndIf
-Local option_adjdoors = GetINIInt("options.INI","3d scene","adjdoors_place")
+Local option_adjdoors = GetINIInt(OptionFile,"3d scene","adjdoors_place")
 If (Not option_adjdoors)
 	UncheckMenu adjdoor_place
 Else
@@ -219,35 +220,35 @@ LabelRange = CreateLabel("",5,135,285,60, optionwin,1) ;70
 color_button = CreateButton("Изменить цвет тумана", 25,20,150,30,optionwin) ;Change CameraFog Color
 color_button2 = CreateButton("Изменить цвет курсора", 25,85,150,30,optionwin) ;Change Cursor Color
 
-labelfogR=CreateLabel("R "+GetINIInt("options.INI","3d scene","bg color R"),225,15,40,15, optionwin)
-labelfogG=CreateLabel("G "+GetINIInt("options.INI","3d scene","bg color G"),225,30,40,15, optionwin)
-labelfogB=CreateLabel("B "+GetINIInt("options.INI","3d scene","bg color B"),225,45,40,15, optionwin)
+labelfogR=CreateLabel("R "+GetINIInt(OptionFile,"3d scene","bg color R"),225,15,40,15, optionwin)
+labelfogG=CreateLabel("G "+GetINIInt(OptionFile,"3d scene","bg color G"),225,30,40,15, optionwin)
+labelfogB=CreateLabel("B "+GetINIInt(OptionFile,"3d scene","bg Color B"),225,45,40,15, optionwin)
 
-labelcursorR=CreateLabel("R "+GetINIInt("options.INI","3d scene","cursor color R"),225,75,40,15, optionwin)
-labelcursorG=CreateLabel("G "+GetINIInt("options.INI","3d scene","cursor color G"),225,90,40,15, optionwin)
-labelcursorB=CreateLabel("B "+GetINIInt("options.INI","3d scene","cursor color B"),225,105,40,15, optionwin)
+labelcursorR=CreateLabel("R "+GetINIInt(OptionFile,"3d scene","cursor color R"),225,75,40,15, optionwin)
+labelcursorG=CreateLabel("G "+GetINIInt(OptionFile,"3d scene","cursor color G"),225,90,40,15, optionwin)
+labelcursorB=CreateLabel("B "+GetINIInt(OptionFile,"3d scene","cursor color B"),225,105,40,15, optionwin)
 
-Global redfog = GetINIInt("options.INI","3d scene","bg color R")
-Global greenfog = GetINIInt("options.INI","3d scene","bg color G")
-Global bluefog = GetINIInt("options.INI","3d scene","bg color B")
+Global redfog = GetINIInt(OptionFile,"3d scene","bg color R")
+Global greenfog = GetINIInt(OptionFile,"3d scene","bg color G")
+Global bluefog = GetINIInt(OptionFile,"3d scene","bg color B")
 
-Global redcursor = GetINIInt("options.INI","3d scene","cursor color R")
-Global greencursor = GetINIInt("options.INI","3d scene","cursor color G")
-Global bluecursor = GetINIInt("options.INI","3d scene","cursor color B")
+Global redcursor = GetINIInt(OptionFile,"3d scene","cursor color R")
+Global greencursor = GetINIInt(OptionFile,"3d scene","cursor Color G")
+Global bluecursor = GetINIInt(OptionFile,"3d scene","cursor color B")
 
 labelrange=CreateLabel("Дальность прорисовки",15,140,80,30, optionwin) ;Culling Range
-Global camerarange = CreateTextField(25, 170, 40, 20, optionwin)
-SetGadgetText camerarange, GetINIInt("options.INI","3d scene","camera range")
+Global camerarange = CreateTextField(25, 150, 40, 20, optionwin)
+SetGadgetText camerarange, GetINIInt(OptionFile,"3d scene","camera range")
 
 ;labelrange=CreateLabel("Camera Range",10,140,80,20, optionwin)
 ;camerarange = CreateTextField(25, 145, 40, 20, optionwin)
 ;SetGadgetText camerarange, GetINIInt("options.INI","3d scene","camera range")
 
 Global vsync = CreateButton("Верх. синх.", 123, 140, 150, 30, optionwin, 2) ;Vsync
-SetButtonState vsync, GetINIInt("options.INI","3d scene","vsync")
+SetButtonState vsync, GetINIInt(OptionFile,"3d scene","vsync")
 
 Global showfps = CreateButton("Отображать FPS", 123, 160, 150, 30, optionwin, 2) ;Show FPS
-SetButtonState showfps, GetINIInt("options.INI","3d scene","show fps")
+SetButtonState showfps, GetINIInt(OptionFile,"3d scene","show fps")
 
 cancelopt_button=CreateButton("Отмена",10,210,100,30,optionwin) ;Cancel
 saveopt_button=CreateButton("Сохранить",185,210,100,30,optionwin) ;create button ;Save
@@ -257,10 +258,10 @@ HideGadget map_settings
 
 zonetext = CreateLabel("Настройки перехода между зонами:",10,10,200,20,map_settings) ;Zone transition settings:
 labelzonetrans1 = CreateLabel("Переход между ЗЛС и ЗТС",10,40,140,20,map_settings) ;LCZ to HCZ transition
-Global zonetrans1 = CreateTextField(160,37,40,20,map_settings)
+Global zonetrans1 = CreateTextField(20,40,80,20,map_settings)
 SetGadgetText zonetrans1,5
 labelzonetrans2 = CreateLabel("Переход между ЗТС и ВЗ",10,60,140,20,map_settings) ;HCZ to EZ transition
-Global zonetrans2 = CreateTextField(160,57,40,20,map_settings)
+Global zonetrans2 = CreateTextField(130,40,80,20,map_settings)
 SetGadgetText zonetrans2,11
 
 Global zonetransvalue1 = 13, zonetransvalue2 = 7
@@ -278,10 +279,10 @@ Global descr_text = CreateTextArea(20,80,350,80,authordescr_settings,1)
 descr_label = CreateLabel("Описание:",140,60,160,20,authordescr_settings) ;Description:
 
 SetStatusText(Loadingwindow, "Инициализация 3D просмотра...") ;Executing 3D viewer...
-ExecFile("window3d.exe")
+ExecFile("Window3D.exe")
 
 Repeat
-	vwprt = FindWindow("Blitz Runtime Class" , "MapCreator 3d view");User32.dll
+	vwprt = FindWindow("Blitz Runtime Class" , "MapCreator 3D View");User32.dll
 	ShowGadget Loadingwindow
 Until vwprt <> 0
 SetStatusText(Loadingwindow, "Создание 3D сцены...") ;Creating 3D scene...
@@ -553,7 +554,7 @@ Repeat
 														Exit
 													EndIf
 												Next
-												If Map(x,y)\Name = "start" Or Map(x,y)\Name = "checkpoint1" Or Map(x,y)\Name = "checkpoint2"
+												If Map(x,y)\Name = "room173" Or Map(x,y)\Name = "checkpoint1" Or Map(x,y)\Name = "checkpoint2"
 													MapAngle(x,y)=180
 												EndIf
 												item2 = SelectedGadgetItem(combobox)
@@ -661,7 +662,7 @@ Repeat
 					If MouseX()>(GadgetX(map_2d)+GadgetX(WinHandle)) And MouseX()<((width)+GadgetX(map_2d)+GadgetX(WinHandle))
 						offset% = 45
 						If MouseY()>(GadgetY(map_2d)+GadgetY(WinHandle)+offset) And MouseY()<((height)+GadgetY(map_2d)+GadgetY(WinHandle)+offset)
-							If Map(Grid_SelectedX,Grid_SelectedY)\Name<>"start"
+							If Map(Grid_SelectedX,Grid_SelectedY)\Name<>"room173"
 								Local prevAngle = MapAngle(Grid_SelectedX,Grid_SelectedY)
 								;Left
 								If (MouseX()-GadgetX(map_2d))<(Float(width)/Float(MapWidth+1)*Grid_SelectedX+GadgetX(WinHandle))
@@ -828,7 +829,7 @@ Repeat
 						If Grid_SelectedX=x And Grid_SelectedY=y
 							If PrevSelectedX<>Grid_SelectedX Or PrevSelectedY<>Grid_SelectedY
 								ChangeGridGadget = True
-								GridGadgetText = "Имя: "+ForestPlace(x,y)\Name+Chr(13)+"Угол: "+ForestPlaceAngle(x,y)+"°" ;Name: ;Angle:
+								GridGadgetText = "Name: "+ForestPlace(x,y)\Name+Chr(13)+"Angle: "+ForestPlaceAngle(x,y)+"°"
 							EndIf
 						EndIf
 					EndIf
@@ -980,7 +981,7 @@ Repeat
 						If Grid_SelectedX=x And Grid_SelectedY=y
 							If PrevSelectedX<>Grid_SelectedX Or PrevSelectedY<>Grid_SelectedY
 								ChangeGridGadget = True
-								GridGadgetText = "Имя: "+MTRoom(x,y)\Name+Chr(13)+"Угол: "+MTRoomAngle(x,y)+"°" ;Name: ;Angle:
+								GridGadgetText = "Name: "+MTRoom(x,y)\Name+Chr(13)+"Angle: "+MTRoomAngle(x,y)+"°"
 							EndIf
 						EndIf
 					EndIf
@@ -1125,7 +1126,7 @@ Repeat
 			EndIf
 		EndIf
 		If EID=6 Then ExecFile "Manual.pdf"
-		If EID=40  Then Notify "SCP Containement Breach Редактор карт v"+versionnumber+""+Chr$(13)+" Разработали: Vane Brain и ENDSHN."+Chr$(13)+" Переведено командой CreatorMasters" ;Map Creator ;created by Vane Brain and ENDSHN.
+		If EID=40  Then Notify "Редактор карт SCP Containement Breach Ultimate Edition/Расширенное издание v"+VersionNumber ;SCP Containement Breach Ultimate Edition Map Creator v
 		If EID=17 Then 
 			ShowGadget optionwin
 		EndIf
@@ -1134,14 +1135,14 @@ Repeat
 			If value=0 Then CheckMenu(event_default)
 			If value=1 Then UncheckMenu(event_default)
 			UpdateWindowMenu winhandle
-			PutINIValue("options.INI","general","events_default",Not value)
+			PutINIValue(OptionFile,"general","events_default",Not value)
 		EndIf
 		If EID=16
 			value=MenuChecked(adjdoor_place)
 			If value=0 Then CheckMenu(adjdoor_place)
 			If value=1 Then UncheckMenu(adjdoor_place)
 			UpdateWindowMenu winhandle
-			PutINIValue("options.INI","3d scene","adjdoors_place",Not value)
+			PutINIValue(OptionFile,"3d scene","adjdoors_place",Not value)
 			WriteOptions()
 		EndIf
 		If EID=18
@@ -1215,7 +1216,7 @@ Repeat
 		EndIf
 		
 		If EventSource()=color_button Then 
-			If RequestColor(GetINIInt("options.INI","3d scene","bg color R"),GetINIInt("options.INI","3d scene","bg color G"),GetINIInt("options.INI","3d scene","bg color B"))=1 Then
+			If RequestColor(GetINIInt(OptionFile,"3d scene","bg color R"),GetINIInt(OptionFile,"3d scene","bg color G"),GetINIInt(OptionFile,"3d scene","bg color B"))=1 Then
 				redfog=RequestedRed()
 				greenfog=RequestedGreen()
 				bluefog=RequestedBlue()
@@ -1225,7 +1226,7 @@ Repeat
 			EndIf	
 		EndIf
 		If EventSource()=color_button2 Then
-			If RequestColor(GetINIInt("options.INI","3d scene","cursor color R"),GetINIInt("options.INI","3d scene","cursor color G"),GetINIInt("options.INI","3d scene","cursor color B"))=1 Then
+			If RequestColor(GetINIInt(OptionFile,"3d scene","cursor color R"),GetINIInt(OptionFile,"3d scene","cursor Color G"),GetINIInt(OptionFile,"3d scene","cursor Color B"))=1 Then
 				redcursor=RequestedRed()
 				greencursor=RequestedGreen()
 				bluecursor=RequestedBlue()
@@ -1235,29 +1236,29 @@ Repeat
 			EndIf
 		EndIf
 		If EventSource()=cancelopt_button Then
-			SetGadgetText labelfogR,"R "+GetINIInt("options.INI","3d scene","bg color R")
-			SetGadgetText labelfogG,"G "+GetINIInt("options.INI","3d scene","bg color G")
-			SetGadgetText labelfogB,"B "+GetINIInt("options.INI","3d scene","bg color B")
-			SetGadgetText labelcursorR,"R "+GetINIInt("options.INI","3d scene","cursor color R")
-			SetGadgetText labelcursorG,"G "+GetINIInt("options.INI","3d scene","cursor color G")
-			SetGadgetText labelcursorB,"B "+GetINIInt("options.INI","3d scene","cursor color B")
-			SetGadgetText camerarange, GetINIInt("options.INI","3d scene","camera range")
-			SetButtonState vsync, GetINIInt("options.INI","3d scene","vsync")
-			SetButtonState showfps, GetINIInt("options.INI","3d scene","show fps")
+			SetGadgetText labelfogR,"R "+GetINIInt(OptionFile,"3d scene","bg color R")
+			SetGadgetText labelfogG,"G "+GetINIInt(OptionFile,"3d scene","bg color G")
+			SetGadgetText labelfogB,"B "+GetINIInt(OptionFile,"3d scene","bg Color B")
+			SetGadgetText labelcursorR,"R "+GetINIInt(OptionFile,"3d scene","cursor color R")
+			SetGadgetText labelcursorG,"G "+GetINIInt(OptionFile,"3d scene","cursor color G")
+			SetGadgetText labelcursorB,"B "+GetINIInt(OptionFile,"3d scene","cursor color B")
+			SetGadgetText camerarange, GetINIInt(OptionFile,"3d scene","camera range")
+			SetButtonState vsync, GetINIInt(OptionFile,"3d scene","vsync")
+			SetButtonState showfps, GetINIInt(OptionFile,"3d scene","show fps")
 			HideGadget optionwin
 		EndIf	
 		If EventSource()=saveopt_button Then
 			HideGadget optionwin
 			SetStatusText(winhandle, "Новые настройки сохранены") ;New settings are saved
-			PutINIValue("options.INI","3d scene","bg color R",redfog)
-			PutINIValue("options.INI","3d scene","bg color G",greenfog)
-			PutINIValue("options.INI","3d scene","bg color B",bluefog)
-			PutINIValue("options.INI","3d scene","cursor color R",redcursor)
-			PutINIValue("options.INI","3d scene","cursor color G",greencursor)
-			PutINIValue("options.INI","3d scene","cursor color B",bluecursor)
-			PutINIValue("options.INI","3d scene","camera range",TextFieldText$(camerarange))
-			PutINIValue("options.INI","3d scene","vsync",ButtonState(vsync))
-			PutINIValue("options.INI","3d scene","show fps",ButtonState(showfps))
+			PutINIValue(OptionFile,"3d scene","bg Color R",redfog)
+			PutINIValue(OptionFile,"3d scene","bg color G",greenfog)
+			PutINIValue(OptionFile,"3d scene","bg color B",bluefog)
+			PutINIValue(OptionFile,"3d scene","cursor color R",redcursor)
+			PutINIValue(OptionFile,"3d scene","cursor color G",greencursor)
+			PutINIValue(OptionFile,"3d scene","cursor color B",bluecursor)
+			PutINIValue(OptionFile,"3d scene","camera range",TextFieldText$(camerarange))
+			PutINIValue(OptionFile,"3d scene","vsync",ButtonState(vsync))
+			PutINIValue(OptionFile,"3d scene","show fps",ButtonState(showfps))
 			WriteOptions()
 		EndIf
 		If EventSource()=resetzonetrans Then
@@ -1651,7 +1652,7 @@ Function LoadRoomTemplates(file$)
 			
 			Local AddRoom% = True
 			Select TemporaryString
-				Case "room ambience","173","pocketdimension","dimension1499","gatea"
+				Case "room ambience","room173_intro","pocketdimension","dimension1499","gatea"
 					AddRoom = False
 			End Select
 			If AddRoom

@@ -539,7 +539,7 @@ Function SaveGame(file$)
 		Else
 			PlaySound_Strict(LoadTempSound(SFXPath$+"General\Save1.ogg"))
 		EndIf
-		Msg = "Game progress saved."
+		Msg = "Игра сохранена." ;Game progress saved.
 		MsgTimer = 70 * 4
 	EndIf
 End Function

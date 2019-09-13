@@ -154,7 +154,7 @@
 		/v/ и все участники форума SCP-CB
 
 
-*Создатели модификаций
+*Создатели модификации
 
 		Nikita Sidorov ("Jabka")
 		Ashad Jackson ("ashadttt") 
@@ -176,11 +176,15 @@
 		Seth Smith ("Faust")
 		I S€NHOR PaORUSSO I
 		Leonard Blackmore ("UnknownDev")
-	
+		Ivan Mikhailov ("Redbull.Ivan")
+		Elan S.
+		Vladislav Borisevich ("Vane Brain")
 
-*Тестировщики модификаций
+*Тестировщики модификации
 
 		Alexey Krasnov("TaskeWSH")
+		LoneWolf
+		[dataexpunded]
 
 *Включённые модификации
 
@@ -192,7 +196,7 @@
 		SCP - 294 More Drinks
 		SCP - Unlockables
 		Field Of View (FOV) Mod
-
+		Story of Site
 
 
 *Разработчики включённых модификаций:
@@ -212,7 +216,7 @@
 		Alex Morganidze
 		Anon4743
 		Caleb Yu ("Omniary")
-		Took from Fan Breach & Redbull.Ivan
+		Ivan Mikhailov ("Redbull.Ivan")
 
 
 *Box Of Horrors
@@ -279,6 +283,26 @@
 		Earok
 		Sswift
 		RadReed
+
+
+*Story of Site
+
+		Ivan Mikhailov ("Redbull.Ivan")
+
+
+*Некоторые материалы взяты из:
+
+		Англоязычной Вики SCP - Containment Breach:
+		www.scpcb.gamepedia.com
+		
+		Русскоязычной Вики SCP - Containment Breach:
+		www.scpcontainmentbreach.fandom.com/ru/
+
+		Фонда SCP:
+		www.scp-wiki.net
+
+		и его русского филлиала:
+		www.scpfoundation.net
 
 
 
@@ -363,6 +387,9 @@
 		SCP-427 основывается на "SCP-427 - Лавкрафтовский амулет"
 за авторством "Dr Ouros"
 
+		SCP-447 основывается "SCP-447 - Шарик из зеленой слизи",
+за авторством "Dr. Clef"
+
 		SCP-457 основывается на "SCP-457 - Горящий человек",
 автор неизвестен
 
@@ -375,7 +402,7 @@
 		SCP-650 основывается на "SCP-650 - Поразительная статуя",
 за авторством "Dr. Talson"
 
-		SCP-682 is основывается на "SCP-682 - Неуязвимая рептилия"
+		SCP-682 основывается на "SCP-682 - Неуязвимая рептилия"
 за авторством "Dr. Gears"
 
 		SCP-714 основывается на "SCP-714 - Нефартовое кольцо"
@@ -439,7 +466,7 @@
 	- Joonas Rikkonen ("Regalis")
 
 /
-	Большое спасибо всем, кто давал нам идеи для модификации
+	Особая благодарность всем, кто давал нам идеи для модификации
 	- а также всем тем, кто искал ошибки и поддерживал модификацию.
 
 	Мы надеемся, что наша модификация всегда будет радовать вас, и дарить новые эмоции.

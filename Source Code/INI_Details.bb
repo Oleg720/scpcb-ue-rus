@@ -461,7 +461,7 @@ Function Lower2$(txt$)
 	For i=1 To Len(txt)
 		m=Mid(txt,i,1)
 		If Asc(m)<128
-			nt=nt+lower2(m)
+			nt=nt+lower(m)
 		Else
 			If Asc(m)>191 And Asc(m)<224
 				nt=nt+Chr(Asc(m)+32)

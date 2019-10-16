@@ -1,7 +1,10 @@
 Global Curr173.NPCs, Curr106.NPCs, Curr096.NPCs, Curr5131.NPCs
-;MOD
-Global Curr650.NPCs
-;END
+
+;{~--<MOD>--~}
+
+Global Curr650.NPCs, Curr066.NPCs
+
+;{~--<END>--~}
 
 Type NPCs
 	Field obj%, obj2%, obj3%, obj4%, Collider%
@@ -13,8 +16,8 @@ Type NPCs
 	Field Frame#
 	
 	Field Angle#
-	Field Sound%, SoundChn%, SoundTimer#
-	Field Sound2%, SoundChn2%
+	Field Sound%, SoundCHN%, SoundTimer#
+	Field Sound2%, SoundCHN2%
 	
 	Field Speed#, CurrSpeed#
 	
@@ -61,12 +64,17 @@ Type NPCs
 	Field TextureID%=-1
 	Field CollRadius#
 	Field IdleTimer#
-	Field SoundChn_IsStream%,SoundChn2_IsStream%
+	Field SoundCHN_IsStream%, SoundCHN2_IsStream%
 	Field FallingPickDistance#
-	;MODS
+	
+	;{~--<MOD>--~}
+	
+    Field UseHeadPhones% = False
 	Field TargetEnt%
 	Field MTF2Leader.NPCs
-	;END
+	
+	;{~--<END>--~}
+	
 End Type
 
 Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
@@ -94,7 +102,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			;On Halloween set jack-o-latern texture.
 			If (Left(CurrentDate(), 7) = "31 Oct ") Then
 				at\OtherTextureID[0] = True
-				Local texFestive = LoadTexture_Strict("GFX\npcs\scp_173_h.pt", 1)
+				Local texFestive = LoadTexture_Strict(NPCsPath$+"scp_173_h.pt", 1)
 				EntityTexture n\obj, texFestive, 0, 0
 				FreeTexture texFestive
 			EndIf
@@ -102,7 +110,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			;On Halloween set jack-o-latern texture.
 			If (Left(CurrentDate(), 7) = "1 Jan ") Then
 				at\OtherTextureID[1] = True
-				Local texFestive2 = LoadTexture_Strict("GFX\npcs\scp_173_ny.pt", 1)
+				Local texFestive2 = LoadTexture_Strict(NPCsPath$+"scp_173_ny.pt", 1)
 				EntityTexture n\obj, texFestive2, 0, 0
 				FreeTexture texFestive2
 			EndIf
@@ -112,7 +120,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			
 			n\Speed = (GetINIFloat("Data\NPCs.ini", "SCP-173", "speed") / 100.0)
 			
-			n\obj2 = CopyEntity(o\NPCModelID[35])
+			n\obj2 = CopyEntity(o\NPCModelID[34])
 			ScaleEntity n\obj2, RoomScale, RoomScale, RoomScale
 			HideEntity n\obj2
 			
@@ -131,7 +139,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			temp# = (GetINIFloat("Data\NPCs.ini", "SCP-106", "scale") / 2.2)		
 			ScaleEntity n\obj, temp, temp, temp
 			
-			Local OldManEyes% = LoadTexture_Strict("GFX\npcs\scp_106_eyes.png")
+			Local OldManEyes% = LoadTexture_Strict(NPCsPath$+"scp_106_eyes.png")
 			
 			n\Speed = (GetINIFloat("Data\NPCs.ini", "SCP-106", "speed") / 100.0)
 			
@@ -183,7 +191,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			n\Collider = CreatePivot()
 			EntityRadius n\Collider, 0.2
 			n\obj = CopyEntity(o\NPCModelID[4])
-
+			
 			temp# = 0.3 / MeshWidth(n\obj)
 			ScaleEntity n\obj, temp, temp, temp
 			;[End Block]
@@ -206,7 +214,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 				EntityAlpha rotor2, 0.5
 			Next
 			
-			n\obj3 = CopyEntity(o\NPCModelID[27])
+			n\obj3 = CopyEntity(o\NPCModelID[26])
 			EntityParent n\obj3, n\obj
 			PositionEntity n\obj3, 0.0, 2.15, -5.48
 			
@@ -227,7 +235,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 				EntityFX lightsprite, 1+8				
 			Next
 			
-			temp# = 0.6
+			temp# = 0.7
 			ScaleEntity n\obj, temp, temp, temp
 			;[End Block]
 			
@@ -237,24 +245,34 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			n\Collider = CreatePivot()
 			EntityRadius n\Collider, 0.2
 			EntityType n\Collider, HIT_PLAYER
-			n\obj = CopyEntity(o\NPCModelID[7]) 
+			
+			For n2.NPCs = Each NPCs
+				If (n\NPCtype = n2\NPCtype) And (n<>n2) Then
+					n\obj = CopyEntity(n2\obj)
+					Exit
+				EndIf
+			Next
+
+            If n\obj = 0 Then
+			    n\obj = CopyEntity(o\NPCModelID[7]) 
+			
+			    temp# = (GetINIFloat("Data\NPCs.ini", "MTF", "scale") / 2.5)
+			
+			    ScaleEntity n\obj, temp, temp, temp
+			
+			    MeshCullBox (n\obj, -MeshWidth(n\obj), -MeshHeight(n\obj), -MeshDepth(n\obj), MeshWidth(n\obj)*2, MeshHeight(n\obj)*2, MeshDepth(n\obj)*2) 
+			EndIf
 			
 			n\Speed = (GetINIFloat("Data\NPCs.ini", "MTF", "speed") / 100.0)
 			
-			temp# = (GetINIFloat("Data\NPCs.ini", "MTF", "scale") / 2.5)
-			
-			ScaleEntity n\obj, temp, temp, temp
-			
-			MeshCullBox (n\obj, -MeshWidth(n\obj), -MeshHeight(n\obj), -MeshDepth(n\obj), MeshWidth(n\obj)*2, MeshHeight(n\obj)*2, MeshDepth(n\obj)*2) 
-			
 			If MTFSFX(0) = 0 Then
-				MTFSFX(0) = LoadSound_Strict("SFX\Character\MTF\ClassD1.ogg")
-				MTFSFX(1) = LoadSound_Strict("SFX\Character\MTF\ClassD2.ogg")
-				MTFSFX(2) = LoadSound_Strict("SFX\Character\MTF\ClassD3.ogg")			
-				MTFSFX(3) = LoadSound_Strict("SFX\Character\MTF\ClassD4.ogg")
-				;MTFSFX(4) = LoadSound_Strict("SFX\Character\MTF\Tesla0.ogg")
-				MTFSFX(5) = LoadSound_Strict("SFX\Character\MTF\Beep.ogg")
-				MTFSFX(6) = LoadSound_Strict("SFX\Character\MTF\Breath.ogg")
+				MTFSFX(0) = LoadSound_Strict(SFXPath$+"Character\MTF\ClassD1.ogg")
+				MTFSFX(1) = LoadSound_Strict(SFXPath$+"Character\MTF\ClassD2.ogg")
+				MTFSFX(2) = LoadSound_Strict(SFXPath$+"Character\MTF\ClassD3.ogg")			
+				MTFSFX(3) = LoadSound_Strict(SFXPath$+"Character\MTF\ClassD4.ogg")
+				;MTFSFX(4) = LoadSound_Strict(SFXPath$+"Character\MTF\Tesla0.ogg")
+				MTFSFX(5) = LoadSound_Strict(SFXPath$+"Character\MTF\Beep.ogg")
+				MTFSFX(6) = LoadSound_Strict(SFXPath$+"Character\MTF\Breath.ogg")
 			EndIf
 			If MTFrooms[6] = Null Then 
 				For r.Rooms = Each Rooms
@@ -271,7 +289,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 							MTFrooms[4] = r	
 						Case "room895"
 							MTFrooms[5] = r	
-						Case "start"
+						Case "room173"
 							MTFrooms[6] = r
 					End Select
 				Next			
@@ -303,24 +321,31 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			EntityType n\Collider, HIT_PLAYER
 			n\obj = CopyEntity(o\NPCModelID[9])
 			
-			n\Speed = (GetINIFloat("Data\NPCs.ini", "SCP-049", "speed") / 100.0)
+			n\Speed = (GetINIFloat("DATA\NPCs.ini", "SCP-049", "speed") / 100.0)
 			
-			temp# = GetINIFloat("Data\NPCs.ini", "SCP-049", "scale")
+			temp# = GetINIFloat("DATA\NPCs.ini", "SCP-049", "scale")
 			ScaleEntity n\obj, temp, temp, temp	
 			
-			n\Sound = LoadSound_Strict("SFX\Horror\Horror12.ogg")
+			n\Sound = LoadSound_Strict(SFXPath$+"Horror\Horror12.ogg")
 			
-			If HorrorSFX(13)=0 Then HorrorSFX(13)=LoadSound_Strict("SFX\Horror\Horror13.ogg")
+			If HorrorSFX(13)=0 Then HorrorSFX(13)=LoadSound_Strict(SFXPath$+"Horror\Horror13.ogg")
 			
 			n\CanUseElevator = True
 			;[End Block]
-		Case NPCtype0492
+		Case NPCtype049_2
 			;[Block]
 			n\NVName = "SCP-049-2"
 			n\Collider = CreatePivot()
 			EntityRadius n\Collider, 0.2
 			EntityType n\Collider, HIT_PLAYER
 			
+			For n2.NPCs = Each NPCs
+				If (n\NPCtype = n2\NPCtype) And (n<>n2) Then
+					n\obj = CopyEntity (n2\obj)
+					Exit
+				EndIf
+			Next
+
 			If n\obj = 0 Then 
 				n\obj = CopyEntity(o\NPCModelID[10])
 				
@@ -334,18 +359,18 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			
 			SetAnimTime(n\obj, 107)
 			
-			n\Sound = LoadSound_Strict("SFX\SCP\049_2\Breath.ogg")
+			n\Sound = LoadSound_Strict(SFXPath$+"SCP\049_2\Breath.ogg")
 			
 			n\HP = 100
 			;[End Block]
-		Case NPCtype5131
+		Case NPCtype513_1
 			;[Block]
 			n\NVName = "SCP-513-1"
 			n\Collider = CreatePivot()
 			EntityRadius n\Collider, 0.2
 		    n\obj = CopyEntity(o\NPCModelID[11])
 			
-			n\obj2 = CopyEntity (n\obj)
+			n\obj2 = CopyEntity(n\obj)
 			EntityAlpha n\obj2, 0.6
 			
 			temp# = 1.8 / MeshWidth(n\obj)
@@ -353,7 +378,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			ScaleEntity n\obj2, temp, temp, temp
 			;[End Block]
 
-		Case NPCtype035Tentacle
+		Case NPCtype035_Tentacle
 			;[Block]
 			n\NVName = "Unidentified"
 			
@@ -375,7 +400,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			
 			n\HP = 150
 			;[End Block]
-		Case NPCtype8602
+		Case NPCtype860_2
 			;[Block]
 			n\NVName = "Unidentified"
 			
@@ -386,7 +411,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			
 			EntityFX(n\obj, 1)
 			
-			tex = LoadTexture_Strict("GFX\npcs\scp_860_2_eyes.png",1+2)
+			tex = LoadTexture_Strict(NPCsPath$+"scp_860_2_eyes.png",1+2)
 			
 			n\obj2 = CreateSprite()
 			ScaleSprite(n\obj2, 0.1, 0.1)
@@ -433,7 +458,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			If n\obj = 0 Then 
 			    n\obj = CopyEntity(o\NPCModelID[14])
 							
-				temp# = GetINIFloat("Data\NPCs.ini", "SCP-939", "scale")/2.5
+				temp# = GetINIFloat("Data\NPCs.ini", "SCP-939", "scale") / 2.5
 				ScaleEntity n\obj, temp, temp, temp		
 			EndIf
 			
@@ -449,7 +474,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			EntityType n\Collider, HIT_PLAYER
 			
 			n\obj = CopyEntity(o\NPCModelID[15])
-			temp# = GetINIFloat("Data\NPCs.ini", "SCP-066", "scale")/2.5
+			temp# = GetINIFloat("Data\NPCs.ini", "SCP-066", "scale") / 2.5
 			ScaleEntity n\obj, temp, temp, temp		
 			
 			n\Speed = (GetINIFloat("Data\NPCs.ini", "SCP-066", "speed") / 100.0)
@@ -474,31 +499,31 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			
 			If n\obj = 0 Then 
 			    n\obj = CopyEntity(o\NPCModelID[16])
+			
+			    EntityFX n\obj,1
+			
+			    temp# = GetINIFloat("Data\NPCs.ini", "SCP-966", "scale") / 40.0
+			    ScaleEntity n\obj, temp, temp, temp		
 			EndIf
-			
-			EntityFX n\obj,1
-			
-			temp# = GetINIFloat("Data\NPCs.ini", "SCP-966", "scale")/40.0
-			ScaleEntity n\obj, temp, temp, temp		
-
+						
 			SetAnimTime n\obj,15.0
 			
 			EntityType n\Collider,HIT_PLAYER
 			
 			n\Speed = (GetINIFloat("Data\NPCs.ini", "SCP-966", "speed") / 100.0)
 			;[End Block]
-		Case NPCtype1048a
+		Case NPCtype1048_A
 			;[Block]
 			n\NVName = "SCP-1048-A"
 			n\obj = CopyEntity(o\NPCModelID[17])
 			ScaleEntity n\obj, 0.05,0.05,0.05
 			SetAnimTime(n\obj, 2)
 			
-			n\Sound = LoadSound_Strict("SFX\SCP\1048A\Shriek.ogg")
-			n\Sound2 = LoadSound_Strict("SFX\SCP\1048A\Growth.ogg")
+			n\Sound = LoadSound_Strict(SFXPath$+"SCP\1048A\Shriek.ogg")
+			n\Sound2 = LoadSound_Strict(SFXPath$+"SCP\1048A\Growth.ogg")
 			;[End Block]
 
-		Case NPCtype1499
+		Case NPCtype1499_1
 			;[Block]
 			n\NVName = "Unidentified"
 			n\Collider = CreatePivot()
@@ -513,9 +538,9 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			
 			If n\obj = 0 Then n\obj = CopyEntity(o\NPCModelID[18])
 
-			n\Speed = (GetINIFloat("DATA\NPCs.ini", "SCP-1499-1", "speed") / 100.0) * Rnd(0.9,1.1)
+			n\Speed = (GetINIFloat("DATA\NPCs.ini", "SCP-1499-1", "speed") / 100.0) * Rnd(0.9, 1.1)
 			temp# = (GetINIFloat("DATA\NPCs.ini", "SCP-1499-1", "scale") / 4.0) * Rnd(0.8,1.0)
-
+			
 			ScaleEntity n\obj, temp, temp, temp
 			
 			EntityFX n\obj,1
@@ -523,7 +548,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			EntityAutoFade n\obj,HideDistance*2.5,HideDistance*2.95
 			;[End Block]
 
-		Case NPCtype0081
+		Case NPCtype008_1
 			;[Block]
 			n\NVName = "SCP-008-1"
 			n\Collider = CreatePivot()
@@ -541,7 +566,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			
 			SetNPCFrame n, 11
 			
-			n\Sound = LoadSound_Strict("SFX\SCP\008_1\Breath.ogg")
+			n\Sound = LoadSound_Strict(SFXPath$+"SCP\008_1\Breath.ogg")
 			
 			n\HP = 120
 			;[End Block]
@@ -563,9 +588,10 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			
 			n\CollRadius = 0.32
 			;[End Block]
-
-		;MODS
-		Case NPCtype0082
+			
+		;{~--<MOD>--~}
+		
+		Case NPCtype008_2
 			;[Block]
 			n\NVName = "SCP-008-2"
 			n\Collider = CreatePivot()
@@ -575,17 +601,17 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			If n\obj = 0 Then 
 				n\obj = CopyEntity(o\NPCModelID[21]) 
 				
-				temp# = (GetINIFloat("Data\NPCs.ini", "SCP-049-2", "scale") / 2.5)
+				temp# = (GetINIFloat("Data\NPCs.ini", "SCP-008-2", "scale") / 2.5)
 				ScaleEntity n\obj, temp, temp, temp
 				
 				MeshCullBox (n\obj, -MeshWidth(n\obj), -MeshHeight(n\obj), -MeshDepth(n\obj), MeshWidth(n\obj)*2, MeshHeight(n\obj)*2, MeshDepth(n\obj)*2)
 			EndIf
 			
-			n\Speed = (GetINIFloat("Data\NPCs.ini", "SCP-049-2", "speed") / 100.0)
-			
+			n\Speed = (GetINIFloat("Data\NPCs.ini", "SCP-008-2", "speed") / 100.0)
+
 			SetAnimTime(n\obj, 107)
-			
-			n\Sound = LoadSound_Strict("SFX\SCP\008_1\Breath.ogg")
+						
+			n\Sound = LoadSound_Strict(SFXPath$+"SCP\008_1\Breath.ogg")
 			
 			n\HP = 120
 			;[End Block]
@@ -596,7 +622,6 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			n\NVName = "SCP-650"
 			n\Collider = CreatePivot()
 			EntityRadius n\Collider, 0.23, 0.32
-			;EntityRadius n\Collider, 0.2
 			EntityType n\Collider, HIT_PLAYER
 			n\Gravity = True
 			
@@ -618,51 +643,48 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			EntityRadius n\Collider, 0.2
 			EntityType n\Collider,HIT_PLAYER
 			
-			n\obj = CopyEntity(o\NPCModelID[23])
+            If n\obj = 0 Then
+			    n\obj = CopyEntity(o\NPCModelID[1])
 			
-			temp# = (GetINIFloat("Data\NPCs.ini", "SCP-457", "scale") / 2.2)		
-			ScaleEntity n\obj, temp, temp, temp
+			    temp# = (GetINIFloat("Data\NPCs.ini", "SCP-457", "scale") / 2.2)		
+			    ScaleEntity n\obj, temp, temp, temp
+			EndIf
 			
 			n\Speed = (GetINIFloat("Data\NPCs.ini", "SCP-457", "speed") / 150.0)
 			
+			tex = LoadTexture_Strict(NPCsPath$+"scp_457.png")
 			EntityAlpha n\obj, 0.25
-			
-			n\Sound = LoadSound_Strict("SFX\SCP\457\Sighting.ogg")
+			EntityTexture n\obj, tex
+			FreeTexture tex
+						
+			n\Sound = LoadSound_Strict(SFXPath$+"SCP\457\Sighting.ogg")
             n\CollRadius = 0.32
 	        ;[End Block]
-	    Case NPCtype0493
+	    Case NPCtype049_3
             ;[Block]
             n\NVName = "SCP-049-3"
 			n\Collider = CreatePivot()
 			EntityRadius n\Collider, 0.2
 			EntityType n\Collider, HIT_PLAYER
 			
-			For n2.NPCs = Each NPCs
-				If n\NPCtype = n2\NPCtype And n<>n2 Then
-					n\obj = CopyEntity (n2\obj)
-					Exit
-				EndIf
-			Next
-			
 			If n\obj = 0 Then 
-				n\obj = CopyEntity(o\NPCModelID[24]) 
+				n\obj = CopyEntity(o\NPCModelID[23]) 
 				
 				MeshCullBox (n\obj, -MeshWidth(n\obj), -MeshHeight(n\obj), -MeshDepth(n\obj), MeshWidth(n\obj)*2, MeshHeight(n\obj)*2, MeshDepth(n\obj)*2)
 				
-				temp# = (GetINIFloat("Data\NPCs.ini", "SCP-049-2", "scale") / 19.0)
-				ScaleEntity n\obj, temp, temp, temp
-				
+				temp# = (GetINIFloat("Data\NPCs.ini", "SCP-049-3", "scale") / 20.6)
+				ScaleEntity n\obj, temp, temp, temp	
 			EndIf
 						
-			n\Speed = (GetINIFloat("Data\NPCs.ini", "SCP-049-2", "speed") / 100.0)
+			n\Speed = (GetINIFloat("Data\NPCs.ini", "SCP-049-3", "speed") / 100.0)
 			
 			SetAnimTime(n\obj, 3.0)
 			
-			n\Sound = LoadSound_Strict("SFX\SCP\049_2\Breath.ogg")
+			n\Sound = LoadSound_Strict(SFXPath$+"SCP\049_2\Breath.ogg")
 			
 			n\HP = 100
 			;[End Block]
-		Case NPCtype178
+		Case NPCtype178_1
 			;[Block]
 			n\NVName = "Unidentified"
 			
@@ -676,16 +698,18 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 				EndIf
 			Next
 			
-			If n\obj = 0 Then n\obj = CopyEntity(o\NPCModelID[25])
+			If n\obj = 0 Then 
+			    n\obj = CopyEntity(o\NPCModelID[24])
 			
-			temp# = Rnd(0.09,0.125)
+			    temp# = Rnd(0.09,0.125)
 			
-			EntityFX n\obj,1
+			    EntityFX n\obj,1
 			
-			temp# = Rnd(0.6,0.8) / MeshWidth(n\obj)
-			ScaleEntity n\obj, temp, temp, temp
+			    temp# = Rnd(0.47, 0.67) / MeshWidth(n\obj)
+			    ScaleEntity n\obj, temp, temp, temp
+			EndIf
 			
-			SetAnimTime n\obj,15.0
+			SetAnimTime n\obj, 15.0
 			
 			EntityType n\Collider, HIT_178
 			
@@ -697,23 +721,33 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			n\Collider = CreatePivot()
 			EntityRadius n\Collider, 0.2
 			EntityType n\Collider, HIT_PLAYER
-			n\obj = CopyEntity(o\NPCModelID[26])
+			
+			For n2.NPCs = Each NPCs
+				If (n\NPCtype = n2\NPCtype) And (n<>n2) Then
+					n\obj = CopyEntity (n2\obj)
+					Exit
+				EndIf
+			Next
+
+			If n\obj = 0 Then
+			    n\obj = CopyEntity(o\NPCModelID[25])
+
+			    temp# = (GetINIFloat("Data\NPCs.ini", "MTF2", "scale") / 2.5)
+			
+			    ScaleEntity n\obj, temp, temp, temp
+			
+			    MeshCullBox (n\obj, -MeshWidth(n\obj), -MeshHeight(n\obj), -MeshDepth(n\obj), MeshWidth(n\obj)*2, MeshHeight(n\obj)*2, MeshDepth(n\obj)*2) 
+			EndIf
 			
 			n\Speed = (GetINIFloat("Data\NPCs.ini", "MTF2", "speed") / 100.0)
 			
-			temp# = (GetINIFloat("Data\NPCs.ini", "MTF2", "scale") / 2.5)
-			
-			ScaleEntity n\obj, temp, temp, temp
-			
-			MeshCullBox (n\obj, -MeshWidth(n\obj), -MeshHeight(n\obj), -MeshDepth(n\obj), MeshWidth(n\obj)*2, MeshHeight(n\obj)*2, MeshDepth(n\obj)*2) 
-			
 			If MTF2SFX(0) = 0
-			    MTF2SFX(0) = LoadSound_Strict("SFX\Character\MTF2\Stop1.ogg")
-				MTF2SFX(1) = LoadSound_Strict("SFX\Character\MTF2\Stop2.ogg")
-				MTF2SFX(2) = LoadSound_Strict("SFX\Character\MTF2\Stop3.ogg")			
-				MTF2SFX(3) = LoadSound_Strict("SFX\Character\MTF2\ClassD2.ogg")
-				MTF2SFX(4) = LoadSound_Strict("SFX\Character\MTF2\ClassD1.ogg")
-				MTF2SFX(5) = LoadSound_Strict("SFX\Character\MTF2\Beep.ogg")
+			    MTF2SFX(0) = LoadSound_Strict(SFXPath$+"Character\MTF2\Stop1.ogg")
+				MTF2SFX(1) = LoadSound_Strict(SFXPath$+"Character\MTF2\Stop2.ogg")
+				MTF2SFX(2) = LoadSound_Strict(SFXPath$+"Character\MTF2\Stop3.ogg")			
+				MTF2SFX(3) = LoadSound_Strict(SFXPath$+"Character\MTF2\ClassD2.ogg")
+				MTF2SFX(4) = LoadSound_Strict(SFXPath$+"Character\MTF2\ClassD1.ogg")
+				MTF2SFX(5) = LoadSound_Strict(SFXPath$+"Character\MTF2\Beep.ogg")
 			EndIf
 
 			If MTF2rooms[6] = Null Then 
@@ -731,7 +765,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 							MTF2rooms[4] = r	
 						Case "room650"
 							MTF2rooms[5] = r	
-						Case "start"
+						Case "room173"
 							MTF2rooms[6] = r
 					End Select
 				Next			
@@ -745,19 +779,49 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			EntityRadius n\Collider, 0.32
 			EntityType n\Collider, HIT_PLAYER
 			
-			n\obj = CopyEntity(o\NPCModelID[32])
+			For n2.NPCs = Each NPCs
+				If (n\NPCtype = n2\NPCtype) And (n<>n2) Then
+					n\obj = CopyEntity (n2\obj)
+					Exit
+				EndIf
+			Next
+
+            If n\obj = 0 Then
+			    n\obj = CopyEntity(o\NPCModelID[31])
 			
-			temp# = 0.55 / MeshWidth(n\obj)
-			ScaleEntity n\obj, temp, temp, temp
+			    temp# = 0.55 / MeshWidth(n\obj)
+			    ScaleEntity n\obj, temp, temp, temp
 			
-			n\Speed = 2.0 / 100
-			
-			MeshCullBox (n\obj, -MeshWidth(n\obj), -MeshHeight(n\obj), -MeshDepth(n\obj), MeshWidth(n\obj)*2, MeshHeight(n\obj)*2, MeshDepth(n\obj)*2)
-		 
+			    MeshCullBox (n\obj, -MeshWidth(n\obj), -MeshHeight(n\obj), -MeshDepth(n\obj), MeshWidth(n\obj)*2, MeshHeight(n\obj)*2, MeshDepth(n\obj)*2)
+			EndIf
+
+		    n\Speed = 2.0 / 100
+		
 		    n\CollRadius = 0.32
 			;[End Block]
+		Case NPCtypeVehicle
+			;[Block]
+			n\NVName = "Vehicle"
+			n\Collider = CreatePivot()
+			EntityRadius n\Collider, 0.32
+			EntityType n\Collider, HIT_PLAYER
+		
+            If n\obj = 0 Then
+			    n\obj = CopyEntity(o\NPCModelID[39])
+			
+			    temp# = 1.86 / MeshWidth(n\obj)
+			    ScaleEntity n\obj, temp, temp, temp
+			
+			    MeshCullBox (n\obj, -MeshWidth(n\obj), -MeshHeight(n\obj), -MeshDepth(n\obj), MeshWidth(n\obj)*2, MeshHeight(n\obj)*2, MeshDepth(n\obj)*2)
+			EndIf
 
-        ;END
+		    n\Speed = 2.0 / 100
+		
+		    n\CollRadius = 0.72
+			;[End Block]
+			
+        ;{~--<END>--~}
+
 	End Select
 	
 	PositionEntity(n\Collider, x, y, z, True)
@@ -790,23 +854,23 @@ Function RemoveNPC(n.NPCs)
 		n\obj4 = 0
 	EndIf
 	
-	If (Not n\SoundChn_IsStream)
-		If (n\SoundChn <> 0 And ChannelPlaying(n\SoundChn)) Then
-			StopChannel(n\SoundChn)
+	If (Not n\SoundCHN_IsStream)
+		If (n\SoundCHN <> 0 And ChannelPlaying(n\SoundCHN)) Then
+			StopChannel(n\SoundCHN)
 		EndIf
 	Else
-		If (n\SoundChn <> 0)
-			StopStream_Strict(n\SoundChn)
+		If (n\SoundCHN <> 0)
+			StopStream_Strict(n\SoundCHN)
 		EndIf
 	EndIf
 	
-	If (Not n\SoundChn2_IsStream)
-		If (n\SoundChn2 <> 0 And ChannelPlaying(n\SoundChn2)) Then
-			StopChannel(n\SoundChn2)
+	If (Not n\SoundCHN2_IsStream)
+		If (n\SoundCHN2 <> 0 And ChannelPlaying(n\SoundCHN2)) Then
+			StopChannel(n\SoundCHN2)
 		EndIf
 	Else
-		If (n\SoundChn2 <> 0)
-			StopStream_Strict(n\SoundChn2)
+		If (n\SoundCHN2 <> 0)
+			StopStream_Strict(n\SoundCHN2)
 		EndIf
 	EndIf
 	
@@ -819,13 +883,12 @@ Function RemoveNPC(n.NPCs)
 	Delete n
 End Function
 
-
 Function UpdateNPCs()
-	CatchErrors("Uncaught (UpdateNPCs)")
 	Local n.NPCs, n2.NPCs, d.Doors, de.Decals, r.Rooms, eo.ElevatorObj, eo2.ElevatorObj
 	Local i%, dist#, dist2#, angle#, x#, y#, z#, prevFrame#, PlayerSeeAble%, RN$
 	Local fs.FPS_Settings = First FPS_Settings
-	Local target
+	Local target%
+	Local dist_to_player#
 	
 	For n.NPCs = Each NPCs
 		;A variable to determine if the NPC is in the facility or not
@@ -852,7 +915,7 @@ Function UpdateNPCs()
 						PositionEntity(n\obj, EntityX(n\Collider), EntityY(n\Collider) - 0.32, EntityZ(n\Collider))
 						RotateEntity (n\obj, 0, EntityYaw(n\Collider)-180, 0)
 						
-						If n\Idle = False Then
+						If n\Idle = False Then  
 							Local temp% = False
 							Local move% = True
 							If dist < 15 Then
@@ -866,7 +929,7 @@ Function UpdateNPCs()
 								EndIf										
 								
 								Local SoundVol# = Max(Min((Distance(EntityX(n\Collider), EntityZ(n\Collider), n\PrevX, n\PrevZ) * 2.5), 1.0), 0.0)
-								n\SoundChn = LoopSound2(StoneDragSFX, n\SoundChn, Camera, n\Collider, 10.0, n\State)
+								n\SoundCHN = LoopSound2(StoneDragSFX, n\SoundCHN, Camera, n\Collider, 10.0, n\State)
 								
 								n\PrevX = EntityX(n\Collider)
 								n\PrevZ = EntityZ(n\Collider)				
@@ -962,7 +1025,7 @@ Function UpdateNPCs()
 																	MoveEntity pvt, 0, 0, n\Speed * 0.6
 																	
 																	If EntityPick(pvt, 0.5) = d\buttons[i] Then 
-																		PlaySound_Strict (LoadTempSound("SFX\Door\DoorOpen173.ogg"))
+																		PlaySound_Strict (LoadTempSound(SFXPath$+"Door\DoorOpen173.ogg"))
 																		UseDoor(d, False)
 																	EndIf
 																	
@@ -990,9 +1053,9 @@ Function UpdateNPCs()
 												
 												Select PlayerRoom\RoomTemplate\Name
 													Case "lockroom", "room2closets", "room895"
-														DeathMSG = SubjectName$+". Причина смерти: смертельный перелом шеи. Записи с камер наблюдения подтверждают, что субъект был убит SCP-173." ;Subject D-9341. Cause of death: Fatal cervical fracture. The surveillance tapes confirm that the subject was killed by SCP-173.	
-													Case "173"
-														DeathMSG = SubjectName$+". Причина смерти: смертельный перелом шеи. По словам начальника службы безопасности Франклина, который присутствовал в камере SCP-173 " ;Subject D-9341. Cause of death: Fatal cervical fracture. According to Security Chief Franklin who was present at SCP-173's containment 
+														DeathMSG = SubjectName$+". Причина смерти: смертельный перелом шеи. Записи с камер наблюдения подтверждают, что субъект был убит SCP-173." ;Subject D-9341. Cause of death: Fatal cervical fracture. The surveillance tapes confirm that the subject was killed by SCP-173.
+													Case "room173_intro"
+														DeathMSG = SubjectName$+". Причина смерти: смертельный перелом шеи. По слоВам начальника службы безопасности Франклина, который присутствовал в камере SCP-173 " ;Subject D-9341. Cause of death: Fatal cervical fracture. According to Security Chief Franklin who was present at SCP-173's containment 
 														DeathMSG = DeathMSG + "во время нарушения условий содержания, субъект был убит SCP-173, как только начались сбои в электрической сети." ;chamber during the breach, the subject was killed by SCP-173 as soon as the disruptions in the electrical network started.
 													Case "room2doors"
 														DeathMSG = Chr(34)+"Если я не ошибаюсь, одна из основных целей этих комнат - остановить SCP-173, чтобы он не продвигался далее во время нарушений условий содержания. " ;If I'm not mistaken, one of the main purposes of these rooms was to stop SCP-173 from moving further in the event of a containment breach. 
@@ -1140,7 +1203,7 @@ Function UpdateNPCs()
 							End If
 							
 							If Rand(500) = 1 Then PlaySound2(OldManSFX(Rand(0, 2)), Camera, n\Collider)
-							n\SoundChn = LoopSound2(OldManSFX(4), n\SoundChn, Camera, n\Collider, 8.0, 0.8)
+							n\SoundCHN = LoopSound2(OldManSFX(4), n\SoundCHN, Camera, n\Collider, 8.0, 0.8)
 							
 							If n\State > - 10 Then
 								ShouldPlay = 66
@@ -1201,7 +1264,7 @@ Function UpdateNPCs()
 											;Animate2(n\obj, AnimTime(n\obj), 284, 333, n\CurrSpeed*43)
 											
 											If prevFrame =< 286 And n\Frame>286 Then
-												PlaySound2(Step2SFX(Rand(0,2)),Camera, n\Collider, 6.0, Rnd(0.8,1.0))	
+												PlaySound2(Step2SFX(Rand(0,2)),Camera, n\Collider, 6.0, Rnd(0.8,1.0))
 											ElseIf prevFrame=<311 And n\Frame>311.0 
 												PlaySound2(Step2SFX(Rand(0,2)),Camera, n\Collider, 6.0, Rnd(0.8,1.0))
 											EndIf
@@ -1333,7 +1396,7 @@ Function UpdateNPCs()
                                             Else
                                                 PlaySound2(OldManSFX(9),Camera,n\Collider)
                                             EndIf
-											n\SoundChn2 = PlaySound2(OldManSFX(6+Rand(0,2)),Camera,n\Collider)
+											n\SoundCHN2 = PlaySound2(OldManSFX(6+Rand(0,2)),Camera,n\Collider)
                                             n\PathTimer = 0
                                             n\Reload = (70*10.0)/(SelectedDifficulty\otherFactors+1)
                                         EndIf
@@ -1342,7 +1405,7 @@ Function UpdateNPCs()
                             EndIf
                             n\Reload = Max(0, n\Reload - fs\FPSfactor[0])
 							
-							UpdateSoundOrigin(n\SoundChn2,Camera,n\Collider)
+							UpdateSoundOrigin(n\SoundCHN2,Camera,n\Collider)
 						Else ;idling outside the map
 							n\CurrSpeed = 0
 							MoveEntity n\Collider, 0, ((EntityY(Collider) - 30) - EntityY(n\Collider)) / 200.0, 0
@@ -1398,15 +1461,15 @@ Function UpdateNPCs()
 						If dist<8.0 Then
 							GiveAchievement(Achv096)
 							;If n\Sound = 0 Then
-							;	n\Sound = LoadSound_Strict("SFX\Music\096.ogg")
+							;	n\Sound = LoadSound_Strict(MusicPath$+"096.ogg")
 							;Else
-							;	n\SoundChn = LoopSound2(n\Sound, n\SoundChn, Camera, n\Collider, 8.0, 1.0)
+							;	n\SoundCHN = LoopSound2(n\Sound, n\SoundCHN, Camera, n\Collider, 8.0, 1.0)
 							;EndIf
-							If n\SoundChn = 0
-								n\SoundChn = StreamSound_Strict("SFX\Music\096.ogg",0)
-								n\SoundChn_IsStream = True
+							If n\SoundCHN = 0
+								n\SoundCHN = StreamSound_Strict(MusicPath$+"096.ogg",0)
+								n\SoundCHN_IsStream = True
 							Else
-								UpdateStreamSoundOrigin(n\SoundChn,Camera,n\Collider,8.0,1.0)
+								UpdateStreamSoundOrigin(n\SoundCHN,Camera,n\Collider,8.0,1.0)
 							EndIf
 							
 							If n\State3 = -1
@@ -1440,13 +1503,13 @@ Function UpdateNPCs()
 										If ProjectedY()>0 And ProjectedY()<GraphicHeight Then
 											If EntityVisible(Collider, n\Collider) Then
 												If (BlinkTimer < - 16 Or BlinkTimer > - 6)
-													PlaySound_Strict LoadTempSound("SFX\SCP\096\Triggered.ogg")
+													PlaySound_Strict LoadTempSound(SFXPath$+"SCP\096\Triggered.ogg")
 													
 													CurrCameraZoom = 10
 													
 													n\Frame = 194
 													;n\Frame = 307
-													StopStream_Strict(n\SoundChn) : n\SoundChn=0
+													StopStream_Strict(n\SoundCHN) : n\SoundCHN=0
 													n\Sound = 0
 													n\State = 1
 													n\State3 = 0
@@ -1464,18 +1527,18 @@ Function UpdateNPCs()
 						CurrCameraZoom = CurveValue(Max(CurrCameraZoom, (Sin(Float(MilliSecs2())/20.0)+1.0) * 10.0),CurrCameraZoom,8.0)
 						
 						If n\Target = Null Then 
-							If n\SoundChn = 0
-								n\SoundChn = StreamSound_Strict("SFX\SCP\096\Scream.ogg",0)
-								n\SoundChn_IsStream = True
+							If n\SoundCHN = 0
+								n\SoundCHN = StreamSound_Strict(SFXPath$+"SCP\096\Scream.ogg",0)
+								n\SoundCHN_IsStream = True
 							Else
-								UpdateStreamSoundOrigin(n\SoundChn,Camera,n\Collider,7.5,1.0)
+								UpdateStreamSoundOrigin(n\SoundCHN,Camera,n\Collider,7.5,1.0)
 							EndIf
-
-							If n\SoundChn2 = 0
-								n\SoundChn2 = StreamSound_Strict("SFX\Music\096Chase.ogg",0)
-								n\SoundChn2_IsStream = 2
+							
+							If n\SoundCHN2 = 0
+								n\SoundCHN2 = StreamSound_Strict(MusicPath$+"096Chase.ogg",0)
+								n\SoundCHN2_IsStream = 2
 							Else
-								SetStreamVolume_Strict(n\SoundChn2,Min(Max(8.0-dist,0.6),1.0)*SFXVolume#)
+								SetStreamVolume_Strict(n\SoundCHN2,Min(Max(8.0-dist,0.6),1.0)*SFXVolume#)
 							EndIf
 						EndIf
 						
@@ -1516,7 +1579,7 @@ Function UpdateNPCs()
 												pvt = CreatePivot()
 												CameraShake = 30
 												BlurTimer = 2000
-												DeathMSG = "В [ДАННЫЕ УДАЛЕНЫ] было найдено большое количество крови. ДНК принадлежит субъекту D-9341. Скорее всего, он был [ДАННЫЕ УДАЛЕНЫ] SCP-096." ;A large amount of blood found in [DATA REDACTED]. DNA indentified as Subject D-9341. Most likely [DATA REDACTED] by SCP-096.
+												DeathMSG = "В [ДАННЫЕ УДАЛЕНЫ] было найдено большое количество крови. ДНК принадлежит Субъекту D-9341. Скорее всего, он был [ДАННЫЕ УДАЛЕНЫ] SCP-096." ;A large amount of blood found in [DATA REDACTED]. DNA indentified as "+SubjectName$+". Most likely [DATA REDACTED] by SCP-096.
 												Kill(True)
 												KillAnim = 1
 												For i = 0 To 6
@@ -1552,7 +1615,7 @@ Function UpdateNPCs()
 									If n\Frame<906 Then
 										AnimateNPC(n,737,906,n\Speed*8,False)
 									Else
-										AnimateNPC(n,907,935,n\CurrSpeed*8)
+										AnimateNPC(n,907,935,n\CurrSpeed*8)	
 									EndIf
 								EndIf
 								
@@ -1584,7 +1647,7 @@ Function UpdateNPCs()
 											AnimateNPC(n,907,935,n\CurrSpeed*8)
 											;AnimateNPC(n, 1059,1084, n\CurrSpeed*8)	
 										EndIf
-										
+
 										dist2# = EntityDistance(n\Collider,n\Path[n\PathLocation]\obj)
 										If dist2 < 0.8 Then ;0.4
 											If n\Path[n\PathLocation]\door <> Null Then
@@ -1631,7 +1694,6 @@ Function UpdateNPCs()
 										If x < 28.0 And x > 20.0 Then
 											z = Abs(EntityZ(n\Collider)-EntityZ(w\obj,True))
 											If z < 28 And z > 20.0 Then
-												DebugLog "TELEPORTING 096 - "+w\room\roomtemplate\name
 												n\PathStatus = 0 : n\PathTimer = 0 : n\PathLocation = 0
 												PositionEntity n\Collider, EntityX(w\obj,True), EntityY(w\obj,True)+0.25,EntityZ(w\obj,True)
 												ResetEntity n\Collider
@@ -1646,11 +1708,11 @@ Function UpdateNPCs()
 						;[End Block]
 					Case 1,2,3
 						;[Block]
-						If n\SoundChn = 0
-							n\SoundChn = StreamSound_Strict("SFX\Music\096Angered.ogg",0)
-							n\SoundChn_IsStream = True
+						If n\SoundCHN = 0
+							n\SoundCHN = StreamSound_Strict(MusicPath$+"096Angered.ogg",0)
+							n\SoundCHN_IsStream = True
 						Else
-							UpdateStreamSoundOrigin(n\SoundChn,Camera,n\Collider,10.0,1.0)
+							UpdateStreamSoundOrigin(n\SoundCHN,Camera,n\Collider,10.0,1.0)
 						EndIf
 						
 						If n\State=1 Then ; get up
@@ -1666,7 +1728,7 @@ Function UpdateNPCs()
 							EndIf
 						ElseIf n\State=2
 							AnimateNPC(n,677,737,0.3,False)
-							If n\Frame=>822 Then n\State=3 : n\State2=0
+							If n\Frame=>737 Then n\State=3 : n\State2=0
 							;AnimateNPC(n, 833, 972, 0.3, False)
 							;If n\Frame=>972 Then n\State = 3 : n\State2=0
 						ElseIf n\State=3
@@ -1676,7 +1738,7 @@ Function UpdateNPCs()
 								;AnimateNPC(n, 973, 1001, 0.5, False)
 								If n\Frame>846.9 Then ;1000.9 
 									n\State = 4
-									StopStream_Strict(n\SoundChn) : n\SoundChn=0
+									StopStream_Strict(n\SoundCHN) : n\SoundCHN=0
 								EndIf
 							Else
 								AnimateNPC(n,1471,1556,0.4)
@@ -1691,12 +1753,12 @@ Function UpdateNPCs()
 							If dist < 4.0 Then
 								GiveAchievement(Achv096)
 							EndIf
-
-							If n\SoundChn = 0
-								n\SoundChn = StreamSound_Strict("SFX\Music\096.ogg",0)
-								n\SoundChn_IsStream = True
+							
+							If n\SoundCHN = 0
+								n\SoundCHN = StreamSound_Strict(MusicPath$+"096.ogg",0)
+								n\SoundCHN_IsStream = True
 							Else
-								UpdateStreamSoundOrigin(n\SoundChn,Camera,n\Collider,14.0,1.0)
+								UpdateStreamSoundOrigin(n\SoundCHN,Camera,n\Collider,14.0,1.0)
 							EndIf
 							
 							If n\Frame>=422
@@ -1765,14 +1827,14 @@ Function UpdateNPCs()
 										If ProjectedY()>0 And ProjectedY()<GraphicHeight Then
 											If EntityVisible(Collider, n\Collider) Then
 												If (BlinkTimer < - 16 Or BlinkTimer > - 6)
-													PlaySound_Strict LoadTempSound("SFX\SCP\096\Triggered.ogg")
+													PlaySound_Strict LoadTempSound(SFXPath$+"SCP\096\Triggered.ogg")
 													
 													CurrCameraZoom = 10
 													
 													If n\Frame >= 422
 														n\Frame = 677 ;833
 													EndIf
-													StopStream_Strict(n\SoundChn) : n\SoundChn=0
+													StopStream_Strict(n\SoundCHN) : n\SoundCHN=0
 													n\Sound = 0
 													n\State = 2
 												EndIf
@@ -1783,7 +1845,7 @@ Function UpdateNPCs()
 								EndIf
 							EndIf
 						EndIf
-						;[End Block]
+						;[End Block]	    
 				End Select
 				
 				;ResetEntity(n\Collider)
@@ -1799,7 +1861,7 @@ Function UpdateNPCs()
 				
 				prevFrame# = n\Frame
 				
-				dist  = EntityDistance(Collider, n\Collider)
+				dist = EntityDistance(Collider, n\Collider)
 				
 				n\BlinkTimer# = 1.0
 				
@@ -1808,8 +1870,8 @@ Function UpdateNPCs()
 						n\Idle = Max(n\Idle-(1+SelectedDifficulty\aggressiveNPCs)*fs\FPSfactor[0],0.1)
 					EndIf
 					n\DropSpeed = 0
-					If ChannelPlaying(n\SoundChn) Then StopChannel(n\SoundChn)
-					If ChannelPlaying(n\SoundChn2) Then StopChannel(n\SoundChn2)
+					If ChannelPlaying(n\SoundCHN) Then StopChannel(n\SoundCHN)
+					If ChannelPlaying(n\SoundCHN2) Then StopChannel(n\SoundCHN2)
 					PositionEntity n\Collider,0,-500,0
 					PositionEntity n\obj,0,-500,0
 				Else
@@ -1851,16 +1913,16 @@ Function UpdateNPCs()
 						Case 2 ;being active
 							;[Block]
 							If (dist < HideDistance*2) And (Not n\Idle) And PlayerInReachableRoom(True) Then
-								n\SoundChn = LoopSound2(n\Sound, n\SoundChn, Camera, n\Collider)
+								n\SoundCHN = LoopSound2(n\Sound, n\SoundCHN, Camera, n\Collider)
 								PlayerSeeAble% = MeNPCSeesPlayer(n)
 								If PlayerSeeAble%=True Or n\State2>0 Then ;Player is visible for 049's sight - attacking
 									GiveAchievement(Achv049)
 									
 									;Playing a sound after detecting the player
-									If n\PrevState <= 1 And ChannelPlaying(n\SoundChn2)=False
+									If n\PrevState <= 1 And ChannelPlaying(n\SoundCHN2)=False
 										If n\Sound2 <> 0 Then FreeSound_Strict(n\Sound2)
-										n\Sound2 = LoadSound_Strict("SFX\SCP\049\Spotted"+Rand(1,7)+".ogg")
-										n\SoundChn2 = LoopSound2(n\Sound2,n\SoundChn2,Camera,n\obj)
+										n\Sound2 = LoadSound_Strict(SFXPath$+"SCP\049\Spotted"+Rand(1,7)+".ogg")
+										n\SoundCHN2 = LoopSound2(n\Sound2,n\SoundCHN2,Camera,n\obj)
 										n\PrevState = 2
 									EndIf
 									n\PathStatus = 0
@@ -1875,8 +1937,8 @@ Function UpdateNPCs()
 										If WearingHazmat>0 Then
 											BlurTimer = BlurTimer+fs\FPSfactor[0]*2.5
 											If BlurTimer>250 And BlurTimer-fs\FPSfactor[0]*2.5 <= 250 And n\PrevState<>3 Then
-												If n\SoundChn2 <> 0 Then StopChannel(n\SoundChn2)
-												n\SoundChn2 = PlaySound_Strict(LoadTempSound("SFX\SCP\049\TakeOffHazmat.ogg"))
+												If n\SoundCHN2 <> 0 Then StopChannel(n\SoundCHN2)
+												n\SoundCHN2 = PlaySound_Strict(LoadTempSound(SFXPath$+"SCP\049\TakeOffHazmat.ogg"))
 												n\PrevState=3
 											ElseIf BlurTimer => 500
 												For i = 0 To MaxItemAmount-1
@@ -1895,14 +1957,22 @@ Function UpdateNPCs()
 													EndIf
 												Next
 											EndIf
-										ElseIf Wearing714 Then
-											BlurTimer = BlurTimer + fs\FPSfactor[0] * 2.5
-											If BlurTimer > 250 And BlurTimer - fs\FPSfactor[0] * 2.5 <= 250 And n\PrevState <> 3 Then
-												If n\SoundChn2 <> 0 Then StopChannel(n\SoundChn2)
-												n\SoundChn2 = PlaySound_Strict(LoadTempSound("SFX\SCP\049\714Equipped.ogg"))
-												n\PrevState = 3
+										ElseIf I_714\Using Then
+											BlurTimer = BlurTimer+fs\FPSfactor[0]*2.5
+											If BlurTimer>250 And BlurTimer-fs\FPSfactor[0]*2.5 <= 250 And n\PrevState<>3 Then
+												If n\SoundCHN2 <> 0 Then StopChannel(n\SoundCHN2)
+												n\SoundCHN2 = PlaySound_Strict(LoadTempSound(SFXPath$+"SCP\049\714Equipped.ogg"))
+												n\PrevState=3
 											ElseIf BlurTimer => 500
-												Wearing714 = False
+												I_714\Using=False
+											EndIf
+										ElseIf I_1033RU\Using > 0 And I_1033RU\HP > 0 Then
+										    BlurTimer = BlurTimer+fs\FPSfactor[0]*2.5
+									        If BlurTimer > 500 And BlurTimer-fs\FPSfactor[0]*2.5 =< 500 Then
+												If n\PrevState<>3 Then n\PrevState=3
+												PlaySound_Strict DamageSFX1033RU(Rand(0, 3))
+												BlurTimer = 1.0
+												LightFlash = 0.2
 											EndIf
 										Else
 											CurrCameraZoom = 20.0
@@ -1910,26 +1980,18 @@ Function UpdateNPCs()
 											
 											If (Not chs\GodMode) Then
 												If PlayerRoom\RoomTemplate\Name$ = "room049"
-												    If Rand(2) = 1 Then
-													    DeathMSG = "В туннеле рядом с камерой SCP-049 были найдены четыре (4) активных образца SCP-049-2. Уничтожены Девятихвостой Лисой." ;Four (4) active instances of SCP-049-2 discovered in the tunnel outside SCP-049's containment chamber. ;Four (4) active instances of SCP-049-2 discovered in the tunnel outside SCP-049's containment chamber. Terminated by Nine-Tailed Fox.
-													Else
-													    DeathMSG = "В туннеле рядом с камерой SCP-049 были найдены четыре (4) активных образца SCP-049-2. Уничтожены Не Вижу Зла."
-													EndIf
+													DeathMSG = "В туннеле рядом с камерой SCP-049 были найдены четыре (2) активных образца SCP-049-2, и один образец SCP-049-3. Уничтожены Девятихвостой Лисой." ;Two (2) active instances of SCP-049-2 and one (1) instances of SCP-049-3 discovered in the tunnel outside SCP-049's containment chamber. Terminated by Nine-Tailed Fox.
 													For e.events = Each Events
 														If e\EventName = "room049" Then e\EventState=-1 : Exit
 													Next
 												Else
-												    If Rand(2) = 1 Then
-													    DeathMSG = "В [УДАЛЕНО] был найден активный образец SCP-049-2. Уничтожен Девятихвостой Лисой." ;An active instance of SCP-049-2 was discovered in [REDACTED]. Terminated by Nine-Tailed Fox.
-													Else
-													    DeathMSG = "В [УДАЛЕНО] был найден активный образец SCP-049-2. Уничтожен Не Вижу Зла." ;An active instance of SCP-049-2 was discovered in [REDACTED]. Terminated by See No Evil.
-													EndIf
+													DeathMSG = "В [УДАЛЕНО] был найден активный образец SCP-049-2. Уничтожен Девятихвостой Лисой." ;An active instance of SCP-049-2 was discovered in [REDACTED]. Terminated by Nine-Tailed Fox.
 													Kill()
 												EndIf
 												PlaySound_Strict HorrorSFX(13)
 												If n\Sound2 <> 0 Then FreeSound_Strict(n\Sound2)
-												n\Sound2 = LoadSound_Strict("SFX\SCP\049\Kidnap"+Rand(1,2)+".ogg")
-												n\SoundChn2 = LoopSound2(n\Sound2,n\SoundChn2,Camera,n\obj)
+												n\Sound2 = LoadSound_Strict(SFXPath$+"SCP\049\Kidnap"+Rand(1,2)+".ogg")
+												n\SoundCHN2 = LoopSound2(n\Sound2,n\SoundCHN2,Camera,n\obj)
 												n\State = 3
 											EndIf										
 										EndIf
@@ -2007,19 +2069,19 @@ Function UpdateNPCs()
 											AnimateNPC(n, Max(Min(AnimTime(n\obj),358.0),346), 393.0, n\CurrSpeed*38)
 											
 											;Playing a sound if he hears the player
-											If n\PrevState = 0 And ChannelPlaying(n\SoundChn2)=False
+											If n\PrevState = 0 And ChannelPlaying(n\SoundCHN2)=False
 												If n\Sound2 <> 0 Then FreeSound_Strict(n\Sound2)
 												If Rand(30)=1
-													n\Sound2 = LoadSound_Strict("SFX\SCP\049\Searching7.ogg")
+													n\Sound2 = LoadSound_Strict(SFXPath$+"SCP\049\Searching7.ogg")
 												Else
-													n\Sound2 = LoadSound_Strict("SFX\SCP\049\Searching"+Rand(1,6)+".ogg")
+													n\Sound2 = LoadSound_Strict(SFXPath$+"SCP\049\Searching"+Rand(1,6)+".ogg")
 												EndIf
-												n\SoundChn2 = LoopSound2(n\Sound2,n\SoundChn2,Camera,n\obj)
+												n\SoundCHN2 = LoopSound2(n\Sound2,n\SoundCHN2,Camera,n\obj)
 												n\PrevState = 1
 											EndIf
 											
 											;Resetting the "PrevState" value randomly, to make 049 talking randomly 
-											If Rand(600)=1 And ChannelPlaying(n\SoundChn2)=False Then n\PrevState = 0
+											If Rand(600)=1 And ChannelPlaying(n\SoundCHN2)=False Then n\PrevState = 0
 											
 											If n\PrevState > 1 Then n\PrevState = 1
 										EndIf
@@ -2130,12 +2192,12 @@ Function UpdateNPCs()
 									EndIf
 								EndIf
 								
-								If ChannelPlaying(n\SoundChn2)
-									UpdateSoundOrigin(n\SoundChn2,Camera,n\obj)
+								If ChannelPlaying(n\SoundCHN2)
+									UpdateSoundOrigin(n\SoundCHN2,Camera,n\obj)
 								EndIf
 							ElseIf (Not n\Idle)
-								If ChannelPlaying(n\SoundChn) Then
-									StopChannel(n\SoundChn)
+								If ChannelPlaying(n\SoundCHN) Then
+									StopChannel(n\SoundCHN)
 								EndIf
 								If PlayerInReachableRoom(True) And InFacility=1 Then ;Player is in a room where SCP-049 can teleport to
 									If Rand(1,3-SelectedDifficulty\otherFactors)=1 Then
@@ -2177,7 +2239,7 @@ Function UpdateNPCs()
 							;[End Block]
 						Case 5 ;used for "room2sl"
 							;[Block]
-							n\SoundChn = LoopSound2(n\Sound, n\SoundChn, Camera, n\Collider)
+							n\SoundCHN = LoopSound2(n\Sound, n\SoundCHN, Camera, n\Collider)
 							PlayerSeeAble% = MeNPCSeesPlayer(n,True)
 							If PlayerSeeAble% = True
 								n\State = 2
@@ -2187,7 +2249,7 @@ Function UpdateNPCs()
 								n\State3 = 0
 								n\State2 = 70*2
 								n\PrevState = 0
-								PlaySound_Strict LoadTempSound("SFX\Room\Room2SL049Spawn.ogg")
+								PlaySound_Strict LoadTempSound(SFXPath$+"Room\Room2SL049Spawn.ogg")
 							ElseIf PlayerSeeAble% = 2 And n\State3 > 0.0
 								n\PathStatus = FindPath(n,EntityX(Collider),EntityY(Collider),EntityZ(Collider))
 							Else
@@ -2268,8 +2330,8 @@ Function UpdateNPCs()
 								EndIf
 							EndIf
 							
-							If ChannelPlaying(n\SoundChn2)
-								UpdateSoundOrigin(n\SoundChn2,Camera,n\obj)
+							If ChannelPlaying(n\SoundCHN2)
+								UpdateSoundOrigin(n\SoundCHN2,Camera,n\obj)
 							EndIf
 							;[End Block]
 					End Select
@@ -2284,7 +2346,8 @@ Function UpdateNPCs()
 				n\State2 = Max(n\State2-fs\FPSfactor[0],0)
 				
 				;[End Block]
-			Case NPCtype0492
+
+			Case NPCtype049_2
 				;[Block]
 				
 				If Abs(EntityY(Collider)-EntityY(n\Collider))<4.0 Then
@@ -2293,7 +2356,7 @@ Function UpdateNPCs()
 					
 					If (Not n\IsDead)
 						Select n\State
-							Case 0
+							Case 0 ;lying
 								;[Block]
 								AnimateNPC(n, 719, 777, 0.2, False)
 								
@@ -2314,7 +2377,7 @@ Function UpdateNPCs()
 									;Animate2(n\obj, AnimTime(n\obj), 926, 935, 0.3, False)
 									;If AnimTime(n\obj)=935 Then n\State = 2
 								Else
-									AnimateNPC(n, 155, 682, 1.6, False)
+									AnimateNPC(n, 155, 682, 1.1, False)
 									;Animate2(n\obj, AnimTime(n\obj), 155, 682, 1.5, False)
 								EndIf
 								;[End Block]
@@ -2329,7 +2392,7 @@ Function UpdateNPCs()
 									n\State3=n\State3-fs\FPSfactor[0]
 								EndIf
 								
-								n\SoundChn = LoopSound2(n\Sound, n\SoundChn, Camera, n\Collider, 6.0, 0.6)
+								n\SoundCHN = LoopSound2(n\Sound, n\SoundCHN, Camera, n\Collider, 6.0, 0.6)
 
 								If n\State2 > 0 And (Not chs\NoTarget) Then ;player is visible -> attack
 									
@@ -2482,6 +2545,12 @@ Function UpdateNPCs()
 								;[End Block]
 						End Select
 					Else
+					    If n\SoundCHN <> 0
+						    StopChannel n\SoundCHN
+						    n\SoundCHN = 0
+						    FreeSound_Strict n\Sound
+						    n\Sound = 0
+					    EndIf
 					    ;If Rand(2) = 1 Then
 						    ;AnimateNPC(n, 133, 157, 0.5, False)
 						;Else
@@ -2495,7 +2564,7 @@ Function UpdateNPCs()
 				EndIf
 				
 				;[End Block]
-			Case NPCtypeGuard ;------------------------------------------------------------------------------------------------------------------
+			Case NPCtypeGuard
 				;[Block]
 				prevFrame# = n\Frame
 				
@@ -2546,7 +2615,7 @@ Function UpdateNPCs()
 									If PickedEntity() = Collider Or n\State3=1 Then
 										Local instaKillPlayer% = False
 										
-										If PlayerRoom\RoomTemplate\Name = "start" Then 
+										If PlayerRoom\RoomTemplate\Name = "room173" Then 
 											DeathMSG = SubjectName$+". Причина смерти: огнестрельное ранение в голову. Записи с камер наблюдения подтверждают, что субъект был убит агентом Алгрином вскоре после начала блокировки Зоны." ;Subject D-9341. Cause of death: Gunshot wound to the head. The surveillance tapes confirm that the subject was terminated by Agent Ulgrin shortly after the site lockdown was initiated.
 											instaKillPlayer = True
 										ElseIf PlayerRoom\RoomTemplate\Name = "exit1" Then
@@ -2562,7 +2631,7 @@ Function UpdateNPCs()
 										MoveEntity (pvt,0.8*0.079, 10.75*0.079, 6.9*0.079)
 										
 										PointEntity pvt, Collider
-										Shoot(EntityX(pvt), EntityY(pvt), EntityZ(pvt), ShootAccuracy, False, instaKillPlayer)
+										Shoot(EntityX(pvt), EntityY(pvt), EntityZ(pvt), ShootAccuracy, True, instaKillPlayer)
 										n\Reload = 7
 									Else
 										n\CurrSpeed = n\Speed
@@ -2678,14 +2747,21 @@ Function UpdateNPCs()
 						;[End Block]
 					Case 7
 						;[Block]
-						AnimateNPC(n, 77, 201, 0.2)
-						;Animate2(n\obj, AnimTime(n\obj), 923, 1354, 0.2)
+						If n\UseHeadPhones = True Then
+						    AnimateNPC(n, 623, 747, 0.2)
+						Else
+						    AnimateNPC(n, 77, 201, 0.2)
+						EndIf
 						;[End Block]
 					Case 8
-
+			
 					Case 9
 						;[Block]
-						AnimateNPC(n,77,201,0.2)
+						If n\UseHeadPhones = True Then
+						    AnimateNPC(n, 623, 747, 0.2)
+						Else
+						    AnimateNPC(n,77,201,0.2)
+						EndIf
 						n\BoneToManipulate = "head"
 						n\ManipulateBone = True
 						n\ManipulationType = 0
@@ -2701,9 +2777,18 @@ Function UpdateNPCs()
 						;[End Block]
 					Case 11
 						;[Block]
-						If n\Frame < 39 Or (n\Frame > 76 And n\Frame < 245) Or (n\Frame > 248 And n\Frame < 302) Or n\Frame > 344
-							AnimateNPC(n,345,357,0.2,False)
-							If n\Frame >= 356 Then SetNPCFrame(n,302)
+						dist_to_player = EntityDistance(Collider, n\Collider)
+						
+						If n\UseHeadPhones = True Then
+						     If n\Frame < 787 Or (n\Frame > 824 And n\Frame < 867) Or (n\Frame > 870 And n\Frame < 884) Or n\Frame > 939
+							    AnimateNPC(n,927,939,0.2,False)
+							    If n\Frame >= 883 Then SetNPCFrame(n,884)
+						    EndIf
+						Else
+						    If n\Frame < 39 Or (n\Frame > 76 And n\Frame < 245) Or (n\Frame > 248 And n\Frame < 302) Or n\Frame > 344
+							    AnimateNPC(n,345,357,0.2,False)
+							    If n\Frame >= 356 Then SetNPCFrame(n,302)
+						    EndIf
 						EndIf
 						
 						If KillTimer => 0 Then
@@ -2742,7 +2827,7 @@ Function UpdateNPCs()
 										MoveEntity (pvt,0.8*0.079, 10.75*0.079, 6.9*0.079)
 										
 										PointEntity pvt, Collider
-										Shoot(EntityX(pvt), EntityY(pvt), EntityZ(pvt), 1.0, False, instaKillPlayer)
+										Shoot(EntityX(pvt),EntityY(pvt), EntityZ(pvt),((25/dist_to_player)*(1/dist_to_player)), True, instaKillPlayer)
 										n\Reload = 7
 									Else
 										n\CurrSpeed = n\Speed
@@ -2750,10 +2835,20 @@ Function UpdateNPCs()
 								EndIf
 								
 								If n\Reload > 0 And n\Reload <= 7
-									AnimateNPC(n,245,248,0.35,True)
+								    If n\UseHeadPhones = True Then
+								        AnimateNPC(n,867,870,0.35,True)
+								    Else
+									    AnimateNPC(n,245,248,0.35,True)
+									EndIf
 								Else
-									If n\Frame < 302
-										AnimateNPC(n,302,344,0.35,True)
+								    If n\UseHeadPhones = True Then
+								        If n\Frame < 884
+										    AnimateNPC(n,884,926,0.35,True)
+									    EndIf
+									Else
+									    If n\Frame < 302
+									        AnimateNPC(n,302,344,0.35,True)
+									    EndIf
 									EndIf
 								EndIf
 								
@@ -2767,7 +2862,11 @@ Function UpdateNPCs()
 											n\PathLocation = n\PathLocation + 1
 										EndIf
 									Else
-										AnimateNPC(n,39,76,n\CurrSpeed*40)
+									    If n\UseHeadPhones = True Then
+									        AnimateNPC(n,787,823,n\CurrSpeed*40)
+									    Else
+										    AnimateNPC(n,39,76,n\CurrSpeed*40)
+										EndIf
 										n\CurrSpeed = CurveValue(n\Speed*0.7, n\CurrSpeed, 20.0)
 										MoveEntity n\Collider, 0, 0, n\CurrSpeed * fs\FPSfactor[0]
 										
@@ -2805,7 +2904,11 @@ Function UpdateNPCs()
 									EndIf
 									
 									If n\PathTimer = 1
-										AnimateNPC(n,39,76,n\CurrSpeed*40)
+									    If n\UseHeadPhones = True Then
+									        AnimateNPC(n,787,823,n\CurrSpeed*40)
+									    Else
+										    AnimateNPC(n,39,76,n\CurrSpeed*40)
+										EndIf
 										n\CurrSpeed = CurveValue(n\Speed*0.7, n\CurrSpeed, 20.0)
 										MoveEntity n\Collider, 0, 0, n\CurrSpeed * fs\FPSfactor[0]
 									EndIf
@@ -2856,7 +2959,7 @@ Function UpdateNPCs()
 						
 						FreeEntity(pvt)
 						
-						UpdateSoundOrigin(n\SoundChn,Camera,n\Collider,20)
+						UpdateSoundOrigin(n\SoundCHN,Camera,n\Collider,20)
 						;[End Block]
 					Case 13
 						;[Block]
@@ -2899,18 +3002,6 @@ Function UpdateNPCs()
 							PlaySound2(StepSFX(2,0,Rand(0,2)),Camera, n\Collider, 8.0, Rnd(0.5,0.7))
 						EndIf
 						;[End Block]
-					;Case 15
-					;    ;[Block]
-					;	AnimateNPC(n, 623, 747, 0.2)
-					;	;[End Block]
-					;Case 16
-					;   ;[Block]
-					;	AnimateNPC(n, 623, 747, 0.2)
-					;	n\BoneToManipulate = "head"
-					;	n\ManipulateBone = True
-					;	n\ManipulationType = 0
-					;	n\Angle = EntityYaw(n\Collider)
-					;	;[End Block]
 					Default
 						;[Block]
 						If Rand(400) = 1 Then n\PrevState = Rnd(-30, 30)
@@ -2940,12 +3031,12 @@ Function UpdateNPCs()
 				;RotateEntity n\obj, EntityPitch(n\Collider)-90, EntityYaw(n\Collider), 0
 				RotateEntity n\obj, 0, EntityYaw(n\Collider)+180, 0
 				;[End Block]
-			Case NPCtypeMTF ;------------------------------------------------------------------------------------------------------------------
+			Case NPCtypeMTF 
 				;[Block]
 				UpdateMTFUnit(n)
 				
 				;[End Block]
-			Case NPCtypeD,NPCtypeClerk 	;------------------------------------------------------------------------------------------------------------------
+			Case NPCtypeD, NPCtypeClerk 	
 				;[Block]
 				RotateEntity(n\Collider, 0, EntityYaw(n\Collider), EntityRoll(n\Collider), True)
 				
@@ -2987,10 +3078,10 @@ Function UpdateNPCs()
 					EndIf
 				EndIf
 				
-				If n\Frame = 19 Or n\Frame = 60
+				If n\Frame = 19 Or n\Frame = 60 Or n\Frame = 629 Or n\Frame = 676
 					n\IsDead = True
 				EndIf
-				If AnimTime(n\obj)=19 Or AnimTime(n\obj)=60
+				If AnimTime(n\obj)=19 Or AnimTime(n\obj)=60 Or AnimTime(n\obj)=629 Or AnimTime(n\obj)=676
 					n\IsDead = True
 				EndIf
 				
@@ -3000,7 +3091,7 @@ Function UpdateNPCs()
 				
 				RotateEntity n\obj, EntityPitch(n\Collider), EntityYaw(n\Collider)-180.0, 0
 				;[End Block]
-			Case NPCtype5131
+			Case NPCtype513_1
 				;[Block]
 				;If KeyHit(48) Then n\Idle = True : n\State2 = 0
 				
@@ -3074,7 +3165,7 @@ Function UpdateNPCs()
 									If EntityInView(n\Collider,Camera) Then
 										If EntityVisible(Collider, n\Collider) Then
 											n\LastSeen = 1
-											PlaySound_Strict LoadTempSound("SFX\SCP\513\Bell"+Rand(2,3)+".ogg")
+											PlaySound_Strict LoadTempSound(SFXPath$+"SCP\513\Bell"+Rand(2, 4)+".ogg")
 										EndIf
 									EndIf
 								EndIf								
@@ -3122,7 +3213,7 @@ Function UpdateNPCs()
 													If EntityInView(n\Collider,Camera) Then
 														If EntityVisible(Collider, n\Collider) Then
 															n\LastSeen = 1
-															PlaySound_Strict LoadTempSound("SFX\SCP\513\Bell"+Rand(2,3)+".ogg")
+															PlaySound_Strict LoadTempSound(SFXPath$+"SCP\513\Bell"+Rand(2, 4)+".ogg")
 														EndIf
 													EndIf
 												EndIf
@@ -3175,7 +3266,7 @@ Function UpdateNPCs()
 				n\DropSpeed = 0
 				ResetEntity(n\Collider)						
 				;[End Block]
-			Case NPCtype372 ;------------------------------------------------------------------------------------------------------------------
+			Case NPCtype372 
 				;[Block]
 				RN$ = PlayerRoom\RoomTemplate\Name
 				If RN$ <> "pocketdimension" And RN$ <> "dimension1499" Then 
@@ -3190,19 +3281,21 @@ Function UpdateNPCs()
 							n\Idle = False
 							n\State = Rand(20, 60)
 							
-							If Rand(300)=1 Then PlaySound2(RustleSFX(Rand(0,2)),Camera, n\obj, 8, Rnd(0.0,0.2))
+							If Rand(300)=1 Then PlaySound2(RustleSFX(Rand(0, 6)),Camera, n\obj, 8, Rnd(0.0,0.2))
 						End If
 					Else
 						PositionEntity(n\obj, EntityX(n\Collider) + Rnd(-0.005, 0.005), EntityY(n\Collider)+0.3+0.1*Sin(MilliSecs2()/2), EntityZ(n\Collider) + Rnd(-0.005, 0.005))
 						RotateEntity n\obj, 0, EntityYaw(n\Collider), ((MilliSecs2()/5) Mod 360)
-
+						
+						AnimateNPC(n, 1, 14, 1.2, True)
+						
 						If EntityInView(n\obj, Camera) Then
 							GiveAchievement(Achv372)
 							
 							If Rand(30)=1 Then 
-								If (Not ChannelPlaying(n\SoundChn)) Then
+								If (Not ChannelPlaying(n\SoundCHN)) Then
 									If EntityVisible(Camera, n\obj) Then 
-										n\SoundChn = PlaySound2(RustleSFX(Rand(0,2)),Camera, n\obj, 8, 0.3)
+										n\SoundCHN = PlaySound2(RustleSFX(Rand(0, 6)),Camera, n\obj, 8, 0.3)
 									EndIf
 								EndIf
 							EndIf
@@ -3232,7 +3325,7 @@ Function UpdateNPCs()
 				n\DropSpeed = 0
 				ResetEntity(n\Collider)						
 				;[End Block]
-			Case NPCtypeApache ;------------------------------------------------------------------------------------------------------------------
+			Case NPCtypeApache 
 				;[Block]
 				dist = EntityDistance(Collider, n\Collider)
 				If dist<60.0 Then 
@@ -3242,7 +3335,7 @@ Function UpdateNPCs()
 						dist2 = 1.0
 					EndIf
 					
-					n\SoundChn = LoopSound2(ApacheSFX, n\SoundChn, Camera, n\Collider, 25.0, dist2)
+					n\SoundCHN = LoopSound2(ApacheSFX, n\SoundCHN, Camera, n\Collider, 25.0, dist2)
 				EndIf
 				
 				n\DropSpeed = 0
@@ -3327,7 +3420,7 @@ Function UpdateNPCs()
 													    DeathMSG = Chr(34)+"CH-2 Центру. Убил убегающего сотрудника класса D у Выхода A."+Chr(34) ;CH-2 to control. Shot down a runaway Class D at Gate A.
 													EndIf
 													
-													Shoot( EntityX(pvt),EntityY(pvt), EntityZ(pvt),((10/dist)*(1/dist))*(n\State=2),(n\State=2))
+													Shoot(EntityX(pvt),EntityY(pvt), EntityZ(pvt),((10/dist)*(1/dist))*(n\State=2),(n\State=2))
 													
 													n\Reload = 5
 												EndIf
@@ -3365,10 +3458,10 @@ Function UpdateNPCs()
 							
 							If EntityDistance(n\obj, target) <0.3 Then
 								;If TempSound2 <> 0 Then FreeSound_Strict TempSound2 : TempSound2 = 0
-								;TempSound2 = LoadSound_Strict("SFX\Character\Apache\Crash"+Rand(1,2)+".ogg")
+								;TempSound2 = LoadSound_Strict(SFXPath$+"Character\Apache\Crash"+Rand(1,2)+".ogg")
 								CameraShake = Max(CameraShake, 3.0)
 								;PlaySound_Strict TempSound2
-								PlaySound_Strict LoadTempSound("SFX\Character\Apache\Crash"+Rand(1,2)+".ogg")
+								PlaySound_Strict LoadTempSound(SFXPath$+"Character\Apache\Crash"+Rand(1,2)+".ogg")
 								n\State = 5
 							EndIf
 							
@@ -3379,7 +3472,7 @@ Function UpdateNPCs()
 				PositionEntity(n\obj, EntityX(n\Collider), EntityY(n\Collider), EntityZ(n\Collider))
 				RotateEntity n\obj, EntityPitch(n\Collider), EntityYaw(n\Collider), EntityRoll(n\Collider), True
 				;[End Block]
-			Case NPCtype035Tentacle
+			Case NPCtype035_Tentacle
 				;[Block]
 				dist = EntityDistance(n\Collider,Collider)
 				
@@ -3407,7 +3500,7 @@ Function UpdateNPCs()
 							    Else
 								    If dist < 2.5 Then 
 									    SetNPCFrame(n, 284)
-									    n\Sound2 = LoadSound_Strict("SFX\Room\035Chamber\TentacleSpawn.ogg")
+									    n\Sound2 = LoadSound_Strict(SFXPath$+"Room\035Chamber\TentacleSpawn.ogg")
 									    PlaySound_Strict(n\Sound2)
 								    EndIf
 							    EndIf
@@ -3417,11 +3510,11 @@ Function UpdateNPCs()
 						    Case 1 ;idle
 							    If n\Sound2=0 Then
 								    FreeSound_Strict n\Sound2 : n\Sound2=0
-								    n\Sound2 = LoadSound_Strict("SFX\Room\035Chamber\TentacleIdle.ogg")
+								    n\Sound2 = LoadSound_Strict(SFXPath$+"Room\035Chamber\TentacleIdle.ogg")
 							    EndIf
-							    n\SoundChn2 = LoopSound2(n\Sound2,n\SoundChn2,Camera,n\Collider)
+							    n\SoundCHN2 = LoopSound2(n\Sound2,n\SoundCHN2,Camera,n\Collider)
 							
-							    If dist < 1.8 Then 
+							    If dist < 1.8 And (Not chs\Notarget) Then
 								    If Abs(DeltaYaw(n\Collider, Collider))<20 Then 
 									    n\State = 2
 									    If n\Sound<>0 Then FreeSound_Strict n\Sound : n\Sound = 0 
@@ -3448,7 +3541,7 @@ Function UpdateNPCs()
 									    ;SetAnimTime(n\obj,2)
 									    If n\Sound2<>0 Then FreeSound_Strict n\Sound2 : n\Sound2 = 0
 									    n\Frame = 2
-									    n\Sound = LoadSound_Strict("SFX\Room\035Chamber\TentacleAttack"+Rand(1,2)+".ogg")
+									    n\Sound = LoadSound_Strict(SFXPath$+"Room\035Chamber\TentacleAttack"+Rand(1,2)+".ogg")
 									    PlaySound_Strict(n\Sound)
 								    EndIf
 								    AnimateNPC(n, 2, 32, 0.3, False)
@@ -3458,13 +3551,13 @@ Function UpdateNPCs()
 									    If dist < 1.8 Then
 										    If Abs(DeltaYaw(n\Collider, Collider))<20 Then 
 											    If WearingHazmat Then
-											        PlaySound_Strict(LoadTempSound("SFX\General\BodyFall.ogg"))
+											        PlaySound_Strict(LoadTempSound(SFXPath$+"General\BodyFall.ogg"))
 											        BlurTimer = 100
 											        If I_1033RU\HP = 0
 												        Injuries = Injuries+Rnd(0.5)
 												    Else
-												        Damage1033RU(20 + (5 * SelectedDifficulty\aggressiveNPCs))
-												        n\HP = n\HP - 30 + (5 * SelectedDifficulty\aggressiveNPCs)
+												        Damage1033RU(20 + (Rand(5) * SelectedDifficulty\aggressiveNPCs))
+												        n\HP = n\HP - 30
 												        If n\HP =< 0 Then
 							                                n\IsDead = True
 							                            EndIf
@@ -3475,24 +3568,24 @@ Function UpdateNPCs()
 											        If I_1033RU\HP = 0
 												        Injuries = Injuries+Rnd(1.0,1.5)
 												    Else
-												        Damage1033RU(20+(5*SelectedDifficulty\aggressiveNPCs))
-												        n\HP = n\HP - 30 + (5 * SelectedDifficulty\aggressiveNPCs)
+												        Damage1033RU(20)
+												        n\HP = n\HP - 34
 												        If n\HP =< 0 Then
 							                                n\IsDead = True
 							                            EndIf
 												    EndIf
 												    If Injuries > 3.0 Then
 													    If PlayerRoom\RoomTemplate\Name = "room2offices" Then
-														    DeathMSG = Chr(34)+"Похоже, что одно большое и очень активное щупальце " ;One large and highly active tentacle-like appendage seems 
-														DeathMSG = DeathMSG + "выросло из трупа учёного в офисе [УДАЛЕНО]. Его уровень агрессии " ;to have grown outside the dead body of a scientist within office area [REDACTED]. Its level of aggression is 
-														DeathMSG = DeathMSG + "не похож на тот, что мы видели раньше. Видимо, в какой-то момент " ;unlike anything we've seen before - it looks like it has 
-														DeathMSG = DeathMSG + "это щупальце избило какого-то бедолагу класса D до смерти."+Chr(34) ;beaten some unfortunate Class D to death at some point during the breach.
-													Else
-														DeathMSG = Chr(34)+"Чтобы с этим разобраться, обычной группой чистильщиков не обойдёшься. " ;We will need more than the regular cleaning team to take care of this. 
-														DeathMSG = DeathMSG + "Два больших и очень активных щупальца, похоже, сформаровались " ;Two large and highly active tentacle-like appendages seem 
-														DeathMSG = DeathMSG + "внутри камеры. Их уровень агрессии не похож на тот, " ;to have formed inside the chamber. Their level of aggression is 
-														DeathMSG = DeathMSG + "что мы видели раньше. Видимо, в какой-то момент " ;unlike anything we've seen before - it looks like they have 
-														DeathMSG = DeathMSG + "это щупальце избило какого-то бедолагу класса D до смерти."+Chr(34) ;beaten some unfortunate Class D to death at some point during the breach.
+															DeathMSG = Chr(34)+"Похоже, что одно большое и очень активное щупальце " ;One large and highly active tentacle-like appendage seems 
+															DeathMSG = DeathMSG + "выросло из трупа учёного в офисе [УДАЛЕНО]. Его уровень агрессии " ;to have grown outside the dead body of a scientist within office area [REDACTED]. Its level of aggression is 
+															DeathMSG = DeathMSG + "не похож на тот, что мы видели раньше. Видимо, в какой-то момент " ;unlike anything we've seen before - it looks like it has 
+															DeathMSG = DeathMSG + "это щупальце избило какого-то бедолагу класса D до смерти."+Chr(34) ;beaten some unfortunate Class D to death at some point during the breach.
+														Else
+															DeathMSG = Chr(34)+"Чтобы с этим разобраться, обычной группой чистильщиков не обойдёшься. " ;We will need more than the regular cleaning team to take care of this. 
+															DeathMSG = DeathMSG + "Два больших и очень активных щупальца, похоже, сформаровались " ;Two large and highly active tentacle-like appendages seem 
+															DeathMSG = DeathMSG + "внутри камеры. Их уровень агрессии не похож на тот, " ;to have formed inside the chamber. Their level of aggression is 
+															DeathMSG = DeathMSG + "что мы видели раньше. Видимо, в какой-то момент " ;unlike anything we've seen before - it looks like they have 
+															DeathMSG = DeathMSG + "это щупальце избило какого-то бедолагу класса D до смерти."+Chr(34) ;beaten some unfortunate Class D to death at some point during the breach.
 													    EndIf
 													    Kill(True)
 												    EndIf
@@ -3512,7 +3605,12 @@ Function UpdateNPCs()
 							
 					    End Select
 					Else
-					    AnimateNPC(n, 390, 513, 0.3, False)
+					    ;AnimateNPC(n, 390, 514, 0.15, False)
+					    AnimateNPC(n, 515, 551, 0.15, False)
+					    If n\Frame >= 551 Then
+				            HideEntity n\obj
+				            HideEntity n\Collider
+				        EndIf
 					EndIf
 				EndIf
 				
@@ -3523,7 +3621,7 @@ Function UpdateNPCs()
 				
 				ResetEntity n\Collider
 				;[End Block]
-			Case NPCtype8602
+			Case NPCtype860_2
 				;[Block]
 				If PlayerRoom\RoomTemplate\Name = "room860" Then
 					Local fr.Forest=PlayerRoom\fr;Object.Forest(e\room\Objects[1])
@@ -3668,7 +3766,7 @@ Function UpdateNPCs()
 									If EntityInView(n\Collider, Camera) Then 
 										n\State2 = 1
 										If Rand(8)=1 Then
-											PlaySound2(LoadTempSound("SFX\SCP\860\Cancer"+Rand(0,2)+".ogg"), Camera, n\Collider, 20.0)
+											PlaySound2(LoadTempSound(SFXPath$+"SCP\860\Cancer"+Rand(0,2)+".ogg"), Camera, n\Collider, 20.0)
 										EndIf										
 									EndIf
 								Else
@@ -3726,7 +3824,7 @@ Function UpdateNPCs()
 											TFormPoint(x2*12.0, 0,z2*12.0, fr\Forest_Pivot,0)
 											
 											PositionEntity n\Collider, TFormedX(), EntityY(fr\Forest_Pivot,True)+1.0,TFormedZ()
-
+											
 											If EntityInView(n\Collider, Camera) Then
 												BlinkTimer=-10
 											Else
@@ -3749,9 +3847,9 @@ Function UpdateNPCs()
 								If n\State2 = 0 Then
 									If dist<8.0 Then
 										If EntityInView(n\Collider,Camera) Then
-											PlaySound_Strict LoadTempSound("SFX\SCP\860\Chase"+Rand(1,2)+".ogg")
+											PlaySound_Strict LoadTempSound(SFXPath$+"SCP\860\Chase"+Rand(1,2)+".ogg")
 											
-											PlaySound2(LoadTempSound("SFX\SCP\860\Cancer"+Rand(0,2)+".ogg"), Camera, n\Collider)	
+											PlaySound2(LoadTempSound(SFXPath$+"SCP\860\Cancer"+Rand(0,2)+".ogg"), Camera, n\Collider)	
 											n\State2 = 1
 										EndIf										
 									EndIf
@@ -3761,11 +3859,11 @@ Function UpdateNPCs()
 									n\State3 = n\State3 + fs\FPSfactor[0]
 									If Rnd(5000)<n\State3 Then
 										temp = True
-										If n\SoundChn <> 0 Then
-											If ChannelPlaying (n\SoundChn) Then temp = False
+										If n\SoundCHN <> 0 Then
+											If ChannelPlaying (n\SoundCHN) Then temp = False
 										EndIf
 										If temp Then
-											n\SoundChn = PlaySound2(LoadTempSound("SFX\SCP\860\Cancer"+Rand(0,2)+".ogg"), Camera, n\Collider)
+											n\SoundCHN = PlaySound2(LoadTempSound(SFXPath$+"SCP\860\Cancer"+Rand(0,2)+".ogg"), Camera, n\Collider)
 										EndIf
 									EndIf
 								Else
@@ -3773,7 +3871,7 @@ Function UpdateNPCs()
 								EndIf
 								
 								If dist<4.5 Or n\State3 > Rnd(200,250) Then
-									n\SoundChn = PlaySound2(LoadTempSound("SFX\SCP\860\Cancer"+Rand(3,5)+".ogg"), Camera, n\Collider)
+									n\SoundCHN = PlaySound2(LoadTempSound(SFXPath$+"SCP\860\Cancer"+Rand(3,5)+".ogg"), Camera, n\Collider)
 									n\State = 3
 								EndIf
 								
@@ -3799,8 +3897,8 @@ Function UpdateNPCs()
 							
 							RotateEntity n\Collider, 0, angle-90, 0, True
 							
-							If n\Sound = 0 Then n\Sound = LoadSound_Strict("SFX\General\Slash1.ogg")
-							If n\Sound2 = 0 Then n\Sound2 = LoadSound_Strict("SFX\General\Slash2.ogg")
+							If n\Sound = 0 Then n\Sound = LoadSound_Strict(SFXPath$+"General\Slash1.ogg")
+							If n\Sound2 = 0 Then n\Sound2 = LoadSound_Strict(SFXPath$+"General\Slash2.ogg")
 							
 							;if close enough to attack OR already attacking, play the attack anim
 							If (dist<1.1 Or (n\Frame>451 And n\Frame<493) Or KillTimer < 0) Then
@@ -3914,15 +4012,15 @@ Function UpdateNPCs()
 								PlaySound2(StepSFX(4, 0, Rand(0,3)), Camera, n\Collider, 12.0)
 								If Rand(10)=1 Then
 									temp = False
-									If n\SoundChn = 0 Then 
+									If n\SoundCHN = 0 Then 
 										temp = True
-									ElseIf Not ChannelPlaying(n\SoundChn)
+									ElseIf Not ChannelPlaying(n\SoundCHN)
 										temp = True
 									EndIf
 									If temp Then
 										If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-										n\Sound = LoadSound_Strict("SFX\SCP\939\"+(n\ID Mod 3)+"Lure"+Rand(1,10)+".ogg")
-										n\SoundChn = PlaySound2(n\Sound, Camera, n\Collider)
+										n\Sound = LoadSound_Strict(SFXPath$+"SCP\939\"+(n\ID Mod 3)+"Lure"+Rand(1,10)+".ogg")
+										n\SoundCHN = PlaySound2(n\Sound, Camera, n\Collider)
 									EndIf
 								EndIf
 							EndIf
@@ -3938,7 +4036,7 @@ Function UpdateNPCs()
 							
 						Case 3
 							If EntityVisible(Collider, n\Collider) Then
-								If n\Sound2 = 0 Then n\Sound2 = LoadSound_Strict("SFX\General\Slash1.ogg")
+								If n\Sound2 = 0 Then n\Sound2 = LoadSound_Strict(SFXPath$+"General\Slash1.ogg")
 								
 								n\EnemyX = EntityX(Collider)
 								n\EnemyZ = EntityZ(Collider)
@@ -3969,7 +4067,7 @@ Function UpdateNPCs()
 										    If I_1033RU\HP = 0
 											    Injuries = Injuries + Rnd(1.5, 2.5)-WearingVest*0.5
 											Else
-										        Damage1033RU(20+(5*SelectedDifficulty\aggressiveNPCs))
+										        Damage1033RU(20+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
                                             EndIf		
 										Else
 											n\Frame	 = 449
@@ -3979,7 +4077,7 @@ Function UpdateNPCs()
 									
 									If Injuries>4.0 Then 
 										DeathMSG=Chr(34)+"Все четверо (4) сбежавших экземпляров SCP-939 были захвачены и успешно возвращены в должные условия содержания. " ;All four (4) escaped SCP-939 specimens have been captured and recontained successfully. 
-										DeathMSG=DeathMSG+"Трое (3) из них натворили настоящий погром в районе хранения 6. Была послана бригада чистильщиков."+Chr(34) ;Three (3) of them made quite a mess at Storage Area 6. A cleaning team has been dispatched.
+										DeathMSG=DeathMSG+"Они натворили настоящий погром в районе хранения 6. Была послана бригада чистильщиков."+Chr(34) ;Four (4) of them made quite a mess at Storage Area 6. A cleaning team has been dispatched.
 										Kill(True)
 										If (Not chs\GodMode) Then n\State = 5
 									EndIf								
@@ -4037,10 +4135,10 @@ Function UpdateNPCs()
 						If PlayerSoundVolume*1.2>dist Or dist < 1.5 Then
 							If n\State3 = 0 Then
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\SCP\939\"+(n\ID Mod 3)+"Attack"+Rand(1,3)+".ogg")
-								n\SoundChn = PlaySound2(n\Sound, Camera, n\Collider)										
+								n\Sound = LoadSound_Strict(SFXPath$+"SCP\939\"+(n\ID Mod 3)+"Attack"+Rand(1,3)+".ogg")
+								n\SoundCHN = PlaySound2(n\Sound, Camera, n\Collider)										
 								
-								PlaySound_Strict(LoadTempSound("SFX\SCP\939\attack.ogg"))
+								PlaySound_Strict(LoadTempSound(SFXPath$+"SCP\939\Attack.ogg"))
 								n\State3 = 1
 							EndIf
 							
@@ -4048,8 +4146,8 @@ Function UpdateNPCs()
 						ElseIf PlayerSoundVolume*1.6>dist
 							If n\State<>1 And n\Reload <= 0 Then
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\SCP\939\"+(n\ID Mod 3)+"Alert"+Rand(1,3)+".ogg")
-								n\SoundChn = PlaySound2(n\Sound, Camera, n\Collider)	
+								n\Sound = LoadSound_Strict(SFXPath$+"SCP\939\"+(n\ID Mod 3)+"Alert"+Rand(1,3)+".ogg")
+								n\SoundCHN = PlaySound2(n\Sound, Camera, n\Collider)	
 								
 								n\Frame = 175
 								n\Reload = 70 * 3
@@ -4073,6 +4171,8 @@ Function UpdateNPCs()
 			Case NPCtype066
 				;[Block]
 				dist = Distance(EntityX(Collider),EntityZ(Collider),EntityX(n\Collider),EntityZ(n\Collider))
+				
+				If EntityDistance(Collider, n\Collider) < 6.0 Then GiveAchievement(Achv066)
 				
 				Select n\State
 					Case 0 
@@ -4117,7 +4217,7 @@ Function UpdateNPCs()
 						EndIf
 						dist = Distance(EntityX(Collider),EntityZ(Collider),EntityX(n\Collider),EntityZ(n\Collider))
 						
-						If Rand(700)=1 Then PlaySound2(LoadTempSound("SFX\SCP\066\Eric"+Rand(1,3)+".ogg"),Camera, n\Collider, 8.0)
+						If Rand(700)=1 Then PlaySound2(LoadTempSound(SFXPath$+"SCP\066\Eric"+Rand(1,3)+".ogg"),Camera, n\Collider, 8.0)
 						
 						If dist < 1.0+n\LastDist Then n\State = Rand(2,3)
 					Case 2 ;roll towards the player and make a sound, and then escape	
@@ -4135,15 +4235,15 @@ Function UpdateNPCs()
 							If n\Frame=683 Then 
 								If n\State2 = 0 Then
 									If Rand(2)=1 Then
-										PlaySound2(LoadTempSound("SFX\SCP\066\Eric"+Rand(1,3)+".ogg"),Camera, n\Collider, 8.0)
+										PlaySound2(LoadTempSound(SFXPath$+"SCP\066\Eric"+Rand(1,3)+".ogg"),Camera, n\Collider, 8.0)
 									Else
-										PlaySound2(LoadTempSound("SFX\SCP\066\Notes"+Rand(1,6)+".ogg"), Camera, n\Collider, 8.0)
+										PlaySound2(LoadTempSound(SFXPath$+"SCP\066\Notes"+Rand(1,6)+".ogg"), Camera, n\Collider, 8.0)
 									EndIf									
 									
 									Select Rand(1,6)
 										Case 1
-											If n\Sound2=0 Then n\Sound2=LoadSound_Strict("SFX\SCP\066\Beethoven.ogg")
-											n\SoundChn2 = PlaySound2(n\Sound2, Camera, n\Collider)
+											If n\Sound2=0 Then n\Sound2=LoadSound_Strict(SFXPath$+"SCP\066\Beethoven.ogg")
+											n\SoundCHN2 = PlaySound2(n\Sound2, Camera, n\Collider)
 											DeafTimer# = 70*(45+(15*SelectedDifficulty\aggressiveNPCs))
 											DeafPlayer = True
 											CameraShake = 10.0
@@ -4164,9 +4264,13 @@ Function UpdateNPCs()
 												CameraShake = 5.0
 												de.Decals = CreateDecal(1, EntityX(n\Collider), 0.01, EntityZ(n\Collider), 90, Rand(360), 0)
 												de\Size = 0.3 : UpdateDecals
-												PlaySound_Strict(LoadTempSound("SFX\General\BodyFall.ogg"))
+												PlaySound_Strict(LoadTempSound(SFXPath$+"General\BodyFall.ogg"))
 												If Distance(EntityX(Collider),EntityZ(Collider),EntityX(n\Collider),EntityZ(n\Collider))<0.8 Then
-													Injuries = Injuries + Rnd(0.3,0.5)
+												    If I_1033RU\HP = 0
+													    Injuries = Injuries + Rnd(0.3,0.5)
+													Else
+													    Damage1033RU(25 + (Rand(5) * SelectedDifficulty\aggressiveNPCs))
+													EndIf
 												EndIf
 											EndIf
 									End Select
@@ -4219,13 +4323,13 @@ Function UpdateNPCs()
 				End Select
 				
 				If n\State > 1 Then
-					If n\Sound = 0 Then n\Sound = LoadSound_Strict("SFX\SCP\066\Rolling.ogg")
-					If n\SoundChn<>0 Then
-						If ChannelPlaying(n\SoundChn) Then
-							n\SoundChn = LoopSound2(n\Sound, n\SoundChn, Camera, n\Collider, 20)
+					If n\Sound = 0 Then n\Sound = LoadSound_Strict(SFXPath$+"SCP\066\Rolling.ogg")
+					If n\SoundCHN<>0 Then
+						If ChannelPlaying(n\SoundCHN) Then
+							n\SoundCHN = LoopSound2(n\Sound, n\SoundCHN, Camera, n\Collider, 20)
 						EndIf
 					Else
-						n\SoundChn = PlaySound2(n\Sound, Camera, n\Collider, 20)
+						n\SoundCHN = PlaySound2(n\Sound, Camera, n\Collider, 20)
 					EndIf					
 				EndIf
 
@@ -4236,8 +4340,8 @@ Function UpdateNPCs()
 					HeartBeatVolume = Max(HeartBeatVolume,Min(n\State3/1000,1.0))
 				EndIf
 				
-				If ChannelPlaying(n\SoundChn2)
-					UpdateSoundOrigin2(n\SoundChn2,Camera,n\Collider,20)
+				If ChannelPlaying(n\SoundCHN2)
+					UpdateSoundOrigin2(n\SoundCHN2,Camera,n\Collider,20)
 					BlurTimer = Max((5.0-dist)*300,0)
 				EndIf
 				
@@ -4249,343 +4353,353 @@ Function UpdateNPCs()
 				;[Block]
 				dist = EntityDistance(n\Collider,Collider)
 				
-				If (dist<HideDistance) Then
+				If n\State > -1 Then
+					If (dist<HideDistance) Then
 					
-					;n\state = the "general" state (idle/wander/attack/echo etc)
-					;n\state2 = timer for doing raycasts
+						;n\State = the "general" state (idle/wander/attack/echo etc)
+						;n\State2 = timer for doing raycasts
 					
-					prevFrame = n\Frame
+						prevFrame = n\Frame
 					
-					If n\Sound > 0 Then
-						temp = 0.5
-						;the ambient sound gets louder when the npcs are attacking
-						If n\State > 0 Then temp = 1.0	
+						If n\Sound > 0 Then
+							temp = 0.5
+							;the ambient sound gets louder when the npcs are attacking
+							If n\State > 0 Then temp = 1.0	
 						
-						n\SoundChn = LoopSound2(n\Sound, n\SoundChn, Camera, Camera, 10.0,temp)
-					EndIf
-					
-					temp = Rnd(-1.0,1.0)
-					PositionEntity n\obj,EntityX(n\Collider,True),EntityY(n\Collider,True)-0.2,EntityZ(n\Collider,True)
-					RotateEntity n\obj,-90.0,EntityYaw(n\Collider),0.0
-					
-					If (WearingNightVision=0) Then
-						HideEntity n\obj
-						If dist<1 And n\Reload <= 0 And MsgTimer <= 0 Then
-							Select Rand(6)
-								Case 1
-									Msg="Вы чувствуете, как что-то дышит рядом с вами." ;You feel something breathing right next to you.
-								Case 2
-									Msg=Chr(34)+"Такое ощущение, как будто рядом со мной что-то есть."+Chr(34) ;It feels like something's in this room with me.
-								Case 3
-									Msg="Вы чувствуете, как будто рядом с вами что-то есть, но ничего не видите." ;You feel like something is here with you, but you do not see anything.
-								Case 4
-									Msg=Chr(34)+"Это шалит моя психика, или здесь есть кто-то ещё?"+Chr(34) ;Is my mind playing tricks on me or is there someone else here?
-								Case 5
-									Msg="Вы чувствуете, как будто что-то преследует Вас." ;You feel like something is following you.
-								Case 6
-									Msg="Вы чувствуете что-то рядом с собой, но не способны это увидеть. Возможно, время пришло." ;You can feel something near you, but you are unable to see it. Perhaps its time is now.
-							End Select
-                            n\Reload = 20*70
-							MsgTimer=8*70
+							n\SoundCHN = LoopSound2(n\Sound, n\SoundCHN, Camera, Camera, 10.0,temp)
 						EndIf
-						n\Reload = n\Reload - fs\FPSfactor[0]
-						
-					Else
-						ShowEntity n\obj
-					EndIf
 					
-					If n\State3>5*70 Then
-						;n\State = 1
-						If n\State3<1000.0 Then
-							For n2.NPCs = Each NPCs	
-								If n2\NPCtype = n\NPCtype Then n2\State3=1000.0 
-							Next
+						temp = Rnd(-1.0,1.0)
+						PositionEntity n\obj,EntityX(n\Collider,True),EntityY(n\Collider,True)-0.2,EntityZ(n\Collider,True)
+						RotateEntity n\obj,-90.0,EntityYaw(n\Collider),0.0
+					
+						If (WearingNightVision = 0) Then
+							HideEntity n\obj
+							If dist<1 And n\Reload <= 0 And MsgTimer <= 0 Then
+								Select Rand(6)
+									Case 1
+										Msg="Вы чувствуете, как что-то дышит рядом с вами." ;You feel something breathing right next to you.
+									Case 2
+										Msg=Chr(34)+"Такое ощущение, как будто рядом со мной что-то есть."+Chr(34) ;It feels like something's in this room with me.
+									Case 3
+										Msg="Вы чувствуете, как будто рядом с вами что-то есть, но ничего не видите." ;You feel like something is here with you, but you do not see anything.
+									Case 4
+										Msg=Chr(34)+"Это шалит моя психика, или здесь есть кто-то ещё?"+Chr(34) ;Is my mind playing tricks on me or is there someone else here?
+									Case 5
+										Msg="Вы чувствуете, как будто что-то преследует Вас." ;You feel like something is following you.
+									Case 6
+										Msg="Вы чувствуете что-то рядом с собой, но не способны это увидеть. Возможно, время пришло." ;You can feel something near you, but you are unable to see it. Perhaps its time is now.
+								End Select
+                           		n\Reload = 20*70
+								MsgTimer=8*70
+							EndIf
+							n\Reload = n\Reload - fs\FPSfactor[0]
+						Else
+							ShowEntity n\obj
 						EndIf
+					
+						If n\State3>5*70 Then
+							;n\State = 1
+							If n\State3<1000.0 Then
+								For n2.NPCs = Each NPCs	
+									If n2\NPCtype = n\NPCtype Then n2\State3=1000.0 
+								Next
+							EndIf
 						
-						n\State = Max(n\State,8)
-						n\State3 = 1000.0					
-						
-					EndIf
+							n\State = Max(n\State,8)
+							n\State3 = 1000.0					
+						EndIf
 					
-					If Stamina<10 Then 
-						n\State3=n\State3+fs\FPSfactor[0]
-					Else If n\State3 < 900.0
-						n\State3=Max(n\State3-fs\FPSfactor[0]*0.2,0.0)
-					EndIf
+						If Stamina<10 Then 
+							n\State3=n\State3+fs\FPSfactor[0]
+						Else If n\State3 < 900.0
+							n\State3=Max(n\State3-fs\FPSfactor[0]*0.2,0.0)
+						EndIf
 					
-					If n\State <> 10
-						n\LastSeen = 0
-					EndIf
+						If n\State <> 10
+							n\LastSeen = 0
+						EndIf
 					
-					Select n\State
-						Case 0 ;idle, standing
-							;If n\Frame>2300.0 Then
-							If n\Frame>556.0
-								;AnimateNPC(n, 2391, 2416, 1.0, False)	
-								;If n\Frame>2415.0 Then SetNPCFrame(n, 201)
-								AnimateNPC(n, 628, 652, 0.25, False)
-								If n\Frame>651.0 Then SetNPCFrame(n, 2)
-							Else
-								;AnimateNPC(n, 201, 1015, 1.0, False)
-								AnimateNPC(n, 2, 214, 0.25, False)
-								
-								;echo/stare/walk around periodically
-								;If n\Frame>1014.0 Then
-								If n\Frame>213.0
-									If Rand(3)=1 And dist<4 Then
-										n\State = Rand(1,4)
-									Else
-										n\State = Rand(5,6)								
-									EndIf
-								EndIf
-								
-								;echo if player gets close
-								If dist<2.0 Then 
-									n\State=Rand(1,4)
-								EndIf 							
-							EndIf
-							
-							n\CurrSpeed = CurveValue(0.0, n\CurrSpeed, 10.0)
-							
-							MoveEntity n\Collider,0,0,n\CurrSpeed
-							
-						Case 1,2 ;echo
-;							If n\State=1 Then
-;								AnimateNPC(n, 1015, 1180, 1.0, False)
-;								If n\Frame > 1179.0 Then n\State = 0
-;							Else
-;								AnimateNPC(n, 1180, 1379, 1.0, False)
-;								If n\Frame > 1378.0 Then n\State = 0
-;							EndIf
-							AnimateNPC(n, 214, 257, 0.25, False)
-							If n\Frame > 256.0 Then n\State = 0
-							
-							;If n\Frame>1029.0 And prevFrame<=1029.0 Or n\Frame>1203.0 And prevFrame<=1203.0 Then
-							If n\Frame>228.0 And prevFrame<=228.0
-								PlaySound2(LoadTempSound("SFX\SCP\966\Echo"+Rand(1,3)+".ogg"), Camera, n\Collider)
-							EndIf
-							
-							angle = VectorYaw(EntityX(Collider)-EntityX(n\Collider),0,EntityZ(Collider)-EntityZ(n\Collider))
-							RotateEntity n\Collider,0.0,CurveAngle(angle,EntityYaw(n\Collider),20.0),0.0
-							
-							If n\State3<900 Then
-								BlurTimer = ((Sin(MilliSecs2()/50)+1.0)*200)/dist
-								
-								If (WearingNightVision>0) Then GiveAchievement(Achv966)
-								
-								If (Not Wearing714) And (WearingGasMask<3) And (WearingHazmat<3) And dist<16 Then
-									BlinkEffect = Max(BlinkEffect, 1.5)
-									BlinkEffectTimer = 1000
-									
-									StaminaEffect = 2.0
-									StaminaEffectTimer = 1000
-									
-									If MsgTimer<=0 And StaminaEffect<1.5 Then
-										Select Rand(4)
-											Case 1
-												Msg = "Вы чувствуете себя истощённым." ;You feel exhausted.
-											Case 2
-												Msg = Chr(34)+"Мне бы и правда не помешало вздремнуть..."+Chr(34) ;Could really go for a nap now...
-											Case 3
-												Msg = Chr(34)+"Если бы я не был в такой сетуации, я бы вздремнул где-нибудь."+Chr(34) ;If I wasn't in this situation I would take a nap somewhere.
-											Case 4
-												Msg = "Вы чувствуете беспокойство." ;You feel restless.
-										End Select
-										
-										MsgTimer = 7*70
-									EndIf
-								EndIf							
-							EndIf
-							
-						Case 3,4 ;stare at player
-;							If n\State=3 Then
-;								AnimateNPC(n, 1379.0, 1692.0, 1.0, False)
-;								
-;								If n\Frame>1691.0 Then n\State = 0
-;							Else
-;								AnimateNPC(n, 1692.0, 2156.0, 1.0, False)
-;								
-;								If n\Frame>2155.0 Then n\State = 0
-;							EndIf
-							If n\State=3
-								AnimateNPC(n, 257, 332, 0.25, False)
-								If n\Frame > 331.0 Then n\State = 0
-							Else
-								AnimateNPC(n, 332, 457, 0.25, False)
-								If n\Frame > 456.0 Then n\State = 0
-							EndIf
-							
-							;If n\Frame>1393.0 And prevFrame<=1393.0 Or n\Frame>1589.0 And prevFrame<=1589.0 Or n\Frame>2000.0 And prevFrame<=2000.0 Then
-							If n\Frame>271.0 And prevFrame<=271.0 Or n\Frame>354 Or n\Frame>314.0 And prevFrame<=314.0 Or n\Frame>301.0 And prevFrame<=301.0
-								PlaySound2(LoadTempSound("SFX\SCP\966\Idle"+Rand(1,3)+".ogg"), Camera, n\Collider)
-							EndIf
-							
-							angle = VectorYaw(EntityX(Collider)-EntityX(n\Collider),0,EntityZ(Collider)-EntityZ(n\Collider))
-							RotateEntity n\Collider,0.0,CurveAngle(angle,EntityYaw(n\Collider),20.0),0.0
-						Case 5,6,8 ;walking or chasing
-							;If n\Frame<2343.0 Then
-							If n\Frame<580.0 And n\Frame>214.0 ;start walking
-								;AnimateNPC(n, 2319, 2343, 0.5, False)
-								AnimateNPC(n, 556, 580, 0.25, False)
-							Else
-								;AnimateNPC(n, 2343, 2391, n\CurrSpeed*25.0)
-								If n\CurrSpeed >= 0.005 Then
-									AnimateNPC(n, 580, 628, n\CurrSpeed*25.0)
+						Select n\State
+							Case 0 ;idle, standing
+								;If n\Frame>2300.0 Then
+								If n\Frame>556.0
+									;AnimateNPC(n, 2391, 2416, 1.0, False)	
+									;If n\Frame>2415.0 Then SetNPCFrame(n, 201)
+									AnimateNPC(n, 628, 652, 0.25, False)
+									If n\Frame>651.0 Then SetNPCFrame(n, 2)
 								Else
-									AnimateNPC(n, 2, 214, 0.25)
-								EndIf
+									;AnimateNPC(n, 201, 1015, 1.0, False)
+									AnimateNPC(n, 2, 214, 0.25, False)
 								
-								;chasing the player
-								If n\State = 8 And dist<32 Then
-									If n\PathTimer <= 0 Then
-										n\PathStatus = FindPath (n, EntityX(Collider,True), EntityY(Collider,True), EntityZ(Collider,True))
-										n\PathTimer = 40*10
-										n\CurrSpeed = 0
+									;echo/stare/walk around periodically
+									;If n\Frame>1014.0 Then
+									If n\Frame>213.0
+										If Rand(3)=1 And dist<4 Then
+											n\State = Rand(1,4)
+										Else
+											n\State = Rand(5,6)								
+										EndIf
 									EndIf
-									n\PathTimer = Max(n\PathTimer-fs\FPSfactor[0],0)
+								
+									;echo if player gets close
+									If dist<2.0 Then 
+										n\State=Rand(1,4)
+									EndIf 							
+								EndIf
+							
+								n\CurrSpeed = CurveValue(0.0, n\CurrSpeed, 10.0)
+							
+								MoveEntity n\Collider,0,0,n\CurrSpeed
+							
+							Case 1,2 ;echo
+								;If n\State=1 Then
+									;AnimateNPC(n, 1015, 1180, 1.0, False)
+									;If n\Frame > 1179.0 Then n\State = 0
+								;Else
+									;AnimateNPC(n, 1180, 1379, 1.0, False)
+									;If n\Frame > 1378.0 Then n\State = 0
+								;EndIf
+								AnimateNPC(n, 214, 257, 0.25, False)
+								If n\Frame > 256.0 Then n\State = 0
+							
+								;If n\Frame>1029.0 And prevFrame<=1029.0 Or n\Frame>1203.0 And prevFrame<=1203.0 Then
+								If n\Frame>228.0 And prevFrame<=228.0
+									PlaySound2(LoadTempSound(SFXPath$+"SCP\966\Echo"+Rand(1,3)+".ogg"), Camera, n\Collider)
+								EndIf
+							
+								angle = VectorYaw(EntityX(Collider)-EntityX(n\Collider),0,EntityZ(Collider)-EntityZ(n\Collider))
+								RotateEntity n\Collider,0.0,CurveAngle(angle,EntityYaw(n\Collider),20.0),0.0
+							
+								If n\State3<900 Then
+									BlurTimer = ((Sin(MilliSecs2()/50)+1.0)*200)/dist
+								
+									If (WearingNightVision>0) Then GiveAchievement(Achv966)
+								
+									If (Not I_714\Using) And (WearingGasMask<3) And (WearingHazmat<3) And dist<16 Then
+										BlinkEffect = Max(BlinkEffect, 1.5)
+										BlinkEffectTimer = 1000
 									
-									If (Not EntityVisible(n\Collider,Collider)) Then
-										If n\PathStatus = 2 Then
+										StaminaEffect = 2.0
+										StaminaEffectTimer = 1000
+									
+										If MsgTimer<=0 And StaminaEffect<1.5 Then
+											Select Rand(4)
+												Case 1
+													Msg = "Вы чувствуете себя истощённым." ;You feel exhausted.
+												Case 2
+													Msg = Chr(34)+"Мне бы и правда не помешало вздремнуть..."+Chr(34) ;Could really go for a nap now...
+												Case 3
+													Msg = Chr(34)+"Если бы я не был в такой сетуации, я бы вздремнул где-нибудь."+Chr(34) ;If I wasn't in this situation I would take a nap somewhere.
+												Case 4
+													Msg = "Вы чувствуете беспокойство." ;You feel restless.
+											End Select
+										
+											MsgTimer = 7*70
+										EndIf
+									EndIf							
+								EndIf
+							
+							Case 3,4 ;stare at player
+								;If n\State=3 Then
+									;AnimateNPC(n, 1379.0, 1692.0, 1.0, False)
+								
+									;If n\Frame>1691.0 Then n\State = 0
+								;Else
+									;AnimateNPC(n, 1692.0, 2156.0, 1.0, False)
+								
+									;If n\Frame>2155.0 Then n\State = 0
+								;EndIf
+								If n\State=3
+									AnimateNPC(n, 257, 332, 0.25, False)
+									If n\Frame > 331.0 Then n\State = 0
+								Else
+									AnimateNPC(n, 332, 457, 0.25, False)
+									If n\Frame > 456.0 Then n\State = 0
+								EndIf
+							
+								;If n\Frame>1393.0 And prevFrame<=1393.0 Or n\Frame>1589.0 And prevFrame<=1589.0 Or n\Frame>2000.0 And prevFrame<=2000.0 Then
+								If n\Frame>271.0 And prevFrame<=271.0 Or n\Frame>354 Or n\Frame>314.0 And prevFrame<=314.0 Or n\Frame>301.0 And prevFrame<=301.0
+									PlaySound2(LoadTempSound(SFXPath$+"SCP\966\Idle"+Rand(1,3)+".ogg"), Camera, n\Collider)
+								EndIf
+							
+								angle = VectorYaw(EntityX(Collider)-EntityX(n\Collider),0,EntityZ(Collider)-EntityZ(n\Collider))
+								RotateEntity n\Collider,0.0,CurveAngle(angle,EntityYaw(n\Collider),20.0),0.0
+							Case 5,6,8 ;walking or chasing
+								;If n\Frame<2343.0 Then
+								If n\Frame < 580.0 And n\Frame > 214.0 ;start walking
+									;AnimateNPC(n, 2319, 2343, 0.5, False)
+									AnimateNPC(n, 556, 580, 0.25, False)
+								Else
+									;AnimateNPC(n, 2343, 2391, n\CurrSpeed*25.0)
+									If n\CurrSpeed > 0 ;>= 0.005 Then
+										AnimateNPC(n, 580, 628, n\CurrSpeed*25.0)
+									Else
+										AnimateNPC(n, 2, 214, 0.25)
+									EndIf
+								
+									;chasing the player
+									If n\State = 8 And dist<32 And (Not chs\Notarget) Then
+										If n\PathTimer <= 0 Then
+											n\PathStatus = FindPath(n, EntityX(Collider,True), EntityY(Collider,True), EntityZ(Collider,True))
+											n\PathTimer = 40*10
 											n\CurrSpeed = 0
-											;SetNPCFrame(n,201)
-											SetNPCFrame(n,2)
-										ElseIf n\PathStatus = 1
-											If n\Path[n\PathLocation]=Null Then 
-												If n\PathLocation > 19 Then 
-													n\PathLocation = 0 : n\PathStatus = 0
+										EndIf
+										n\PathTimer = Max(n\PathTimer-fs\FPSfactor[0],0)
+									
+										If (Not EntityVisible(n\Collider,Collider)) Then
+											If n\PathStatus = 2 Then
+												n\CurrSpeed = 0
+												;SetNPCFrame(n,201)
+												SetNPCFrame(n,2)
+											ElseIf n\PathStatus = 1
+												If n\Path[n\PathLocation]=Null Then 
+													If n\PathLocation > 19 Then 
+														n\PathLocation = 0 : n\PathStatus = 0
+													Else
+														n\PathLocation = n\PathLocation + 1
+													EndIf
 												Else
-													n\PathLocation = n\PathLocation + 1
-												EndIf
-											Else
-												n\Angle = VectorYaw(EntityX(n\Path[n\PathLocation]\obj,True)-EntityX(n\Collider),0,EntityZ(n\Path[n\PathLocation]\obj,True)-EntityZ(n\Collider))
-												;RotateEntity n\Collider,0.0,CurveAngle(angle,EntityYaw(n\Collider),10.0),0.0
+													n\Angle = VectorYaw(EntityX(n\Path[n\PathLocation]\obj,True)-EntityX(n\Collider),0,EntityZ(n\Path[n\PathLocation]\obj,True)-EntityZ(n\Collider))
+													;RotateEntity n\Collider,0.0,CurveAngle(angle,EntityYaw(n\Collider),10.0),0.0
 												
-												dist2 = EntityDistance(n\Collider,n\Path[n\PathLocation]\obj)
+													dist2 = EntityDistance(n\Collider,n\Path[n\PathLocation]\obj)
 												
-												temp = True
-												If dist2 < 0.8 Then 
-													If n\Path[n\PathLocation]\door<>Null Then
-														If (Not n\Path[n\PathLocation]\door\IsElevatorDoor)
-															If (n\Path[n\PathLocation]\door\locked Or n\Path[n\PathLocation]\door\KeyCard<>0 Or n\Path[n\PathLocation]\door\Code<>"") And (Not n\Path[n\PathLocation]\door\open) Then
-																temp = False
-															Else
-																If n\Path[n\PathLocation]\door\open = False And (n\Path[n\PathLocation]\door\buttons[0]<>0 Or n\Path[n\PathLocation]\door\buttons[1]<>0) Then
-																	UseDoor(n\Path[n\PathLocation]\door, False)
+													temp = True
+													If dist2 < 0.8 Then 
+														If n\Path[n\PathLocation]\door<>Null Then
+															If (Not n\Path[n\PathLocation]\door\IsElevatorDoor)
+																If (n\Path[n\PathLocation]\door\locked Or n\Path[n\PathLocation]\door\KeyCard<>0 Or n\Path[n\PathLocation]\door\Code<>"") And (Not n\Path[n\PathLocation]\door\open) Then
+																	temp = False
+																Else
+																	If n\Path[n\PathLocation]\door\open = False And (n\Path[n\PathLocation]\door\buttons[0]<>0 Or n\Path[n\PathLocation]\door\buttons[1]<>0) Then
+																		UseDoor(n\Path[n\PathLocation]\door, False)
+																	EndIf
 																EndIf
 															EndIf
 														EndIf
+														If dist2 < 0.3 Then n\PathLocation = n\PathLocation + 1
 													EndIf
-													If dist2 < 0.3 Then n\PathLocation = n\PathLocation + 1
-												EndIf
 												
-												If temp = False Then
-													n\PathStatus = 0
-													n\PathLocation = 0
-													n\PathTimer = 40*10
+													If temp = False Then
+														n\PathStatus = 0
+														n\PathLocation = 0
+														n\PathTimer = 40*10
+													EndIf
 												EndIf
-											EndIf
 											
+												n\CurrSpeed = CurveValue(n\Speed,n\CurrSpeed,10.0)
+											ElseIf n\PathStatus = 0
+												n\CurrSpeed = CurveValue(0,n\CurrSpeed,10.0)
+											EndIf
+										Else
+											n\Angle = VectorYaw(EntityX(Collider)-EntityX(n\Collider),0,EntityZ(Collider)-EntityZ(n\Collider))
 											n\CurrSpeed = CurveValue(n\Speed,n\CurrSpeed,10.0)
-										ElseIf n\PathStatus = 0
-											n\CurrSpeed = CurveValue(0,n\CurrSpeed,10.0)
+										
+											If dist<1.0 Then n\State=10
+										
 										EndIf
 									Else
-										n\Angle = VectorYaw(EntityX(Collider)-EntityX(n\Collider),0,EntityZ(Collider)-EntityZ(n\Collider))
-										n\CurrSpeed = CurveValue(n\Speed,n\CurrSpeed,10.0)
+										If MilliSecs2() > n\State2 And dist<16.0 Then
+											HideEntity n\Collider
+											EntityPick(n\Collider, 1.5)
+											If PickedEntity() <> 0 Then
+												n\Angle = EntityYaw(n\Collider)+Rnd(80,110)
+											EndIf
+											ShowEntity n\Collider
 										
-										If dist<1.0 Then n\State=10
+											n\State2=MilliSecs2()+1000
+										
+											If Rand(5)=1 Then n\State=0
+										EndIf	
+									
+										n\CurrSpeed = CurveValue(n\Speed*0.5, n\CurrSpeed, 20.0)
 										
 									EndIf
+								
+									If (prevFrame < 604 And n\Frame=>604) Or (prevFrame < 627 And n\Frame=>627) Then
+                                  	  PlaySound2(StepSFX(4,0,Rand(0,3)),Camera, n\Collider, 7.0, Rnd(0.5,0.7))
+                               		EndIf
+								
+									RotateEntity n\Collider, 0, CurveAngle(n\Angle,EntityYaw(n\Collider),10.0),0
+								
+									MoveEntity n\Collider,0,0,n\CurrSpeed*fs\FPSfactor[0]
+								EndIf
+							Case 10 ;attack
+								If n\LastSeen=0
+									PlaySound2(LoadTempSound(SFXPath$+"SCP\966\Echo"+Rand(1,3)+".ogg"), Camera, n\Collider)
+									n\LastSeen = 1
+								EndIf
+							
+								;If n\Frame>2300.0 Then
+								If n\Frame>557.0
+									;AnimateNPC(n, 2391, 2416, 1.0, False
+									AnimateNPC(n, 628, 652, 0.25, False)
+									;If n\Frame>2415.0 Then
+									If n\Frame>651.0
+										Select Rand(3)
+											Case 1
+												;SetNPCFrame(n, 2160)
+												SetNPCFrame(n, 458)
+											Case 2
+												;SetNPCFrame(n, 2192)
+												SetNPCFrame(n, 488)
+											Case 3
+												;SetNPCFrame(n, 2221)
+												SetNPCFrame(n, 518)
+										End Select
+									
+									EndIf
 								Else
-									If MilliSecs2() > n\State2 And dist<16.0 Then
-										HideEntity n\Collider
-										EntityPick(n\Collider, 1.5)
-										If PickedEntity() <> 0 Then
-											n\Angle = EntityYaw(n\Collider)+Rnd(80,110)
-										EndIf
-										ShowEntity n\Collider
-										
-										n\State2=MilliSecs2()+1000
-										
-										If Rand(5)=1 Then n\State=0
+									;If n\Frame <= 2191 Then
+										;AnimateNPC(n, 2160, 2191, 0.3, False)
+										;If n\Frame > 2190 Then n\State = 8
+									;ElseIf n\Frame <= 2220
+										;AnimateNPC(n, 2192, 2220, 0.3, False)
+										;If n\Frame > 2219 Then n\State = 8
+									;ElseIf n\Frame <= 2260
+										;AnimateNPC(n, 2221, 2260, 0.3, False)
+										;If n\Frame > 2259 Then n\State = 8
+									;EndIf
+								
+									If n\Frame <= 487
+										AnimateNPC(n, 458, 487, 0.3, False)
+										If n\Frame > 486.0 Then n\State = 8
+									ElseIf n\Frame <= 517
+										AnimateNPC(n, 488, 517, 0.3, False)
+										If n\Frame > 516.0 Then n\State = 8
+									ElseIf n\Frame <= 557
+										AnimateNPC(n, 518, 557, 0.3, False)
+										If n\Frame > 556.0 Then n\State = 8
+									EndIf
+								EndIf
+							
+								If dist<1.0 Then
+									;If n\Frame>2173.0 And prevFrame<=2173.0 Or n\Frame>2203.0 And prevFrame<=2203.0 Or n\Frame>2227.0 And prevFrame<=2227.0 Then
+									If n\Frame>470.0 And prevFrame<=470.0 Or n\Frame>500.0 And prevFrame<=500.0 Or n\Frame>527.0 And prevFrame<=527.0
+										PlaySound2(LoadTempSound(SFXPath$+"General\Slash"+Rand(1,2)+".ogg"), Camera, n\Collider)
+										If I_1033RU\HP = 0
+										    Injuries = Injuries + Rnd(0.5,1.0)
+										Else
+										    Damage1033RU(20+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+										EndIf								
 									EndIf	
-									
-									n\CurrSpeed = CurveValue(n\Speed*0.5, n\CurrSpeed, 20.0)
-									
 								EndIf
-								
-								If (prevFrame < 604 And n\Frame=>604) Or (prevFrame < 627 And n\Frame=>627) Then
-                                    PlaySound2(StepSFX(4,0,Rand(0,3)),Camera, n\Collider, 7.0, Rnd(0.5,0.7))
-                                EndIf
-								
-								RotateEntity n\Collider, 0, CurveAngle(n\Angle,EntityYaw(n\Collider),10.0),0
-								
-								MoveEntity n\Collider,0,0,n\CurrSpeed*fs\FPSfactor[0]
-							EndIf
-						Case 10 ;attack
-							If n\LastSeen=0
-								PlaySound2(LoadTempSound("SFX\SCP\966\Echo"+Rand(1,3)+".ogg"), Camera, n\Collider)
-								n\LastSeen = 1
-							EndIf
 							
-							;If n\Frame>2300.0 Then
-							If n\Frame>557.0
-								;AnimateNPC(n, 2391, 2416, 1.0, False
-								AnimateNPC(n, 628, 652, 0.25, False)
-								;If n\Frame>2415.0 Then
-								If n\Frame>651.0
-									Select Rand(3)
-										Case 1
-											;SetNPCFrame(n, 2160)
-											SetNPCFrame(n, 458)
-										Case 2
-											;SetNPCFrame(n, 2192)
-											SetNPCFrame(n, 488)
-										Case 3
-											;SetNPCFrame(n, 2221)
-											SetNPCFrame(n, 518)
-									End Select
-									
-								EndIf
-							Else
-								
-								If n\Frame <= 487
-									AnimateNPC(n, 458, 487, 0.3, False)
-									If n\Frame > 486.0 Then n\State = 8
-								ElseIf n\Frame <= 517
-									AnimateNPC(n, 488, 517, 0.3, False)
-									If n\Frame > 516.0 Then n\State = 8
-								ElseIf n\Frame <= 557
-									AnimateNPC(n, 518, 557, 0.3, False)
-									If n\Frame > 556.0 Then n\State = 8
-								EndIf
-							EndIf
-							
-							If dist<1.0 Then
-								;If n\Frame>2173.0 And prevFrame<=2173.0 Or n\Frame>2203.0 And prevFrame<=2203.0 Or n\Frame>2227.0 And prevFrame<=2227.0 Then
-								If n\Frame>470.0 And prevFrame<=470.0 Or n\Frame>500.0 And prevFrame<=500.0 Or n\Frame>527.0 And prevFrame<=527.0
-									PlaySound2(LoadTempSound("SFX\General\Slash"+Rand(1,2)+".ogg"), Camera, n\Collider)
-									If I_1033RU\HP = 0
-									    Injuries = Injuries + Rnd(0.5,1.0)
-									Else
-									    Damage1033RU(20+(5*SelectedDifficulty\aggressiveNPCs))
-								    EndIf
-								EndIf	
-							EndIf
-							
-							n\Angle = VectorYaw(EntityX(Collider)-EntityX(n\Collider),0,EntityZ(Collider)-EntityZ(n\Collider))
-							RotateEntity n\Collider, 0, CurveAngle(n\Angle,EntityYaw(n\Collider),30.0),0
-							
-					End Select
-				Else
-					HideEntity n\obj
-					If (Rand(600)=1) Then
-						TeleportCloser(n)
+								n\Angle = VectorYaw(EntityX(Collider)-EntityX(n\Collider),0,EntityZ(Collider)-EntityZ(n\Collider))
+								RotateEntity n\Collider, 0, CurveAngle(n\Angle,EntityYaw(n\Collider),30.0),0	
+						End Select
+					Else
+						HideEntity n\obj
+						If (Rand(600)=1) Then
+							TeleportCloser(n)
+						EndIf
 					EndIf
 				EndIf
 				
 				;[End Block]
-			Case NPCtype1048a
+
+			Case NPCtype1048_A
 				;[Block]
 				Select n\State	
 						
@@ -4594,7 +4708,7 @@ Function UpdateNPCs()
 						;649, 677
 				End Select
 				;[End block]
-			Case NPCtype1499
+			Case NPCtype1499_1
 				;[Block]
 				;n\State: Current State of the NPC
 				;n\State2: A second state variable (dependend on the current NPC's n\State)
@@ -4795,12 +4909,12 @@ Function UpdateNPCs()
 									n\State = 2
 									n\State2 = 0
 									
-									If Not ChannelPlaying(n\SoundChn) Then
+									If Not ChannelPlaying(n\SoundCHN) Then
 										dist = EntityDistance(n\Collider,Collider)
 										If (dist < 20.0) Then
 											If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-											n\Sound = LoadSound_Strict("SFX\SCP\1499\Idle"+Rand(1,4)+".ogg")
-											n\SoundChn = PlaySound2(n\Sound, Camera, n\Collider, 20.0)
+											n\Sound = LoadSound_Strict(SFXPath$+"SCP\1499\Idle"+Rand(1,4)+".ogg")
+											n\SoundCHN = PlaySound2(n\Sound, Camera, n\Collider, 20.0)
 										EndIf
 									EndIf
 								EndIf
@@ -4813,8 +4927,8 @@ Function UpdateNPCs()
 											n\State = 2
 											If dist < 5.0 Then
 												If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-												n\Sound = LoadSound_Strict("SFX\SCP\1499\Triggered.ogg")
-												n\SoundChn = PlaySound2(n\Sound, Camera, n\Collider,20.0)
+												n\Sound = LoadSound_Strict(SFXPath$+"SCP\1499\Triggered.ogg")
+												n\SoundCHN = PlaySound2(n\Sound, Camera, n\Collider,20.0)
 												
 												n\State2 = 1 ;if player is too close, switch to attack after screaming
 												
@@ -4841,8 +4955,8 @@ Function UpdateNPCs()
 									If dist < 4.0 Then
 										If EntityVisible(n\Collider,Collider) Then
 											If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-											n\Sound = LoadSound_Strict("SFX\SCP\1499\Triggered.ogg")
-											n\SoundChn = PlaySound2(n\Sound, Camera, n\Collider,20.0)
+											n\Sound = LoadSound_Strict(SFXPath$+"SCP\1499\Triggered.ogg")
+											n\SoundCHN = PlaySound2(n\Sound, Camera, n\Collider,20.0)
 											
 											n\State = 1
 											
@@ -4915,8 +5029,12 @@ Function UpdateNPCs()
 									If dist > 0.85 Or Abs(DeltaYaw(n\Collider,Collider))>60.0
 										;Miss
 									Else
-										Injuries = Injuries + Rnd(0.75,1.5)
-										PlaySound2(LoadTempSound("SFX\General\Slash"+Rand(1,2)+".ogg"), Camera, n\Collider)
+									    If I_1033RU\HP = 0
+										    Injuries = Injuries + Rnd(0.75,1.5)
+										Else
+										    Damage1033RU(20+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+										EndIf
+										PlaySound2(LoadTempSound(SFXPath$+"General\Slash"+Rand(1,2)+".ogg"), Camera, n\Collider)
 										If Injuries > 10.0
 											Kill(True)
 											If PlayerRoom\RoomTemplate\Name$ = "dimension1499"
@@ -4940,8 +5058,12 @@ Function UpdateNPCs()
 									If dist > 0.85 Or Abs(DeltaYaw(n\Collider,Collider))>60.0
 										;Miss
 									Else
-										Injuries = Injuries + Rnd(0.75,1.5)
-										PlaySound2(LoadTempSound("SFX\General\Slash"+Rand(1,2)+".ogg"), Camera, n\Collider)
+									    If I_1033RU\HP = 0
+										    Injuries = Injuries + Rnd(0.75,1.5)
+										Else
+										    Damage1033RU(20+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+										EndIf
+										PlaySound2(LoadTempSound(SFXPath$+"General\Slash"+Rand(1,2)+".ogg"), Camera, n\Collider)
 										If Injuries > 10.0
 											Kill(True)
 											If PlayerRoom\RoomTemplate\Name$ = "dimension1499"
@@ -4976,8 +5098,8 @@ Function UpdateNPCs()
 							;[End Block]
 					End Select
 					
-					If n\SoundChn <> 0 And ChannelPlaying(n\SoundChn) Then
-						UpdateSoundOrigin(n\SoundChn,Camera,n\Collider,20.0)
+					If n\SoundCHN <> 0 And ChannelPlaying(n\SoundCHN) Then
+						UpdateSoundOrigin(n\SoundCHN,Camera,n\Collider,20.0)
 					EndIf
 					
 					MoveEntity n\Collider,0,0,n\CurrSpeed*fs\FPSfactor[0]
@@ -4992,7 +5114,7 @@ Function UpdateNPCs()
 				
 				;[End Block]
 
-			Case NPCtype0081
+			Case NPCtype008_1
 				;[Block]
 				;n\State: Main State
 				;n\State2: A timer used for the player detection
@@ -5106,11 +5228,11 @@ Function UpdateNPCs()
 							
 							If n\CurrSpeed > 0.005 Then
 								If (prevFrame < 80 And n\Frame=>80) Or (prevFrame > 92 And n\Frame<65)
-									PlaySound2(StepSFX(0,0,Rand(0,7)),Camera, n\Collider, 8.0, Rnd(0.3,0.5))
+									PlaySound2(StepSFX(GetStepSound(n\Collider),0,Rand(0,2)),Camera, n\Collider, 8.0, Rnd(0.3,0.5))	
 								EndIf
 							EndIf
 							
-							n\SoundChn = LoopSound2(n\Sound,n\SoundChn,Camera,n\Collider)
+							n\SoundCHN = LoopSound2(n\Sound,n\SoundCHN,Camera,n\Collider)
 						Case 3 ;Attacking
 							AnimateNPC(n, 126, 165, 0.4, False)
 							If (n\Frame => 146 And prevFrame < 146)
@@ -5127,7 +5249,8 @@ Function UpdateNPCs()
 							                    n\IsDead = True
 							                EndIf
 										EndIf
-										DeathMSG = SubjectName$+". Причина смерти: многочисленные рваные раны и травмы от ударов тупым предметом, нанесённые [ДАННЫЕ УДАЛЕНЫ], который был заражён SCP-008. Данный субъект был обнаружен и ликвидирован подразделением Девятихвостая лиса." ;Subject D-9341. Cause of death: multiple lacerations and severe blunt force trauma caused by [DATA EXPUNGED], who was infected with SCP-008. Said subject was located by Nine-Tailed Fox and terminated.
+										DeathMSG = SubjectName$+". Причина смерти: многочисленные рваные раны и травмы от ударов тупым предметом, нанесённые [ДАННЫЕ УДАЛЕНЫ], который был заражён SCP-008.  " ;Cause of death: multiple lacerations and severe blunt force trauma caused by [DATA REDACTED], who was infected with SCP-008.
+										DeathMSG = DeathMSG + "Данный субъект был обнаружен и ликвидирован подразделением Девятихностая Лиса." ;Said subject was located by Nine-Tailed Fox and terminated.
 									EndIf
 								EndIf
 							ElseIf n\Frame => 164
@@ -5181,9 +5304,9 @@ Function UpdateNPCs()
 							EndIf
 					End Select
 				Else
-					If n\SoundChn <> 0
-						StopChannel n\SoundChn
-						n\SoundChn = 0
+					If n\SoundCHN <> 0
+						StopChannel n\SoundCHN
+						n\SoundCHN = 0
 						FreeSound_Strict n\Sound
 						n\Sound = 0
 					EndIf
@@ -5193,7 +5316,7 @@ Function UpdateNPCs()
 				RotateEntity n\obj,0,EntityYaw(n\Collider)-180,0
 				PositionEntity n\obj,EntityX(n\Collider),EntityY(n\Collider)-0.2,EntityZ(n\Collider)
 				;[End Block]
-			Case NPCtype0082
+			Case NPCtype008_2
 				;[Block]
 				
 				If Abs(EntityY(Collider)-EntityY(n\Collider))<4.0 Then
@@ -5202,7 +5325,7 @@ Function UpdateNPCs()
 					
 					If (Not n\IsDead)
 						Select n\State
-							Case 0 ;Just lying
+							Case 0
 								;[Block]
 								AnimateNPC(n, 719, 777, 0.2, False)
 								
@@ -5214,7 +5337,7 @@ Function UpdateNPCs()
 									EndIf
 								EndIf
 								;[End Block]
-							Case 1 ;Stands Up
+							Case 1 ;stands up
 								;[Block]
 								If n\Frame=>682 Then 
 									AnimateNPC(n, 926, 935, 0.3, False)
@@ -5223,13 +5346,13 @@ Function UpdateNPCs()
 									;Animate2(n\obj, AnimTime(n\obj), 926, 935, 0.3, False)
 									;If AnimTime(n\obj)=935 Then n\State = 2
 								Else
-									AnimateNPC(n, 155, 682, 1.6, False)
+									AnimateNPC(n, 155, 682, 1.1, False)
 									;Animate2(n\obj, AnimTime(n\obj), 155, 682, 1.5, False)
 								EndIf
 								;[End Block]
-							Case 2 ;Following The Player
+							Case 2 ;following the player
 								;[Block]
-								If n\State3 < 0 Then ;Check if the player is visible every three seconds
+								If n\State3 < 0 Then ;check if the player is visible every three seconds
 									If EntityDistance(Collider, n\Collider)<5.0 Then 
 										If EntityVisible(Collider, n\Collider) Then n\State2 = 70*5
 									EndIf
@@ -5238,7 +5361,7 @@ Function UpdateNPCs()
 									n\State3=n\State3-fs\FPSfactor[0]
 								EndIf
 								
-								n\SoundChn = LoopSound2(n\Sound, n\SoundChn, Camera, n\Collider, 6.0, 0.6)
+								n\SoundCHN = LoopSound2(n\Sound, n\SoundCHN, Camera, n\Collider, 6.0, 0.6)
 
 								If n\State2 > 0 And (Not chs\NoTarget) Then ;player is visible -> attack
 									
@@ -5265,7 +5388,6 @@ Function UpdateNPCs()
 										AnimateNPC(n, 936, 1017, n\CurrSpeed*60)
 										
 										;Animate2(n\obj, AnimTime(n\obj), 936, 1017, n\CurrSpeed*60)
-										
 									EndIf
 									
 									n\State2=n\State2-fs\FPSfactor[0]
@@ -5283,6 +5405,9 @@ Function UpdateNPCs()
 											RotateEntity n\Collider, 0, CurveAngle(EntityYaw(n\obj), EntityYaw(n\Collider), 30.0), 0
 											n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 20.0)
 											MoveEntity n\Collider, 0, 0, n\CurrSpeed * fs\FPSfactor[0]
+											
+											AnimateNPC(n, 936, 1017, n\CurrSpeed*60)
+											;Animate2(n\obj, AnimTime(n\obj), 936, 1017, n\CurrSpeed*60)
 											
 											AnimateNPC(n, 936, 1017, n\CurrSpeed*60)
 											;Animate2(n\obj, AnimTime(n\obj), 936, 1017, n\CurrSpeed*60)
@@ -5312,6 +5437,7 @@ Function UpdateNPCs()
 										n\CurrSpeed = 0
 										AnimateNPC(n, 778, 926, 0.1)
 										;Animate2(n\obj, AnimTime(n\obj), 778, 926, 0.1)
+										
 										n\PathTimer = n\PathTimer-fs\FPSfactor[0]
 										If n\PathTimer < 70*5
 										    n\PathTimer = n\PathTimer + Rnd(1,2+(2*SelectedDifficulty\aggressiveNPCs))*fs\FPSfactor[0]
@@ -5319,6 +5445,15 @@ Function UpdateNPCs()
 										    n\PathStatus = FindPath(n,EntityX(Collider),EntityY(Collider),EntityZ(Collider))
 										    n\PathTimer = 0
 									    EndIf
+									EndIf
+								EndIf
+								
+								If EntityDistance(n\Collider,Collider)>HideDistance
+									If n\State3 < 70*(15+(10*SelectedDifficulty\aggressiveNPCs))
+										n\State3 = n\State3+fs\FPSfactor[0]
+									Else
+										n\State3 = 70*3
+										n\State = 4
 									EndIf
 								EndIf
 								
@@ -5330,7 +5465,7 @@ Function UpdateNPCs()
 									EndIf
 								EndIf
 								;[End Block]
-							Case 3 ;Attacking
+							Case 3
 								;[Block]
 								If chs\NoTarget Then n\State = 2
 								If n\Frame < 66 Then
@@ -5340,9 +5475,8 @@ Function UpdateNPCs()
 									If prevFrame < 23 And n\Frame=>23 Then
 										If EntityDistance(n\Collider,Collider)<1.1
 											If (Abs(DeltaYaw(n\Collider,Collider))<=60.0)
-												PlaySound_Strict DamageSFX(Rand(5,8))
-												If (Not WearingHazmat) Then I_008\Timer = I_008\Timer + (1+(1*SelectedDifficulty\aggressiveNPCs))
-												If I_1033RU\HP = 0
+											    PlaySound_Strict DamageSFX(Rand(5,8))
+											    If I_1033RU\HP = 0
 												    Injuries = Injuries+Rnd(0.4,1.0)
 												Else
 											        Damage1033RU(20)
@@ -5350,12 +5484,13 @@ Function UpdateNPCs()
 											        If n\HP =< 0 Then
 							                            n\IsDead = True
 							                        EndIf
-                                                EndIf
-                                                If Injuries > 3.0
-							                        DeathMSG = SubjectName$+". Причина смерти: многочисленные рваные раны и травмы от ударов тупым предметом, нанесённые [ДАННЫЕ УДАЛЕНЫ], который был заражён SCP-008. Данный субъект был обнаружен и ликвидирован подразделением Не Вижу Зла." ;Cause of death: multiple lacerations and severe blunt force trauma caused by [Data EXPUNGED], who was infected with SCP-008. Said subject was located by See No Evil And terminated."
-							                    EndIf
-										    EndIf
-								        EndIf
+											    EndIf
+											    If Injuries > 3.0
+												    DeathMSG = SubjectName$+". Причина смерти: многочисленные рваные раны и травмы от ударов тупым предметом, нанесённые [ДАННЫЕ УДАЛЕНЫ], который был заражён SCP-008." ;Cause of death: multiple lacerations and severe blunt force trauma caused by an instance of SCP-008-2.
+												    Kill(True)
+												EndIf
+											EndIf
+										EndIf
 									ElseIf n\Frame=65 Then
 										n\State = 2
 									EndIf							
@@ -5365,21 +5500,20 @@ Function UpdateNPCs()
 									If prevFrame < 90 And n\Frame=>90 Then
 										If EntityDistance(n\Collider,Collider)<1.1
 											If (Abs(DeltaYaw(n\Collider,Collider))<=60.0)
-												PlaySound_Strict DamageSFX(Rand(5,8))
-												If (Not WearingHazmat) Then I_008\Timer = I_008\Timer + (1+(1*SelectedDifficulty\aggressiveNPCs))
-												If I_1033RU\HP = 0
-											        Injuries = Injuries+Rnd(0.4,1.0)
-										        Else
+											    PlaySound_Strict DamageSFX(Rand(5,8))
+											    If I_1033RU\HP = 0
+												    Injuries = Injuries+Rnd(0.4,1.0)
+												Else
 											        Damage1033RU(20)
-										            n\HP = n\HP - 24
+											        n\HP = n\HP - 24
 											        If n\HP =< 0 Then
 							                            n\IsDead = True
 							                        EndIf
                                                 EndIf
-                                                If Injuries > 3.0
-												    DeathMSG = SubjectName$+". Причина смерти: многочисленные рваные раны и травмы от ударов тупым предметом, нанесённые [ДАННЫЕ УДАЛЕНЫ], который был заражён SCP-008. Данный субъект был обнаружен и ликвидирован подразделением Девятихвостая лиса." ;Cause of death: multiple lacerations and severe blunt force trauma caused by [Data EXPUNGED], who was infected with SCP-008. Said subject was located by Nine Tailed Fox And terminated.
+												If Injuries > 3.0
+												    DeathMSG = SubjectName$+". Причина смерти: многочисленные рваные раны и травмы от ударов тупым предметом, нанесённые [ДАННЫЕ УДАЛЕНЫ], который был заражён SCP-008." ;Cause of death: multiple lacerations and severe blunt force trauma caused by an instance of SCP-008-2.
 												    Kill(True)
-												EndIf
+											    EndIf
 											EndIf
 										EndIf
 									ElseIf n\Frame=132 Then
@@ -5389,11 +5523,13 @@ Function UpdateNPCs()
 								;[End Block]
 						End Select
 					Else
-						;If Rand(2) = 1 Then
-						    ;AnimateNPC(n, 133, 157, 0.5, False)
-						;Else
-						    AnimateNPC(n, 1035, 1072, 0.3, False)
-                        ;EndIf
+					    If n\SoundCHN <> 0
+						    StopChannel n\SoundCHN
+						    n\SoundCHN = 0
+						    FreeSound_Strict n\Sound
+						    n\Sound = 0
+					    EndIf
+						AnimateNPC(n, 1035, 1072, 0.3, False)
 					EndIf
 					
 					PositionEntity(n\obj, EntityX(n\Collider), EntityY(n\Collider) - 0.2, EntityZ(n\Collider))
@@ -5447,7 +5583,7 @@ Function UpdateNPCs()
 				
 				;Nullified teleportation behind player due to issues. If someone could do a hotfix, credits given.
 				If n\Idle = False Then
-
+				     								
 					If dist < 15 Then
 						If dist < 10.0 Then 
 							If EntityVisible(n\Collider, Collider) Then
@@ -5461,7 +5597,7 @@ Function UpdateNPCs()
 						EndIf										
 								
 						;Local SoundVol# = Max(Min((Distance(EntityX(n\Collider), EntityZ(n\Collider), n\PrevX, n\PrevZ) * 2.5), 1.0), 0.0)
-						;n\SoundChn = LoopSound2(StoneDragSFX, n\SoundChn, Camera, n\Collider, 10.0, n\State)
+						;n\SoundCHN = LoopSound2(StoneDragSFX, n\SoundCHN, Camera, n\Collider, 10.0, n\State)
 								
 						n\PrevX = EntityX(n\Collider)
 						n\PrevZ = EntityZ(n\Collider)				
@@ -5569,174 +5705,173 @@ Function UpdateNPCs()
 					If PlayerRoom\RoomTemplate\Name = "exit1" And PlayerRoom\RoomTemplate\Name = "gatea" And PlayerRoom\RoomTemplate\Name = "pocketdimension" And PlayerRoom\RoomTemplate\Name = "dimension1499" Then
 					     HideEntity n\obj					
 					     HideEntity n\Collider
-					     n\Idle = True
-					;To enable 650, use the command.					
+					     n\Idle = True					
 					EndIf																																				  
 			     EndIf	
 					
-				;[End block]
+				;[End Block]
 			Case NPCtype457
 			    ;[Block]
-			       
+			      
+			    If PlayerRoom\RoomTemplate\Name <> "room457" Then n\State = 3 
+
 				prevFrame# = n\Frame
 				
-				If (Not Contained457) Then
-				    Select n\State
-					    Case 0 ;normal routine (walking and idling)
-					
-						    If n\PathStatus = 1
-							    If n\Path[n\PathLocation]=Null Then 
-								    If n\PathLocation > 19 Then 
-									    n\PathLocation = 0 : n\PathStatus = 0
-								    Else
-									    n\PathLocation = n\PathLocation + 1
-								    EndIf
-							    Else
-								    PointEntity n\obj, n\Path[n\PathLocation]\obj
+				If n\State < 3 Then ;used if player escaped from the room457 tunnels
+				    If (Not Contained457)
+				        Select n\State
+					        Case 0 ;normal routine (walking and idling)
+					            ;[Block]
+						        If n\PathStatus = 1
+							        If n\Path[n\PathLocation]=Null Then 
+								        If n\PathLocation > 19 Then 
+									        n\PathLocation = 0 : n\PathStatus = 0
+								        Else
+									        n\PathLocation = n\PathLocation + 1
+								        EndIf
+							        Else
+								        PointEntity n\obj, n\Path[n\PathLocation]\obj
 								
-								    RotateEntity n\Collider, 0, CurveAngle(EntityYaw(n\obj), EntityYaw(n\Collider), 20.0), 0
+								        RotateEntity n\Collider, 0, CurveAngle(EntityYaw(n\obj), EntityYaw(n\Collider), 20.0), 0
 
-								    AnimateNPC(n, 284, 333, n\CurrSpeed*43)
-								    ;Animate2(n\obj, AnimTime(n\obj), 1614, 1641, n\CurrSpeed*30)
-								    n\CurrSpeed = CurveValue(n\Speed*0.7, n\CurrSpeed, 20.0)
+								        AnimateNPC(n, 284, 333, n\CurrSpeed*43)
+
+								        n\CurrSpeed = CurveValue(n\Speed*0.7, n\CurrSpeed, 20.0)
 								
-								    MoveEntity n\Collider, 0, 0, n\CurrSpeed * fs\FPSfactor[0]
+								        MoveEntity n\Collider, 0, 0, n\CurrSpeed * fs\FPSfactor[0]
 								
-								    If EntityDistance(n\Collider,n\Path[n\PathLocation]\obj) < 0.3 Then
-									    n\PathLocation = n\PathLocation + 1
-								    EndIf
-							    EndIf
+								        If EntityDistance(n\Collider,n\Path[n\PathLocation]\obj) < 0.3 Then
+									        n\PathLocation = n\PathLocation + 1
+								        EndIf
+							        EndIf
 							
-							    If EntityDistance(n\Collider,Collider)<8.0 And (Not chs\Notarget)
-								    If EntityVisible(n\Collider,Collider)
-									    n\State = 0
-								    EndIf
-							    EndIf
-						    Else
-							    If n\Frame < 493
-								    n\CurrSpeed = 0
-								    AnimateNPC(n, 334, 494, 0.4)
-							    Else
-                                    n\PathStatus = FindPath (n, EntityX(Collider,True), EntityY(Collider,True), EntityZ(Collider,True))
-							    EndIf
-							    ;n\State = 0
-						    EndIf
+							        If EntityDistance(n\Collider,Collider) < 6.0
+								        If EntityVisible(n\Collider,Collider)
+									        n\State = 0
+								        EndIf
+							        EndIf
+						        Else
+							        If n\Frame < 493
+								        n\CurrSpeed = 0
+								        AnimateNPC(n, 334, 494, 0.4)
+							        Else
+                                        n\PathStatus = FindPath(n, EntityX(n\TargetEnt,True), EntityY(n\TargetEnt,True), EntityZ(n\TargetEnt,True))
+							        EndIf
+						        EndIf
 						
-						    If EntityDistance(n\Collider,Collider)<6.0 And (Not chs\Notarget)
-							    If EntityVisible(n\Collider,Collider)
-								    n\LastSeen = 500
-								    n\State = 1
-								    n\PathStatus = 0
-								    n\State3 = 0.0
-							    EndIf
-						    EndIf
-					    Case 1 ;chasing the player and trying to kill him
-						    If n\LastSeen > 0
-							    If n\State3 = 0.0
-								    n\SoundCHN = PlaySound_Strict(n\Sound)
-								    n\State3 = 1.0
-							    EndIf
+						        If EntityDistance(n\Collider,Collider) < 4.0 And (Not chs\Notarget)
+							        If EntityVisible(n\Collider,Collider)
+								        n\LastSeen = 500
+								        n\State = 1
+								        n\PathStatus = 0
+								        n\State3 = 0.0
+							        EndIf
+						        EndIf
+						        ;[End Block]
+					        Case 1 ;chasing the player and trying to kill him
+					            ;[Block]
+					
+						        If n\LastSeen > 0
+							        If n\State3 = 0.0
+								        n\SoundCHN = PlaySound_Strict(n\Sound)
+								        n\State3 = 1.0
+							        EndIf
 							
-							    n\CurrSpeed = n\Speed
-							    MoveEntity n\Collider, 0, 0, (n\CurrSpeed*2)*fs\FPSfactor[0]
+							        n\CurrSpeed = n\Speed
+							        MoveEntity n\Collider, 0, 0, (n\CurrSpeed*2)*fs\FPSfactor[0]
 							
-							    AnimateNPC(n, 284, 333, n\CurrSpeed*60)
+							        AnimateNPC(n, 284, 333, n\CurrSpeed*60)
 							
-							    angle = VectorYaw(EntityX(Collider)-EntityX(n\Collider),0,EntityZ(Collider)-EntityZ(n\Collider))
-							    RotateEntity n\Collider, 0, CurveAngle(angle, EntityYaw(n\Collider), 20.0), 0
+							        angle = VectorYaw(EntityX(Collider)-EntityX(n\Collider),0,EntityZ(Collider)-EntityZ(n\Collider))
+							        RotateEntity n\Collider, 0, CurveAngle(angle, EntityYaw(n\Collider), 20.0), 0
 							
-							    If EntityDistance(n\Collider,Collider)<6.0
-								    If EntityVisible(n\Collider,Collider)
-									    n\LastSeen = 500
-									    If EntityDistance(n\Collider,Collider)<0.6
-									        If EntityDistance(n\Collider,Collider) > 0.5 Then 
-										        n\CurrSpeed = CurveValue(n\Speed * 2.5,n\CurrSpeed,10.0)
-									        Else
-										        n\CurrSpeed = 0
-									        EndIf
-									        AnimateNPC(n, 105, 110, 0.15, False)
+							        If EntityDistance(n\Collider, Collider) < 6.0
+								        If EntityVisible(n\Collider, Collider)
+									        n\LastSeen = 500
+									        If EntityDistance(n\Collider,Collider) < 0.6
+									            If EntityDistance(n\Collider,Collider) > 0.5 Then 
+										            n\CurrSpeed = CurveValue(n\Speed * 2.5,n\CurrSpeed,10.0)
+									            Else
+										            n\CurrSpeed = 0
+									            EndIf
+									            AnimateNPC(n, 105, 110, 0.15, False)
 
-										    If KillTimer >= 0 And (Not chs\GodMode) Then
-										        PointEntity n\obj, Collider 
-										        RotateEntity n\Collider, 0, CurveAngle(EntityYaw(n\obj), EntityYaw(n\Collider), 10.0), 0 
-										        If Ceil(n\Frame) = 110 And (Not chs\GodMode) Then
-										            PlaySound_Strict(LoadTempSound("SFX\SCP\294\burn.ogg"))
-												    Kill(False, True)
-										            If PlayerRoom\RoomTemplate\Name = "room457" Then
-											            DeathMsg = SubjectName$+" найден мёртвым в туннелях хранилища SCP-457. Похоже, что субъект умер от SCP-457, поскольку его тело было полностью сожжено. " ;found dead inside the SCP-457 Storage Tunnels. Subject seems To be burned down by SCP-457 as his body is completely burnt. 
-											            DeathMsg = DeathMsg + "Похоже, пытаясь добыть как можно больше пищи, SCP-457 сжёг всю территорию. К счастью, SCP-457 не смог возпользоваться лифтом, " ;SCP-457 seems to had damaged the whole area trying to get as many fuel as possible to grow. Luckely SCP-457 wasn't able to use the 
-											            DeathMsg = DeathMsg + "чтобы добраться до основной части комплекса." ;elevators to get to the main facility.
-	                                                EndIf
+										        If KillTimer >= 0 And (Not chs\GodMode) Then
+										            PointEntity n\obj, Collider 
+										            RotateEntity n\Collider, 0, CurveAngle(EntityYaw(n\obj), EntityYaw(n\Collider), 10.0), 0 
+										            If Ceil(n\Frame) = 110 And (Not chs\GodMode) Then
+										                PlaySound_Strict(LoadTempSound(SFXPath$+"SCP\294\Burn.ogg"))
+												        Kill(False, True)
+												
+											            DeathMsg = SubjectName$+" найден мёртвым в туннелях харнения SCP-457. Похоже, Субъект был сожжён SCP-457, так как всё его тело в ожогах. " ;found dead inside the SCP-457's Storage Tunnels. Subject seems to be burned down by SCP-457 as his body is completely burnt. 
+											            DeathMsg = DeathMsg + "SCP-457 сжёг всю территорию вокрут, пытаясь добыть себе пищу. К счастью, SCP-457 не смог воспользоваться " ;SCP-457 seems to had damaged the whole area trying to get as many fuel as possible to grow. Luckely SCP-457 wasn't able to use the 
+											            DeathMsg = DeathMsg + "лифтом, чтобы добраться до основной части комплекса." ;elevators to get to the main facility.
+	                                               EndIf
 	                                            EndIf
 										    EndIf
 									    EndIf
-								    EndIf
-							    EndIf
-						    Else
-							    n\State = 0
-							    n\PathStatus = 0
-						    EndIf
-						
-					    Case 2
-						
-				    End Select
-							
-				    If n\State < 2
-					    If EntityDistance(n\Collider,Collider)<10.0
-						    If EntityVisible(n\Collider,Collider)
-							    GiveAchievement(Achv457)
-						    EndIf
-					    EndIf
-				    EndIf
-				Else
-				    AnimateNPC(n, 334, 494, 0.4, True)
-				EndIf
+							        EndIf
+						        Else
+							        n\State = 0
+							        n\PathStatus = 0
+						        EndIf
+						        ;[End Block]
+				        End Select
+				    Else
+				        ;used for contained state
+				        AnimateNPC(n, 334, 494, 0.4, True)
+				    EndIf		
 				
-				;457's fire							 
-			    p.Particles = CreateParticle(EntityX(n\Collider),EntityY(n\Collider),EntityZ(n\Collider),0,Rnd(0.2,0.3),-0.2,60)
-                PositionEntity p\pvt,EntityX(n\Collider,True)+Rnd(-0.5,0.5),EntityY(n\Collider,True),EntityZ(n\Collider,True)+Rnd(-0.5,0.5)
-                p\SizeChange = 0.0098
-                p\Achange = Rnd(-0.0025,-0.003)
-                p\speed = 0.004
-                RotateEntity p\pvt, 90, 0, 0  
-                EntityTexture(p\obj, at\ParticleTextureID[9])          
+				    If chs\Notarget And n\State = 1 Then n\State = 0
+				
+				    ;SCP-457's fire							 
+			        p.Particles = CreateParticle(EntityX(n\Collider),EntityY(n\Collider),EntityZ(n\Collider),0,Rnd(0.2,0.3),-0.2,60)
+                    PositionEntity p\pvt,EntityX(n\Collider,True)+Rnd(-0.5,0.5),EntityY(n\Collider,True),EntityZ(n\Collider,True)+Rnd(-0.5,0.5)
+                    p\SizeChange = 0.0098
+                    p\Achange = Rnd(-0.0025,-0.003)
+                    p\speed = 0.004
+                    RotateEntity p\pvt, 90, 0, 0  
+                    EntityTexture(p\obj, at\ParticleTextureID[9])          
 
-                p.Particles = CreateParticle(EntityX(n\Collider),EntityY(n\Collider),EntityZ(n\Collider),0,Rnd(0.2,0.3),-0.2,60)
-                PositionEntity p\pvt,EntityX(n\Collider,True)+Rnd(-0.5,0.5),EntityY(n\Collider,True),EntityZ(n\Collider,True)+Rnd(-0.5,0.5)
-                p\SizeChange = 0.00059
-                p\Achange = Rnd(-0.0025,-0.003)
-                p\speed = 0.0007
-                RotateEntity p\pvt, 90, 0, 0   
+                    p.Particles = CreateParticle(EntityX(n\Collider),EntityY(n\Collider),EntityZ(n\Collider),0,Rnd(0.2,0.3),-0.2,65)
+                    PositionEntity p\pvt,EntityX(n\Collider,True)+Rnd(-0.5,0.5),EntityY(n\Collider,True),EntityZ(n\Collider,True)+Rnd(-0.5,0.5)
+                    p\SizeChange = 0.00059
+                    p\Achange = Rnd(-0.0025,-0.003)
+                    p\speed = 0.0007
+                    RotateEntity p\pvt, 90, 0, 0   
 				
-				n\LastSeen = Max(0, n\LastSeen - fs\FPSfactor[0])
+				    n\LastSeen = Max(0, n\LastSeen - fs\FPSfactor[0])
 				                		
-				PositionEntity(n\obj, EntityX(n\Collider), EntityY(n\Collider) - 0.2, EntityZ(n\Collider))
+				    PositionEntity(n\obj, EntityX(n\Collider), EntityY(n\Collider) - 0.2, EntityZ(n\Collider))
 				
-				RotateEntity n\obj, 0, EntityYaw(n\Collider), 0
+				    RotateEntity n\obj, 0, EntityYaw(n\Collider), 0
 				
-                n\SoundChn = LoopSound2(FireSFX, n\SoundChn, Camera, n\Collider, 10.0, 0.9)
+                    n\SoundCHN = LoopSound2(FireSFX, n\SoundCHN, Camera, n\Collider, 10.0, 0.9)
                 
-                If prevFrame =< 286 And n\Frame>286 Then
-					PlaySound2(StepSFX(2,0,Rand(0,2)),Camera, n\Collider, 6.0, Rnd(0.8,1.0))	
-				ElseIf prevFrame=<311 And n\Frame>311.0 
-					PlaySound2(StepSFX(2,0,Rand(0,2)),Camera, n\Collider, 6.0, Rnd(0.8,1.0))
+                    If prevFrame =< 286 And n\Frame>286 Then
+				    	PlaySound2(StepSFX(2,0,Rand(0,2)),Camera, n\Collider, 6.0, Rnd(0.8,1.0))	
+				    ElseIf prevFrame=<311 And n\Frame>311.0 
+					    PlaySound2(StepSFX(2,0,Rand(0,2)),Camera, n\Collider, 6.0, Rnd(0.8,1.0))
+				    EndIf
 				EndIf
-				
 	            ;[End Block]
-	        Case NPCtype0493
+	       Case NPCtype049_3
 				;[Block]
 				If Abs(EntityY(Collider)-EntityY(n\Collider))<4.0 Then
 
-					prevframe# = AnimTime(n\obj)
+                    prevFrame# = n\Frame
+					;prevframe# = AnimTime(n\obj)
 				
 					If (Not n\IsDead)
 
 						Select n\State
 							Case 0 ;Just Lying
-                                Animate2(n\obj, AnimTime(n\obj), 590.0, 599.0, 0.1, False)
+                                ;nothing
 							Case 1 ;Stands Up
-								Animate2(n\obj, AnimTime(n\obj), 3.0, 30.0, 0.1, False)
-								If AnimTime(n\obj)=>29.5 Then n\State = 2
+								;Animate2(n\obj, AnimTime(n\obj), 3.0, 30.0, 0.1, False)
+								AnimateNPC(n, 3.0, 30.0, 0.1, False)
+								;If AnimTime(n\obj)=>29.5 Then n\State = 2
+								If n\Frame = 30 Then n\State = 2
 							Case 2 ;Following The Player
 								If n\State3 < 0 Then ;check if the player is visible every three seconds
 									If EntityDistance(Collider, n\Collider)<5.0 Then 
@@ -5755,21 +5890,24 @@ Function UpdateNPCs()
 							
 									If dist < 0.7 Then 
 										n\State = 3
-										SetAnimTime n\obj, 127.0
+										n\Frame = 127.0
+										;SetAnimTime n\obj, 127.0
 									Else
 										n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 20.0)
 										MoveEntity n\Collider, 0, 0, n\CurrSpeed * fs\FPSfactor[0]								
 								
-										If dist < 2.0 Then
-											Animate2(n\obj, AnimTime(n\obj), Min(AnimTime(n\obj),95.0), 124.0, n\CurrSpeed*30)
+										If dist < 3.0 Then
+										    AnimateNPC(n, Min(AnimTime(n\obj),95.0), 124.0, n\CurrSpeed*30)
+											;Animate2(n\obj, AnimTime(n\obj), Min(AnimTime(n\obj),95.0), 124.0, n\CurrSpeed*30)
 										Else
-											Animate2(n\obj, AnimTime(n\obj), 64.0, 93.0, n\CurrSpeed*30)
+											AnimateNPC(n, 64.0, 93.0, n\CurrSpeed*30)
+											;Animate2(n\obj, AnimTime(n\obj), 64.0, 93.0, n\CurrSpeed*30)
 										EndIf
 									EndIf
 							
 									n\State2=n\State2-fs\FPSfactor[0]
 								Else
-									n\SoundChn = LoopSound2(n\Sound, n\SoundChn, Camera, n\Collider, 6.0, 0.6)
+									n\SoundCHN = LoopSound2(n\Sound, n\SoundCHN, Camera, n\Collider, 6.0, 0.6)
 							
 									If n\PathStatus = 1 Then ;path found
 										If n\Path[n\PathLocation]=Null Then 
@@ -5784,7 +5922,8 @@ Function UpdateNPCs()
 											RotateEntity n\Collider, 0, CurveAngle(EntityYaw(n\obj), EntityYaw(n\Collider), 30.0), 0
 											n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 20.0)
 											MoveEntity n\Collider, 0, 0, n\CurrSpeed * fs\FPSfactor[0]
-											Animate2(n\obj, AnimTime(n\obj), 64.0, 93.0, n\CurrSpeed*30)
+											AnimateNPC(n, 64.0, 93.0, n\CurrSpeed*30)
+											;Animate2(n\obj, AnimTime(n\obj), 64.0, 93.0, n\CurrSpeed*30)
 									
 											;opens doors in front of him
 											dist2# = EntityDistance(n\Collider,n\Path[n\PathLocation]\obj)
@@ -5809,7 +5948,8 @@ Function UpdateNPCs()
 										EndIf
 									Else ;no path to the player, stands still
 										n\CurrSpeed = 0
-										Animate2(n\obj, AnimTime(n\obj), 610, 619, 0.1)
+										AnimateNPC(n, 590, 599, 0.1)
+										;Animate2(n\obj, AnimTime(n\obj), 590, 599, 0.1)
 										n\PathTimer = n\PathTimer-fs\FPSfactor[0]
 										If n\PathTimer < 70*5
 										    n\PathTimer = n\PathTimer + Rnd(1,2+(2*SelectedDifficulty\aggressiveNPCs))*fs\FPSfactor[0]
@@ -5819,21 +5959,32 @@ Function UpdateNPCs()
 									    EndIf
 									EndIf
 								EndIf
-						
-								;65, 80, 93, 109, 123
-								If n\CurrSpeed > 0.005 Then
-									If (prevframe < 65 And AnimTime(n\obj)=>65) Or (prevframe < 80 And AnimTime(n\obj)=>80) Then
-										PlaySound2(StepSFX(2,0,Rand(0,2)),Camera, n\Collider, 8.0, Rnd(0.3,0.5))						
-									ElseIf (prevframe < 93 And AnimTime(n\obj)=>93) Or (prevframe < 109 And AnimTime(n\obj)=>109)
-										PlaySound2(StepSFX(2,0,Rand(0,2)),Camera, n\Collider, 8.0, Rnd(0.3,0.5))
-									ElseIf (prevframe < 123 And AnimTime(n\obj)=>123)
-										PlaySound2(StepSFX(2,0,Rand(0,2)),Camera, n\Collider, 8.0, Rnd(0.3,0.5))	
+
+								;If n\CurrSpeed > 0.005 Then
+								;	If (prevframe < 65 And AnimTime(n\obj)=>65) Or (prevframe < 80 And AnimTime(n\obj)=>80) Then
+								;		PlaySound2(StepSFX(GetStepSound(n\Collider),0,Rand(0,2)),Camera, n\Collider, 8.0, Rnd(0.3,0.5))				
+								;	ElseIf (prevframe < 93 And AnimTime(n\obj)=>93) Or (prevframe < 109 And AnimTime(n\obj)=>109)
+								;		PlaySound2(StepSFX(GetStepSound(n\Collider),0,Rand(0,2)),Camera, n\Collider, 8.0, Rnd(0.3,0.5))
+								;	ElseIf (prevframe < 123 And AnimTime(n\obj)=>123)
+								;		PlaySound2(StepSFX(GetStepSound(n\Collider),0,Rand(0,2)),Camera, n\Collider, 8.0, Rnd(0.3,0.5))	
+								;	EndIf
+								;EndIf
+								
+								If n\CurrSpeed > 0 Then
+									If (prevframe < 65 And n\Frame >= 65) Or (prevframe < 80 And n\Frame >= 80) Then
+										PlaySound2(StepSFX(GetStepSound(n\Collider),0,Rand(0,2)),Camera, n\Collider, 8.0, Rnd(0.3,0.5))				
+									ElseIf (prevframe < 93 And n\Frame >= 93) Or (prevframe < 109 And n\Frame >= 109)
+										PlaySound2(StepSFX(GetStepSound(n\Collider),0,Rand(0,2)),Camera, n\Collider, 8.0, Rnd(0.3,0.5))
+									ElseIf (prevframe < 123 And n\Frame >= 123)
+										PlaySound2(StepSFX(GetStepSound(n\Collider),0,Rand(0,2)),Camera, n\Collider, 8.0, Rnd(0.3,0.5))	
 									EndIf
-								EndIf						
+								EndIf							
 							Case 3 ; Attacking
 					    		If chs\NoTarget Then n\State = 2
-								Animate2(n\obj, AnimTime(n\obj), 127, 165, 0.7, False)
-								If prevframe < 146 And AnimTime(n\obj)=>146 Then 
+					            AnimateNPC(n, 127, 165, 0.7, False)
+								;Animate2(n\obj, AnimTime(n\obj), 127, 165, 0.7, False)
+								;If prevframe < 146 And AnimTime(n\obj) >= 146 Then 
+								If prevframe < 146 And n\Frame >= 146 Then 
 						   	 		If EntityDistance(n\Collider,Collider)<1.1
 							    		If (Abs(DeltaYaw(n\Collider,Collider))<=60.0)
 							        		PlaySound_Strict DamageSFX(Rand(2,3))
@@ -5847,19 +5998,26 @@ Function UpdateNPCs()
 							                    EndIf
 							        		EndIf
 							                If Injuries > 3.0 Then
-							                    DeathMSG = SubjectName$+". Причина смерти: множественные раны и травмы, нанесённые SCP-049-2." ;Subject D-9341. Cause of death: multiple lacerations and severe blunt force trauma caused by an instance of SCP-049-2.
+							                    DeathMSG = SubjectName$+". Причина смерти: множественные раны и травмы, нанесённые SCP-049-3." ;Subject D-9341. Cause of death: multiple lacerations and severe blunt force trauma caused by an instance of SCP-049-3.
 							                    Kill(True)
 							                EndIf
 							   			EndIf
                            			EndIf
-								ElseIf AnimTime(n\obj)>164.5 Then
+                                ElseIf n\Frame > 164.0 Then
+								;ElseIf AnimTime(n\obj)>164.0 Then
 						    		n\State = 2
 								EndIf
 						End Select
-				
 					Else
-						AnimateNPC(n, 620, 638, 0.5, False)
-						
+					    If n\SoundCHN <> 0
+						    StopChannel n\SoundCHN
+						    n\SoundCHN = 0
+						    FreeSound_Strict n\Sound
+						    n\Sound = 0
+					    EndIf
+					    ;Animate2(n\obj, AnimTime(n\obj), 600, 619, 0.5, False)
+						AnimateNPC(n, 600, 619, 0.5, False)
+						If n\Frame >= 618 Then n\Frame = 619
 					EndIf
 				
 				    PositionEntity(n\obj, EntityX(n\Collider), EntityY(n\Collider) - 0.2, EntityZ(n\Collider))
@@ -5868,7 +6026,7 @@ Function UpdateNPCs()
 				EndIf
 				
 				;[End Block]
-			Case NPCtype178
+			Case NPCtype178_1
 				;[Block]
 				dist = EntityDistance(n\Collider,Collider)
 				
@@ -5877,7 +6035,7 @@ Function UpdateNPCs()
 					;the ambient sound gets louder when the npcs are attacking
 					If n\State > 0 Then temp = 1.0	
 					
-					n\SoundChn = LoopSound2(n\Sound, n\SoundChn, Camera, Camera, 10.0,temp)
+					n\SoundCHN = LoopSound2(n\Sound, n\SoundCHN, Camera, Camera, 10.0,temp)
 				EndIf
 				
 				temp = Rnd(-1.0,1.0)
@@ -5899,7 +6057,7 @@ Function UpdateNPCs()
 					
 				EndIf
 				
-				If (Wearing178<>1) And (n\State3=0.0) Then
+				If (I_178\Using<>1) And (n\State3=0.0) Then
 					If n\State<=0 Then
 						;nothing happens here...
 					Else
@@ -5963,7 +6121,7 @@ Function UpdateNPCs()
 					EndIf
 					
 					;If Rand(1,15)=1 Then EntityColor n\obj,Rand(50,100),0,Rand(0,50)
-					If (Wearing178=1) Or (n\State3>0) Then
+					If (I_178\Using=1) Or (n\State3>0) Then
 						n\State=Min(n\State+fs\FPSfactor[0],300.0)
 					Else
 						n\State=Max(n\State-fs\FPSfactor[0],0.0)
@@ -6008,10 +6166,15 @@ Function UpdateNPCs()
 						n\CurrSpeed = CurveValue(n\Speed,n\CurrSpeed,10.0)
 					EndIf
 					
-					If dist>0.3 Then
+					If dist > 0.3 Then
 						MoveEntity n\Collider, 0, 0, n\CurrSpeed * fs\FPSfactor[0]
-						AnimateNPC(n, 64, 91, n\CurrSpeed*10.0)
-						;Animate2(n\obj, AnimTime(n\obj), 64, 91, n\CurrSpeed*10.0)
+						If dist < 2.0 Then
+						    AnimateNPC(n, Min(AnimTime(n\obj),95.0), 124.0, n\CurrSpeed*10)
+						    ;Animate2(n\obj, AnimTime(n\obj), Min(AnimTime(n\obj),95.0), 124.0, n\CurrSpeed*30)
+						Else
+							AnimateNPC(n, 64.0, 93.0, n\CurrSpeed*10)
+							;Animate2(n\obj, AnimTime(n\obj), 64.0, 93.0, n\CurrSpeed*30)
+						EndIf
 						
 						For d.Doors = Each Doors
 							If (EntityDistance(n\Collider,d\obj)<1.25) And (d\Code<>"ABCD") And (EntityCollided(n\Collider,HIT_178)=0) Then
@@ -6027,11 +6190,11 @@ Function UpdateNPCs()
 						   If I_1033RU\HP = 0
 							   Injuries = Injuries+Rnd(0.4,0.8)
 						   Else
-						       Damage1033RU(20+(5*SelectedDifficulty\aggressiveNPCs))
+						       Damage1033RU(20+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
 						   EndIf
 							If Injuries>=4.0 Then
 								If n\State3=0.0 Then
-									DeathMSG = "Субъект класса D, надевший SCP-178, найден мёртвым в [УДАЛЕНО]. " ;A Class D subject wearing SCP-178 was found dead in [REDACTED].
+									DeathMSG = SubjectName$+", надевший SCP-178, найден мёртвым в [УДАЛЕНО]. " ; wearing SCP-178 was found dead in [REDACTED].
 									DeathMSG = DeathMSG + "Предположительно, убит под" ;Presumed to be killed by the 
 									DeathMSG = DeathMSG + " воздействием эффектов SCP-178." ;effects of SCP-178.
 								Else
@@ -6087,8 +6250,34 @@ Function UpdateNPCs()
 				
 				RotateEntity n\obj, 0, EntityYaw(n\Collider), 0
 				;[End Block]
+            Case NPCtypeVehicle 
+				;[Block]
+				
+				Select n\State
+					Case 0 ;idle
+					    n\CurrSpeed = CurveValue(0.0, n\CurrSpeed, 5.0)
+					Case 1 ;rides
+						n\CurrSpeed = CurveValue(n\Speed*0.7, n\CurrSpeed, 20.0)
+						Animate2(n\obj, AnimTime(n\obj), 1, 20, n\CurrSpeed * 18)
+				End Select
+				
+				If n\State = 0 Then
+				    If ChannelPlaying(n\SoundCHN2) = True Then StopChannel n\SoundCHN2 
+				    n\SoundCHN = LoopSound2(VehicleSFX(1), n\SoundCHN, Camera, n\Collider, 15, 2.0)
+				ElseIf n\State = 1
+				    If ChannelPlaying(n\SoundCHN) = True Then StopChannel n\SoundCHN  
+				    n\SoundCHN2 = LoopSound2(VehicleSFX(0), n\SoundCHN2, Camera, n\Collider, 15, 2.0)
+				EndIf
+												
+				MoveEntity(n\Collider, 0, 0, n\CurrSpeed * fs\FPSfactor[0])
+				
+				PositionEntity(n\obj, EntityX(n\Collider), EntityY(n\Collider) - 0.32, EntityZ(n\Collider))
+				
+				RotateEntity n\obj, 0, EntityYaw(n\Collider), 0
+				;[End Block]
+				
+            ;{~--<END>--~}
 
-            ;END
 		End Select
 		
 		If n\IsDead
@@ -6097,7 +6286,7 @@ Function UpdateNPCs()
 		
 		Local gravityDist = Distance(EntityX(Collider),EntityZ(Collider),EntityX(n\Collider),EntityZ(n\Collider))
 		
-		If gravityDist<HideDistance*0.7 Or n\NPCtype = NPCtype1499 Then
+		If gravityDist<HideDistance*0.7 Or n\NPCtype = NPCtype1499_1 Then
 			If n\InFacility = InFacility
 				TranslateEntity n\Collider, 0, n\DropSpeed, 0
 				
@@ -6114,7 +6303,7 @@ Function UpdateNPCs()
 						Local UpdateGravity% = False
 						Local MaxX#,MinX#,MaxZ#,MinZ#
 						If n\InFacility=1
-							If PlayerRoom\RoomTemplate\Name$ <> "173"
+							If PlayerRoom\RoomTemplate\Name$ <> "room173_intro"
 								For e.Events = Each Events
 									If e\EventName = "room860"
 										If e\EventState = 1.0
@@ -6180,9 +6369,7 @@ Function UpdateNPCs()
 			EndIf
 		Else
 			n\DropSpeed = 0
-		EndIf
-		
-		CatchErrors(Chr(34)+n\NVName+Chr(34)+" NPC")
+		EndIf	
 	Next
 	
 	If MTF_CameraCheckTimer>0.0 And MTF_CameraCheckTimer<70*90
@@ -6191,11 +6378,11 @@ Function UpdateNPCs()
 		MTF_CameraCheckTimer=0.0
 		If (Not PlayerDetected)
 			If MTF_CameraCheckDetected
-				PlayAnnouncement("SFX\Character\MTF\AnnouncCameraFound"+Rand(1,2)+".ogg")
+				PlayAnnouncement(SFXPath$+"Character\MTF\AnnouncCameraFound"+Rand(1,2)+".ogg")
 				PlayerDetected=True
 				MTF_CameraCheckTimer=70*60
 			Else
-				PlayAnnouncement("SFX\Character\MTF\AnnouncCameraNoFound.ogg")
+				PlayAnnouncement(SFXPath$+"Character\MTF\AnnouncCameraNoFound.ogg")
 			EndIf
 		EndIf
 		MTF_CameraCheckDetected=False
@@ -6204,24 +6391,24 @@ Function UpdateNPCs()
 		EndIf
 	EndIf
 	
-	If MTF2_CameraCheckTimer>0.0 And MTF2_CameraCheckTimer<70*90
-		MTF2_CameraCheckTimer=MTF2_CameraCheckTimer+fs\FPSfactor[0]
-	ElseIf MTF2_CameraCheckTimer>=70*90
-		MTF2_CameraCheckTimer=0.0
-		If (Not PlayerDetected)
-			If MTF2_CameraCheckDetected
-				;PlayAnnouncement("SFX\Character\MTF2\AnnouncCameraFound"+Rand(1,2)+".ogg")
-				PlayerDetected=True
-				MTF2_CameraCheckTimer=70*60
+	;If MTF2_CameraCheckTimer>0.0 And MTF2_CameraCheckTimer<70*90
+        ;MTF2_CameraCheckTimer=MTF2_CameraCheckTimer+fs\FPSfactor[0]
+	;ElseIf MTF2_CameraCheckTimer>=70*90
+		;MTF2_CameraCheckTimer=0.0
+		;If (Not PlayerDetected)
+			;If MTF2_CameraCheckDetected
+				;PlayAnnouncement(SFXPath$+"Character\MTF2\AnnouncCameraFound"+Rand(1,2)+".ogg")
+				;PlayerDetected=True
+				;MTF2_CameraCheckTimer=70*60
 			;Else
-				;PlayAnnouncement("SFX\Character\MTF2\AnnouncCameraNoFound.ogg")
-			EndIf
-		EndIf
-		MTF2_CameraCheckDetected=False
-		If MTF2_CameraCheckTimer=0.0
-			PlayerDetected=False
-		EndIf
-	EndIf
+		        ;PlayAnnouncement(SFXPath$+"Character\MTF2\AnnouncCameraNoFound.ogg")
+			;EndIf
+		;EndIf
+		;MTF2_CameraCheckDetected=False
+		;If MTF2_CameraCheckTimer=0.0
+		;	PlayerDetected=False
+		;EndIf
+	;EndIf
 
 	
 End Function
@@ -6344,7 +6531,7 @@ Function TeleportMTFGroup(n.NPCs)
 			EndIf
 		EndIf
 	Next
-
+	
 End Function
 
 Function UpdateMTFUnit(n.NPCs)
@@ -6370,13 +6557,13 @@ Function UpdateMTFUnit(n.NPCs)
                 realType = "096"
 			Case NPCtype049
                 realType = "049"
-			Case NPCtype0492
-                realType = "0492"
-			Case NPCtype5131
+			Case NPCtype049_2
+                realType = "049-2"
+			Case NPCtype513_1
                 realType = "513-1"
-			Case NPCtype035Tentacle
-                realType = "035tentacle"
-			Case NPCtype8602
+			Case NPCtype035_Tentacle
+                realType = "035-Tentacle"
+			Case NPCtype860_2
                 realType = "860-2"
 			Case NPCtype939
                 realType = "939"
@@ -6386,26 +6573,34 @@ Function UpdateMTFUnit(n.NPCs)
                 realType = "PDPlane"
 			Case NPCtype966
                 realType = "966"
-			Case NPCtype1048a
+			Case NPCtype1048_A
                 realType = "1048-A"
-			Case NPCtype1499
+			Case NPCtype1499_1
 				realType = "1499-1"
-			;MODS
+				
+			;{~--<MOD>--~}
+			
 			Case NPCtype650
                 realType = "650"
             Case NPCtype457
                 realType = "457"
-            Case NPCtype0493
-                realType = "0493"
-            Case NPCtype0082
-			    realType = "0082"
-			Case NPCtype178
-                realType = "178"
+            Case NPCtype049_3
+                realType = "049-3"
+            Case NPCtype008_2
+			    realType = "008-2"
+			Case NPCtype178_1
+                realType = "178-1"
             Case NPCtypeCI
                 realType = "CI"
-            ;END
+            Case NPCtypeMTF2
+                realType = "MTF2"
+            Case NPCtypeVehicle
+                realType = "Vehicle"
+
+            ;{~--<END>--~}
+
 		End Select
-		RuntimeError "Called UpdateMTFUnit on "+realType
+		RuntimeError "Вызов UpdateMTFUnit на "+realType ;Called UpdateMTFUnit on
 	EndIf
 	;[End Block]
 	
@@ -6415,12 +6610,13 @@ Function UpdateMTFUnit(n.NPCs)
 	Local n2.NPCs
 	
 	Local p.Particles, target, dist#, dist2#
+	Local dist_to_player#
 	
 	If n\IsDead Then
 		n\BlinkTimer = -1.0
 		SetNPCFrame(n, 532)
-		If ChannelPlaying(n\SoundChn2) Then
-			StopChannel(n\SoundChn2)
+		If ChannelPlaying(n\SoundCHN2) Then
+			StopChannel(n\SoundCHN2)
 		EndIf
 		Return
 	EndIf
@@ -6432,7 +6628,7 @@ Function UpdateMTFUnit(n.NPCs)
 		;only play the "blinking" sound clip if searching/containing 173
 		If n\State = 2
 			If OtherNPCSeesMeNPC(Curr173,n) Or EntityDistance(n\Collider,Curr173\Collider)<3.0
-				PlayMTFSound(LoadTempSound("SFX\Character\MTF\173\BLINKING.ogg"),n)
+				PlayMTFSound(LoadTempSound(SFXPath$+"Character\MTF\173\BLINKING.ogg"),n)
 			EndIf
 		EndIf
 		n\BlinkTimer = 70.0*Rnd(10.0,15.0)
@@ -6450,7 +6646,7 @@ Function UpdateMTFUnit(n.NPCs)
 	
 	If Int(n\State) <> 1 Then n\PrevState = 0
 	
-	n\SoundChn2 = LoopSound2(MTFSFX(6),n\SoundChn2,Camera,n\Collider)
+	n\SoundCHN2 = LoopSound2(MTFSFX(6),n\SoundCHN2,Camera,n\Collider)
 	
 	If n\Idle>0.0 Then
 		FinishWalking(n,488,522,0.015*26)
@@ -6484,7 +6680,7 @@ Function UpdateMTFUnit(n.NPCs)
 							
 							If (Not tmp)
 								For r = Each Rooms
-									If r\RoomTemplate\Name$ = "start"
+									If r\RoomTemplate\Name$ = "room173"
 										Local foundChamber% = False
 										Local pvt% = CreatePivot()
 										PositionEntity pvt%,EntityX(r\obj,True)+4736*RoomScale,0.5,EntityZ(r\obj,True)+1692*RoomScale
@@ -6513,9 +6709,9 @@ Function UpdateMTFUnit(n.NPCs)
 											Curr173\Target = Null
 											Curr173\IsDead = True
 											If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-											n\Sound = LoadSound_Strict("SFX\Character\MTF\173\Cont"+Rand(1,4)+".ogg")
+											n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF\173\Cont"+Rand(1,4)+".ogg")
 											PlayMTFSound(n\Sound, n)
-											PlayAnnouncement("SFX\Character\MTF\Announc173Contain.ogg")
+											PlayAnnouncement(SFXPath$+"Character\MTF\Announc173Contain.ogg")
 											r\RoomDoors[1]\MTFClose = True
                                          	UseDoor(r\RoomDoors[1],False)
 											r\RoomDoors[1]\open = False
@@ -6665,13 +6861,13 @@ Function UpdateMTFUnit(n.NPCs)
 					If n\LastSeen > 0 And n\LastSeen < 70*15 Then
 						If temp < 2
 							If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-							n\Sound = LoadSound_Strict("SFX\Character\MTF\ThereHeIs"+Rand(1,6)+".ogg")
+							n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF\ThereHeIs"+Rand(1,6)+".ogg")
 							PlayMTFSound(n\Sound, n)
 						EndIf
 					Else
 						If temp = True
 							If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-							n\Sound = LoadSound_Strict("SFX\Character\MTF\Stop"+Rand(1,6)+".ogg")
+							n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF\Stop"+Rand(1,6)+".ogg")
 							PlayMTFSound(n\Sound, n)
 						ElseIf temp = 2
 							;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
@@ -6712,7 +6908,7 @@ Function UpdateMTFUnit(n.NPCs)
 							n\PathTimer=0.0
 							n\PathStatus=0
 							If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-							n\Sound = LoadSound_Strict("SFX\Character\MTF\173\Spotted"+Rand(1,2)+".ogg")
+							n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF\173\Spotted"+Rand(1,2)+".ogg")
 							PlayMTFSound(n\Sound, n)
 						EndIf
 					EndIf
@@ -6732,7 +6928,7 @@ Function UpdateMTFUnit(n.NPCs)
 							n\Target = Curr106
 							;If n\MTFLeader=Null
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF\106\Spotted"+Rand(1,3)+".ogg")
+								n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF\106\Spotted"+Rand(1,4)+".ogg")
 								PlayMTFSound(n\Sound, n)
 							;EndIf
 						EndIf
@@ -6751,7 +6947,7 @@ Function UpdateMTFUnit(n.NPCs)
 							n\PathTimer = 0.0
 							n\PathStatus = 0
 							If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-							n\Sound = LoadSound_Strict("SFX\Character\MTF\096\Spotted"+Rand(1,2)+".ogg")
+							n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF\096\Spotted"+Rand(1,2)+".ogg")
 							PlayMTFSound(n\Sound, n)
 						EndIf
 					EndIf
@@ -6771,12 +6967,12 @@ Function UpdateMTFUnit(n.NPCs)
 								n\PathStatus = 0
 								n\Target = n2
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Spotted"+Rand(1,5)+".ogg")
+								n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF\049\Spotted"+Rand(1,5)+".ogg")
 								PlayMTFSound(n\Sound, n)
 								Exit
 							EndIf
 						EndIf
-					ElseIf n2\NPCtype = NPCtype0492 And n2\IsDead = False
+					ElseIf n2\NPCtype = NPCtype049_2 And n2\IsDead = False
 						If OtherNPCSeesMeNPC(n2,n) Then
 							If EntityVisible(n\Collider,n2\Collider)
 								n\State = 9
@@ -6790,12 +6986,12 @@ Function UpdateMTFUnit(n.NPCs)
 								n\Target = n2
 								n\Reload = 70*5
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Player0492_1.ogg")
+								n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF\049\Player0492_1.ogg")
 								PlayMTFSound(n\Sound, n)
 								Exit
 							EndIf
 						EndIf
-					ElseIf n2\NPCtype = NPCtype0081 And n2\IsDead = False
+					ElseIf n2\NPCtype = NPCtype008_1 And n2\IsDead = False
 						If OtherNPCSeesMeNPC(n2,n) Then
 							If EntityVisible(n\Collider,n2\Collider)
 								n\State = 9
@@ -6809,13 +7005,15 @@ Function UpdateMTFUnit(n.NPCs)
 								n\Target = n2
 								n\Reload = 70*5
 								;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								;n\Sound = LoadSound_Strict("SFX\Character\MTF\008\008_1spotted.ogg")
+								;n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF\008\008_1spotted.ogg")
 								;PlayMTFSound(n\Sound, n)
 								Exit
 							EndIf
 						EndIf
-					;MODS
-					ElseIf n2\NPCtype = NPCtype0493 And n2\IsDead = False
+						
+					;{~--<MOD>--~}
+					
+					ElseIf n2\NPCtype = NPCtype049_3 And n2\IsDead = False
 						If OtherNPCSeesMeNPC(n2,n) Then
 							If EntityVisible(n\Collider,n2\Collider)
 								n\State = 9
@@ -6829,12 +7027,12 @@ Function UpdateMTFUnit(n.NPCs)
 								n\Target = n2
 								n\Reload = 70*5
 								;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								;n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Player0492_1.ogg")
+								;n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF\049\049_3Spotted.ogg")
 								;PlayMTFSound(n\Sound, n)
 								Exit
 							EndIf
 						EndIf
-					ElseIf n2\NPCtype = NPCtype0082 And n2\IsDead = False
+					ElseIf n2\NPCtype = NPCtype008_2 And n2\IsDead = False
 						If OtherNPCSeesMeNPC(n2,n) Then
 							If EntityVisible(n\Collider,n2\Collider)
 								n\State = 9
@@ -6848,12 +7046,12 @@ Function UpdateMTFUnit(n.NPCs)
 								n\Target = n2
 								n\Reload = 70*5
 								;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								;n\Sound = LoadSound_Strict("SFX\Character\MTF\008\008_1spotted.ogg")
+								;n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF\008\008_2spotted.ogg")
 								;PlayMTFSound(n\Sound, n)
 								Exit
 							EndIf
 						EndIf
-					ElseIf n2\NPCtype = NPCtype035Tentacle And n2\IsDead = False
+					ElseIf n2\NPCtype = NPCtype035_Tentacle And n2\IsDead = False
 						If OtherNPCSeesMeNPC(n2,n) Then
 							If EntityVisible(n\Collider,n2\Collider)
 								n\State = 9
@@ -6867,23 +7065,27 @@ Function UpdateMTFUnit(n.NPCs)
 								n\Target = n2
 								n\Reload = 70*5
 								;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								;n\Sound = LoadSound_Strict("SFX\Character\MTF\008\008_1spotted.ogg")
+								;n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF\035\Tentacle_Spotted.ogg")
 								;PlayMTFSound(n\Sound, n)
 								Exit
 							EndIf
 						EndIf
-                    ;END
 					EndIf
+					
+					;{~--<END>--~}
+					
 				Next
                 ;[End Block]
 			Case 1 ;searching for player
                 ;[Block]
+                dist_to_player = EntityDistance(Collider, n\Collider)
+
                 n\Speed = 0.015
                 n\State2=n\State2-fs\FPSfactor[0]
                 If MeNPCSeesPlayer(n) = True Then
 					
 					;if close enough, start shooting at the player
-					If playerDist < 4.0 Then
+					If playerDist < 5.2 Then
 						
 						Local angle# = VectorYaw(EntityX(Collider)-EntityX(n\Collider),0,EntityZ(Collider)-EntityZ(n\Collider))
 						
@@ -6903,18 +7105,19 @@ Function UpdateMTFUnit(n.NPCs)
 									RotateEntity(pvt, EntityPitch(n\Collider), EntityYaw(n\Collider), 0, True)
 									PositionEntity(pvt, EntityX(n\obj), EntityY(n\obj), EntityZ(n\obj))
 									MoveEntity (pvt,0.8*0.079, 10.75*0.079, 6.9*0.079)
-									
-									Shoot(EntityX(pvt),EntityY(pvt),EntityZ(pvt),5.0/playerDist, False)
+
+                                    ;Shoot(EntityX(pvt),EntityY(pvt),EntityZ(pvt),5.0/playerDist, True)
+									Shoot(EntityX(pvt),EntityY(pvt), EntityZ(pvt),((25/dist_to_player)*(1/dist_to_player)), True)
 									n\Reload = 7
 									
 									FreeEntity(pvt)
 									
-									DeathMSG=SubjectName$+". Погиб от потери крови после выстрела Девятихвостой Лисы." ;Subject D-9341. Died of blood loss after being shot by Nine-Tailed Fox.
+									DeathMSG=SubjectName$+". Погиб от потери крови после выстрела Девятихвостой Лисы."  ;Died of blood loss after being shot by Nine-Tailed Fox.
 									
 									;player killed -> "target terminated"
 									If prev => 0 And KillTimer < 0 Then
-										DeathMSG=SubjectName$+". Уничтожен Девятихвостой Лисой." ;Subject D-9341. Terminated by Nine-Tailed Fox.
-										PlayMTFSound(LoadTempSound("SFX\Character\MTF\Targetterminated"+Rand(1,4)+".ogg"),n)
+										DeathMSG=SubjectName$+". Уничтожен Девятихвостой Лисой." ;Terminated by Nine-Tailed Fox.
+										PlayMTFSound(LoadTempSound(SFXPath$+"Character\MTF\Targetterminated"+Rand(1,4)+".ogg"),n)
 									EndIf
 								EndIf	
 							EndIf
@@ -7082,7 +7285,7 @@ Function UpdateMTFUnit(n.NPCs)
 					
 					If n\MTFLeader=Null And n\LastSeen<70*30 And n\LastSeen+fs\FPSfactor[0]=>70*30 Then
 						If Rand(2)=1 Then 
-							PlayMTFSound(LoadTempSound("SFX\Character\MTF\Searching"+Rand(1,6)+".ogg"),n)
+							PlayMTFSound(LoadTempSound(SFXPath$+"Character\MTF\Searching"+Rand(1,6)+".ogg"),n)
 						EndIf
 					EndIf
 					
@@ -7093,10 +7296,10 @@ Function UpdateMTFUnit(n.NPCs)
                 
                 If n\State2<=0.0 And n\State2+fs\FPSfactor[0] >0.0 Then
 					If n\MTFLeader = Null Then
-						PlayMTFSound(LoadTempSound("SFX\Character\MTF\Targetlost"+Rand(1,3)+".ogg"),n)
+						PlayMTFSound(LoadTempSound(SFXPath$+"Character\MTF\Targetlost"+Rand(1,3)+".ogg"),n)
 						If MTF_CameraCheckTimer=0.0
 							If Rand(15-(7*SelectedDifficulty\aggressiveNPCs))=1 ;Maybe change this to another chance - ENDSHN
-								PlayAnnouncement("SFX\Character\MTF\AnnouncCameraCheck.ogg")
+								PlayAnnouncement(SFXPath$+"Character\MTF\AnnouncCameraCheck.ogg")
 								MTF_CameraCheckTimer = fs\FPSfactor[0]
 							EndIf
 						EndIf
@@ -7115,7 +7318,7 @@ Function UpdateMTFUnit(n.NPCs)
 							n\EnemyZ = EntityZ(Curr173\Collider,True)
 							n\State2 = 70.0*15.0 ;give up after 15 seconds
 							If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-							n\Sound = LoadSound_Strict("SFX\Character\MTF\173\Spotted3.ogg")
+							n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF\173\Spotted3.ogg")
 							PlayMTFSound(n\Sound, n)
 							n\State3 = 0.0
 							n\PathTimer=0.0
@@ -7123,7 +7326,6 @@ Function UpdateMTFUnit(n.NPCs)
 						EndIf
 					EndIf
 				EndIf
-				
 				If Curr106\State <= 0
 					If OtherNPCSeesMeNPC(Curr106,n) Or EntityDistance(n\Collider,Curr106\Collider)<3.0 Then
 						If EntityVisible(n\Collider,Curr106\Collider) Then
@@ -7138,13 +7340,12 @@ Function UpdateMTFUnit(n.NPCs)
 							n\Target = Curr106
 							If n\MTFLeader=Null
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF\106\Spotted4.ogg")
+								n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF\106\Spotted5.ogg")
 								PlayMTFSound(n\Sound, n)
 							EndIf
 						EndIf
 					EndIf
 				EndIf
-				
 				If Curr096 <> Null
 					If OtherNPCSeesMeNPC(Curr096,n) Then
 						If EntityVisible(n\Collider,Curr096\Collider) Then
@@ -7158,13 +7359,12 @@ Function UpdateMTFUnit(n.NPCs)
 							n\PathStatus = 0
 							If n\MTFLeader=Null
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF\096\Spotted"+Rand(1,2)+".ogg")
+								n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF\096\Spotted"+Rand(1,2)+".ogg")
 								PlayMTFSound(n\Sound, n)
 							EndIf
 						EndIf
 					EndIf
 				EndIf
-				
 				For n2.NPCs = Each NPCs
 					If n2\NPCtype = NPCtype049
 						If OtherNPCSeesMeNPC(n2,n) Then
@@ -7179,12 +7379,12 @@ Function UpdateMTFUnit(n.NPCs)
 								n\PathStatus = 0
 								n\Target = n2
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Spotted"+Rand(1,5)+".ogg")
+								n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF\049\Spotted"+Rand(1,5)+".ogg")
 								PlayMTFSound(n\Sound, n)
 								Exit
 							EndIf
 						EndIf
-					ElseIf n2\NPCtype = NPCtype0492 And n2\IsDead = False
+					ElseIf n2\NPCtype = NPCtype049_2 And n2\IsDead = False
 						If OtherNPCSeesMeNPC(n2,n) Then
 							If EntityVisible(n\Collider,n2\Collider)
 								n\State = 9
@@ -7198,14 +7398,83 @@ Function UpdateMTFUnit(n.NPCs)
 								n\Target = n2
 								n\Reload = 70*5
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Player0492_1.ogg")
+								n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF\049\Player0492_1.ogg")
 								PlayMTFSound(n\Sound, n)
 								Exit
 							EndIf
 						EndIf
+						
+					;{~--<MOD>--~}
+					
+					ElseIf n2\NPCtype = NPCtype049_3 And n2\IsDead = False
+						If OtherNPCSeesMeNPC(n2,n) Then
+							If EntityVisible(n\Collider,n2\Collider)
+								n\State = 9
+								n\EnemyX = EntityX(n2\Collider,True)
+								n\EnemyY = EntityY(n2\Collider,True)
+								n\EnemyZ = EntityZ(n2\Collider,True)
+								n\State2 = 70*15.0
+								n\State3 = 0.0
+								n\PathTimer = 0.0
+								n\PathStatus = 0
+								n\Target = n2
+								n\Reload = 70*5
+								;If n\MTFLeader=Null
+								    ;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
+								    ;n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF\049\049_3Spotted.ogg")
+								    ;PlayMTFSound(n\Sound, n)
+								;EndIf
+								Exit
+							EndIf
+						EndIf
+                    ElseIf n2\NPCtype = NPCtype008_2 And n2\IsDead = False
+						If OtherNPCSeesMeNPC(n2,n) Then
+							If EntityVisible(n\Collider,n2\Collider)
+								n\State = 9
+								n\EnemyX = EntityX(n2\Collider,True)
+								n\EnemyY = EntityY(n2\Collider,True)
+								n\EnemyZ = EntityZ(n2\Collider,True)
+								n\State2 = 70*15.0
+								n\State3 = 0.0
+								n\PathTimer = 0.0
+								n\PathStatus = 0
+								n\Target = n2
+								n\Reload = 70*5
+								;If n\MTFLeader=Null
+								    ;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
+								    ;n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF\008\008_2Spotted.ogg")
+								    ;PlayMTFSound(n\Sound, n)
+								;EndIf
+								Exit
+							EndIf
+						EndIf
+                     ElseIf n2\NPCtype = NPCtype035_Tentacle And n2\IsDead = False
+						If OtherNPCSeesMeNPC(n2,n) Then
+							If EntityVisible(n\Collider,n2\Collider)
+								n\State = 9
+								n\EnemyX = EntityX(n2\Collider,True)
+								n\EnemyY = EntityY(n2\Collider,True)
+								n\EnemyZ = EntityZ(n2\Collider,True)
+								n\State2 = 70*15.0
+								n\State3 = 0.0
+								n\PathTimer = 0.0
+								n\PathStatus = 0
+								n\Target = n2
+								n\Reload = 70*5
+								;If n\MTFLeader=Null
+								    ;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
+								    ;n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF\035\Tentacle_Spotted.ogg")
+								    ;PlayMTFSound(n\Sound, n)
+								;EndIf
+								Exit
+							EndIf
+						EndIf
 					EndIf
+					
+					;{~--<END>--~}
+					
 				Next
-
+                
                 ;[End Block]
 			Case 2 ;searching for/looking at 173
                 ;[Block]
@@ -7236,7 +7505,7 @@ Function UpdateMTFUnit(n.NPCs)
 									Curr173\Idle = 2
 									If n\MTFLeader = Null Then Curr173\Target = n
 									If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-									n\Sound = LoadSound_Strict("SFX\Character\MTF\173\Box"+Rand(1,3)+".ogg")
+									n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF\173\Box"+Rand(1,3)+".ogg")
 									PlayMTFSound(n\Sound, n)
 								EndIf
 							EndIf
@@ -7630,14 +7899,14 @@ Function UpdateMTFUnit(n.NPCs)
 							PositionEntity(pvt, EntityX(n\obj), EntityY(n\obj), EntityZ(n\obj))
 							MoveEntity (pvt,0.8*0.079, 10.75*0.079, 6.9*0.079)
 							
-							Shoot(EntityX(pvt),EntityY(pvt),EntityZ(pvt),0.9, False)
+							Shoot(EntityX(pvt),EntityY(pvt),EntityZ(pvt),0.9, True)
 							n\Reload = 7
 							
 							FreeEntity(pvt)
 							
 							;If prev => 0 And KillTimer < 0 Then
 								;DeathMSG=SubjectName$+". Terminated by Nine-Tailed Fox."
-								;If n\MTFLeader = Null Then PlayMTFSound(LoadTempSound("SFX\Character\MTF\049\Player0492_2.ogg"),n)
+								;If n\MTFLeader = Null Then PlayMTFSound(LoadTempSound(SFXPath$+"Character\MTF\049\Player0492_2.ogg"),n)
 							;EndIf
 						EndIf	
 					EndIf
@@ -7796,7 +8065,7 @@ Function UpdateMTFUnit(n.NPCs)
 					n\State = 0
 				EndIf
 				;[End Block]
-			Case 9 ;SCP-049-2/008 spotted
+			Case 9 ;Spotted other NPCs
 				;[Block]
 				If EntityVisible(n\Collider, n\Target\Collider) Then
 					PointEntity n\obj,n\Target\Collider
@@ -7844,17 +8113,18 @@ Function UpdateMTFUnit(n.NPCs)
 							Else
 								If (Not n\Target\IsDead)
 									If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-									If n\NPCtype = NPCtype0492
-										n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Player0492_2.ogg")
+									If n\NPCtype = NPCtype049_2
+										n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF\049\Player0492_2.ogg")
 										PlayMTFSound(n\Sound, n)
-									;ElseIf n\NPCtype = NPCtype0493
-									    ;n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Player049_3_2.ogg")
+									;ElseIf n\NPCtype = NPCtype049_3
+									    ;n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF\049\Player049_3_2.ogg")
 									    ;PlayMTFSound(n\Sound, n)
-									;ElseIf n\NPCtype = NPCtype0082
-									    ;n\Sound = LoadSound_Strict("SFX\Character\MTF2\008\008_2.ogg")
+									;ElseIf n\NPCtype = NPCtype008_2
+									    ;n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\008\008_2.ogg")
 									    ;PlayMTFSound(n\Sound, n)
-									;Else;If n\NPCtype = NPCtype0081
-									    ;n\Sound = LoadSound_Strict("SFX\Character\MTF2\008\008_1.ogg")
+									;Else;If n\NPCtype = NPCtype008_1
+									    ;n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\008\008_1.ogg")
+									    ;PlayMTFSound(n\Sound, n)
 									EndIf
 								EndIf
 								SetNPCFrame(n\Target,133)
@@ -8011,13 +8281,13 @@ Function UpdateMTF2Unit(n.NPCs)
                 realType = "096"
 			Case NPCtype049
                 realType = "049"
-			Case NPCtype0492
-                realType = "0492"
-			Case NPCtype5131
+			Case NPCtype049_2
+                realType = "049-2"
+			Case NPCtype513_1
                 realType = "513-1"
-			Case NPCtype035Tentacle
-                realType = "035tentacle"
-			Case NPCtype8602
+			Case NPCtype035_Tentacle
+                realType = "035-Tentacle"
+			Case NPCtype860_2
                 realType = "860-2"
 			Case NPCtype939
                 realType = "939"
@@ -8027,28 +8297,36 @@ Function UpdateMTF2Unit(n.NPCs)
                 realType = "PDPlane"
 			Case NPCtype966
                 realType = "966"
-			Case NPCtype1048a
+			Case NPCtype1048_A
                 realType = "1048-A"
-			Case NPCtype1499
+			Case NPCtype1499_1
 				realType = "1499-1"
-			Case NPCtype0081
+			Case NPCtype008_1
 			    realType = "008"
-			;MODS
-            Case NPCtype178
-                realType = "178"
-            Case NPCtype0082
-			    realType = "0082"
-			Case NPCtype0493
-			    realType = "0493"
+			Case NPCtypeMTF
+			    realType = "MTF"
+			
+			;{~--<MOD>--~}
+			
+            Case NPCtype178_1
+                realType = "178-1"
+            Case NPCtype008_2
+			    realType = "008-2"
+			Case NPCtype049_3
+			    realType = "049-3"
 		    Case NPCtype650
                 realType = "650"
             Case NPCtype457
                 realType = "457"
             Case NPCtypeCI
                 realType = "CI"
-            ;END
+            Case NPCtypeVehicle
+                realType = "Vehicle"
+
+            ;{~--<END>--~}
+
 		End Select
-		RuntimeError "Called UpdateMTF2Unit on "+realType
+		RuntimeError "Вызов UpdateMTF2Unit на "+realType ;Called UpdateMTF2Unit on
 	EndIf
 	;[End Block]
 	
@@ -8058,6 +8336,7 @@ Function UpdateMTF2Unit(n.NPCs)
 	Local n2.NPCs
 	
 	Local p.Particles, target, dist#, dist2#
+	Local dist_to_player#
 	
 	If n\IsDead Then
 		n\BlinkTimer = -1.0
@@ -8072,7 +8351,7 @@ Function UpdateMTF2Unit(n.NPCs)
 		;only play the "blinking" sound clip if searching/containing 173
 		If n\State = 2 
 		    If OtherNPCSeesMeNPC(Curr173,n) Or EntityDistance(n\Collider,Curr173\Collider)<3.0
-			    PlayMTFSound(LoadTempSound("SFX\Character\MTF2\173\BLINKING"+Rand(1,4)+".ogg"),n)
+			    PlayMTFSound(LoadTempSound(SFXPath$+"Character\MTF2\173\BLINKING"+Rand(1,4)+".ogg"),n)
 			EndIf
 		EndIf
 		n\BlinkTimer = 70.0*Rnd(10.0,15.0)
@@ -8122,7 +8401,7 @@ Function UpdateMTF2Unit(n.NPCs)
 							
 							If (Not tmp)
 								For r = Each Rooms
-									If r\RoomTemplate\Name$ = "start"
+									If r\RoomTemplate\Name$ = "room173"
 										Local foundChamber% = False
 										Local pvt% = CreatePivot()
 										PositionEntity pvt%,EntityX(r\obj,True)+4736*RoomScale,0.5,EntityZ(r\obj,True)+1692*RoomScale
@@ -8151,9 +8430,9 @@ Function UpdateMTF2Unit(n.NPCs)
 											Curr173\Target = Null
 											Curr173\IsDead = True
 											If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-											n\Sound = LoadSound_Strict("SFX\Character\MTF2\173\Cont"+Rand(1,6)+".ogg")
+											n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\173\Cont"+Rand(1,6)+".ogg")
 											PlayMTFSound(n\Sound, n)
-											;PlayAnnouncement("SFX\Character\MTF2\Announc173Contain.ogg")
+											;PlayAnnouncement(SFXPath$+"Character\MTF2\Announc173Contain.ogg")
 											r\RoomDoors[1]\MTFClose = True
                                          	UseDoor(r\RoomDoors[1],False)
 											r\RoomDoors[1]\open = False
@@ -8303,13 +8582,13 @@ Function UpdateMTF2Unit(n.NPCs)
 					If n\LastSeen > 0 And n\LastSeen < 70*15 Then
 						If temp < 2
 							If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-							n\Sound = LoadSound_Strict("SFX\Character\MTF2\ThereHeIs"+Rand(1,6)+".ogg")
+							n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\ThereHeIs"+Rand(1,6)+".ogg")
 							PlayMTFSound(n\Sound, n)
 						EndIf
 					Else
 						If temp = True
 							If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-							n\Sound = LoadSound_Strict("SFX\Character\MTF2\Stop"+Rand(1,6)+".ogg")
+							n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\Stop"+Rand(1,6)+".ogg")
 							PlayMTFSound(n\Sound, n)
 						ElseIf temp = 2
 							;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
@@ -8347,7 +8626,7 @@ Function UpdateMTF2Unit(n.NPCs)
 							n\PathTimer=0.0
 							n\PathStatus=0
 							If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-							n\Sound = LoadSound_Strict("SFX\Character\MTF2\173\Spotted"+Rand(1,4)+".ogg")
+							n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\173\Spotted"+Rand(1,4)+".ogg")
 							PlayMTFSound(n\Sound, n)
 						EndIf
 					EndIf
@@ -8367,7 +8646,7 @@ Function UpdateMTF2Unit(n.NPCs)
 							n\Target = Curr106
 							;If n\MTF2Leader=Null
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF2\106\Spotted"+Rand(1,6)+".ogg")
+								n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\106\Spotted"+Rand(1,6)+".ogg")
 								PlayMTFSound(n\Sound, n)
 							;EndIf
 						EndIf
@@ -8386,7 +8665,7 @@ Function UpdateMTF2Unit(n.NPCs)
 							n\PathTimer = 0.0
 							n\PathStatus = 0
 							If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-							n\Sound = LoadSound_Strict("SFX\Character\MTF2\096\Spotted"+Rand(1,2)+".ogg")
+							n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\096\Spotted"+Rand(1,2)+".ogg")
 							PlayMTFSound(n\Sound, n)
 						EndIf
 					EndIf
@@ -8406,12 +8685,12 @@ Function UpdateMTF2Unit(n.NPCs)
 								n\PathStatus = 0
 								n\Target = n2
 								;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								;n\Sound = LoadSound_Strict("SFX\Character\MTF2\049\Spotted"+Rand(1,?)+".ogg")
+								;n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\049\Spotted"+Rand(1,?)+".ogg")
 								;PlayMTFSound(n\Sound, n)
 								Exit
 							EndIf
 						EndIf
-					ElseIf n2\NPCtype = NPCtype0493 And n2\IsDead = False
+					ElseIf n2\NPCtype = NPCtype008_1 And n2\IsDead = False
 						If OtherNPCSeesMeNPC(n2,n) Then
 							If EntityVisible(n\Collider,n2\Collider)
 								n\State = 9
@@ -8425,51 +8704,12 @@ Function UpdateMTF2Unit(n.NPCs)
 								n\Target = n2
 								n\Reload = 70*5
 								;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								;n\Sound = LoadSound_Strict("SFX\Character\MTF2\049\Player0492_1.ogg")
+								;n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\008\008_1spotted.ogg")
 								;PlayMTFSound(n\Sound, n)
 								Exit
 							EndIf
 						EndIf
-					ElseIf n2\NPCtype = NPCtype0081 And n2\IsDead = False
-						If OtherNPCSeesMeNPC(n2,n) Then
-							If EntityVisible(n\Collider,n2\Collider)
-								n\State = 9
-								n\EnemyX = EntityX(n2\Collider,True)
-								n\EnemyY = EntityY(n2\Collider,True)
-								n\EnemyZ = EntityZ(n2\Collider,True)
-								n\State2 = 70*15.0
-								n\State3 = 0.0
-								n\PathTimer = 0.0
-								n\PathStatus = 0
-								n\Target = n2
-								n\Reload = 70*5
-								;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								;n\Sound = LoadSound_Strict("SFX\Character\MTF2\008\008_1spotted.ogg")
-								;PlayMTFSound(n\Sound, n)
-								Exit
-							EndIf
-						EndIf
-					;MODS
-					ElseIf n2\NPCtype = NPCtype0082 And n2\IsDead = False
-						If OtherNPCSeesMeNPC(n2,n) Then
-							If EntityVisible(n\Collider,n2\Collider)
-								n\State = 9
-								n\EnemyX = EntityX(n2\Collider,True)
-								n\EnemyY = EntityY(n2\Collider,True)
-								n\EnemyZ = EntityZ(n2\Collider,True)
-								n\State2 = 70*15.0
-								n\State3 = 0.0
-								n\PathTimer = 0.0
-								n\PathStatus = 0
-								n\Target = n2
-								n\Reload = 70*5
-								;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								;n\Sound = LoadSound_Strict("SFX\Character\MTF2\008\008_1spotted.ogg")
-								;PlayMTFSound(n\Sound, n)
-								Exit
-							EndIf
-						EndIf
-					ElseIf n2\NPCtype = NPCtype0492 And n2\IsDead = False
+					ElseIf n2\NPCtype = NPCtype049_2 And n2\IsDead = False
 						If OtherNPCSeesMeNPC(n2,n) Then
 							If EntityVisible(n\Collider,n2\Collider)
 								n\State = 9
@@ -8483,12 +8723,15 @@ Function UpdateMTF2Unit(n.NPCs)
 								n\Target = n2
 								n\Reload = 70*5
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF2\049\Player0492_1.ogg")
+								n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\049\Player0492_1.ogg")
 								PlayMTFSound(n\Sound, n)
 								Exit
 							EndIf
 						EndIf
-					ElseIf n2\NPCtype = NPCtype035Tentacle And n2\IsDead = False
+						
+					;{~--<MOD>--~}
+					
+					ElseIf n2\NPCtype = NPCtype008_2 And n2\IsDead = False
 						If OtherNPCSeesMeNPC(n2,n) Then
 							If EntityVisible(n\Collider,n2\Collider)
 								n\State = 9
@@ -8502,23 +8745,65 @@ Function UpdateMTF2Unit(n.NPCs)
 								n\Target = n2
 								n\Reload = 70*5
 								;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								;n\Sound = LoadSound_Strict("SFX\Character\MTF\008\008_1spotted.ogg")
+								;n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\008\008_2Spotted.ogg")
 								;PlayMTFSound(n\Sound, n)
 								Exit
 							EndIf
 						EndIf
-						;END
+					ElseIf n2\NPCtype = NPCtype049_3 And n2\IsDead = False
+						If OtherNPCSeesMeNPC(n2,n) Then
+							If EntityVisible(n\Collider,n2\Collider)
+								n\State = 9
+								n\EnemyX = EntityX(n2\Collider,True)
+								n\EnemyY = EntityY(n2\Collider,True)
+								n\EnemyZ = EntityZ(n2\Collider,True)
+								n\State2 = 70*15.0
+								n\State3 = 0.0
+								n\PathTimer = 0.0
+								n\PathStatus = 0
+								n\Target = n2
+								n\Reload = 70*5
+								;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
+								;n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\049\049_3Spotted.ogg")
+								;PlayMTFSound(n\Sound, n)
+								Exit
+							EndIf
+						EndIf
+					ElseIf n2\NPCtype = NPCtype035_Tentacle And n2\IsDead = False
+						If OtherNPCSeesMeNPC(n2,n) Then
+							If EntityVisible(n\Collider,n2\Collider)
+								n\State = 9
+								n\EnemyX = EntityX(n2\Collider,True)
+								n\EnemyY = EntityY(n2\Collider,True)
+								n\EnemyZ = EntityZ(n2\Collider,True)
+								n\State2 = 70*15.0
+								n\State3 = 0.0
+								n\PathTimer = 0.0
+								n\PathStatus = 0
+								n\Target = n2
+								n\Reload = 70*5
+								;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
+								;n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\035\Tentalce_Spotted.ogg")
+								;PlayMTFSound(n\Sound, n)
+								Exit
+							EndIf
+						EndIf
 					EndIf
+					
+					;{~--<END>--~}
+					
 				Next
                 ;[End Block]
 			Case 1 ;searching for player
                 ;[Block]
                 n\Speed = 0.015
                 n\State2=n\State2-fs\FPSfactor[0]
+
+                dist_to_player = EntityDistance(Collider, n\Collider)
                 If MeNPCSeesPlayer(n) = True Then
 					
 					;if close enough, start shooting at the player
-					If playerDist < 4.0 Then
+					If playerDist < 5.2 Then
 						
 						Local angle# = VectorYaw(EntityX(Collider)-EntityX(n\Collider),0,EntityZ(Collider)-EntityZ(n\Collider))
 						
@@ -8538,8 +8823,9 @@ Function UpdateMTF2Unit(n.NPCs)
 									RotateEntity(pvt, EntityPitch(n\Collider), EntityYaw(n\Collider), 0, True)
 									PositionEntity(pvt, EntityX(n\obj), EntityY(n\obj), EntityZ(n\obj))
 									MoveEntity (pvt,0.8*0.079, 10.75*0.079, 6.9*0.079)
+
+									Shoot(EntityX(pvt),EntityY(pvt), EntityZ(pvt),((25/dist_to_player)*(1/dist_to_player)), True)
 									
-									Shoot(EntityX(pvt),EntityY(pvt),EntityZ(pvt),5.0/playerDist, False)
 									n\Reload = 7
 									
 									FreeEntity(pvt)
@@ -8549,7 +8835,7 @@ Function UpdateMTF2Unit(n.NPCs)
 									;player killed -> "target terminated"
 									If prev => 0 And KillTimer < 0 Then
 										DeathMSG=SubjectName$+". Уничтожен Не Вижу Зла." ;Terminated by See No Evil."
-										PlayMTFSound(LoadTempSound("SFX\Character\MTF2\Targetterminated"+Rand(1,5)+".ogg"),n)
+										PlayMTFSound(LoadTempSound(SFXPath$+"Character\MTF2\Targetterminated"+Rand(1,5)+".ogg"),n)
 									EndIf
 								EndIf	
 							EndIf
@@ -8717,7 +9003,7 @@ Function UpdateMTF2Unit(n.NPCs)
 					
 					If n\MTF2Leader=Null And n\LastSeen<70*30 And n\LastSeen+fs\FPSfactor[0]=>70*30 Then
 						If Rand(2)=1 Then 
-							PlayMTFSound(LoadTempSound("SFX\Character\MTF2\Searching"+Rand(1,6)+".ogg"),n)
+							PlayMTFSound(LoadTempSound(SFXPath$+"Character\MTF2\Searching"+Rand(1,6)+".ogg"),n)
 						EndIf
 					EndIf
 					
@@ -8728,10 +9014,10 @@ Function UpdateMTF2Unit(n.NPCs)
                 
                 If n\State2<=0.0 And n\State2+fs\FPSfactor[0] >0.0 Then
 					If n\MTF2Leader = Null Then
-						PlayMTFSound(LoadTempSound("SFX\Character\MTF2\Targetlost"+Rand(1,4)+".ogg"),n)
+						PlayMTFSound(LoadTempSound(SFXPath$+"Character\MTF2\Targetlost"+Rand(1,4)+".ogg"),n)
 						If MTF2_CameraCheckTimer=0.0
 							If Rand(15-(7*SelectedDifficulty\aggressiveNPCs))=1 ;Maybe change this to another chance - ENDSHN
-								;PlayAnnouncement("SFX\Character\MTF2\AnnouncCameraCheck.ogg")
+								;PlayAnnouncement(SFXPath$+"Character\MTF2\AnnouncCameraCheck.ogg")
 								MTF2_CameraCheckTimer = fs\FPSfactor[0]
 							EndIf
 						EndIf
@@ -8750,7 +9036,7 @@ Function UpdateMTF2Unit(n.NPCs)
 							n\EnemyZ = EntityZ(Curr173\Collider,True)
 							n\State2 = 70.0*15.0 ;give up after 15 seconds
 							If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-							n\Sound = LoadSound_Strict("SFX\Character\MTF2\173\Spotted3.ogg")
+							n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\173\Spotted3.ogg")
 							PlayMTFSound(n\Sound, n)
 							n\State3 = 0.0
 							n\PathTimer=0.0
@@ -8773,7 +9059,7 @@ Function UpdateMTF2Unit(n.NPCs)
 							n\Target = Curr106
 							If n\MTF2Leader=Null
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF2\106\Spotted4.ogg")
+								n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\106\Spotted4.ogg")
 								PlayMTFSound(n\Sound, n)
 							EndIf
 						EndIf
@@ -8793,7 +9079,7 @@ Function UpdateMTF2Unit(n.NPCs)
 							n\PathStatus = 0
 							If n\MTF2Leader=Null
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF2\096\Spotted"+Rand(1,2)+".ogg")
+								n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\096\Spotted"+Rand(1,2)+".ogg")
 								PlayMTFSound(n\Sound, n)
 							EndIf
 						EndIf
@@ -8814,12 +9100,12 @@ Function UpdateMTF2Unit(n.NPCs)
 								n\PathStatus = 0
 								n\Target = n2
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Spotted"+Rand(1,5)+".ogg")
+								n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF\049\Spotted"+Rand(1,5)+".ogg")
 								PlayMTFSound(n\Sound, n)
 								Exit
 							EndIf
 						EndIf
-					ElseIf n2\NPCtype = NPCtype0492 And n2\IsDead = False
+					ElseIf n2\NPCtype = NPCtype049_2 And n2\IsDead = False
 						If OtherNPCSeesMeNPC(n2,n) Then
 							If EntityVisible(n\Collider,n2\Collider)
 								n\State = 9
@@ -8834,17 +9120,86 @@ Function UpdateMTF2Unit(n.NPCs)
 								n\Reload = 70*5
 								;If n\MTF2Leader=Null
 									If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-									n\Sound = LoadSound_Strict("SFX\Character\MTF2\049\Player0492_1.ogg")
+									n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\049\Player0492_1.ogg")
 									PlayMTFSound(n\Sound, n)
 								;EndIf
 								Exit
 							EndIf
 						EndIf
+						
+					;{~--<MOD>--~}
+					
+					ElseIf n2\NPCtype = NPCtype049_3 And n2\IsDead = False
+						If OtherNPCSeesMeNPC(n2,n) Then
+							If EntityVisible(n\Collider,n2\Collider)
+								n\State = 9
+								n\EnemyX = EntityX(n2\Collider,True)
+								n\EnemyY = EntityY(n2\Collider,True)
+								n\EnemyZ = EntityZ(n2\Collider,True)
+								n\State2 = 70*15.0
+								n\State3 = 0.0
+								n\PathTimer = 0.0
+								n\PathStatus = 0
+								n\Target = n2
+								n\Reload = 70*5
+								;If n\MTF2Leader=Null
+									;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
+									;n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\049\049_3Spotted.ogg")
+									;PlayMTFSound(n\Sound, n)
+								;EndIf
+								Exit
+							EndIf
+						EndIf
+                    ElseIf n2\NPCtype = NPCtype008_2 And n2\IsDead = False
+						If OtherNPCSeesMeNPC(n2,n) Then
+							If EntityVisible(n\Collider,n2\Collider)
+								n\State = 9
+								n\EnemyX = EntityX(n2\Collider,True)
+								n\EnemyY = EntityY(n2\Collider,True)
+								n\EnemyZ = EntityZ(n2\Collider,True)
+								n\State2 = 70*15.0
+								n\State3 = 0.0
+								n\PathTimer = 0.0
+								n\PathStatus = 0
+								n\Target = n2
+								n\Reload = 70*5
+								;If n\MTF2Leader=Null
+									;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
+									;n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\008\008_2Spotted.ogg")
+									;PlayMTFSound(n\Sound, n)
+								;EndIf
+								Exit
+							EndIf
+						EndIf
+					ElseIf n2\NPCtype = NPCtype035_Tentacle And n2\IsDead = False
+						If OtherNPCSeesMeNPC(n2,n) Then
+							If EntityVisible(n\Collider,n2\Collider)
+								n\State = 9
+								n\EnemyX = EntityX(n2\Collider,True)
+								n\EnemyY = EntityY(n2\Collider,True)
+								n\EnemyZ = EntityZ(n2\Collider,True)
+								n\State2 = 70*15.0
+								n\State3 = 0.0
+								n\PathTimer = 0.0
+								n\PathStatus = 0
+								n\Target = n2
+								n\Reload = 70*5
+								;If n\MTF2Leader=Null
+									;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
+									;n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\035\Tentacle_Spotted.ogg")
+									;PlayMTFSound(n\Sound, n)
+								;EndIf
+								Exit
+							EndIf
+						EndIf
 					EndIf
+					
+					;{~--<END>--~}
+					
 				Next
-
+                
                 ;[End Block]
-			Case 2 ;searching for/looking at 173
+			Case 2 ;searching for/looking at SCP-173
                 ;[Block]
                 If Curr173\Idle = 2 Then
 					n\State = 0
@@ -8873,7 +9228,7 @@ Function UpdateMTF2Unit(n.NPCs)
 									Curr173\Idle = 2
 									If n\MTF2Leader = Null Then Curr173\Target = n
 									If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-									n\Sound = LoadSound_Strict("SFX\Character\MTF2\173\Box"+Rand(1,4)+".ogg")
+									n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\173\Box"+Rand(1,4)+".ogg")
 									PlayMTFSound(n\Sound, n)
 								EndIf
 							EndIf
@@ -9068,7 +9423,7 @@ Function UpdateMTF2Unit(n.NPCs)
 				
 				n\Angle = EntityYaw(n\Collider)
 				;[End Block]
-			Case 4 ;SCP-106/049 detected
+			Case 4 ;SCP-106/SCP-049 detected
 				;[Block]
 				n\Speed = 0.03
                 n\State2=n\State2-fs\FPSfactor[0]
@@ -9228,7 +9583,6 @@ Function UpdateMTF2Unit(n.NPCs)
 				;[End Block]
 			Case 6 ;seeing the player as a 049-2 instance
 				;[Block]
-				
 				PointEntity n\obj,Collider
 				RotateEntity n\Collider,0,CurveAngle(EntityYaw(n\obj),EntityYaw(n\Collider),20.0),0
 				n\Angle = EntityYaw(n\Collider)
@@ -9250,14 +9604,14 @@ Function UpdateMTF2Unit(n.NPCs)
 							PositionEntity(pvt, EntityX(n\obj), EntityY(n\obj), EntityZ(n\obj))
 							MoveEntity (pvt,0.8*0.079, 10.75*0.079, 6.9*0.079)
 							
-							Shoot(EntityX(pvt),EntityY(pvt),EntityZ(pvt),0.9, False)
+							Shoot(EntityX(pvt),EntityY(pvt), EntityZ(pvt), 0.9, True)
 							n\Reload = 7
 							
 							FreeEntity(pvt)
 							
 							;If prev => 0 And KillTimer < 0 Then
 								;DeathMSG=SubjectName$+". Terminated by See No Evil."
-								;If n\MTF2Leader = Null Then PlayMTFSound(LoadTempSound("SFX\Character\MTF2\049\Player0492_2.ogg"),n)
+								;If n\MTF2Leader = Null Then PlayMTFSound(LoadTempSound(SFXPath$+"Character\MTF2\049\Player0492_2.ogg"),n)
 							;EndIf
 						EndIf	
 					EndIf
@@ -9464,17 +9818,17 @@ Function UpdateMTF2Unit(n.NPCs)
 							Else
 								If (Not n\Target\IsDead)
 									If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-									If n\NPCtype = NPCtype0492
-										n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Player0492_2.ogg")
+									If n\NPCtype = NPCtyp049_2
+										n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF\049\Player0492_2.ogg")
 										PlayMTFSound(n\Sound, n)
-									;ElseIf n\NPCtype = NPCtype0493
-									    ;n\Sound = LoadSound_Strict("SFX\Character\MTF\049\Player049_3_2.ogg")
+									;ElseIf n\NPCtype = NPCtype049_3
+									    ;n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF\049\Player049_3_2.ogg")
 									    ;PlayMTFSound(n\Sound, n)
-									;ElseIf n\NPCtype = NPCtype0082
-									    ;n\Sound = LoadSound_Strict("SFX\Character\MTF2\008\008_2.ogg")
+									;ElseIf n\NPCtype = NPCtype008_2
+									    ;n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\008\008_2.ogg")
 									    ;PlayMTFSound(n\Sound, n)
-									;Else;If n\NPCtype = NPCtype0081
-									    ;n\Sound = LoadSound_Strict("SFX\Character\MTF2\008\008_1.ogg")
+									;Else;If n\NPCtype = NPCtype008_1
+									    ;n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\008\008_1.ogg")
 									    ;PlayMTFSound(n\Sound, n)
 									EndIf
 								EndIf
@@ -9623,180 +9977,563 @@ Function Shoot(x#, y#, z#, hitProb# = 1.0, particles% = True, instaKill% = False
 	
 	LightVolume = TempLightVolume*1.2
 	
-	If (Not chs\GodMode) Then 
-		If instaKill Then Kill(True) : PlaySound_Strict BullethitSFX : Return	    
-		If Rnd(1.0) =< hitProb Then
-			TurnEntity Camera, Rnd(-3,3), Rnd(-3,3), 0
+	If instaKill Then Kill(True) : PlaySound_Strict BullethitSFX : Return
+		
+	If Rnd(1.0) =< hitProb Then
+		TurnEntity Camera, Rnd(-3,3), Rnd(-3,3), 0
 			
-			Local ShotMessageUpdate$
-			If WearingVest>0 Then
-				If WearingVest = 1 Then
-					Select Rand(8)
-						Case 1,2,3,4,5
-						    If I_1033RU\HP = 0
-						        BlurTimer = 500
-							    Stamina = 0
-						        Injuries = Injuries + Rnd(0.1,0.5)
-						        ShotMessageUpdate = "Пуля прошла сквозь жилет, Вы задыхаетесь." ;A bullet penetrated your vest, making you gasp.
-                            Else
-							    ShotMessageUpdate = "Пуля прошла сквозь жилет, но SCP-1033-RU защитил Вас." ;A bullet penetrated your vest, but SCP-1033-RU protected you.
-								Damage1033RU(2+(5*SelectedDifficulty\aggressiveNPCs))
-								EndIf
-						Case 6
-						    BlurTimer = 500
-							Stamina = 0
-						        Injuries = Injuries + Rnd(0.8,1.2)
-						        ShotMessageUpdate = "Пуля попала вам в левую ногу." ;A bullet hit your left leg.
-						Case 7
-						    BlurTimer = 500
-							Stamina = 0
-							    Injuries = Injuries + Rnd(0.8,1.2)
-							    ShotMessageUpdate = "Пуля попала вам в правую ногу." ;A bullet hit your right leg.
-						Case 8
-						    BlurTimer = 500
-							Stamina = 0
-						        Injuries = Injuries + Rnd(1.2,1.6)
-						        ShotMessageUpdate = "Пуля попала вам в шею, Вы задыхаетесь." ;A bullet struck your neck, making you gasp.
-					End Select	
-				Else
-					If Rand(10)=1 Then
-					    BlurTimer = 500
-					    Stamina = Stamina - 1
-						Injuries = Injuries + Rnd(0.8,1.1)
-						ShotMessageUpdate = "Поля попала вам в грудь. Жилет поглотил часть урона." ;A bullet hit your chest. The vest absorbed some of the damage.
-					Else
-					    Injuries = Injuries + Rnd(0.1,0.5)
-					    ShotMessageUpdate = "Поля попала вам в грудь. Жилет поглотил большую часть урона." ;A bullet hit your chest. The vest absorbed most of the damage.
-					EndIf
-				EndIf
-				
-				If Injuries >= 5
-				    If I_1033RU\HP = 0
-					    If Rand(3) = 1 Then Kill(True)
-					Else
-					    Damage1033RU(50+(5*SelectedDifficulty\aggressiveNPCs))
-                    EndIf
-				EndIf
-			Else
-				Select Rand(6)
-					Case 1
-					    If I_1033RU\HP = 0
-						    Kill(True)
+		Local ShotMessageUpdate$
+		If WearingVest > 0 And (Not WearingHelmet) Then ;If player wearing the ballistic vest only
+			If WearingVest = 1 Then
+				Select Rand(16)
+					Case 1,2,3,4,5,6,7,8,9 ;Vest
+						;[Block]
+						BlurTimer = 650
+						Stamina = 0
+						If I_1033RU\HP = 0
+							ShotMessageUpdate = "Пуля прошла сквозь жилет, Вы задыхаетесь." ;A bullet penetrated your vest, making you gasp.
+							Injuries = Injuries + Rnd(0.1,0.2)
 						Else
-						    Damage1033RU(50+(5*SelectedDifficulty\aggressiveNPCs))
-                        EndIf
-					Case 2
-					    BlurTimer = 500
-					    If I_1033RU\HP = 0
-					        Injuries = Injuries + Rnd(0.8,1.2)
-					        ShotMessageUpdate = "Пуля попала вам в левую ногу." ;A bullet hit your left leg.
-					    Else
-					        Damage1033RU(2+(5*SelectedDifficulty\aggressiveNPCs))
-						    ShotMessageUpdate = "Пуля попала вам в левую ногу, но SCP-1033-RU защитил Вас." ;A bullet hit your left leg, but SCP-1033-RU protected you.
+							ShotMessageUpdate = "Пуля прошла сквозь жилет, но SCP-1033-RU защитил Вас." ;A bullet penetrated your vest, but SCP-1033-RU protected you.
+							Damage1033RU(5+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+					    EndIf
+						;[End Block]
+					Case 10 ;Left leg
+						;[Block]
+						BlurTimer = 650
+						Stamina = 0
+						If I_1033RU\HP = 0
+						    ShotMessageUpdate = "Пуля попала Вам в левую ногу." ;A bullet hit your left leg.
+							Injuries = Injuries + Rnd(0.7,0.9)
+						Else
+							ShotMessageUpdate = "Пуля попала Вам в левую ногу, но SCP-1033-RU защитил Вас." ;A bullet hit your left leg, but SCP-1033-RU protected you.
+							Damage1033RU(15+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+					    EndIf
+					    ;[End Block]
+					Case 11 ;Right leg
+						;[Block]
+					    BlurTimer = 650
+					    Stamina = 0
+						If I_1033RU\HP = 0
+						    ShotMessageUpdate = "Пуля попала Вам в правую ногу." ;A bullet hit your right leg.
+							Injuries = Injuries + Rnd(0.7,0.9)
+						Else
+							ShotMessageUpdate = "Пуля попала Вам в правую ногу, но SCP-1033-RU защитил Вас." ;A bullet hit your right leg, but SCP-1033-RU protected you.
+							Damage1033RU(15+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
 						EndIf
-					Case 3
-					    BlurTimer = 500
-					    If I_1033RU\HP = 0
-					        Injuries = Injuries + Rnd(0.8,1.2)
-					        ShotMessageUpdate = "Пуля попала вам в правую ногу." ;A bullet hit your right leg.
-					    Else
-					        Damage1033RU(2+(5*SelectedDifficulty\aggressiveNPCs))
-						    ShotMessageUpdate = "Пуля попала вам в правую ногу, но SCP-1033-RU защитил Вас." ;A bullet hit your right leg, but SCP-1033-RU protected you.
+						;[End Block]
+					Case 12 ;Left hand
+						;[Block]
+						BlurTimer = 650
+						If I_1033RU\HP = 0
+						    ShotMessageUpdate = "Пуля попала Вам в левую руку." ;A bullet hit your left hand."
+							Injuries = Injuries + Rnd(0.5,0.7)
+						Else
+							ShotMessageUpdate = "Пуля попала Вам в левую руку, но SCP-1033-RU защитил Вас." ;A bullet hit your left hand, but SCP-1033-RU protected you.
+							Damage1033RU(10+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+					    EndIf
+					    ;[End Block]
+					Case 13 ;Right hand
+						;[Block]
+					    BlurTimer = 650
+						If I_1033RU\HP = 0
+						    ShotMessageUpdate = "Пуля попала Вам в правую руку." ;A bullet hit your right hand.
+							Injuries = Injuries + Rnd(0.5,0.7)
+						Else
+							ShotMessageUpdate = "Пуля попала Вам в правую руку, но SCP-1033-RU защитил Вас." ;A bullet hit your right hand, but SCP-1033-RU protected you.
+							Damage1033RU(10+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
 						EndIf
-					Case 4
-					    BlurTimer = 500
-					    If I_1033RU\HP = 0
-					        Injuries = Injuries + Rnd(0.8,1.2)
-					        ShotMessageUpdate = "Пуля попала вам в правое плечо." ;A bullet hit your right shoulder.
-					    Else
-					        Damage1033RU(2+(5*SelectedDifficulty\aggressiveNPCs))
-						    ShotMessageUpdate = "Пуля попала вам в правое плечо, но SCP-1033-RU защитил Вас." ;A bullet hit your right shoulder, but SCP-1033-RU protected you.
-						EndIf	
-					Case 5
-					    BlurTimer = 500
-			            If I_1033RU\HP = 0
-			                Injuries = Injuries + Rnd(0.8,1.2)
-			                ShotMessageUpdate = "Пуля попала вам в левое плечо." ;A bullet hit your left shoulder.
-			            Else
-			                Damage1033RU(2+(5*SelectedDifficulty\aggressiveNPCs))
-						    ShotMessageUpdate = "Пуля попала вам в левое плечо, но SCP-1033-RU защитил Вас." ;A bullet hit your left shoulder, but SCP-1033-RU protected you.
+						;[End Block]
+					Case 14 ;Neck
+						;[Block]
+					    BlurTimer = 650
+						Stamina = 0
+						If I_1033RU\HP = 0
+							ShotMessageUpdate = "Пуля попала Вам в шею, Вы задыхаетесь." ;A bullet struck your neck, making you gasp
+							Injuries = Injuries + Rnd(1.1,1.3)
+						Else
+							Damage1033RU(35+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+							ShotMessageUpdate = "Пуля попала Вам в шею, но SCP-1033-RU защитил Вас." ;A bullet struck your neck, but SCP-1033-RU protected you.
 						EndIf
-					Case 6
-					    BlurTimer = 500
-					    If I_1033RU\HP = 0
-					        Injuries = Injuries + Rnd(2.5,4.0)
-					        ShotMessageUpdate = "Пуля попала вам в правое плечо." ;A bullet hit your right shoulder.
-					    Else
-					        Damage1033RU(2+(5*SelectedDifficulty\aggressiveNPCs))
-						    ShotMessageUpdate = "Пуля попала вам в правое плечо, но SCP-1033-RU защитил Вас." ;A bullet hit your right shoulder, but SCP-1033-RU protected you.
-						EndIf
-				End Select
-			EndIf
-			
-			;Only updates the message if it's been more than two seconds.
-			If (MsgTimer < 64*4) Then
-				Msg = ShotMessageUpdate
-				MsgTimer = 70*6
-			EndIf
-
-            If I_1033RU\HP = 0
-			    Injuries = Min(Injuries, 4.0)
+						;[End Block]
+					Case 15 ;Head
+						;[Block]
+						ShotMessageUpdate = "Пуля попала Вам в голову." ;A bullet hit your head.
+						Kill(True)
+						;[End Block]
+					Case 16 ;Face
+					    ;[Block]
+					    For n.NPCs = Each NPCs
+					        If n\NPCtype = NPCtypeMTF Or n\NPCtype = NPCtypeMTF2
+		                        If EntityInView(n\obj, Camera) And EntityVisible(n\obj, Camera)
+					                ShotMessageUpdate = "Пуля попала Вам в лицо." ;A bullet hit your face.
+					                Kill(True)
+					            Else
+					                ShotMessageUpdate = "Пуля попала Вам в голову." ;A bullet hit your head.
+					                Kill(True)
+					            EndIf
+					        EndIf
+					    Next
+                        ;[End Block]
+			    End Select	
 			Else
-			    Damage1033RU(2+(5*SelectedDifficulty\aggressiveNPCs))
-            EndIf
-
-			;Kill(True)
-			PlaySound_Strict BullethitSFX
-		ElseIf particles And ParticleAmount>0
-			pvt = CreatePivot()
-			PositionEntity pvt, EntityX(Collider),(EntityY(Collider)+EntityY(Camera))/2,EntityZ(Collider)
-			PointEntity pvt, p\obj
-			TurnEntity pvt, 0, 180, 0
+				If Rand(10)=1 Then ;Chest (more damage)
+					;[Block]
+				    BlurTimer = 650
+					Stamina = Stamina - 1
+					If I_1033RU\HP = 0
+						ShotMessageUpdate = "Пуля попала Вам в грудь. Жилет поглотил часть урона." ;A bullet hit your chest. The vest absorbed some of the damage.
+						Injuries = Injuries + Rnd(0.7,0.8)
+					Else
+					    ShotMessageUpdate = "Пуля попала Вам в грудь, но SCP-1033-RU защитил Вас." ;A bullet hit your chest, but SCP-1033-RU protected you.
+						Damage1033RU(30+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+					EndIf
+				    ;[End Block]
+				Else ;Chest
+					;[Block]
+					BlurTimer = 650
+					If I_1033RU\HP = 0
+						ShotMessageUpdate = "Пуля попала Вам в грудь. Жилет поглотил большую часть урона." ;A bullet hit your chest. The vest absorbed most of the damage.
+						Injuries = Injuries + Rnd(0.1,0.2)
+				    Else
+						ShotMessageUpdate = "Пуля попала Вам в грудь, но SCP-1033-RU защитил Вас." ;A bullet hit your chest, but SCP-1033-RU protected you.
+						Damage1033RU(5+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+				    EndIf
+					;[End Block]
+				EndIf
+			EndIf
+		Else If WearingVest > 0 And WearingHelmet > 0 Then ;If player wearing the ballistic vest and the ballistic helmet
+			If WearingVest = 1 Then
+				Select Rand(22)
+					Case 1,2,3,4,5,6,7,8,9 ;Vest
+						;[Block]
+						BlurTimer = 650
+						Stamina = 0
+						If I_1033RU\HP = 0
+							ShotMessageUpdate = "Поля попала Вас в жилет, Вы задыхаетесь." ;A bullet penetrated your vest, making you gasp.
+							Injuries = Injuries + Rnd(0.1,0.2)
+						Else
+							ShotMessageUpdate = "Поля попала Вас в жилет, но SCP-1033-RU защитил Вас." ;A bullet penetrated your vest, but SCP-1033-RU protected you.
+							Damage1033RU(5+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+					    EndIf
+						;[End Block]
+					Case 10 ;Left leg
+						;[Block]
+					    BlurTimer = 650
+					    Stamina = 0
+						If I_1033RU\HP = 0
+							ShotMessageUpdate = "Пуля попала Вам в левую ногу." ;A bullet hit your left leg.
+							Injuries = Injuries + Rnd(0.7,0.9)
+					    Else
+							ShotMessageUpdate = "Пуля попала Вам в левую ногу, но SCP-1033-RU защитил Вас." ;A bullet hit your left leg, but SCP-1033-RU protected you.
+							Damage1033RU(15+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+						EndIf
+					    ;[End Block]
+					Case 11 ;Right leg
+						;[Block]
+					    BlurTimer = 650
+						Stamina = 0
+						If I_1033RU\HP = 0
+							ShotMessageUpdate = "Пуля попала Вам в правую ногу." ;A bullet hit your right leg.
+							Injuries = Injuries + Rnd(0.7,0.9)
+					    Else
+							ShotMessageUpdate = "Пуля попала Вам в правую ногу, но SCP-1033-RU защитил Вас." ;A bullet hit your right leg, but SCP-1033-RU protected you.
+							Damage1033RU(15+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+					    EndIf
+						;[End Block]
+					Case 12 ;Left hand
+						;[Block]
+						BlurTimer = 650
+						If I_1033RU\HP = 0
+						    ShotMessageUpdate = "Пуля попала Вам в левую руку." ;A bullet hit your left hand."
+							Injuries = Injuries + Rnd(0.5,0.7)
+						Else
+							ShotMessageUpdate = "Пуля попала Вам в левую руку, но SCP-1033-RU защитил Вас." ;A bullet hit your left hand, but SCP-1033-RU protected you.
+							Damage1033RU(10+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+					    EndIf
+					    ;[End Block]
+					Case 13 ;Right hand
+						;[Block]
+					    BlurTimer = 650
+						If I_1033RU\HP = 0
+						    ShotMessageUpdate = "Пуля попала Вам в правую руку." ;A bullet hit your right hand.
+							Injuries = Injuries + Rnd(0.5,0.7)
+						Else
+							ShotMessageUpdate = "Пуля попала Вам в правую руку, но SCP-1033-RU защитил Вас." ;A bullet hit your right hand, but SCP-1033-RU protected you.
+							Damage1033RU(10+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+						EndIf
+						;[End Block]
+					Case 14 ;Neck
+						;[Block]
+						BlurTimer = 650
+						Stamina = 0
+					    If I_1033RU\HP = 0
+							ShotMessageUpdate = "Пуля попала Вам в шею, Вы задыхаетесь." ;A bullet struck your neck, making you gasp.
+							Injuries = Injuries + Rnd(1.1,1.3)
+						Else
+							Damage1033RU(35+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+							ShotMessageUpdate = "Пуля попала Вам в шею, но SCP-1033-RU защитил Вас." ;A bullet struck your neck, but SCP-1033-RU protected you.
+						EndIf
+						;[End Block]
+					Case 15,16,17,18,19,20,21 ;Helmet
+						;[Block]
+						BlurTimer = 650
+						ShotMessageUpdate = "Пуля попала Вам в шлем." ;A bullet penetrated your helmet.
+						;[End Block]
+					Case 22 ;Face
+						;[Block]
+						For n.NPCs = Each NPCs
+					        If n\NPCtype = NPCtypeMTF Or n\NPCtype = NPCtypeMTF2
+		                        If EntityInView(n\obj, Camera) And EntityVisible(n\obj, Camera)
+					                ShotMessageUpdate = "Пуля попала Вам в лицо." ;A bullet hit your face.
+					                Kill(True)
+					            Else
+					                If WearingHelmet > 0
+					                    BlurTimer = 500
+					                    ShotMessageUpdate = "Пуля попала Вам в шлем." ;A bullet penetrated your helmet.
+                                    Else
+                                        ShotMessageUpdate = "Пуля попала Вам в голову." ;A bullet hit your head.
+					                    Kill(True)
+                                    EndIf
+					            EndIf
+					        EndIf
+					    Next
+						;[End Block]
+				End Select	
+			Else
+				If Rand(10)=1 Then ;Chest (more damage)
+					;[Block]
+				    BlurTimer = 650
+					Stamina = Stamina - 1
+					If I_1033RU\HP = 0
+						ShotMessageUpdate = "Пуля попала Вам в грудь. Жилет поглотил часть урона." ;A bullet hit your chest. The vest absorbed some of the damage.
+						Injuries = Injuries + Rnd(0.7,0.9)
+					Else
+						ShotMessageUpdate = "Пуля попала Вам в грудь, но SCP-1033-RU защитил Вас." ;A bullet hit your chest, but SCP-1033-RU protected you.
+						Damage1033RU(30+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+					EndIf
+					;[End Block]
+				Else ;Chest
+					;[Block]
+					If I_1033RU\HP = 0
+						ShotMessageUpdate = "Пуля попала Вам в грудь. Жилет поглотил большую часть урона." ;A bullet hit your chest. The vest absorbed most of the damage.
+						Injuries = Injuries + Rnd(0.1,0.2)
+				    Else
+						ShotMessageUpdate = "Пуля попала Вам в грудь, но SCP-1033-RU защитил Вас." ;A bullet hit your chest, but SCP-1033-RU protected you.
+						Damage1033RU(5+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+					EndIf
+					;[End Block]
+				EndIf
+			EndIf
+		Else If WearingVest = 0 And WearingHelmet > 0 ;If player wearing the ballistic helmet only
+			Select Rand(17)
+				Case 1,2,3,4,5,6,7 ;Helmet
+					;[Block]
+					BlurTimer = 650
+					ShotMessageUpdate = "Пуля попала Вам в шлем." ;A bullet penetrated your helmet.
+					;[End Block]
+				Case 8 ;Left leg
+					;[Block]
+					BlurTimer = 650
+					Stamina = 0
+					If I_1033RU\HP = 0
+						ShotMessageUpdate = "Пуля попала Вам в левую ногу." ;A bullet hit your left leg.
+						Injuries = Injuries + Rnd(0.7,0.9)
+					Else
+						ShotMessageUpdate = "Пуля попала Вам в левую ногу, но SCP-1033-RU защитил Вас." ;A bullet hit your left leg, but SCP-1033-RU protected you.
+						Damage1033RU(15+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+                    EndIf
+					;[End Block]
+				Case 9 ;Right leg
+					;[Block]
+					BlurTimer = 650
+					Stamina = 0
+					If I_1033RU\HP = 0
+						ShotMessageUpdate = "Пуля попала Вам в правую ногу." ;A bullet hit your right leg.
+						Injuries = Injuries + Rnd(0.7,0.9)
+				    Else
+						ShotMessageUpdate = "Пуля попала Вам в правую ногу, но SCP-1033-RU защитил Вас." ;A bullet hit your right leg, but SCP-1033-RU protected you.
+						Damage1033RU(15+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+                    EndIf
+					;[End Block]
+				Case 10 ;Left hand
+					;[Block]
+					BlurTimer = 650
+					If I_1033RU\HP = 0
+						ShotMessageUpdate = "Пуля попала Вам в левую руку." ;A bullet hit your left hand."
+						Injuries = Injuries + Rnd(0.5,0.7)
+					Else
+					    ShotMessageUpdate = "Пуля попала Вам в левую руку, но SCP-1033-RU защитил Вас." ;A bullet hit your left hand, but SCP-1033-RU protected you.
+						Damage1033RU(10+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+					EndIf
+					;[End Block]
+				Case 11 ;Right hand
+					;[Block]
+					BlurTimer = 650
+					If I_1033RU\HP = 0
+						ShotMessageUpdate = "Пуля попала Вам в правую руку." ;A bullet hit your right hand.
+					    Injuries = Injuries + Rnd(0.5,0.7)
+					Else
+					    ShotMessageUpdate = "Пуля попала Вам в правую руку, но SCP-1033-RU защитил Вас." ;A bullet hit your right hand, but SCP-1033-RU protected you.
+						Damage1033RU(10+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+					EndIf
+					;[End Block]
+				Case 12 ;Right Shoulder
+					;[Block]
+				    BlurTimer = 650
+					If I_1033RU\HP = 0
+						ShotMessageUpdate = "Пуля попала вам в правое плечо." ;A bullet hit your right shoulder.
+						Injuries = Injuries + Rnd(0.9,1.1)
+					Else
+						ShotMessageUpdate = "Пуля попала вам в правое плечо, но SCP-1033-RU защитил Вас." ;A bullet hit your right shoulder, but SCP-1033-RU protected you.
+						Damage1033RU(25+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+					EndIf
+				    ;[End Block]	
+				Case 13 ;Left shoulder
+					;[Block]
+					BlurTimer = 650
+					If I_1033RU\HP = 0
+						ShotMessageUpdate = "Пуля попала вам в левое плечо." ;A bullet hit your left shoulder.
+						Injuries = Injuries + Rnd(0.9,1.1)	
+					Else
+						ShotMessageUpdate = "Пуля попала вам в левое плечо, но SCP-1033-RU защитил Вас." ;A bullet hit your left shoulder, but SCP-1033-RU protected you.
+						Damage1033RU(25+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+				    EndIf
+					;[End Block]
+			    Case 14 ;Right shoulder (more damage)
+					;[Block]
+					BlurTimer = 650
+					If I_1033RU\HP = 0
+						ShotMessageUpdate = "Пуля попала вам в правое плечо." ;A bullet hit your right shoulder.
+						Injuries = Injuries + Rnd(2.4,2.6)
+				    Else
+						ShotMessageUpdate = "Пуля попала вам в правое плечо, но SCP-1033-RU защитил Вас." ;A bullet hit your right shoulder, but SCP-1033-RU protected you.
+						Damage1033RU(25+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+					EndIf
+					;[End Block]
+				Case 15 ;Left shoulder (more damage)
+					;[Block]
+					BlurTimer = 650
+					If I_1033RU\HP = 0
+						ShotMessageUpdate = "Пуля попала вам в левое плечо." ;A bullet hit your left shoulder.
+						Injuries = Injuries + Rnd(2.4,2.6)
+				    Else
+						ShotMessageUpdate = "Пуля попала вам в левое плечо, но SCP-1033-RU защитил Вас." ;A bullet hit your left shoulder, but SCP-1033-RU protected you.
+						Damage1033RU(25+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+					EndIf
+					;[End Block]
+				Case 16 ;Neck
+					;[Block]
+					BlurTimer = 650
+					Stamina = 0
+					If I_1033RU\HP = 0
+					    ShotMessageUpdate = "Пуля попала Вам в шею, Вы задыхаетесь." ;A bullet struck your neck, making you gasp.
+						Injuries = Injuries + Rnd(1.1,1.3)
+				    Else
+					    Damage1033RU(35+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+						ShotMessageUpdate = "Пуля попала Вам в шею, но SCP-1033-RU защитил Вас." ;A bullet struck your neck, but SCP-1033-RU protected you.
+					EndIf
+                    ;[End Block]
+			    Case 17 ;Face
+					;[Block]
+					For n.NPCs = Each NPCs
+					    If n\NPCtype = NPCtypeMTF Or n\NPCtype = NPCtypeMTF2
+		                    If EntityInView(n\obj, Camera) And EntityVisible(n\obj, Camera)
+					            ShotMessageUpdate = "Пуля попала Вам в лицо." ;A bullet hit your face.
+					            Kill(True)
+					        Else
+					            If WearingHelmet > 0
+					                BlurTimer = 500
+					                ShotMessageUpdate = "Пуля попала Вам в шлем." ;A bullet penetrated your helmet.
+                                Else
+                                    ShotMessageUpdate = "Пуля попала Вам в голову." ;A bullet hit your head.
+					                Kill(True)
+                                EndIf
+					        EndIf
+					    EndIf
+					Next
+					;[End Block]
+			End Select
+		Else If WearingVest = 0 And WearingHelmet = 0 ;If player not wearing the ballistic vest and the ballistic helmet
+			Select Rand(11)
+				Case 1 ;Head
+				    ;[Block]
+					ShotMessageUpdate = "Пуля попала Вам в голову." ;A bullet hit your head.
+				    Kill(True)
+					;[End Block]
+				Case 2 ;Left leg
+					;[Block]
+					BlurTimer = 650
+					Stamina = 0
+					If I_1033RU\HP = 0
+						ShotMessageUpdate = "Пуля попала Вам в левую ногу." ;A bullet hit your left leg.
+						Injuries = Injuries + Rnd(0.7,0.9)
+					Else
+						ShotMessageUpdate = "Пуля попала Вам в левую ногу, но SCP-1033-RU защитил Вас." ;A bullet hit your left leg, but SCP-1033-RU protected you.
+						Damage1033RU(15+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+                    EndIf
+					;[End Block]
+			    Case 3 ;Right leg
+					;[Block]
+					BlurTimer = 650
+					Stamina = 0
+					If I_1033RU\HP = 0
+						ShotMessageUpdate = "Пуля попала Вам в правую ногу." ;A bullet hit your right leg.
+						Injuries = Injuries + Rnd(0.7,0.9)
+				    Else
+						ShotMessageUpdate = "Пуля попала Вам в правую ногу, но SCP-1033-RU защитил Вас." ;A bullet hit your right leg, but SCP-1033-RU protected you.
+						Damage1033RU(15+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+                    EndIf
+				    ;[End Block]
+				Case 4 ;Right Shoulder
+					;[Block]
+					BlurTimer = 650
+					If I_1033RU\HP = 0
+						ShotMessageUpdate = "Пуля попала вам в правое плечо." ;A bullet hit your right shoulder.
+						Injuries = Injuries + Rnd(0.9,1.1)
+					Else
+						ShotMessageUpdate = "Пуля попала вам в правое плечо, но SCP-1033-RU защитил Вас." ;A bullet hit your right shoulder, but SCP-1033-RU protected you.
+						Damage1033RU(25+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+					EndIf
+				    ;[End Block]	
+				Case 5 ;Left shoulder
+					;[Block]
+					BlurTimer = 650
+					If I_1033RU\HP = 0
+						ShotMessageUpdate = "Пуля попала вам в левое плечо." ;A bullet hit your left shoulder.
+						Injuries = Injuries + Rnd(0.9,1.1)	
+					Else
+						ShotMessageUpdate = "Пуля попала вам в левое плечо, но SCP-1033-RU защитил Вас." ;A bullet hit your left shoulder, but SCP-1033-RU protected you.
+						Damage1033RU(25+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+					EndIf
+					;[End Block]
+				Case 6 ;Right shoulder (more damage)
+					;[Block]
+					BlurTimer = 650
+					If I_1033RU\HP = 0
+						ShotMessageUpdate = "Пуля попала вам в правое плечо." ;A bullet hit your right shoulder.
+						Injuries = Injuries + Rnd(2.4,2.6)
+					Else
+						ShotMessageUpdate = "Пуля попала вам в правое плечо, но SCP-1033-RU защитил Вас." ;A bullet hit your right shoulder, but SCP-1033-RU protected you.
+						Damage1033RU(25+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+					EndIf
+					;[End Block]
+				Case 7 ;Left shoulder (more damage)
+					;[Block]
+					BlurTimer = 650
+					If I_1033RU\HP = 0
+						ShotMessageUpdate = "Пуля попала вам в левое плечо." ;A bullet hit your left shoulder.
+						Injuries = Injuries + Rnd(2.4,2.6)
+					Else
+						ShotMessageUpdate = "Пуля попала вам в левое плечо, но SCP-1033-RU защитил Вас." ;A bullet hit your left shoulder, but SCP-1033-RU protected you.
+						Damage1033RU(25+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+					EndIf
+					;[End Block]
+				Case 8 ;Left hand
+					;[Block]
+					BlurTimer = 650
+					If I_1033RU\HP = 0
+						ShotMessageUpdate = "Пуля попала Вам в левую руку." ;A bullet hit your left hand."
+						Injuries = Injuries + Rnd(0.5,0.7)
+					Else
+						ShotMessageUpdate = "Пуля попала Вам в левую руку, но SCP-1033-RU защитил Вас." ;A bullet hit your left hand, but SCP-1033-RU protected you.
+						Damage1033RU(10+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+					EndIf
+					;[End Block]
+				Case 9 ;Right hand
+				    ;[Block]
+					BlurTimer = 650
+				    If I_1033RU\HP = 0
+						ShotMessageUpdate = "Пуля попала Вам в правую руку." ;A bullet hit your right hand.
+					    Injuries = Injuries + Rnd(0.5,0.7)
+					Else
+						ShotMessageUpdate = "Пуля попала Вам в правую руку, но SCP-1033-RU защитил Вас." ;A bullet hit your right hand, but SCP-1033-RU protected you.
+						Damage1033RU(10+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+					EndIf
+					;[End Block]
+				Case 10 ;Neck
+					;[Block]
+					BlurTimer = 650
+				    Stamina = 0
+					If I_1033RU\HP = 0
+					    ShotMessageUpdate = "Пуля попала Вам в шею, Вы задыхаетесь." ;A bullet struck your neck, making you gasp.
+						Injuries = Injuries + Rnd(1.1,1.3)
+				    Else
+						Damage1033RU(35+(Rand(5) * SelectedDifficulty\aggressiveNPCs))
+					    ShotMessageUpdate = "Пуля попала Вам в шею, но SCP-1033-RU защитил Вас." ;A bullet struck your neck, but SCP-1033-RU protected you.
+					EndIf
+                    ;[End Block]
+                Case 11 ;Face
+					;[Block]
+					For n.NPCs = Each NPCs
+					    If n\NPCtype = NPCtypeMTF Or n\NPCtype = NPCtypeMTF2
+		                    If EntityInView(n\obj, Camera) And EntityVisible(n\obj, Camera)
+					            ShotMessageUpdate = "Пуля попала Вам в лицо." ;A bullet hit your face.
+					            Kill(True)
+					        Else
+                                ShotMessageUpdate = "Пуля попала Вам в голову." ;A bullet hit your head.
+					            Kill(True)
+					        EndIf
+					    EndIf
+					Next
+					;[End Block]
+		    End Select
+		EndIf
 			
-			EntityPick(pvt, 2.5)
+		;Only updates the message if it's been more than two seconds.
+		If (MsgTimer < 70*4) Then
+			Msg = ShotMessageUpdate
+			MsgTimer = 70*6
+		EndIf
 			
-			If PickedEntity() <> 0 Then 
-				PlaySound2(Gunshot3SFX, Camera, pvt, 0.4, Rnd(0.8,1.0))
+		PlaySound_Strict BullethitSFX
+	ElseIf particles And ParticleAmount>0
+		pvt = CreatePivot()
+		PositionEntity pvt, EntityX(Collider),(EntityY(Collider)+EntityY(Camera))/2,EntityZ(Collider)
+		PointEntity pvt, p\obj
+		TurnEntity pvt, 0, 180, 0
+			
+		EntityPick(pvt, 2.5)
+			
+		If PickedEntity() <> 0 Then 
+			PlaySound2(Gunshot3SFX, Camera, pvt, 0.4, Rnd(0.8,1.0))
 				
-				If particles Then 
-					;dust/smoke particles
-					p.Particles = CreateParticle(PickedX(),PickedY(),PickedZ(), 0, 0.03, 0, 80)
-					p\speed = 0.001
-					p\SizeChange = 0.003
+			If particles Then 
+				;dust/smoke particles
+				p.Particles = CreateParticle(PickedX(),PickedY(),PickedZ(), 0, 0.03, 0, 80)
+				p\speed = 0.001
+				p\SizeChange = 0.003
+				p\A = 0.8
+				p\Achange = -0.01
+				RotateEntity p\pvt, EntityPitch(pvt)-180, EntityYaw(pvt),0
+					
+				For i = 0 To Rand(2,3)
+					p.Particles = CreateParticle(PickedX(),PickedY(),PickedZ(), 0, 0.006, 0.003, 80)
+					p\speed = 0.02
 					p\A = 0.8
 					p\Achange = -0.01
-					RotateEntity p\pvt, EntityPitch(pvt)-180, EntityYaw(pvt),0
+					RotateEntity p\pvt, EntityPitch(pvt)+Rnd(170,190), EntityYaw(pvt)+Rnd(-10,10),0	
+				Next
 					
-					For i = 0 To Rand(2,3)
-						p.Particles = CreateParticle(PickedX(),PickedY(),PickedZ(), 0, 0.006, 0.003, 80)
-						p\speed = 0.02
-						p\A = 0.8
-						p\Achange = -0.01
-						RotateEntity p\pvt, EntityPitch(pvt)+Rnd(170,190), EntityYaw(pvt)+Rnd(-10,10),0	
-					Next
-					
-					;bullet hole decal
-					Local de.Decals = CreateDecal(Rand(13,14), PickedX(),PickedY(),PickedZ(), 0,0,0)
-					AlignToVector de\obj,-PickedNX(),-PickedNY(),-PickedNZ(),3
-					MoveEntity de\obj, 0,0,-0.001
-					EntityFX de\obj, 1
-					de\lifetime = 70*20
-					EntityBlend de\obj, 2
-					de\Size = Rnd(0.028,0.034)
-					ScaleSprite de\obj, de\Size, de\Size
-				EndIf				
-			EndIf
-			FreeEntity pvt
-			
-		EndIf
-		
+				;bullet hole decal
+				Local de.Decals = CreateDecal(Rand(13,14), PickedX(), PickedY() + Rnd(-0.05, 0.05), PickedZ(), Rnd(-4.0, 4.0), Rnd(-4.0, 4.0), Rnd(-4.0, 4.0))
+				AlignToVector de\obj,-PickedNX(),-PickedNY(),-PickedNZ(),3
+				MoveEntity de\obj, 0,0,-0.001
+				EntityFX de\obj, 1
+				de\lifetime = 70*20
+				EntityBlend de\obj, 2
+				de\Size = Rnd(0.028,0.034)
+				ScaleSprite de\obj, de\Size, de\Size
+			EndIf				
+		EndIf	
+		FreeEntity pvt
 	EndIf
-	
+			
 End Function
 
 Function PlayMTFSound(sound%, n.NPCs)
 	If n <> Null Then
-		n\SoundChn = PlaySound2(sound, Camera, n\Collider, 8.0)	
+		n\SoundCHN = PlaySound2(sound, Camera, n\Collider, 8.0)	
 	EndIf
 	
 	If SelectedItem <> Null Then
@@ -9908,134 +10645,138 @@ Function Console_SpawnNPC(c_input$, c_state$ = "")
 	
 	Select c_input$ 
 		Case "0081", "0081zombie", "scp008-1", "scp-008-1", "scp0081", "008-1"
-			n.NPCs = CreateNPC(NPCtype0081, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
+			n.NPCs = CreateNPC(NPCtype008_1, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
 			n\State = 1
-			consoleMSG = "SCP-008-1 создан." ;SCP-008-1 spawned.
+			consoleMSG = "Сущность " +chr(34)+ "SCP-008-1" +chr(34)+ " создана." ;SCP-008-1 spawned.
 			
 		Case "049", "scp049", "scp-049"
 			n.NPCs = CreateNPC(NPCtype049, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
 			n\State = 1
-			consoleMSG = "SCP-049 создан." ;SCP-049 spawned.
+			consoleMSG = "Сущность " +chr(34)+ "SCP-049" +chr(34)+ " создана." ;SCP-049 spawned.
 			
 		Case "049-2", "0492", "scp-049-2", "scp049-2", "049zombie", "zombie", "scp-0492"
-			n.NPCs = CreateNPC(NPCtype0492, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
+			n.NPCs = CreateNPC(NPCtype049_2, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
 			n\State = 1
-			consoleMSG = "SCP-049-2 создан." ;SCP-049-2 spawned.
+			consoleMSG = "Сущность " +chr(34)+ "SCP-049-2" +chr(34)+ " создана." ;SCP-049-2 spawned.
 			
 		Case "066", "scp066", "scp-066"
 			n.NPCs = CreateNPC(NPCtype066, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
 			If (Curr066 = Null) Curr066 = n
-			consoleMSG = "SCP-066 создан." ;SCP-066 spawned.
+			consoleMSG = "Сущность " +chr(34)+ "SCP-066" +chr(34)+ " создана." ;SCP-066 spawned.
 			
 		Case "096", "scp096", "scp-096"
 			n.NPCs = CreateNPC(NPCtype096, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
 			n\State = 5
 			If (Curr096 = Null) Then Curr096 = n
-			consoleMSG = "SCP-096 создан." ;SCP-096 spawned.
+			consoleMSG = "Сущность " +chr(34)+ "SCP-096" +chr(34)+ " создана." ;SCP-096 spawned.
 			
 		Case "106", "scp106", "scp-106", "larry"
 			n.NPCs = CreateNPC(NPCtype106, EntityX(Collider), EntityY(Collider) - 0.5, EntityZ(Collider))
 			n\State = -1
-			consoleMSG = "SCP-106 создан." ;SCP-106 spawned.
+			consoleMSG = "Сущность " +chr(34)+ "SCP-106" +chr(34)+ " создана." ;SCP-106 spawned.
 			
 		Case "173", "scp173", "scp-173", "statue"
 			n.NPCs = CreateNPC(NPCtype173, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
 			Curr173 = n
 			If (Curr173\Idle = 3) Then Curr173\Idle = False
-			consoleMSG = "SCP-173 создан." ;SCP-173 spawned.
-
+			consoleMSG = "Сущность " +chr(34)+ "SCP-173" +chr(34)+ " создана." ;SCP-173 spawned.
+			
 		Case "372", "scp372", "scp-372"
 			n.NPCs = CreateNPC(NPCtype372, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
-			consoleMSG = "SCP-372 создан." ;SCP-372 spawned.
+			consoleMSG = "Сущность " +chr(34)+ "SCP-372" +chr(34)+ " создана." ;SCP-372 spawned.
 			
 		Case "513-1", "5131", "scp513-1", "scp-513-1"
-			n.NPCs = CreateNPC(NPCtype5131, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
-			consoleMSG = "SCP-513-1 создан." ;SCP-513-1 spawned.
+			n.NPCs = CreateNPC(NPCtype513_1, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
+			consoleMSG = "Сущность " +chr(34)+ "SCP-513-1" +chr(34)+ " создана." ;SCP-513-1 spawned.
 			
 		Case "860-2", "8602", "scp860-2", "scp-860-2"
-			CreateConsoleMsg("SCP-860-2 не может быть создан с помощью консоли. Простите!", 255, 0, 0) ;SCP-860-2 cannot be spawned with the console. Sorry!
+			CreateConsoleMsg("Сущность " +chr(34)+ "SCP-860-2" +chr(34)+ " не может быть создана с помощью консоли. Простите!", 255, 0, 0) ;SCP-860-2 cannot be spawned with the console. Sorry!
 			
 		Case "939", "scp939", "scp-939"
-			CreateConsoleMsg("Особи SCP-939 не могут быть созданы с помощью консоли. Простите!", 255, 0, 0) ;SCP-939 instances cannot be spawned with the console. Sorry!
+			CreateConsoleMsg("Сущность " +chr(34)+ "Образец SCP-939" +chr(34)+ " не может быть создана с помощью консоли. Простите!", 255, 0, 0) ;SCP-939 instances cannot be spawned with the console. Sorry!
 
 		Case "966", "scp966", "scp-966"
 			n.NPCs = CreateNPC(NPCtype966, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
-			consoleMSG = "Особь SCP-966 создана." ;SCP-966 instance spawned.
+			consoleMSG = "Сущность " +chr(34)+ "Образец SCP-966" +chr(34)+ " создана." ;SCP-966 instance spawned.
 			
 		Case "1048-a", "scp1048-a", "scp-1048-a", "scp1048a", "scp-1048a", "1048a"
-			CreateConsoleMsg("SCP-1048-A не может быть создан с помощью консоли. Простите!", 255, 0, 0) ;SCP-1048-A cannot be spawned with the console. Sorry!
+			CreateConsoleMsg("Сущность " +chr(34)+ "SCP-1048-A" +chr(34)+ " не может быть создана с помощью консоли. Простите!", 255, 0, 0) ;SCP-1048-A cannot be spawned with the console. Sorry!
 			
 		Case "1499-1", "14991", "scp-1499-1", "scp1499-1"
-			n.NPCs = CreateNPC(NPCtype1499, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
-			consoleMSG = "Особь SCP-1499-1 создана." ;SCP-1499-1 instance spawned.
+			n.NPCs = CreateNPC(NPCtype1499_1, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
+			consoleMSG = "Сущность " +chr(34)+ "Образец SCP-1499-1" +chr(34)+ " создана." ;SCP-1499-1 instance spawned.
 			
 		Case "class-d", "classd", "d"
 			n.NPCs = CreateNPC(NPCtypeD, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
-			consoleMSG = "Класс D создан." ;D-Class spawned.
+			consoleMSG = "Сущность " +chr(34)+ "Класс D" +chr(34)+ " создана." ;D-Class spawned.
 			
 		Case "guard"
 			n.NPCs = CreateNPC(NPCtypeGuard, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
-			consoleMSG = "Охранник создан." ;Guard spawned.
+			consoleMSG = "Сущность " +chr(34)+ "Охраник" +chr(34)+ " создана." ;Guard spawned.
 			
 		Case "mtf"
 			n.NPCs = CreateNPC(NPCtypeMTF, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
-			consoleMSG = "МОГ создан." ;MTF unit spawned.
+			consoleMSG = "Сущность " +chr(34)+ "Солдат МОГ (MTF)" +chr(34)+ " создана." ;MTF unit spawned.
 			
 		Case "apache", "helicopter"
 			n.NPCs = CreateNPC(NPCtypeApache, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
-			consoleMSG = "Вертолёт Апач создан." ;Apache spawned.
+			consoleMSG = "Сущность " +chr(34)+ "Вертолёт Апач" +chr(34)+ " создана." ;Apache spawned.
 			
-		Case "tentacle"
-			n.NPCs = CreateNPC(NPCtype035Tentacle, EntityX(Collider), EntityY(Collider), EntityZ(Collider))
-			consoleMSG = "Щупалец SCP-035 создан." ;SCP-035 tentacle spawned.
+		Case "tentacle", "scp035tentacle", "035tentacle", "scp-035-tentacle", "scp035-tentacle", "scp035-tentacle"
+			n.NPCs = CreateNPC(NPCtype035_Tentacle, EntityX(Collider), EntityY(Collider) - 0.12, EntityZ(Collider))
+			consoleMSG = "Сущность " +chr(34)+ "Тентакли SCP-035" +chr(34)+ " создана." ;SCP-035 tentacle spawned.
 			
 		Case "clerk"
 			n.NPCs = CreateNPC(NPCtypeClerk, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
-			consoleMSG = "Клерк создан." ;Clerk spawned.
+			consoleMSG = "Сущность " +chr(34)+ "Клерк" +chr(34)+ " создана." ;Clerk spawned.
 			
-		;MODS
+		;{~--<MOD>--~}
 			
 		Case "650", "scp650", "scp-650", "black statue"
 			n.NPCs = CreateNPC(NPCtype650, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
 			If (Curr650 = Null) Curr650 = n
 			n\Idle = False
 			If (Curr650\Idle = 3) Then Curr650\Idle = False
-			consoleMSG = "SCP-650 создан." ;SCP-650 spawned.
+			consoleMSG = "Сущность " +chr(34)+ "SCP-650" +chr(34)+ " создана." ;SCP-650 spawned.
 			
 		Case "scp-457","457","scp457"
-		    CreateConsoleMsg("SCP-457 не может быть создан с помощью консоли. Простите!", 255, 0, 0) ;SCP-457 cannot be spawned with the console. Sorry!
+		    CreateConsoleMsg("Сущность " +chr(34)+ "SCP-457" +chr(34)+ " не может быть создана с помощью консоли. Простите!", 255, 0, 0) ;SCP-457 cannot be spawned with the console. Sorry!
 			
 		Case "0493", "049-3", "scp049-3", "scp-049-3", "scp-0493", "scp0493", "049zombie2", "zombie2"
-			n.NPCs = CreateNPC(NPCtype0493, EntityX(Collider),EntityY(Collider)+0.2,EntityZ(Collider))			
+			n.NPCs = CreateNPC(NPCtype049_3, EntityX(Collider),EntityY(Collider)+0.23,EntityZ(Collider))			
 			n\state = 1
-			consoleMSG = "SCP-049-3 создан." ;SCP-049-2 spawned.
+			consoleMSG = "Сущность " +chr(34)+ "SCP-049-3" +chr(34)+ " создана." ;SCP-049-3 spawned.
 			
 		Case "0082", "008-2", "scp-008-2", "scp008-2", "0082zombie"
-			n.NPCs = CreateNPC(NPCtype0082, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
+			n.NPCs = CreateNPC(NPCtype008_2, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
 			n\State = 1
-			consoleMSG = "SCP-008-3 создан." ;SCP-008 infected human spawned.
+			consoleMSG = "Сущность " +chr(34)+ "SCP-008-2" +chr(34)+ " создана." ;SCP-008-2 spawned.
 			
-		Case "178-1", "1781", "scp-178-1", "scp178-1"
-			n.NPCs = CreateNPC(NPCtype178, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
-			consoleMSG = "SCP-178-1 instance spawned." ;SCP-178-1 instance spawned.
-			CreateConsoleMsg("Особи SCP-178-1 не буду видны, пока вы не наденете SCP-178.", 255, 255, 0) ;SCP-178-1 instances will be invisible unless you equip SCP-178.
+		Case "178-1", "1781", "scp-178-1", "scp178-1", "scp-1781"
+			n.NPCs = CreateNPC(NPCtype178_1, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
+			consoleMSG = "Сущность " +chr(34)+ "Образец SCP-178-1" +chr(34)+ " создана." ;SCP-178-1 instance spawned.
+			CreateConsoleMsg("Образцы SCP-178-1 не буду видны, пока вы не наденете SCP-178.", 255, 255, 0) ;SCP-178-1 instances will be invisible unless you equip SCP-178.
 
         Case "mtf2"
 			n.NPCs = CreateNPC(NPCtypeMTF2, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
-			consoleMSG = "МОГ создан." ;MTF unit spawned.
+			consoleMSG = "Сущность " +chr(34)+ "Солдат МОГ (MTF)" +chr(34)+ " создана." ;MTF unit spawned.
 			
 		Case "ci"
 			n.NPCs = CreateNPC(NPCtypeCI, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
-			consoleMSG = "Повстанец Хаоса создан." ;CI unit spawned.
+			consoleMSG = "Сущность " +chr(34)+ "Повстанец Хаоса" +chr(34)+ " создана." ;CI unit spawned.
 			
-        ;END
+		Case "vehicle", "introvehicle", "intro_vehicle", "truck"
+			n.NPCs = CreateNPC(NPCtypeVehicle, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
+			consoleMSG = "Сущность " +chr(34)+ "Транспорт" +chr(34)+ " создана." ;Vehicle spawned.
+			
+        ;{~--<END>--~}
 			
 		Default 
-			CreateConsoleMsg("Тип NPC не найден.", 255, 0, 0) : Return ;NPC type not found.
+			CreateConsoleMsg("Указанная сущность не найдена.", 255, 0, 0) : Return ;NPC type not found.
 	End Select
 	
 	If n <> Null
-		If c_state <> "" Then n\State = Float(c_state) : consoleMSG = consoleMSG + " (Состояние = " + n\State + ")" ; (State = 
+		If c_state <> "" Then n\State = Float(c_state) : consoleMSG = consoleMSG + " (State = " + n\State + ")"
 	EndIf
 	
 	CreateConsoleMsg(consoleMSG)
@@ -10054,7 +10795,7 @@ Function ManipulateNPCBones()
 			If bonename$<>""
 				pvt% = CreatePivot()
 				bone% = FindChild(n\obj,bonename$)
-				If bone% = 0 Then RuntimeError "ОШИБКА: NPC "+Chr(34)+bonename$+Chr(34)+" не существует." ;ERROR: NPC bone ;does not exist.
+				If bone% = 0 Then RuntimeError "ОШИБКА: Сущности (NPC bone) "+Chr(34)+bonename$+Chr(34)+" не существует." ;ERROR: NPC bone "+Chr(34)+bonename$+Chr(34)+" does not exist."
 				PositionEntity pvt%,EntityX(bone%,True),EntityY(bone%,True),EntityZ(bone%,True)
 				Select n\ManipulationType
 					Case 0 ;<--- looking at player
@@ -10167,7 +10908,7 @@ Function PlayerInReachableRoom(canSpawnIn049Chamber%=False)
 	Local e.Events, temp
 	
 	;Player is in these rooms, returning false
-	If RN = "pocketdimension" Or RN = "gatea" Or RN = "dimension1499" Or RN = "173" Then
+	If RN = "pocketdimension" Or RN = "gatea" Or RN = "dimension1499" Or RN = "room173_intro" Then
 		Return False
 	EndIf
 	;Player is at GateB and is at the surface, returning false
@@ -10298,7 +11039,7 @@ End Function
 Function ChangeNPCTextureID(n.NPCs,textureid%)
     Local o.Objects = First Objects
 	If (n=Null) Then
-		CreateConsoleMsg("Попытка изменить текстуру недействительного NPC.") ;Tried to change the texture of an invalid NPC
+		CreateConsoleMsg("Tried to change the texture of an invalid NPC")
 		If ConsoleOpening Then
 			ConsoleOpen = True
 		EndIf
@@ -10316,4 +11057,88 @@ Function ChangeNPCTextureID(n.NPCs,textureid%)
 	SetNPCFrame(n,n\Frame)
 	
 End Function
+
+Function AnimateNPC(n.NPCs, start#, quit#, speed#, loop=True)
+	Local newTime#
+	Local fs.FPS_Settings = First FPS_Settings
+	
+	If speed > 0.0 Then 
+		newTime = Max(Min(n\Frame + speed * fs\FPSfactor[0],quit),start)
+		
+		If loop And newTime => quit Then
+			newTime = start
+		EndIf
+	Else
+		If start < quit Then
+			temp% = start
+			start = quit
+			quit = temp
+		EndIf
+		
+		If loop Then
+			newTime = n\Frame + speed * fs\FPSfactor[0]
+			
+			If newTime < quit Then 
+				newTime = start
+			Else If newTime > start 
+				newTime = quit
+			EndIf
+		Else
+			newTime = Max(Min(n\Frame + speed * fs\FPSfactor[0],start),quit)
+		EndIf
+	EndIf
+	SetNPCFrame(n, newTime)
+	
+End Function
+
+Function SetNPCFrame(n.NPCs, frame#)
+	If (Abs(n\Frame-frame)<0.001) Then Return
+	
+	SetAnimTime n\obj, frame
+	
+	n\Frame = frame
+End Function
+
+Function Animate2#(entity%, curr#, start%, quit%, speed#, loop=True)
+	
+	Local newTime#
+	Local fs.FPS_Settings = First FPS_Settings
+	
+	If speed > 0.0 Then 
+		newTime = Max(Min(curr + speed * fs\FPSfactor[0],quit),start)
+		
+		If loop Then
+			If newTime => quit Then 
+				;SetAnimTime entity, start
+				newTime = start
+			Else
+				;SetAnimTime entity, newTime
+			EndIf
+		Else
+			;SetAnimTime entity, newTime
+		EndIf
+	Else
+		If start < quit Then
+			temp% = start
+			start = quit
+			quit = temp
+		EndIf
+		
+		If loop Then
+			newTime = curr + speed * fs\FPSfactor[0]
+			
+			If newTime < quit Then newTime = start
+			If newTime > start Then newTime = quit
+			
+			;SetAnimTime entity, newTime
+		Else
+			;SetAnimTime (entity, Max(Min(curr + speed * fs\FPSfactor[0],start),quit))
+			newTime = Max(Min(curr + speed * fs\FPSfactor[0],start),quit)
+		EndIf
+	EndIf
+	
+	SetAnimTime entity, newTime
+	Return newTime
+	
+End Function 
 

@@ -206,7 +206,7 @@ Const MusicPath2$ = SFXPath$+"Radio\UserTracks\"
 ;[VERSIONS]
 
 Const GameVersionNumber$ = "1.3.11"
-Const ModVersionNumber$ = "5.5 [Rus Indev]" ;5.5
+Const ModVersionNumber$ = "5.5.2 [Rus Indev]"
 
 ;[OPTIONS]
 

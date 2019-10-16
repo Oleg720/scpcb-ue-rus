@@ -424,7 +424,7 @@ Function UpdateMainMenu()
 				
 				AASetFont fo\Font[1]
 				
-				If DrawButton(x + 450 * MenuScale, y + height + 20 * MenuScale, 160 * MenuScale, 70 * MenuScale, "START", False) Then
+				If DrawButton(x + 450 * MenuScale, y + height + 20 * MenuScale, 160 * MenuScale, 70 * MenuScale, "НАЧАТЬ", False) Then ;START
 					If CurrSave = "" Then CurrSave = "untitled"
 					
 					If RandomSeed = "" Then
@@ -952,7 +952,7 @@ Function UpdateMainMenu()
 					    AAText(x + 320 * MenuScale, y + 100 * MenuScale, "Консоль") ;Open/Close Console ;280
 						InputBox(x + 430 * MenuScale, y + 100 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_CONSOLE,210)),12) ;470 ;100
 					EndIf
-					AAText(x + 320 * MenuScale, y + 120 * MenuScale, "Снимок экрана") ;Take Screenshot ;280
+					AAText(x + 320 * MenuScale, y + 120 * MenuScale, "Скриншот") ;Take Screenshot ;280
 					InputBox(x + 430 * MenuScale, y + 120 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_SCREENSHOT,210)),13) ;470 ;100
 					
 					If MouseOn(x+20*MenuScale,y,width-40*MenuScale,140*MenuScale)
@@ -2371,25 +2371,7 @@ Function DrawMapCreatorTooltip(x%,y%,width%,height%,mapname$)
 	AAText(fx,fy+((AAStringHeight(txt[0])*2)+AAStringHeight(txt[2])*lines+5*MenuScale),txt[3])
 	AAText(fx,fy+((AAStringHeight(txt[0])*3)+AAStringHeight(txt[2])*lines+5*MenuScale),txt[4])
 	AAText(fx,fy+((AAStringHeight(txt[0])*4)+AAStringHeight(txt[2])*lines+5*MenuScale),txt[5])
-	
-End Function
 
-Function ChangeMenu_TestIMG(change$)
-	
-	If Menu_TestIMG <> 0 Then FreeImage Menu_TestIMG
-	AmbientLightRoomTex% = CreateTexture(2,2,257)
-	TextureBlend AmbientLightRoomTex,5
-	SetBuffer(TextureBuffer(AmbientLightRoomTex))
-	ClsColor 0,0,0
-	Cls
-	SetBuffer BackBuffer()
-	Menu_TestIMG = Create3DIcon(200,200,MapPath$+"room3z3_opt.rmesh",0,-0.75,1,0,0,0,menuroomscale#,menuroomscale#,menuroomscale#,True)
-	ScaleImage Menu_TestIMG,MenuScale,MenuScale
-	MaskImage Menu_TestIMG,255,0,255
-	FreeTexture AmbientLightRoomTex : AmbientLightRoomTex = 0
-	
-	CurrMenu_TestIMG = change$
-	
 End Function
 
 Global OnSliderID% = 0

@@ -569,6 +569,7 @@ Function LoadGame(file$)
 	
 	HideEntity(at\OverlayID[5])
 	HideEntity(at\OverlayID[8])
+	HideEntity(at\OverlayID[9])
 	
 	x = ReadFloat(f)
 	y = ReadFloat(f)
@@ -1333,7 +1334,7 @@ Function LoadGame(file$)
 	I_427\Using = ReadByte(f)
 	I_427\Timer = ReadFloat(f)
 	
-	If version = "5.4.1" Then
+	If version = "5.5.1" Then
 		I_Zone\Transition[0] = ReadByte(f)
 		I_Zone\Transition[1] = ReadByte(f)
 		I_Zone\HasCustomForest = ReadByte(f)
@@ -1469,6 +1470,7 @@ Function LoadGameQuick(file$)
 	HideEntity Collider
 	HideEntity(at\OverlayID[5])
 	HideEntity(at\OverlayID[8])
+	HideEntity(at\OverlayID[9])
 	
 	x = ReadFloat(f)
 	y = ReadFloat(f)

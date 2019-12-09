@@ -1,6 +1,6 @@
 Global ResWidth% = 910
 Global ResHeight% = 660
-Global VersionNumber$ = "5.5 [Rus]"
+Global VersionNumber$ = "5.5.1 [Rus]"
 
 Loadingwindow=CreateWindow("", GraphicsWidth()/2-160,GraphicsHeight()/2-120,320,260,winhandle,8)
 panelloading = CreatePanel(0,0,320,260,Loadingwindow,0)

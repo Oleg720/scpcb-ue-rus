@@ -1,5 +1,5 @@
 Include "Source Code\Materials.bb"
-Include "Source Code\TextureCache.bb"
+Include "Source Code\Texture_Cache.bb"
 
 Function LoadWorld(file$, rt.RoomTemplates)
 	Local map = LoadAnimMesh_Strict(file)
@@ -667,7 +667,7 @@ End Function
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-Include "Source Code\Drawportals.bb"
+Include "Source Code\Draw_Portals.bb"
 
 Type Forest
 	Field TileMesh%[6]
@@ -2928,7 +2928,7 @@ Function FillRoom(r.Rooms)
 			PositionEntity(r\Objects[9], r\x + 1058.0 * RoomScale, r\y - 4865.0 * RoomScale, r\z - 287.0  * RoomScale)
             EntityParent(r\Objects[9], r\obj)
 
-			sc.SecurityCams = CreateSecurityCam(r\x + 558.956 * RoomScale, r\y - 4660.0 * RoomScale, r\z + 772.0 * RoomScale, r)
+			sc.SecurityCams = CreateSecurityCam(r\x + 666.0 * RoomScale, r\y - 4654.0 * RoomScale, r\z + 755.0 * RoomScale, r) ; 559 772
 			sc\angle = 135
 			sc\turn = 45
 			TurnEntity(sc\CameraObj, 20, 0, 0)
@@ -4284,7 +4284,7 @@ Function FillRoom(r.Rooms)
 			it = CreateItem("Записка д-ра Л.", "paper", r\x - 538.0 * RoomScale, r\y + 250.0 * RoomScale, r\z - 365.0 * RoomScale) ;Dr. L's Note
 			EntityParent(it\collider, r\obj)
 			;[End Block]
-		Case "room173_intro" ;(173) (Upgraded by Ultimate Edition)
+		Case "room173intro" ;(173) (Upgraded by Ultimate Edition)
 			;[Block]
 			r\Objects[0] = CreatePivot()
 			PositionEntity (r\Objects[0], EntityX(r\obj) + 40.0 * RoomScale, r\y + 460.0 * RoomScale, EntityZ(r\obj) + 1072.0 * RoomScale)
@@ -5001,7 +5001,7 @@ Function FillRoom(r.Rooms)
 			PositionEntity(d\buttons[0], EntityX(d\buttons[0], True), EntityY(d\buttons[0], True), EntityZ(d\buttons[0], True) + 0.062, True)
 			PositionEntity(d\buttons[1], EntityX(d\buttons[1], True), EntityY(d\buttons[1], True), EntityZ(d\buttons[1], True) - 0.062, True)	
 			
-			d = CreateDoor(r\zone, r\x - 509.0 * RoomScale, r\y - 768.0 * RoomScale, r\z - 1037.0 * RoomScale, 0, r, False, False, 5)
+			d = CreateDoor(r\zone, r\x - 510.0 * RoomScale, r\y - 768.0 * RoomScale, r\z - 1037.0 * RoomScale, 0, r, False, False, 5)
 			d\locked = True : d\DisableWaypoint = True
 			FreeEntity(d\buttons[0]) : d\buttons[0] = 0
 			PositionEntity(d\buttons[1], EntityX(d\buttons[1], True), EntityY(d\buttons[1], True), EntityZ(d\buttons[1], True) - 0.012, True)	
@@ -5500,14 +5500,18 @@ Function FillRoom(r.Rooms)
 		Case "room1office" ;Ultimate Edition room.
 			;[Block]
             d = CreateDoor(r\zone, r\x, r\y, r\z - 256.0 * RoomScale, 0, r, False, False, 0, "2411")
-            PositionEntity(d\buttons[0], EntityX(d\buttons[0], True), EntityY(d\buttons[0], True), EntityZ(d\buttons[0], True) + 0.062, True)
-			PositionEntity(d\buttons[1], EntityX(d\buttons[1], True), EntityY(d\buttons[1], True), EntityZ(d\buttons[1], True) - 0.062, True)		
 			d\AutoClose = False	
 			
             it = CreateItem("Запись полевого агента #235-001-CO5", "paper", r\x, r\y + 200.0 * RoomScale, r\z + 400.0 * RoomScale) ;Field Agent Log #235-001-CO5
 			EntityParent(it\collider, r\obj)
 			
 			it = CreateItem("Записки групп интересов", "paper", r\x, r\y + 200.0 * RoomScale, r\z + 650.0 * RoomScale) ;Groups of Interest Log
+			EntityParent(it\collider, r\obj)
+			
+			it = CreateItem("Аптечка первой помощи", "firstaid", r\x + 680.0 * RoomScale, r\y + 260.0 * RoomScale, r\z + 885.0 * RoomScale)
+			EntityParent(it\collider, r\obj) : RotateEntity(it\collider, 0, 90, 0)
+			
+			it = CreateItem("9V-батарейка", "bat", r\x - 700.0 * RoomScale, r\y + 210.0 * RoomScale, r\z + 920.0 * RoomScale)
 			EntityParent(it\collider, r\obj)
             ;[End Block]
 		Case "room650" ;Ultimate Edition room		
@@ -5842,10 +5846,10 @@ Function FillRoom(r.Rooms)
 			PositionEntity(r\Objects[4], r\x - 4885.0 * RoomScale, r\y - 4598.0 * RoomScale, r\z + 2235.0 * RoomScale)
 			EntityParent(r\Objects[4], r\obj)
 						
-			d = CreateDoor(r\zone, r\x - 4336.0 * RoomScale, r\y - 4528.0 * RoomScale, r\z + 1552.0 * RoomScale, 0, r, False, False, 6)
-			d\AutoClose = False
-			PositionEntity(d\buttons[0], EntityX(d\buttons[0], True), EntityY(d\buttons[1], True), EntityZ(d\buttons[0], True) + 0.062, True)
-			PositionEntity(d\buttons[1], EntityX(d\buttons[1], True), EntityY(d\buttons[1], True), EntityZ(d\buttons[1], True) - 0.062, True)					
+			r\RoomDoors[2] = CreateDoor(r\zone, r\x - 4336.0 * RoomScale, r\y - 4528.0 * RoomScale, r\z + 1552.0 * RoomScale, 0, r, False, False, 6)
+			r\RoomDoors[2]\AutoClose = False
+			PositionEntity(r\RoomDoors[2]\buttons[0], EntityX(r\RoomDoors[2]\buttons[0], True), EntityY(r\RoomDoors[2]\buttons[1], True), EntityZ(r\RoomDoors[2]\buttons[0], True) + 0.062, True)
+			PositionEntity(r\RoomDoors[2]\buttons[1], EntityX(r\RoomDoors[2]\buttons[1], True), EntityY(r\RoomDoors[2]\buttons[1], True), EntityZ(r\RoomDoors[2]\buttons[1], True) - 0.062, True)					
 			
 			If ChanceToSpawn005 = 3 And (Not ChanceToSpawn005 = 1) And (Not ChanceToSpawn005 = 2) Then
 				it = CreateItem("SCP-005", "scp005", r\x - 4951.0 * RoomScale, r\y - 4688.0 * RoomScale, r\z + 1828.0 * RoomScale)
@@ -7037,7 +7041,7 @@ Function CreateSecurityCam.SecurityCams(x#, y#, z#, r.Rooms, screen% = False)
 	Local sc.SecurityCams = New SecurityCams
 	Local o.Objects = First Objects
 	
-	sc\obj = CopyEntity(o\CamId[0])
+	sc\obj = CopyEntity(o\CamID[0])
 	ScaleEntity(sc\obj, 0.0015, 0.0015, 0.0015)
 	sc\CameraObj = CopyEntity(o\CamID[1])
 	ScaleEntity(sc\CameraObj, 0.01, 0.01, 0.01)
@@ -7086,10 +7090,9 @@ End Function
 
 Function UpdateSecurityCams()
 	Local sc.SecurityCams
-	Local RedTexture% = LoadTexture_Strict(MapPath$+"CameraTexture2.png")
-	Local JustTexture% = LoadTexture_Strict(MapPath$+"CameraTexture1.png")
 	Local fs.FPS_Settings = First FPS_Settings
-	
+	Local DefaultTexture% = LoadTexture_Strict("GFX\map\CameraTexture1.png")
+	Local RedTexture% = LoadTexture_Strict("GFX\map\CameraTexture2.png")
 	;coffineffect = 0, not affected by 895
 	;coffineffect = 1, constantly affected by 895
 	;coffineffect = 2, 079 can broadcast 895 feed on this screen
@@ -7144,10 +7147,10 @@ Function UpdateSecurityCams()
 					RotateEntity(sc\obj, 0, sc\room\angle + sc\angle + Max(Min(sc\CurrAngle, sc\turn), -sc\turn), 0)
 					
 					If EntityInView(sc\CameraObj, Camera) And EntityVisible(sc\CameraObj, Camera) Then
-					    If (MilliSecs2() Mod 1500) < 1100 Then
-                            EntityTexture sc\CameraObj, RedTexture
+					    If (MilliSecs2() Mod 1250) < 800 Then ;1500
+                            EntityTexture sc\CameraObj, RedTexture%
 	                    Else
-		                    EntityTexture sc\CameraObj, JustTexture
+		                    EntityTexture sc\CameraObj, DefaultTexture
 	                    EndIf
 	                EndIf
 	
@@ -8370,7 +8373,7 @@ Function CreateMap()
 	MapRoomID(ROOM1)=MapRoomID(ROOM1)+1	
 	
 	If IntroEnabled
-		r = CreateRoom(0, ROOM1, 8, 0, (MapHeight-1) * 8, "room173_intro")
+		r = CreateRoom(0, ROOM1, 8, 0, (MapHeight-1) * 8, "room173intro")
 		MapRoomID(ROOM1)=MapRoomID(ROOM1)+1
 	EndIf
 	
@@ -8718,7 +8721,7 @@ Function UpdateRoomLights(cam%)
 										ShowEntity r\LightSprites2%[i]
 										r\LightSpriteHidden%[i] = False
 									EndIf
-									If PlayerRoom\RoomTemplate\Name$ = "room173_intro" Then
+									If PlayerRoom\RoomTemplate\Name$ = "room173intro" Then
 										random# = Rnd(0.38,0.42)
 									Else
 										If r\LightFlicker%[i]<5 Then
@@ -8791,7 +8794,7 @@ Function UpdateRoomLights(cam%)
 							EndIf
 						Else
 							If (EntityDistance(cam%,r\LightSprites2[i])<8.5 Or r\RoomTemplate\UseLightCones) Then
-								If PlayerRoom\RoomTemplate\Name$ = "room173_intro" Then
+								If PlayerRoom\RoomTemplate\Name$ = "room173intro" Then
 									random# = Rnd(0.38,0.42)
 								Else
 									If r\LightFlicker%[i]<5 Then

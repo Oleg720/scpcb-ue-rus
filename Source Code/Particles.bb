@@ -102,7 +102,6 @@ Function UpdateEmitters()
 	InSmoke = False
 	For e.emitters = Each Emitters
 		If fs\FPSfactor[0] > 0 And (PlayerRoom = e\room Or e\room\dist < 8) Then
-			;If ParticleAmount = 2 Or SmokeDelay#=0.0
 			Local p.Particles = CreateParticle(EntityX(e\obj, True), EntityY(e\obj, True), EntityZ(e\obj, True), Rand(e\minimage, e\maximage), e\size, e\gravity, e\lifetime)
 			p\speed = e\speed
 			RotateEntity(p\pvt, EntityPitch(e\Obj, True), EntityYaw(e\Obj, True), EntityRoll(e\Obj, True), True)
@@ -113,7 +112,6 @@ Function UpdateEmitters()
 			p\SizeChange = e\SizeChange
 			
 			p\Achange = e\achange
-			;EndIf
 			e\SoundCHN = LoopSound2(HissSFX, e\SoundCHN, Camera, e\Obj)
 			
 			If InSmoke = False Then
@@ -124,13 +122,6 @@ Function UpdateEmitters()
 					EndIf
 				EndIf					
 			EndIf
-			;If ParticleAmount <> 2
-			;	If SmokeDelay#<(10-(5*ParticleAmount))
-			;		SmokeDelay#=SmokeDelay#+fs\FPSfactor[0]
-			;	Else
-			;		SmokeDelay#=0.0
-			;	EndIf
-			;EndIf
 		EndIf
 	Next
 	
@@ -239,7 +230,7 @@ Function UpdateDevilEmitters()
 			If dem\isDeconGas
 				dem\SoundCHN = LoopSound2(HissSFX, dem\SoundCHN, Camera, dem\obj)
 				If InSmoke = False Then
-					If WearingGasMask=0 And WearingHazmat=0 Then
+					If WearingGasMask=0 And WearingHazmat=0 And WearingNightVision=0 Then
 						Local dist# = Distance(EntityX(Camera, True), EntityZ(Camera, True), EntityX(dem\obj, True), EntityZ(dem\obj, True))
 						If dist < 0.8 Then
 							If Abs(EntityY(Camera, True)-EntityY(dem\obj,True))<5.0 Then InSmoke = True
@@ -278,11 +269,3 @@ Function DeleteDevilEmitters()
 	
 End Function
 
-
-
-
-
-
-;~IDEal Editor Parameters:
-;~F#4#10#2E#4A#54#66#A0#C5#D0#E0#112
-;~C#Blitz3D

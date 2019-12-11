@@ -9,14 +9,14 @@ If Len(InitErrorStr)>0 Then
 EndIf
 
 Include "Source Code\FMod.bb"
-Include "Source Code\StrictLoads.bb"
+Include "Source Code\Strict_Loads.bb"
 Include "Source Code\Fullscreen_Window_Fix.bb"
-Include "Source Code\KeyName.bb"
-Include "Source Code\DevilParticleSystem.bb"
+Include "Source Code\Key_Name.bb"
+Include "Source Code\Devil_Particle_System.bb"
 Include "Source Code\Math.bb"
 Include "Source Code\INI_Details.bb"
 
-Global ModCompatibleNumber$ = "5.5.2 [Rus Indev]"
+Global ModCompatibleNumber$ = "5.5.4-Dev [Rus Indev]"
 
 Type Fonts
     Field Font%[MaxFontAmount-1]
@@ -2270,11 +2270,11 @@ DrawLoading(35, True)
 
 ;----------------------------------------------  Items  -----------------------------------------------------
 
-Include "Source Code\Items.bb"
+Include "Source Code\Items_System.bb"
 
 ;--------------------------------------- Particles ------------------------------------------------------------
 
-Include "Source Code\Particles.bb"
+Include "Source Code\Particles_System.bb"
 
 ;-------------------------------------  Doors --------------------------------------------------------------
 
@@ -2845,23 +2845,28 @@ Function UseDoor(d.Doors, showmsg%=True, playsfx%=True)
 			If (Instr(Msg,"Вы приложили свою")=0) Or (MsgTimer < 70*3) Then ;You placed your
 				Msg = "Вы приложили ладонь к сканеру. Сообщение: "+Chr(34)+"ДНК опознана. Доступ разрешён."+Chr(34) ;You place the palm of the hand onto the scanner. The scanner reads "+Chr(34)+"DNA verified. Access granted.
 			EndIf
-			MsgTimer = 70 * 10
+			MsgTimer = 70 * 7
 		Else
 			temp = 0
             If SelectedItem <> Null
                 If SelectedItem\itemtemplate\tempname = "scp005" Then temp = 1
+				If SelectedItem\itemtemplate\tempname = "key0" Or SelectedItem\itemtemplate\tempname = "key1" Or SelectedItem\itemtemplate\tempname = "key2" Or SelectedItem\itemtemplate\tempname = "key3" Or SelectedItem\itemtemplate\tempname = "key4" Or SelectedItem\itemtemplate\tempname = "key5" Or SelectedItem\itemtemplate\tempname = "key6" Or SelectedItem\itemtemplate\tempname = "key7" Then temp = 2  
             EndIf
             If temp = 0
                 If showmsg = True Then 
                     PlaySound_Strict ScannerSFX2
                     Msg = "Вы приложили свою ладонь к сканеру. Сообщение: "+Chr(34)+"ДНК не соответствуют образцу. В доступе отказано."+Chr(34) ;You placed your palm onto the scanner. The scanner reads: "+Chr(34)+"DNA does not match known sample. Access denied.Вы приложили свою ладонь к сканеру. Сообщение: "+Chr(34)+"ДНК не соответствуют образцу. В доступе отказано."+Chr(34) ;You placed your palm onto the scanner. The scanner reads: "+Chr(34)+"DNA does not match known sample. Access denied.
-                    MsgTimer = 70 * 10
+                    MsgTimer = 70 * 7
                     Return
                 EndIf
-            Else
+            ElseIf temp = 1
                 PlaySound_Strict ScannerSFX1
                 Msg = "Вы приложили ключ к сканеру. Сообщение: "+Chr(34)+"Неизвестная ДНК опознана. ОШИБКА! Доступ разрешён."+Chr(34) ;You hold the key onto the scanner. The scanner reads: "+Chr(34)+"Unknown DNA verified. ERROR! Access granted.
-                MsgTimer = 70 * 10  
+                MsgTimer = 70 * 7
+				ElseIf temp = 2
+                Msg = "The type of this slot doesn't require keycards." ;..!
+                MsgTimer = 70 * 7
+                Return
             EndIf
 		EndIf
 	Else
@@ -2962,15 +2967,15 @@ End Function
 
 DrawLoading(40,True)
 
-Include "Source Code\MapSystem.bb"
+Include "Source Code\Map_System.bb"
 
 DrawLoading(80,True)
 
-Include "Source Code\NPCs.bb"
+Include "Source Code\NPCs_System.bb"
 
 ;-------------------------------------  Events --------------------------------------------------------------
 
-Include "Source Code\EventSystem.bb"
+Include "Source Code\Event_System.bb"
 
 Collisions HIT_PLAYER, HIT_MAP, 2, 2
 Collisions HIT_PLAYER, HIT_PLAYER, 1, 3
@@ -3190,7 +3195,7 @@ Repeat
 		While True
 			If FileSize("Screenshots\screenshot_" + Str(n) + ".png") = 0 Then
 				SaveBuffer(BackBuffer(), "Screenshots\screenshot_" + Str(n) + ".png")
-				Msg = "Сохранён сником экрана: " + Chr(34) + "Screenshots\screenshot_" + Str(n) + ".png" + Chr(34) ;"Screenshot taken."
+				Msg = "Скриншот сохранён в: " + Chr(34) + "Screenshots\screenshot_" + Str(n) + ".png" + Chr(34) ;"Screenshot taken."
 				MsgTimer = 70*5
 				Exit
 			Else
@@ -3349,7 +3354,7 @@ Function MainLoop()
 				
 			If Rand(3)=1 Then PlayerZone = 3
 				
-			If PlayerRoom\RoomTemplate\Name = "room173_intro" Then 
+			If PlayerRoom\RoomTemplate\Name = "room173intro" Then 
 				PlayerZone = 4
 			ElseIf PlayerRoom\RoomTemplate\Name = "room860"
 				For e.Events = Each Events
@@ -3541,7 +3546,9 @@ Function MainLoop()
 			BlinkTimer = BlinkTimer - fs\FPSfactor[0]
 		Else
 			BlinkTimer = BlinkTimer - fs\FPSfactor[0] * 0.6 * BlinkEffect
-			If EyeIrritation > 0 Then BlinkTimer = BlinkTimer-Min(EyeIrritation / 100.0 + 1.0, 4.0) * fs\FPSfactor[0]
+			If WearingNightVision = 0 Then
+				If EyeIrritation > 0 Then BlinkTimer = BlinkTimer-Min(EyeIrritation / 100.0 + 1.0, 4.0) * fs\FPSfactor[0]
+			EndIf
 				
 			darkA = Max(darkA, 0.0)
 		End If
@@ -3618,7 +3625,7 @@ Function MainLoop()
 				W$ = SelectedItem\itemtemplate\tempname
 				V# = SelectedItem\state
 			EndIf
-			If (W<>"vest" And W<>"finevest" And W<>"hazmatsuit" And W<>"hazmatsuit2" And W<>"hazmatsuit3" And W<>"helmet") Or V=0 Or V=100
+			If (W<>"vest" And W<>"finevest" And W<>"hazmatsuit" And W<>"hazmatsuit2" And W<>"hazmatsuit3") Or V=0 Or V=100
 				If InvOpen Then
 					ResumeSounds()
 					MouseXSpeed() : MouseYSpeed() : MouseZSpeed() : mouse_x_speed_1#=0.0 : mouse_y_speed_1#=0.0
@@ -3635,7 +3642,7 @@ Function MainLoop()
 	If KeyHit(KEY_SAVE) Then
 		If SelectedDifficulty\saveType = SAVEANYWHERE Then
 			RN$ = PlayerRoom\RoomTemplate\Name$
-			If RN$ = "room173_intro" Or (RN$ = "exit1" And EntityY(Collider)>1040.0*RoomScale) Or RN$ = "gatea"
+			If RN$ = "room173intro" Or (RN$ = "exit1" And EntityY(Collider)>1040.0*RoomScale) Or RN$ = "gatea"
 				Msg = "Вы не можете сохраниться в этой локации." ;You cannot save in this location.
 				MsgTimer = 70 * 4
 			ElseIf (Not CanSave) Or QuickLoadPercent > -1
@@ -3653,7 +3660,7 @@ Function MainLoop()
 				MsgTimer = 70 * 4
 			Else
 				RN$ = PlayerRoom\RoomTemplate\Name$
-				If RN$ = "room173_intro" Or (RN$ = "exit1" And EntityY(Collider)>1040.0*RoomScale) Or RN$ = "gatea"
+				If RN$ = "room173intro" Or (RN$ = "exit1" And EntityY(Collider)>1040.0*RoomScale) Or RN$ = "gatea"
 					Msg = "Вы не можете сохраниться в этой локации." ;You cannot save in this location.
 					MsgTimer = 70 * 4
 				ElseIf (Not CanSave) Or QuickLoadPercent > -1
@@ -3709,9 +3716,9 @@ Function MainLoop()
 	UpdateConsole()
 		
 	If PlayerRoom <> Null Then
-		If PlayerRoom\RoomTemplate\Name = "room173_intro" Then
+		If PlayerRoom\RoomTemplate\Name = "room173intro" Then
 			For e.Events = Each Events
-				If e\EventName = "room173_intro" Then
+				If e\EventName = "room173intro" Then
 					If e\EventState3 => 40 And e\EventState3 < 50 Then
 						If InvOpen Then
 							Msg = "Дважды щёлкните по документу, чтобы посмотреть его." ;Double click on the document to view it.
@@ -5062,10 +5069,13 @@ Function DrawGUI()
 		Color 0, 0, 0
 		Rect(x - 50, y, 30, 30)
 		
-		If EyeIrritation > 0 Or BlurTimer > 550 Or BlinkEffect > 1.0 Or LightFlash > 0 Then
+		If BlurTimer > 550 Or BlinkEffect > 1.0 Or LightFlash > 0 Then
 			Color 200, 0, 0
 			Rect(x - 50 - 3, y - 3, 30 + 6, 30 + 6)
 		ElseIf LightBlink > 0 And (Not WearingNightVision)
+		    Color 200, 0, 0
+			Rect(x - 50 - 3, y - 3, 30 + 6, 30 + 6)
+		ElseIf EyeIrritation > 0 And (Not WearingNightVision)
 		    Color 200, 0, 0
 			Rect(x - 50 - 3, y - 3, 30 + 6, 30 + 6)
 		Else
@@ -5113,15 +5123,15 @@ Function DrawGUI()
 			AASetFont fo\ConsoleFont
 			
 			AAText x - 60, 40, "*******************************"
-            AAText x - 60, 60, "Room: " + PlayerRoom\RoomTemplate\Name ;Room:
+            AAText x - 60, 60, "Комната: " + PlayerRoom\RoomTemplate\Name ;Room:
             AAText x - 60, 80, "Координаты комнаты: (" + Floor(EntityX(PlayerRoom\obj) / 8.0 + 0.5) + ", " + Floor(EntityZ(PlayerRoom\obj) / 8.0 + 0.5) + ", угол: "+PlayerRoom\angle + ")" ;Room coordinates: ;angle:
 			For ev.Events = Each Events
 				If ev\room = PlayerRoom Then
 					AAText x - 60, 100, "Событие: " + ev\EventName ;Room event:
-					AAText x - 50, 190, "(состояние) state: " + ev\EventState
-					AAText x - 50, 210, "(состояние) state2: " + ev\EventState2   
-					AAText x - 50, 230, "(состояние) state3: " + ev\EventState3
-					AAText x - 50, 250, "(состояние) state4: " + ev\EventState4
+					AAText x - 60, 120, "(состояние) state: " + ev\EventState
+					AAText x - 60, 140, "(состояние) state2: " + ev\EventState2   
+					AAText x - 60, 160, "(состояние) state3: " + ev\EventState3
+					AAText x - 60, 180, "(состояние) state4: " + ev\EventState4
 					AAText x - 60, 200, "str: "+ ev\EventStr
 					Exit
 				EndIf
@@ -6780,7 +6790,7 @@ Function DrawGUI()
 									PlaySound_Strict LoadTempSound(SFXPath$+"SCP\1162\NostalgiaCancer"+Rand(1,5)+".ogg")
 									SelectedItem\state = 1
 								EndIf
-							Case "Документ об SCP-???" ;Document SCP-???
+							Case "Документ об SCP-XXX" ;Document SCP-XXX
 							    SelectedItem\itemtemplate\img = LoadImage_Strict(SelectedItem\itemtemplate\imgpath)	
 								SelectedItem\itemtemplate\img = ResizeImage2(SelectedItem\itemtemplate\img, ImageWidth(SelectedItem\itemtemplate\img) * MenuScale, ImageHeight(SelectedItem\itemtemplate\img) * MenuScale)
 								If (SelectedItem\state = 0) Then
@@ -9137,7 +9147,7 @@ Function DrawMenu()
 			AAText x, y+20*MenuScale, "Сохранение: "+CurrSave ;Save:
 			AAText x, y+40*MenuScale, "Сид карты: "+RandomSeed ;Map seed:
 		ElseIf AchievementsMenu <= 0 And OptionsMenu > 0 And QuitMSG <= 0 And KillTimer >= 0
-			If DrawButton(x + 101 * MenuScale, y + 410 * MenuScale, 230 * MenuScale, 60 * MenuScale, "Back") Then
+			If DrawButton(x + 101 * MenuScale, y + 410 * MenuScale, 230 * MenuScale, 60 * MenuScale, "Назад") Then ;Back
 				AchievementsMenu = 0
 				OptionsMenu = 0
 				QuitMSG = 0
@@ -9373,7 +9383,7 @@ Function DrawMenu()
 					Color(255, 255, 255)
 					
 					y = y + 30*MenuScale
-					AAText(x, y, "Control configuration:")
+					AAText(x, y, "Настройка управления:") ;Control configuration:
 					y = y + 10*MenuScale
 					
 					AAText(x, y + 20 * MenuScale, "Идти вперёд") ;Move Forward
@@ -9819,7 +9829,7 @@ End Type
 
 ;--------------------------------------- music & sounds ----------------------------------------------
 
-Include "Source Code\SoundSystem.bb"
+Include "Source Code\Sound_System.bb"
 
 ;--------------------------------------- entities ----------------------------------------------------
 
@@ -13475,10 +13485,12 @@ Function Use207()
 		
 		  If I_207\Timer > 30.0 And prevI207Timer =< 30.0 Then
               CameraShake = 10.0
+			  BlurTimer = 600.0
 		  EndIf
 		
 		  If I_207\Timer > 35.0 And prevI207Timer =< 35.0 Then
               CameraShake = 10.0
+			  BlurTimer = 600.0
 		  EndIf
 
           If I_207\Timer >= 50.0 Then
@@ -13488,7 +13500,9 @@ Function Use207()
       EndIf
 End Function
 
-Function Use402() ;This SCP sucks
+;This SCP sucks - Jabka
+;DON' FORGET TO REMOVE IN NEXT UPDATE!
+Function Use402() 
 
     Local prevI402Timer# = I_402\Timer
     Local fs.FPS_Settings = First FPS_Settings
@@ -13571,9 +13585,11 @@ Function Use402() ;This SCP sucks
 	EndIf
        
 End Function
+;Just copy of the SCP-198... But I'm too lazy to rewrite or remove it. - Jabka
+;DON' FORGET TO REMOVE IN NEXT UPDATE!
 
-Function Use357() ;Just copy of the SCP-198... But I'm too lazy to rewrite or remove it. - Jabka
 
+Function Use357() 
      Local prevI357Timer# = I_357\Timer
      Local i%
      Local fs.FPS_Settings = First FPS_Settings
@@ -13732,7 +13748,7 @@ Function UpdateMTF()
 End Function
 
 Function UpdateMTF2()
-	If PlayerRoom\RoomTemplate\Name = "gateaentrance" Or PlayerRoom\RoomTemplate\Name = "exit1" Then Return
+	If PlayerRoom\RoomTemplate\Name = "gateaentrance" Or PlayerRoom\RoomTemplate\Name = "exit1" Or PlayerRoom\RoomTemplate\Name = "room106" Or PlayerRoom\RoomTemplate\Name = "room457" Then Return
 	
 	Local r.Rooms, n.NPCs
 	Local dist#, i%
@@ -14201,7 +14217,7 @@ Function RenderWorld2()
 	ElseIf WearingNightVision=3
 		AmbientLight 255,255,255
 	ElseIf PlayerRoom<>Null
-		If (PlayerRoom\RoomTemplate\Name<>"room173_intro") And (PlayerRoom\RoomTemplate\Name<>"exit1") And (PlayerRoom\RoomTemplate\Name<>"gatea") Then
+		If (PlayerRoom\RoomTemplate\Name<>"room173intro") And (PlayerRoom\RoomTemplate\Name<>"exit1") And (PlayerRoom\RoomTemplate\Name<>"gatea") Then
 			AmbientLight Brightness, Brightness, Brightness
 		EndIf
 	EndIf

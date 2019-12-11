@@ -1334,7 +1334,7 @@ Function LoadGame(file$)
 	I_427\Using = ReadByte(f)
 	I_427\Timer = ReadFloat(f)
 	
-	If version = "5.5.1" Then
+	If version = "5.5.3" Then
 		I_Zone\Transition[0] = ReadByte(f)
 		I_Zone\Transition[1] = ReadByte(f)
 		I_Zone\HasCustomForest = ReadByte(f)
@@ -2149,7 +2149,7 @@ Function LoadGameQuick(file$)
 	I_427\Using = ReadByte(f)
 	I_427\Timer = ReadFloat(f)
 	
-	If version = "5.4.1" Then
+	If version = "5.5.3" Then
 		I_Zone\Transition[0] = ReadByte(f)
 		I_Zone\Transition[1] = ReadByte(f)
 		I_Zone\HasCustomForest = ReadByte(f)
@@ -2679,12 +2679,12 @@ Function LoadMap(file$)
 		Next
 	Next
 	
-	If IntroEnabled Then r = CreateRoom(0, ROOM1, 8, 0, (MapHeight+2) * 8, "room173_intro")
+	If IntroEnabled Then r = CreateRoom(0, ROOM1, 8, 0, (MapHeight+2) * 8, "room173intro")
 	r = CreateRoom(0, ROOM1, (MapWidth+2) * 8, 0, (MapHeight+2) * 8, "pocketdimension")
 	r = CreateRoom(0, ROOM1, 0, 500, -16, "gatea")
 	r = CreateRoom(0, ROOM1, -16, 800, 0, "dimension1499")
 	
-	CreateEvent("room173_intro", "room173_intro", 0)
+	CreateEvent("room173intro", "room173intro", 0)
 	CreateEvent("pocketdimension", "pocketdimension", 0)   
 	CreateEvent("gatea", "gatea", 0)
 	CreateEvent("dimension1499", "dimension1499", 0)

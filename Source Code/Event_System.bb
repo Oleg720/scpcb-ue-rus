@@ -65,7 +65,7 @@ End Function
 Function InitEvents()
 	Local e.Events
 	
-	CreateEvent("room173_intro", "room173_intro", 0)
+	CreateEvent("room173intro", "room173intro", 0)
 	CreateEvent("room173", "room173", 0)
 	
 	CreateEvent("pocketdimension", "pocketdimension", 0)	
@@ -984,7 +984,7 @@ Function UpdateEvents()
 					EndIf					
 				End If
 				;[End Block]
-			Case "room173_intro" ;the intro sequence
+			Case "room173intro" ;the intro sequence
 				;[Block]
 				
 				If PlayerRoom = e\room Then
@@ -1275,7 +1275,7 @@ Function UpdateEvents()
 							EndIf 
 							
 							If e\room\NPC[11] <> Null Then
-							    If EntityX(e\room\NPC[11]\Collider)>EntityX(e\room\obj,True)-2700.0*RoomScale Then
+							    If EntityX(e\room\NPC[11]\Collider)>EntityX(e\room\obj,True)-1200.0*RoomScale Then
 							        e\room\NPC[11]\State = 0
 									RemoveNPC(e\room\NPC[11])
 							    EndIf
@@ -8345,7 +8345,7 @@ Function UpdateEvents()
 										Case 5
 											itemName = "Старый бейдж" ;Old Badge
 										Case 6
-										    itemName = "Документ об SCP-???" ;Document SCP-???
+										    itemName = "Документ об SCP-XXX" ;Document SCP-XXX
 									End Select
 									
 									Local itemExists% = False
@@ -8538,7 +8538,7 @@ Function UpdateEvents()
 							Case 5
 								it = CreateItem("Старый бейдж","badge", EntityX(pp, True), EntityY(pp, True), EntityZ(pp, True)) ;Old Badge
 							Case 6
-								it = CreateItem("Документ об SCP-???","paper", EntityX(pp, True), EntityY(pp, True), EntityZ(pp, True)) ;Document SCP-???
+								it = CreateItem("Документ об SCP-XXX","paper", EntityX(pp, True), EntityY(pp, True), EntityZ(pp, True)) ;Document SCP-XXX
 						End Select
 						EntityType(it\collider, HIT_ITEM)
 						GiveAchievement(Achv1162)
@@ -9358,11 +9358,7 @@ Function UpdateEvents()
 							Else
 							    Contained457 = False
 							EndIf
-							
-							;Loop drips sound
-							e\Sound3 = LoadSound_Strict(SFXPath$+"Room\457Chamber\Drips.ogg")
-					        e\SoundCHN3 = LoopSound2(e\Sound3, e\SoundCHN3, Camera, e\room\Objects[4], 3.4, 1.0)
-					
+
 							If e\room\NPC[0]\State = 0 Then
 							    If EntityDistance(e\room\NPC[0]\Collider, e\room\RoomDoors[7]\obj) < 0.7	
 							        e\room\RoomDoors[7]\open = True
@@ -9560,7 +9556,6 @@ Function UpdateEvents()
 				        ShowEntity e\room\obj
 				
                         ;Main setup
-						GiveAchievement(Achv409)
 						ShouldPlay = 29
 							
 					    If e\EventState = 0 Then
@@ -9569,7 +9564,8 @@ Function UpdateEvents()
 						        QuickLoad_CurrEvent = e
 						        e\EventStr = "load0"
 					        EndIf
-				        ElseIf e\EventState = 1.0 Then 	
+				        ElseIf e\EventState = 1.0 Then
+							If e\room\RoomDoors[2]\open = True Then GiveAchievement(Achv409)						
 					        dist# = EntityDistance(Collider, e\room\NPC[0]\Collider)
 					        If dist < 1.0 And I_409\Timer < 1 Then
 						        I_409\Timer = 1
@@ -9579,7 +9575,7 @@ Function UpdateEvents()
 					            If I_409\Timer < 1 Then
 						            DrawHandIcon = True
 						            If MouseHit1 Then
-						                Msg = "You touched the SCP-409."
+						                Msg = "Вы дотронулись до SCP-409." ;You touched the SCP-409.
 						                MsgTimer = 70*6
 						                BlurTimer = 2000
 						                I_409\Timer = I_409\Timer + 1.0

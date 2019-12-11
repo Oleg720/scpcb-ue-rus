@@ -206,7 +206,7 @@ Const MusicPath2$ = SFXPath$+"Radio\UserTracks\"
 ;[VERSIONS]
 
 Const GameVersionNumber$ = "1.3.11"
-Const ModVersionNumber$ = "5.5.2 [Rus Indev]"
+Const ModVersionNumber$ = "5.5.4-Dev [Rus Indev]"
 
 ;[OPTIONS]
 
@@ -224,5 +224,3 @@ Const ItemsPath$ = GFXPath$+"items\"
 
 ;{~--<END>--~}
 
-;~IDEal Editor Parameters:
-;~C#Blitz3D

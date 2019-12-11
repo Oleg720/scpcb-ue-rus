@@ -46,7 +46,7 @@ Function Init3DMenu()
 	Select Lower(GetINIString$(OptionFile,"options","game progress"))
 		;Case "intro" ;'s chamber before breach (WIP)
 		    ;[Block]
-			;m3d\Room = "room173_intro"
+			;m3d\Room = "room173intro"
 			;[End Block]
 		Case "lcz" ;Light Containment Zone rooms
 		    ;[Block]
@@ -137,7 +137,7 @@ Function Init3DMenu()
 				
 	Select m3d\Room
 			;Intro
-		;Case "room173_intro"
+		;Case "room173intro"
 		;	;[Block]
 		;	AmbientLight 200,200,200
 		;	TranslateEntity m3d\Cam, -16.0, -1.0, -8.0
@@ -481,7 +481,7 @@ Function Update3DMenu()
 		
 	Select m3d\Room
 		;	;intro
-		;Case "room173_intro"
+		;Case "room173intro"
 		;	;[Block]
 		;	
 		;	;[End Block]

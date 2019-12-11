@@ -1,9 +1,11 @@
-;[Block]
 Dim KeyName$(211)
+
 KeyName(1)="Esc"
+
 For i = 2 To 10
 	KeyName(i)=i-1
 Next
+
 KeyName(11)="0"
 KeyName(12)="-"
 KeyName(13)="="

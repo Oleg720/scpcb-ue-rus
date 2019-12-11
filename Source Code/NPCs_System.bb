@@ -1054,7 +1054,7 @@ Function UpdateNPCs()
 												Select PlayerRoom\RoomTemplate\Name
 													Case "lockroom", "room2closets", "room895"
 														DeathMSG = SubjectName$+". Причина смерти: смертельный перелом шеи. Записи с камер наблюдения подтверждают, что субъект был убит SCP-173." ;Subject D-9341. Cause of death: Fatal cervical fracture. The surveillance tapes confirm that the subject was killed by SCP-173.
-													Case "room173_intro"
+													Case "room173intro"
 														DeathMSG = SubjectName$+". Причина смерти: смертельный перелом шеи. По слоВам начальника службы безопасности Франклина, который присутствовал в камере SCP-173 " ;Subject D-9341. Cause of death: Fatal cervical fracture. According to Security Chief Franklin who was present at SCP-173's containment 
 														DeathMSG = DeathMSG + "во время нарушения условий содержания, субъект был убит SCP-173, как только начались сбои в электрической сети." ;chamber during the breach, the subject was killed by SCP-173 as soon as the disruptions in the electrical network started.
 													Case "room2doors"
@@ -5541,45 +5541,17 @@ Function UpdateNPCs()
 			Case NPCtype650
 				;[Block]
                
-                ;A pivot to rotate and position for 650 - Unfinished
-                ;n\obj2 = CreatePivot()
-                ;EntityParent n\obj2, Collider      
-                ;PositionEntity(n\obj2, EntityX(Collider), EntityY(Collider), EntityZ(Collider) + 0.7)
-                ;RotateEntity n\obj2,0,EntityYaw(Collider),0
-                ;TurnEntity n\obj2,0,180,0
-                ;MoveEntity(n\obj2, 0, 0, +0.7)
-                ;RotateEntity n\obj2, 0, EntityYaw(Collider), 0
-            
-                ;RotateEntity n\obj2, EntityPitch(Collider), EntityYaw(Collider), EntityRoll(Collider)
-                ;TurnEntity n\obj2,0,EntityYaw(Collider),0
-                ;TurnEntity n\obj2,0,180,0
-
-
-				;PositionEntity(n\obj, EntityX(n\Collider), EntityY(n\Collider) - 0.18, EntityZ(n\Collider))
 				PositionEntity(n\obj, EntityX(n\Collider), EntityY(n\Collider) - 0.32, EntityZ(n\Collider))
 				RotateEntity (n\obj, 0, EntityYaw(n\Collider), 0)
 
-                ;SetNPCFrame(n, 0)
-                ;SetNPCFrame(n)
-                ;AnimateNPC(n, 0, 121, n\CurrSpeed*26)
-                ;pvt = CreatePivot()
-                ;PositionEntity(pvt,EntityX(Collider,True),EntityY(Collider,True),EntityZ(Collider) + 0.7)
-                ;RotateEntity pvt,0,EntityYaw(Collider,True),0
-                ;TurnEntity pvt,0,180,0
-                ;EntityParent pvt, Collider
-                
                 pvt = CreatePivot()
                 PositionEntity pvt,EntityX(Collider,True),EntityY(Collider,True),EntityZ(Collider,True)
                 RotateEntity pvt,0,EntityYaw(Collider,True),0
                 TurnEntity pvt,0,180,0
                  
-                ;HideEntity(Collider)
                 EntityPick(pvt,1.0)
-                ;ShowEntity(Collider)
                 FreeEntity pvt
-                ;Local temp650%
 				dist# = EntityDistance(n\Collider, Collider)								
-				;n\Idle = False
 				
 				;Nullified teleportation behind player due to issues. If someone could do a hotfix, credits given.
 				If n\Idle = False Then
@@ -5618,49 +5590,28 @@ Function UpdateNPCs()
                     If ((BlinkTimer < - 16) Or (IsNVGBlinking=True)) And EntityVisible(n\obj,Camera) Then
                     ;Make 650 to not move like 173
                     ;Player blinks -> 650 teleport behind the player (Issue fixed)
-					      ;PointEntity(n\Collider, Collider)
-					      ;HideEntity n\obj
 					      RotateEntity(n\Collider,0,EntityYaw(Collider)-180,0)														
 					      PositionEntity(n\Collider, EntityX(Collider), EntityY(Collider), EntityZ(Collider))
 					      MoveEntity(n\Collider, 0, 0, +1.5)
 					      ResetEntity n\Collider
 					      MoveEntity(n\Collider, 0, +0.50, 0)					
-					      ;ShowEntity n\obj
-					      ;PointEntity(n\Collider, Collider)
-					      ;PositionEntity(n\Collider, EntityX(n\Collider), EntityY(n\Collider), EntityZ(n\Collider))
-					      ;MoveEntity(n\Collider, 0, 0, n\Speed * fs\FPSfactor[0])													
-						  ;MoveEntity(n\Collider, 0, +0.8, +0.7)	
-						  ;MoveEntity(n\Collider, 0, 0, +0.7)						 
-						  ;PointEntity(n\Collider, Collider)
-						  ;If EntityCollided(n\Collider,HIT_PLAYER)=Collider Then
-						  ;    MoveEntity(n\Collider, 0, +0.8, +0.7)
-						  ;EndIf
 						         						
 						  Select Rand(5)
 							Case 1
-							    ;ShowEntity n\obj
 								SetNPCFrame(n, 1)
-							Case 2
-							    ;ShowEntity n\obj							    
+							Case 2					    
 								SetNPCFrame(n, 5)
 							Case 3
-								;ShowEntity n\obj
 								SetNPCFrame(n, 7)
 							Case 4
-								;ShowEntity n\obj
 								SetNPCFrame(n, 9)
 							Case 5
-							    ;ShowEntity n\obj
 								SetNPCFrame(n, 11)
-						  End Select						
-						  ;MoveEntity(n\Collider, 0, +0.1, 0)						
+						  End Select											
 					ElseIf (Not EntityInView(n\obj, Camera)) And EntityVisible(n\obj,Camera) Then 
 					;Make 650 to move like 173
 					;Player don't look -> 650 move forward				
 						  PointEntity(n\Collider, Collider)	
-						  ;PositionEntity(n\Collider, EntityX(n\Collider), EntityY(n\Collider), EntityZ(n\Collider))	
-						  ;PositionEntity(n\Collider, EntityX(n\Collider), EntityY(n\Collider), EntityZ(n\Collider))
-						  ;PositionEntity(n\Collider, EntityX(n\Collider), Min(EntityY(n\Collider),0.35), EntityZ(n\Collider))											
 						  MoveEntity(n\Collider, 0, 0, n\Speed * fs\FPSfactor[0])
 						
 						  Select Rand(5)
@@ -5678,7 +5629,6 @@ Function UpdateNPCs()
 					ElseIf (Not EntityVisible(n\obj,Camera)) And EntityInView(n\obj, Camera) And dist > 8.0 Then
 					;Not sure if this is buggy or not but I will let the testers test it.
 					;This is triggered if: 650 is not visible, dist is more than 10, and camera sense 650 in the view
-							;PositionEntity n\Collider, EntityX(w\obj,True), EntityY(w\obj,True)+0.25,EntityZ(w\obj,True)
 							PositionEntity(n\Collider, EntityX(Collider), EntityY(Collider)+0.25, EntityZ(Collider))
 							ResetEntity n\Collider
 					        RotateEntity(n\Collider,0,EntityYaw(Collider)-180,0)														
@@ -5701,12 +5651,14 @@ Function UpdateNPCs()
 					;	 HeartBeatVolume = 1.0
 					;EndIf
 					
-					;650 to no longer appear if player is in exit1, gatea or pocketdimension
-					If PlayerRoom\RoomTemplate\Name = "exit1" And PlayerRoom\RoomTemplate\Name = "gatea" And PlayerRoom\RoomTemplate\Name = "pocketdimension" And PlayerRoom\RoomTemplate\Name = "dimension1499" Then
+					;650 to no longer appear if player is in exit1, gatea, dimension1499, room860 or pocketdimension
+					For e.Events = Each Events		   
+					    If (PlayerRoom\RoomTemplate\Name = "exit1" And EntityY(Collider) > 1040.0 * RoomScale) Or PlayerRoom\RoomTemplate\Name = "gatea" Or PlayerRoom\RoomTemplate\Name = "pocketdimension" Or PlayerRoom\RoomTemplate\Name = "dimension1499" Or (PlayerRoom\RoomTemplate\Name = "room860" And e\EventState = 1.0) Then
 					     HideEntity n\obj					
 					     HideEntity n\Collider
-					     n\Idle = True					
-					EndIf																																				  
+					     n\Idle = True
+						EndIF
+					Next
 			     EndIf	
 					
 				;[End Block]
@@ -6263,10 +6215,10 @@ Function UpdateNPCs()
 				
 				If n\State = 0 Then
 				    If ChannelPlaying(n\SoundCHN2) = True Then StopChannel n\SoundCHN2 
-				    n\SoundCHN = LoopSound2(VehicleSFX(1), n\SoundCHN, Camera, n\Collider, 15, 2.0)
+				    n\SoundCHN = LoopSound2(VehicleSFX(1), n\SoundCHN, Camera, n\Collider, 13, 1.0)
 				ElseIf n\State = 1
 				    If ChannelPlaying(n\SoundCHN) = True Then StopChannel n\SoundCHN  
-				    n\SoundCHN2 = LoopSound2(VehicleSFX(0), n\SoundCHN2, Camera, n\Collider, 15, 2.0)
+				    n\SoundCHN2 = LoopSound2(VehicleSFX(0), n\SoundCHN2, Camera, n\Collider, 13, 1.0)
 				EndIf
 												
 				MoveEntity(n\Collider, 0, 0, n\CurrSpeed * fs\FPSfactor[0])
@@ -6303,7 +6255,7 @@ Function UpdateNPCs()
 						Local UpdateGravity% = False
 						Local MaxX#,MinX#,MaxZ#,MinZ#
 						If n\InFacility=1
-							If PlayerRoom\RoomTemplate\Name$ <> "room173_intro"
+							If PlayerRoom\RoomTemplate\Name$ <> "room173intro"
 								For e.Events = Each Events
 									If e\EventName = "room860"
 										If e\EventState = 1.0
@@ -10908,7 +10860,7 @@ Function PlayerInReachableRoom(canSpawnIn049Chamber%=False)
 	Local e.Events, temp
 	
 	;Player is in these rooms, returning false
-	If RN = "pocketdimension" Or RN = "gatea" Or RN = "dimension1499" Or RN = "room173_intro" Then
+	If RN = "pocketdimension" Or RN = "gatea" Or RN = "dimension1499" Or RN = "room173intro" Then
 		Return False
 	EndIf
 	;Player is at GateB and is at the surface, returning false

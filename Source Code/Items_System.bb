@@ -279,11 +279,11 @@ Function InitItemTemplates()
 	CreateItemTemplate("Бейдж Эмили Росс", "badge", ItemsPath$+"badge.x", ItemsPath$+"INV_Emily_badge.png", ItemsPath$+"Emily_badge_HUD.png", 0.0001, ItemsPath$+"Emily_badge.png") ;Emily Ross' Badge
 	it = CreateItemTemplate("Потерянный ключ", "key", ItemsPath$+"key.b3d", ItemsPath$+"INV_key.png", "", 0.0028) : it\sound = 3 ;Lost Key
 	it = CreateItemTemplate("Дисциплинарное слушание DH-S-4137-17092", "oldpaper", ItemsPath$+"paper.x", ItemsPath$+"INV_paper.png", ItemsPath$+"dh.s", 0.003) : it\sound = 0 ;Disciplinary Hearing DH-S-4137-17092
-	it = CreateItemTemplate("Монета", "coin", ItemsPath$+"coin_ticket.b3d", ItemsPath$+"INV_coin.png", "", 0.0005) : it\sound = 3 ;Coin
-	it = CreateItemTemplate("Билет в кино", "ticket", ItemsPath$+"coin_ticket.b3d", ItemsPath$+"INV_ticket.png", ItemsPath$+"ticket_HUD.png", 0.002, ItemsPath$+"ticket.png", "", 0, 1 + 2 + 8) : it\sound = 0 ;Movie Ticket
+	it = CreateItemTemplate("Монета", "coin", ItemsPath$+"coin.b3d", ItemsPath$+"INV_coin.png", "", 0.0005) : it\sound = 3 ;Coin
+	it = CreateItemTemplate("Билет в кино", "ticket", ItemsPath$+"coin.b3d", ItemsPath$+"INV_ticket.png", ItemsPath$+"ticket_HUD.png", 0.002, ItemsPath$+"ticket.png", "", 0, 1 + 2 + 8) : it\sound = 0 ;Movie Ticket
 	CreateItemTemplate("Старый бейдж", "badge", ItemsPath$+"badge.x", ItemsPath$+"INV_d_9341_badge.png", ItemsPath$+"d_9341_badge_HUD.png", 0.0001, ItemsPath$+"d_9341_badge.png", "", 0, 1 + 2 + 8) ;Old Badge
 	
-	it = CreateItemTemplate("Четвертак","25ct", ItemsPath$+"coin_ticket.b3d", ItemsPath$+"INV_coin.png", "", 0.0005, ItemsPath$+"coin.png", "", 0, 1 + 2 + 8) : it\sound = 3 ;Quarter
+	it = CreateItemTemplate("Четвертак","25ct", ItemsPath$+"coin.b3d", ItemsPath$+"INV_coin.png", "", 0.0005, ItemsPath$+"coin.png", "", 0, 1 + 2 + 8) : it\sound = 3 ;Quarter
 	it = CreateItemTemplate("Кошелёк","wallet", ItemsPath$+"wallet.b3d", ItemsPath$+"INV_wallet.png", "", 0.0005, "", "", 1) : it\sound = 2 ;Wallet
 	
 	it = CreateItemTemplate("SCP-427","scp427",ItemsPath$+"scp_427.b3d",ItemsPath$+"INV_scp_427.png", "", 0.001) : it\sound = 3
@@ -330,7 +330,7 @@ Function InitItemTemplates()
     it = CreateItemTemplate("Документ об SCP-402", "paper", ItemsPath$+"paper.x", ItemsPath$+"INV_paper.png", ItemsPath$+"doc_402.png", 0.003) : it\sound = 0 ;Document SCP-402
     it = CreateItemTemplate("Документ об SCP-1033-RU", "paper", ItemsPath$+"paper.x", ItemsPath$+"INV_paper.png", ItemsPath$+"doc_1033_ru.png", 0.003) : it\sound = 0 ;Document SCP-1033-RU
     it = CreateItemTemplate("Документ об SCP-357", "paper", ItemsPath$+"paper.x", ItemsPath$+"INV_paper.png", ItemsPath$+"doc_357.png", 0.003) : it\sound = 0 ;Document SCP-357
-    it = CreateItemTemplate("Документ об SCP-???", "paper", ItemsPath$+"paper.x", ItemsPath$+"INV_paper.png", ItemsPath$+"doc_970_1162.png", 0.003) : it\sound = 0 ;Document SCP-???
+    it = CreateItemTemplate("Документ об SCP-XXX", "paper", ItemsPath$+"paper.x", ItemsPath$+"INV_paper.png", ItemsPath$+"doc_970_1162.png", 0.003) : it\sound = 0 ;Document SCP-XXX
 
     it = CreateItemTemplate("Инцидент O5-14", "paper", ItemsPath$+"paper.x", ItemsPath$+"INV_burnt_note.png", ItemsPath$+"doc_O5_14.png", 0.0025, ItemsPath$+"burnt_note.png") : it\sound = 0 ;Incident O5-14
 

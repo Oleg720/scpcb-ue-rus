@@ -3,7 +3,7 @@ MenuBlack = LoadImage_Strict("GFX\menu\menublack.png")
 MaskImage MenuBlack, 255,255,0
 Global QuickLoadIcon% = LoadImage_Strict("GFX\menu\QuickLoading.png")
 
-Include "Source Code\Menu3D.bb"
+Include "Source Code\Menu_3D.bb"
 
 Init3DMenu()
 
@@ -238,7 +238,7 @@ Function UpdateMainMenu()
 		If ms\MainMenuTab<>8
 		    If MouseOn((GraphicWidth/2)+(330*MenuScale), y, 130, 60) And (Rand(20)=1) Then
 		        Color 100+Rand(50),100,100
-                AAText(GraphicWidth/2)+(330*MenuScale)+(3*MenuScale)+Rand(-10*MenuScale,10*MenuScale), y+(3*MenuScale)+Rand(-10*MenuScale,10*MenuScale),"BACK",False,False
+                AAText(GraphicWidth/2)+(330*MenuScale)+(3*MenuScale)+Rand(-10*MenuScale,10*MenuScale), y+(3*MenuScale)+Rand(-10*MenuScale,10*MenuScale),"НАЗАД",False,False ;BACK
             EndIf
             Color 0,0,0
 			AAText(GraphicWidth/2)+(330*MenuScale)+(3*MenuScale), y+(3*MenuScale),"НАЗАД",False,False ;BACK
@@ -1372,7 +1372,7 @@ Function UpdateLauncher()
 		EndIf
 		
 		If DrawButton(LauncherWidth - 275, LauncherHeight - 50 - 55, 150, 30, "НАШЕЛ ОШИБКУ!", False, False, False) Then ;REPORT A BUG!
-		    ExecFile("https://vk.com/creatormteam") ;<- Перед релизом - создать обсуждение в группе для баг-репортов и отсавить здесь на него ссылку
+		    ExecFile("https://vk.com/creatormteam") ;<- Перед релизом - создать обсуждение в группе для баг-репортов и оставить здесь на него ссылку
 					
 			End
 		EndIf

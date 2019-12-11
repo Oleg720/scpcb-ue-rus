@@ -9120,7 +9120,7 @@ Function DrawMenu()
 			AASetFont fo\Font[0]
 		ElseIf OptionsMenu > 0 Then
 			AASetFont fo\Font[1]
-			AAText(x, y-(122-45)*MenuScale, "НАСТРОЙКА",False,True) ;OPTIONS
+			AAText(x, y-(122-45)*MenuScale, "НАСТРОЙКИ",False,True) ;OPTIONS
 			AASetFont fo\Font[0]
 		ElseIf QuitMSG > 0 Then
 			AASetFont fo\Font[1]
@@ -9724,7 +9724,7 @@ Function DrawMenu()
 				y = y + 75*MenuScale
 
 				If SelectedDifficulty\menu Then
-					If DrawButton(x, y, 430*MenuScale, 60*MenuScale, "Настройка") Then OptionsMenu = 1 ;Options
+					If DrawButton(x, y, 430*MenuScale, 60*MenuScale, "Настройки") Then OptionsMenu = 1 ;Options
 					y = y + 75*MenuScale
 				EndIf				
 			Else							

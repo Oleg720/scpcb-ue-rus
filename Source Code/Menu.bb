@@ -195,7 +195,7 @@ Function UpdateMainMenu()
 						ms\MainMenuTab = 2
 					EndIf
 				Case 2
-					txt = "Õ¿—“–Œ… ¿" ;OPTIONS
+					txt = "Õ¿—“–Œ… »" ;OPTIONS
 					If temp Then ms\MainMenuTab = 3
 				Case 3
 					txt = "¬€’Œƒ" ;QUIT
@@ -602,7 +602,7 @@ Function UpdateMainMenu()
 				Color(255, 255, 255)
 				AASetFont fo\Font[1]
 								
-				AAText(GraphicWidth/2, y + height / 2, "Õ¿—“–Œ… ¿", True, True) ;OPTIONS	
+				AAText(GraphicWidth/2, y + height / 2, "Õ¿—“–Œ… »", True, True) ;OPTIONS	
 
 				x = (GraphicWidth/2)-(290*MenuScale)
 				y = y + height + 20 * MenuScale

@@ -1,6 +1,6 @@
 ГЛАВНАЯ ПАПКА:
-Конвертация - ок
-Мониторы - ok
+Конвертация в png/Перенос из ванильной CB - ок
+Камеры - ok
 
 ---
 Font:
@@ -11,25 +11,35 @@ items:
 
 ./1025 - ok
 ./1048 - wip
-	1048_21.png , 1048_22.png -  
-Документы - WIP
+	1048_21.png , 1048_22.png -  (Когда-нибудь, ВАЖНО!)
+Документы - WIP (Но большая часть готова, ВАЖНО)
+	- Обычные документы с описанием SCP - ok
+	- doc_O5(2).png, doc_references.png, doc_data.png, unknown_note.png, doc_O5.png - ok
+	- doc_O5_14.png - WIP (Иван, на зимних каникулах)
+	- doc_unknown.png, note_085.png, note_Maynard.png
+447 предметы - ok (Низний приоритет)
+1079 предметы - ok (Средний приоритет)
+Новые карточки - когда-нибудь, наверное (Самый низкий приоритет)
 
 ---
 map:
-Таблички - WIP
-
+Таблички - OK (ВАЖНО!)
+Миниатюры мониторов (chatscreen) - ok
+SLH_miscsigns2.jpg, c45signs.png
 
 ---
-menu:
+menu: - ok (Средний приоритет)
 
 back3d.png - ok
-launcher.png - 
+launcher.png - ok
 
 ---
-npcs:
-
+npcs: (Нижкий приоритет)
+body(2).png, body(3), body(4), clerk, Franklin.png, scientist, scp_008_1, scp_008_victim, scp_035_victim, scp_049_3, scp_106_victim(2), scp_106_victim(3), scp_106_victim(4), scp_106_victim
+janitor(2) - ok
+body_c - можно не переводить, в игре надписей не видно без noclip
 
 ---
-screen: - ok
+screen: - ok (ВАЖНО!)
 
 096.png, 457.png, 914.png - ok

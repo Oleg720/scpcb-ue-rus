@@ -988,7 +988,7 @@ Function UpdateNPCs()
 								;more than 6 room lengths away from the player -> teleport to a room closer to the player
 								If dist > 50 Then
 									If Rand(70)=1 Then
-										If PlayerRoom\RoomTemplate\Name <> "exit1" And PlayerRoom\RoomTemplate\Name <> "gatea" And PlayerRoom\RoomTemplate\Name <> "pocketdimension" Then
+										If PlayerRoom\RoomTemplate\Name <> "gateb" And PlayerRoom\RoomTemplate\Name <> "gatea" And PlayerRoom\RoomTemplate\Name <> "pocketdimension" Then
 											For w.waypoints = Each WayPoints
 												If w\door=Null And Rand(5)=1 Then
 													x = Abs(EntityX(Collider)-EntityX(w\obj,True))
@@ -2589,7 +2589,7 @@ Function UpdateNPCs()
 							Local DetectDistance# = 11.0
 							
 							;If at Gate B increase his distance so that he can shoot the player from a distance after they are spotted.
-							If PlayerRoom\RoomTemplate\Name = "exit1" Then
+							If PlayerRoom\RoomTemplate\Name = "gateb" Then
 								DetectDistance = 21.0
 								ShootAccuracy = 0.0
 								If Rand(1,8-SelectedDifficulty\aggressiveNPCs*4)<2 Then ShootAccuracy = 0.03
@@ -3329,7 +3329,7 @@ Function UpdateNPCs()
 				;[Block]
 				dist = EntityDistance(Collider, n\Collider)
 				If dist<60.0 Then 
-					If PlayerRoom\RoomTemplate\Name = "exit1" Then 
+					If PlayerRoom\RoomTemplate\Name = "gateb" Then 
 						dist2 = Max(Min(EntityDistance(n\Collider, PlayerRoom\Objects[3])/(8000.0*RoomScale),1.0),0.0)
 					Else 
 						dist2 = 1.0
@@ -3414,7 +3414,7 @@ Function UpdateNPCs()
 												If WrapAngle(EntityYaw(pvt)-EntityYaw(n\Collider))<10 Then
 													PlaySound2(Gunshot2SFX, Camera, n\Collider, 20)
 													
-													If PlayerRoom\RoomTemplate\Name = "exit1" Then
+													If PlayerRoom\RoomTemplate\Name = "gateb" Then
 														DeathMSG = Chr(34)+"CH-2 Центру. Убил убегающего сотрудника класса D у Выхода B."+Chr(34) ;CH-2 to control. Shot down a runaway Class D at Gate B.
 													Else
 													    DeathMSG = Chr(34)+"CH-2 Центру. Убил убегающего сотрудника класса D у Выхода A."+Chr(34) ;CH-2 to control. Shot down a runaway Class D at Gate A.
@@ -5555,7 +5555,6 @@ Function UpdateNPCs()
 				
 				;Nullified teleportation behind player due to issues. If someone could do a hotfix, credits given.
 				If n\Idle = False Then
-				     								
 					If dist < 15 Then
 						If dist < 10.0 Then 
 							If EntityVisible(n\Collider, Collider) Then
@@ -5567,18 +5566,10 @@ Function UpdateNPCs()
 								n\EnemyZ = EntityZ(Collider, True)
 							EndIf
 						EndIf										
-								
-						;Local SoundVol# = Max(Min((Distance(EntityX(n\Collider), EntityZ(n\Collider), n\PrevX, n\PrevZ) * 2.5), 1.0), 0.0)
-						;n\SoundCHN = LoopSound2(StoneDragSFX, n\SoundCHN, Camera, n\Collider, 10.0, n\State)
-								
 						n\PrevX = EntityX(n\Collider)
 						n\PrevZ = EntityZ(n\Collider)				
-								
-						;If (BlinkTimer < - 16 Or BlinkTimer > - 6) And (IsNVGBlinking=False) Then
-						;	If EntityInView(n\obj, Camera) Then move = False
-						;EndIf
 					EndIf
-					;more than 6 room lengths away from the player -> teleport to a room closer to the player
+					;More than 6 room lengths away from the player -> teleport to a room closer to the player
 		
                     ;Set 650 to disappear sometime...
                     ;Experimenting teleportation behind the player is still on progress
@@ -5645,19 +5636,13 @@ Function UpdateNPCs()
                        EndIf
 					EndIf
 					
-					;Not needed								
-					;If EntityInView(n\obj, Camera) And EntityVisible(n\obj,Camera) Then
-					;	 HeartBeatRate = Max(HeartBeatRate, 140)
-					;	 HeartBeatVolume = 1.0
-					;EndIf
-					
-					;650 to no longer appear if player is in exit1, gatea, dimension1499, room860 or pocketdimension
+					;650 to no longer appear if player is in gateb, gatea, dimension1499, room860 or pocketdimension
 					For e.Events = Each Events		   
-					    If (PlayerRoom\RoomTemplate\Name = "exit1" And EntityY(Collider) > 1040.0 * RoomScale) Or PlayerRoom\RoomTemplate\Name = "gatea" Or PlayerRoom\RoomTemplate\Name = "pocketdimension" Or PlayerRoom\RoomTemplate\Name = "dimension1499" Or (PlayerRoom\RoomTemplate\Name = "room860" And e\EventState = 1.0) Then
+					    If (PlayerRoom\RoomTemplate\Name = "gateb" And EntityY(Collider) > 1040.0 * RoomScale) Or PlayerRoom\RoomTemplate\Name = "gatea" Or PlayerRoom\RoomTemplate\Name = "pocketdimension" Or PlayerRoom\RoomTemplate\Name = "dimension1499" Or (PlayerRoom\RoomTemplate\Name = "room860" And e\EventState = 1.0) Then
 					     HideEntity n\obj					
 					     HideEntity n\Collider
 					     n\Idle = True
-						EndIF
+						EndIf
 					Next
 			     EndIf	
 					
@@ -10864,7 +10849,7 @@ Function PlayerInReachableRoom(canSpawnIn049Chamber%=False)
 		Return False
 	EndIf
 	;Player is at GateB and is at the surface, returning false
-	If RN = "exit1" And EntityY(Collider)>1040.0*RoomScale Then
+	If RN = "gateb" And EntityY(Collider)>1040.0*RoomScale Then
 		Return False
 	EndIf
 	;Player is in 860's test room and inside the forest, returning false

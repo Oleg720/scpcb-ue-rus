@@ -3,7 +3,7 @@ Const C_WS_POPUP = $80000000
 Const C_HWND_TOP = 0
 Const C_SWP_SHOWWINDOW = $0040
 
-Global VersionNumber$ = "5.5.1 [Rus]"
+Global VersionNumber$ = "5.5.4 [Rus]"
 
 Const ClrR = 50, ClrG = 50, ClrB = 50
 
@@ -989,7 +989,7 @@ Function CreateOverLapBox(r.Rooms)
 	Local s
 	Local sizeadd# = 0.02
 	
-	If r\RoomTemplate\Name = "exit1" Then Return
+	If r\RoomTemplate\Name = "gateb" Then Return
 	If r\RoomTemplate\Name = "gatea" Then Return
 	If r\RoomTemplate\Name = "room049" Then Return
 	If r\RoomTemplate\Name = "room457" Then Return

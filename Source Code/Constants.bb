@@ -55,7 +55,7 @@ Const MaxOverlayTextureIDAmount = 23
 Const MaxOBJTunnelIDAmount = 7
 Const MaxMonitorIDAmount = 3
 Const MaxDoorIDAmount = 11
-Const MaxButtonIDAmount = 4
+Const MaxButtonIDAmount = 5
 Const MaxLeverIDAmount = 2
 Const MaxCamIDAmount = 2
 Const MaxOtherModelsIDAmount = 2
@@ -206,7 +206,7 @@ Const MusicPath2$ = SFXPath$+"Radio\UserTracks\"
 ;[VERSIONS]
 
 Const GameVersionNumber$ = "1.3.11"
-Const ModVersionNumber$ = "5.5.4-Dev [Rus Indev]"
+Const ModVersionNumber$ = "5.5.4 [Rus Indev]"
 
 ;[OPTIONS]
 

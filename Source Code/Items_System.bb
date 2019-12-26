@@ -309,8 +309,8 @@ Function InitItemTemplates()
     CreateItemTemplate("Ключ-карта 6-го уровня", "key6",  ItemsPath$+"key_card.x", ItemsPath$+"INV_key_card_lvl_6.png", "", 0.0004, ItemsPath$+"key_card_lvl_6.png") ;Level 6 Key Card
     
     it = CreateItemTemplate("Порезанная бумага", "paperstrips", ItemsPath$+"paper_strips.x", ItemsPath$+"INV_paper_strips.png", "", 0.003) : it\sound = 0 ;Paper Strips
-    it = CreateItemTemplate("Запись полевого агента #235-001-CO5", "paper", ItemsPath$+"paper.x", ItemsPath$+"INV_paper.png", ItemsPath$+"doc_O5.png", 0.003) : it\sound = 0 ;Field Agent Log #235-001-CO5
-    it = CreateItemTemplate("Записки групп интересов", "paper", ItemsPath$+"paper.x", ItemsPath$+"INV_paper.png", ItemsPath$+"doc_O5(2).png", 0.003) : it\sound = 0 ;Groups Of Interest Log
+    it = CreateItemTemplate("Запись Полевого агента #235-001-CO5", "paper", ItemsPath$+"paper.x", ItemsPath$+"INV_paper.png", ItemsPath$+"doc_O5.png", 0.003) : it\sound = 0 ;Field Agent Log #235-001-CO5
+    it = CreateItemTemplate("Связанные организации", "paper", ItemsPath$+"paper.x", ItemsPath$+"INV_paper.png", ItemsPath$+"doc_O5(2).png", 0.003) : it\sound = 0 ;Groups Of Interest Log
     it = CreateItemTemplate("Неизвестный документ", "paper", ItemsPath$+"paper.x", ItemsPath$+"INV_paper_bloody.png", ItemsPath$+"doc_unknown.png", 0.003, ItemsPath$+"paper_bloody.png") : it\sound = 0 ;Unknown Document
     it = CreateItemTemplate("Неизвестная записка", "paper", ItemsPath$+"note.x", ItemsPath$+"INV_note_bloody.png", ItemsPath$+"unknown_note.png", 0.003, ItemsPath$+"note_bloody.png") : it\sound = 0 ;Unknown Note
 

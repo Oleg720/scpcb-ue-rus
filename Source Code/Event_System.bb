@@ -213,7 +213,7 @@ Function InitEvents()
 	
 	CreateEvent("gateaentrance", "gateaentrance", 0)
 	CreateEvent("gatea", "gatea", 0)	
-	CreateEvent("exit1", "exit1", 0)
+	CreateEvent("gateb", "gateb", 0)
 	
 	CreateEvent("room205", "room205", 0)
 	
@@ -696,7 +696,7 @@ Function UpdateEvents()
 	
 	For e.Events = Each Events
 		Select e\EventName
-			Case "exit1"
+			Case "gateb"
 				;[Block]
 				If RemoteDoorOn = False Then
 					e\room\RoomDoors[4]\locked = True
@@ -1634,7 +1634,7 @@ Function UpdateEvents()
 							If IntroSFX(17) <> 0 Then
 								If EntityVisible(Curr173\Collider, Collider) Then
 									If EntityInView(Curr173\obj, Camera) Then
-										Msg = "Press " + KeyName(KEY_BLINK) + " to blink."
+										Msg = "Нажмите "+KeyName(KEY_BLINK)+", чтобы моргнуть." ;Press ;to blink.
 										MsgTimer = 70 * 4
 										PlaySound_Strict IntroSFX(17)
 										IntroSFX(17) = 0
@@ -6459,13 +6459,13 @@ Function UpdateEvents()
 			Case "room079"
 				;[Block]
 				If PlayerRoom = e\room Then
-				    ;If EntityY(Collider) < -600.0 * RoomScale Then
-					;    ;optimize
-				    ;    For r.Rooms = Each Rooms
-					;        HideEntity r\obj
-				    ;    Next
-				    ;    ShowEntity e\room\obj
-				    ;EndIf
+				    If EntityY(Collider) < -9500.0 * RoomScale Then
+					    ;optimize
+				        For r.Rooms = Each Rooms
+					        HideEntity r\obj
+				        Next
+				        ShowEntity e\room\obj
+
 					If e\EventState = 0 Then
 						e\room\NPC[0]=CreateNPC(NPCtypeGuard, EntityX(e\room\Objects[2], True), EntityY(e\room\Objects[2], True) + 0.5, EntityZ(e\room\Objects[2], True))
 						PointEntity e\room\NPC[0]\Collider, e\room\obj
@@ -6493,11 +6493,11 @@ Function UpdateEvents()
 								GiveAchievement(Achv079)
 								e\EventState = 3
 								e\EventState2 = 1
-								e\SoundCHN = StreamSound_Strict(SFXPath$+"SCP\079\Speech.ogg", SFXVolume, 0)
-								e\SoundCHN_IsStream = True
+								e\SoundCHN3 = StreamSound_Strict(SFXPath$+"SCP\079\Speech.ogg", SFXVolume, 0)
+								e\SoundCHN3_IsStream = True
 							EndIf							
 						ElseIf e\EventState < 2000 Then
-							If IsStreamPlaying_Strict(e\SoundCHN)
+							If IsStreamPlaying_Strict(e\SoundCHN3)
 								If Rand(4) = 1 Then
 									EntityTexture(e\room\Objects[1], at\OtherTextureID[Rand(3, 8)])
 									ShowEntity (e\room\Objects[1])
@@ -6505,8 +6505,8 @@ Function UpdateEvents()
 									HideEntity (e\room\Objects[1])							
 								EndIf							
 							Else
-								If e\SoundCHN <> 0
-									StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0
+								If e\SoundCHN3 <> 0
+									StopStream_Strict(e\SoundCHN3) : e\SoundCHN3 = 0
 								EndIf
 								EntityTexture(e\room\Objects[1], at\OtherTextureID[9])
 								ShowEntity (e\room\Objects[1])
@@ -6515,16 +6515,16 @@ Function UpdateEvents()
 						Else
 							If EntityDistance(e\room\Objects[0], Collider)<2.5 Then 
 								e\EventState = 10001
-								If e\SoundCHN <> 0
-									StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0
+								If e\SoundCHN3 <> 0
+									StopStream_Strict(e\SoundCHN3) : e\SoundCHN3 = 0
 								EndIf
-								e\SoundCHN = StreamSound_Strict(SFXPath$+"SCP\079\Refuse.ogg", SFXVolume, 0)
+								e\SoundCHN3 = StreamSound_Strict(SFXPath$+"SCP\079\Refuse.ogg", SFXVolume, 0)
 							EndIf
 						EndIf
 					Else
-						If e\SoundCHN<>0
-							If (Not IsStreamPlaying_Strict(e\SoundCHN))
-								e\SoundCHN = 0
+						If e\SoundCHN3<>0
+							If (Not IsStreamPlaying_Strict(e\SoundCHN3))
+								e\SoundCHN3 = 0
 								EntityTexture(e\room\Objects[1], at\OtherTextureID[9])
 								ShowEntity (e\room\Objects[1])
 							Else
@@ -6536,20 +6536,23 @@ Function UpdateEvents()
 								EndIf
 							EndIf
 						EndIf
-					EndIf	
+					EndIf
+					EndIf
+					;Elevator
+					e\EventState4 = UpdateElevators(e\EventState4, e\room\RoomDoors[1], e\room\RoomDoors[2], e\room\Objects[3], e\room\Objects[4], e)						
 				EndIf
 				
 				If e\EventState2 = 1 Then
 					If RemoteDoorOn Then 	
-						If e\SoundCHN <> 0
-							StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0
+						If e\SoundCHN3 <> 0
+							StopStream_Strict(e\SoundCHN3) : e\SoundCHN3 = 0
 						EndIf
-						e\SoundCHN = StreamSound_Strict(SFXPath$+"SCP\079\GateB.ogg", SFXVolume, 0)
-						e\SoundCHN_IsStream = True
+						e\SoundCHN3 = StreamSound_Strict(SFXPath$+"SCP\079\GateB.ogg", SFXVolume, 0)
+						e\SoundCHN3_IsStream = True
 						e\EventState2 = 2
 						
 						For e2.Events = Each Events
-							If e2\EventName="exit1" Or e2\EventName="gateaentrance" Then
+							If e2\EventName="gateb" Or e2\EventName="gateaentrance" Then
 								e2\EventState3 = 1
 							EndIf
 						Next
@@ -10096,7 +10099,7 @@ Function UpdateEndings()
 	
 	For e.Events = Each Events
 		Select e\EventName
-			Case "exit1"
+			Case "gateb"
 				;[Block]
 				If PlayerRoom = e\room Then
 					

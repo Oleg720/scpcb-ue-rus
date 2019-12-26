@@ -1270,7 +1270,7 @@ Function UpdateLauncher()
 	
 	BlinkMeterIMG% = LoadImage_Strict(GFXPath$+"blinkmeter.png")
 		
-	AppTitle "SCP - CB: Ultimate Edition/Расширенное издание Лаунчер" ;Launcher
+	AppTitle "SCP - CB: Ultimate Edition/Расширенное издание | Лаунчер" ;Launcher
 	
 	Repeat
 	
@@ -1353,7 +1353,7 @@ Function UpdateLauncher()
 
 		Text(40 + 430 + 15, 262 - 55 + 65 + 8, "16 Бит") ;16 Bit
 		Color 255, 255, 255
-		Text(40 + 430 + 15, 262 - 55 + 95 + 8, "Использовать") ;Use launcher
+		Text(40 + 430 + 15, 262 - 55 + 95 + 0, "Использовать") ;Use launcher
 		Text(40 + 430 + 15, 262 - 55 + 95 + 18, "лаунчер")
 		
 		If (Not BorderlessWindowed)
@@ -1372,7 +1372,7 @@ Function UpdateLauncher()
 		EndIf
 		
 		If DrawButton(LauncherWidth - 275, LauncherHeight - 50 - 55, 150, 30, "НАШЕЛ ОШИБКУ!", False, False, False) Then ;REPORT A BUG!
-		    ExecFile("https://vk.com/creatormteam") ;<- Перед релизом - создать обсуждение в группе для баг-репортов и оставить здесь на него ссылку
+		    ExecFile("https://vk.me/creatormteam")
 					
 			End
 		EndIf

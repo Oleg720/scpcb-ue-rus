@@ -16,7 +16,7 @@ Include "Source Code\Devil_Particle_System.bb"
 Include "Source Code\Math.bb"
 Include "Source Code\INI_Details.bb"
 
-Global ModCompatibleNumber$ = "5.5.4-Dev [Rus Indev]"
+Global ModCompatibleNumber$ = "5.5.4 [Rus Indev]"
 
 Type Fonts
     Field Font%[MaxFontAmount-1]
@@ -2389,9 +2389,11 @@ Function CreateDoor.Doors(lvl, x#, y#, z#, angle#, room.Rooms, dopen% = False,  
 			If keycard>0 Then
 				d\buttons[i]= CopyEntity(o\ButtonID[1])
 			ElseIf keycard<0
-				d\buttons[i]= CopyEntity(o\ButtonID[3])	
+				d\buttons[i]= CopyEntity(o\ButtonID[3])
+			ElseIf big=3	
+			    d\buttons[i] = CopyEntity(o\ButtonID[4])				
 			Else
-				d\buttons[i] = CopyEntity(o\ButtonID[0])
+				If (Not big=3) Then d\buttons[i] = CopyEntity(o\ButtonID[0])
 			End If
 		EndIf
 		
@@ -2476,9 +2478,9 @@ Function CreateDoor.Doors(lvl, x#, y#, z#, angle#, room.Rooms, dopen% = False,  
 	
 End Function
 
-Function CreateButton(x#,y#,z#, pitch#,yaw#,roll#=0)
+Function CreateButton(x#, y#, z# ,pitch#, yaw#, roll# = 0, btype = 0)
     Local o.Objects = First Objects
-	Local obj = CopyEntity(o\ButtonID[0])	
+	Local obj = CopyEntity(o\ButtonID[btype])	
 	
 	ScaleEntity(obj, 0.03, 0.03, 0.03)
 	
@@ -3195,7 +3197,7 @@ Repeat
 		While True
 			If FileSize("Screenshots\screenshot_" + Str(n) + ".png") = 0 Then
 				SaveBuffer(BackBuffer(), "Screenshots\screenshot_" + Str(n) + ".png")
-				Msg = "Скриншот сохранён в: " + Chr(34) + "Screenshots\screenshot_" + Str(n) + ".png" + Chr(34) ;"Screenshot taken."
+				Msg = "Скриншот сохранён." ;"Screenshot taken."
 				MsgTimer = 70*5
 				Exit
 			Else
@@ -3341,7 +3343,7 @@ Function MainLoop()
 		
 	If fs\FPSfactor[0] > 0 And PlayerRoom\RoomTemplate\Name <> "dimension1499" Then UpdateSecurityCams()
 	
-	If PlayerRoom\RoomTemplate\Name <> "pocketdimension" And PlayerRoom\RoomTemplate\Name <> "gatea" And PlayerRoom\RoomTemplate\Name <> "exit1" And (Not ms\MenuOpen) And (Not ConsoleOpen) And (Not InvOpen) Then 
+	If PlayerRoom\RoomTemplate\Name <> "pocketdimension" And PlayerRoom\RoomTemplate\Name <> "gatea" And PlayerRoom\RoomTemplate\Name <> "gateb" And (Not ms\MenuOpen) And (Not ConsoleOpen) And (Not InvOpen) Then 
 			
 		If Rand(1500) = 1 Then
 			For i = 0 To 5
@@ -3396,7 +3398,7 @@ Function MainLoop()
 			
 		If Rand(50000) = 3 Then
 			Local RN$ = PlayerRoom\RoomTemplate\Name$
-			If RN$ <> "room860" And RN$ <> "room1123" And RN$ <> "room173_intro" And RN$ <> "dimension1499" Then
+			If RN$ <> "room860" And RN$ <> "room1123" And RN$ <> "room173intro" And RN$ <> "dimension1499" Then
 				If fs\FPSfactor[0] > 0 Then LightBlink = Rnd(1.0,2.0)
 				PlaySound_Strict  LoadTempSound(SFXPath$+"SCP\079\Broadcast"+Rand(1, 8)+".ogg")
 			EndIf 
@@ -3433,7 +3435,7 @@ Function MainLoop()
 				UpdateDimension1499()
 			EndIf
 			UpdateLeave1499()
-		ElseIf PlayerRoom\RoomTemplate\Name = "gatea" Or (PlayerRoom\RoomTemplate\Name="exit1" And EntityY(Collider)>1040.0*RoomScale)
+		ElseIf PlayerRoom\RoomTemplate\Name = "gatea" Or (PlayerRoom\RoomTemplate\Name="gateb" And EntityY(Collider)>1040.0*RoomScale)
 			UpdateDoors()
 			If QuickLoadPercent = -1 Or QuickLoadPercent = 100
 				UpdateEndings()
@@ -3642,7 +3644,7 @@ Function MainLoop()
 	If KeyHit(KEY_SAVE) Then
 		If SelectedDifficulty\saveType = SAVEANYWHERE Then
 			RN$ = PlayerRoom\RoomTemplate\Name$
-			If RN$ = "room173intro" Or (RN$ = "exit1" And EntityY(Collider)>1040.0*RoomScale) Or RN$ = "gatea"
+			If RN$ = "room173intro" Or (RN$ = "gateb" And EntityY(Collider)>1040.0*RoomScale) Or RN$ = "gatea"
 				Msg = "Вы не можете сохраниться в этой локации." ;You cannot save in this location.
 				MsgTimer = 70 * 4
 			ElseIf (Not CanSave) Or QuickLoadPercent > -1
@@ -3660,7 +3662,7 @@ Function MainLoop()
 				MsgTimer = 70 * 4
 			Else
 				RN$ = PlayerRoom\RoomTemplate\Name$
-				If RN$ = "room173intro" Or (RN$ = "exit1" And EntityY(Collider)>1040.0*RoomScale) Or RN$ = "gatea"
+				If RN$ = "room173intro" Or (RN$ = "gateb" And EntityY(Collider)>1040.0*RoomScale) Or RN$ = "gatea"
 					Msg = "Вы не можете сохраниться в этой локации." ;You cannot save in this location.
 					MsgTimer = 70 * 4
 				ElseIf (Not CanSave) Or QuickLoadPercent > -1
@@ -5460,7 +5462,7 @@ Function DrawGUI()
 			CameraFogColor (Camera,200,200,200)
 			CameraClsColor (Camera,200,200,200)					
 			CameraRange(Camera, 0.05, 30)
-		Else If (PlayerRoom\RoomTemplate\Name = "exit1") And (EntityY(Collider)>1040.0*RoomScale)
+		Else If (PlayerRoom\RoomTemplate\Name = "gateb") And (EntityY(Collider)>1040.0*RoomScale)
 			HideEntity at\OverlayID[0]
 			CameraFogRange Camera, 5,45
 			CameraFogColor (Camera,200,200,200)
@@ -5662,7 +5664,7 @@ Function DrawGUI()
 			CameraFogColor (Camera,200,200,200)
 			CameraClsColor (Camera,200,200,200)					
 			CameraRange(Camera, 0.05, 30)
-		ElseIf (PlayerRoom\RoomTemplate\Name = "exit1") And (EntityY(Collider)>1040.0*RoomScale)
+		ElseIf (PlayerRoom\RoomTemplate\Name = "gateb") And (EntityY(Collider)>1040.0*RoomScale)
 			HideEntity at\OverlayID[0]
 			CameraFogRange Camera, 5,45
 			CameraFogColor (Camera,200,200,200)
@@ -9076,7 +9078,7 @@ Function DrawMenu()
     EndIf
 	If ms\MenuOpen Then
 		
-		If PlayerRoom\RoomTemplate\Name$ <> "exit1" And PlayerRoom\RoomTemplate\Name$ <> "gatea"
+		If PlayerRoom\RoomTemplate\Name$ <> "gateb" And PlayerRoom\RoomTemplate\Name$ <> "gatea"
 			If ms\StopHidingTimer = 0 Then
 				If EntityDistance(Curr173\Collider, Collider)<4.0 Or EntityDistance(Curr106\Collider, Collider)<4.0 Then 
 					ms\StopHidingTimer = 1
@@ -10230,6 +10232,8 @@ Function LoadEntities()
 		
 	o\ButtonID[3] = LoadMesh_Strict(MapPath$+"ButtonScanner.b3d") ;scanner button
 	
+	o\ButtonID[4] = LoadMesh_Strict(MapPath$+"ButtonElevator.b3d") ;elevator button
+	
 	For i=0 To MaxButtonIDAmount-1
         HideEntity o\ButtonID[i]
     Next	
@@ -10669,7 +10673,7 @@ Function InitNewGame()
 			Else
 			    MaxItemAmount% = 2
 			EndIf
-		ElseIf (r\RoomTemplate\Name = "room173_intro" And IntroEnabled) Then
+		ElseIf (r\RoomTemplate\Name = "room173intro" And IntroEnabled) Then
 			PositionEntity (Collider, EntityX(r\obj), 1.0, EntityZ(r\obj))
 			PlayerRoom = r
 			If SelectedDifficulty\TwoSlots = False Then
@@ -10687,7 +10691,7 @@ Function InitNewGame()
 			Else
 			    MaxItemAmount% = 2
 			EndIf
-		ElseIf (SelectedDifficulty\menu = False And r\RoomTemplate\Name = "room173_intro" And IntroEnabled) Then
+		ElseIf (SelectedDifficulty\menu = False And r\RoomTemplate\Name = "room173intro" And IntroEnabled) Then
 			PositionEntity (Collider, EntityX(r\obj), 1.0, EntityZ(r\obj))
 			ItemAmount = ItemAmount + 1		
 			PlayerRoom = r
@@ -11037,7 +11041,7 @@ Function NullGame(playbuttonsfx%=True)
 	
 	I_357\Timer = 0
 
-    ;Randomize the SCP-005's change again
+    ;Randomize the SCP-005's chance again
     ChanceToSpawn005 = Rand(3)
 
     MTF2timer = 0
@@ -13475,7 +13479,7 @@ Function Use207()
 
       If I_207\Timer > 0.0 Then
           If (Not I_427\Using=1 And I_427\Timer < 70*360) Then
-              I_207\Timer = Min(I_207\Timer+fs\FPSfactor[0]*0.002,40)
+              I_207\Timer = Min(I_207\Timer+fs\FPSfactor[0]*0.002,50)
           EndIf
         
           If I_207\Timer > 20.0 Then
@@ -13748,7 +13752,7 @@ Function UpdateMTF()
 End Function
 
 Function UpdateMTF2()
-	If PlayerRoom\RoomTemplate\Name = "gateaentrance" Or PlayerRoom\RoomTemplate\Name = "exit1" Or PlayerRoom\RoomTemplate\Name = "room106" Or PlayerRoom\RoomTemplate\Name = "room457" Then Return
+	If PlayerRoom\RoomTemplate\Name = "gateaentrance" Or PlayerRoom\RoomTemplate\Name = "gateb" Or PlayerRoom\RoomTemplate\Name = "room106" Or PlayerRoom\RoomTemplate\Name = "room457" Then Return
 	
 	Local r.Rooms, n.NPCs
 	Local dist#, i%
@@ -13760,7 +13764,7 @@ Function UpdateMTF2()
 			
 			Local entrance2.Rooms = Null
 			For r.Rooms = Each Rooms
-				If lower2(r\RoomTemplate\Name) = "exit1" Then entrance2 = r : Exit
+				If lower2(r\RoomTemplate\Name) = "gateb" Then entrance2 = r : Exit
 			Next
 			
 			If entrance2 <> Null Then
@@ -13998,7 +14002,7 @@ Function Update008()
 				BlinkTimer = Max(Min(-10*(I_008\Timer-96), BlinkTimer),-10)
 				If PlayerRoom\RoomTemplate\Name = "dimension1499" Then
 					DeathMSG = "Местонахождение SCP-1499 до сих пор неизвестно, однако на расследование сообщений о нападении с применением насилия на церковь в российском городе [УДАЛЕНО] была отправлена разведгруппа ." ;The whereabouts of SCP-1499 are still unknown, but a recon team has been dispatched to investigate reports of a violent attack to a church in the Russian town of [REDACTED].
-				ElseIf PlayerRoom\RoomTemplate\Name = "gatea" Or PlayerRoom\RoomTemplate\Name = "exit1" Then
+				ElseIf PlayerRoom\RoomTemplate\Name = "gatea" Or PlayerRoom\RoomTemplate\Name = "gateb" Then
 					DeathMSG = SubjectName$+" обнаружен блуждающим у Ворот " ;Subject D-9341 found wandering around Gate
 					If PlayerRoom\RoomTemplate\Name = "gatea" Then
 						DeathMSG = DeathMSG + "A"
@@ -14217,7 +14221,7 @@ Function RenderWorld2()
 	ElseIf WearingNightVision=3
 		AmbientLight 255,255,255
 	ElseIf PlayerRoom<>Null
-		If (PlayerRoom\RoomTemplate\Name<>"room173intro") And (PlayerRoom\RoomTemplate\Name<>"exit1") And (PlayerRoom\RoomTemplate\Name<>"gatea") Then
+		If (PlayerRoom\RoomTemplate\Name<>"room173intro") And (PlayerRoom\RoomTemplate\Name<>"gateb") And (PlayerRoom\RoomTemplate\Name<>"gatea") Then
 			AmbientLight Brightness, Brightness, Brightness
 		EndIf
 	EndIf

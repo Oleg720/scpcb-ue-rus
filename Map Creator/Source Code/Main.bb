@@ -1,6 +1,6 @@
 Global ResWidth% = 910
 Global ResHeight% = 660
-Global VersionNumber$ = "5.5.1 [Rus]"
+Global VersionNumber$ = "5.5.4 [Rus]"
 
 Loadingwindow=CreateWindow("", GraphicsWidth()/2-160,GraphicsHeight()/2-120,320,260,winhandle,8)
 panelloading = CreatePanel(0,0,320,260,Loadingwindow,0)
@@ -308,8 +308,8 @@ Repeat
 	SetGadgetText(map_author_text,(Left(TextFieldText(map_author_text),15)))
 	SetGadgetText(map_author_label,("Автор карты ("+(Len(TextFieldText(map_author_text)))+"/15) :")) ;Map author
 	
-	If Len(TextAreaText(descr_text))>200 Then
-		SetGadgetText(descr_text,(Left(TextAreaText(descr_text),200)))
+	If Len(TextAreaText(descr_text))>250 Then
+		SetGadgetText(descr_text,(Left(TextAreaText(descr_text),250)))
 	EndIf
 	SetGadgetText(descr_label,("Описание ("+(Len(TextAreaText(descr_text)))+"/200) :")) ;Description
 	
@@ -1652,7 +1652,7 @@ Function LoadRoomTemplates(file$)
 			
 			Local AddRoom% = True
 			Select TemporaryString
-				Case "room ambience","room173_intro","pocketdimension","dimension1499","gatea"
+				Case "room ambience","room173intro","pocketdimension","dimension1499","gatea"
 					AddRoom = False
 			End Select
 			If AddRoom

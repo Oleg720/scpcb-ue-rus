@@ -16,16 +16,17 @@ items:
 	- Обычные документы с описанием SCP - ok
 	- doc_O5(2).png, doc_references.png, doc_data.png, unknown_note.png, doc_O5.png - ok
 	- doc_O5_14.png - WIP (Иван, на зимних каникулах)
-	- doc_unknown.png, note_085.png, note_Maynard.png
+	- doc_unknown.png, note_085.png, note_Maynard.png - когди-нибудь
 447 предметы - ok (Низний приоритет)
 1079 предметы - ok (Средний приоритет)
 Новые карточки - когда-нибудь, наверное (Самый низкий приоритет)
 
 ---
-map:
+map: - ok
+
 Таблички - OK (ВАЖНО!)
 Миниатюры мониторов (chatscreen) - ok
-SLH_miscsigns2.jpg, c45signs.png
+SLH_miscsigns2.jpg, c45signs.png, parisigns1.png - ok
 
 ---
 menu: - ok (Средний приоритет)
@@ -35,6 +36,7 @@ launcher.png - ok
 
 ---
 npcs: (Нижкий приоритет)
+
 body(2).png, body(3), body(4), clerk, Franklin.png, scientist, scp_008_1, scp_008_victim, scp_035_victim, scp_049_3, scp_106_victim(2), scp_106_victim(3), scp_106_victim(4), scp_106_victim
 janitor(2) - ok
 body_c - можно не переводить, в игре надписей не видно без noclip

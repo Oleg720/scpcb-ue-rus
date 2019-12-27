@@ -16,7 +16,7 @@ Include "Source Code\Devil_Particle_System.bb"
 Include "Source Code\Math.bb"
 Include "Source Code\INI_Details.bb"
 
-Global ModCompatibleNumber$ = "5.5.4 [Rus Indev]"
+Global ModCompatibleNumber$ = "5.5.4.1 [Rus Indev]"
 
 Type Fonts
     Field Font%[MaxFontAmount-1]
@@ -13479,7 +13479,7 @@ Function Use207()
 
       If I_207\Timer > 0.0 Then
           If (Not I_427\Using=1 And I_427\Timer < 70*360) Then
-              I_207\Timer = Min(I_207\Timer+fs\FPSfactor[0]*0.002,50)
+              I_207\Timer = Min(I_207\Timer+fs\FPSfactor[0]*0.002,51)
           EndIf
         
           If I_207\Timer > 20.0 Then

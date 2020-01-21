@@ -1111,6 +1111,8 @@ Function UpdateEvents()
 									
 									e\room\NPC[3]\Sound = LoadSound_Strict(SFXPath$+"Room\Intro\Guard\Ulgrin\ExitCell.ogg")
 									e\room\NPC[3]\SoundCHN = PlaySound2(e\room\NPC[3]\Sound, Camera, e\room\NPC[3]\Collider)
+									
+									
 
 									e\room\NPC[3]\State = 9
 									e\room\NPC[4]\State = 9
@@ -3893,7 +3895,6 @@ Function UpdateEvents()
 											If e\EventState2 = 0 Then
 												n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\Tesla0.ogg")
 												PlayMTFSound(n\Sound, n)
-												
 												n\Idle = 70 * 10 
 												e\EventState2 = 70 * 100
 											EndIf

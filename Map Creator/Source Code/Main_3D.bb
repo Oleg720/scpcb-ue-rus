@@ -3,7 +3,7 @@ Const C_WS_POPUP = $80000000
 Const C_HWND_TOP = 0
 Const C_SWP_SHOWWINDOW = $0040
 
-Global VersionNumber$ = "5.5.4 [Rus]"
+Global VersionNumber$ = "5.5.4.1 [Rus]"
 
 Const ClrR = 50, ClrG = 50, ClrB = 50
 
@@ -29,7 +29,7 @@ api_SetWindowPos( G_app_handle, C_HWND_TOP, 0, 0, ResWidth, ResHeight, C_SWP_SHO
 
 AppTitle "MapCreator 3D View"
 
-Const OptionFile$ = "Source Code\options.ini"
+Const OptionFile$ = "..\Data\options_mp.ini" ;Source Code\
 
 Global Camera = CreateCamera()
 Global CamColorR% = GetINIInt(OptionFile,"3d scene","bg color R")
@@ -86,7 +86,7 @@ LoadMaterials("..\Data\materials.ini")
 
 Global RoomScale# = 8.0 / 2048.0
 Const ZONEAMOUNT = 3
-Global MapWidth% = GetINIInt("..\Source Code\options.ini", "game", "map size"), MapHeight% = GetINIInt("..\Source Code\options.ini", "game", "map size")
+Global MapWidth% = GetINIInt("..\Data\options.ini", "game", "map size"), MapHeight% = GetINIInt("..\Data\options.ini", "game", "map size")
 Dim MapTemp%(MapWidth+1, MapHeight+1)
 Dim MapFound%(MapWidth, MapHeight)
 

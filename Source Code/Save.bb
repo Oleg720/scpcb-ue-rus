@@ -1224,10 +1224,10 @@ Function LoadGame(file$)
 		Local tempName$ = ReadString(f)
 		Local Name$ = ReadString(f)
 		
-		If tempName = "50ct" Then
-			ittName = "Четвертак" ;Quarter
-			tempName = "25ct"
-		EndIf
+		;If tempName = "50ct" Then
+		;	ittName = "Четвертак" ;Quarter
+		;	tempName = "25ct"
+		;EndIf
 		
 		x = ReadFloat(f)
 		y = ReadFloat(f)
@@ -1334,12 +1334,12 @@ Function LoadGame(file$)
 	I_427\Using = ReadByte(f)
 	I_427\Timer = ReadFloat(f)
 	
-	If version = "5.5.4" Then
-		I_Zone\Transition[0] = ReadByte(f)
-		I_Zone\Transition[1] = ReadByte(f)
-		I_Zone\HasCustomForest = ReadByte(f)
-		I_Zone\HasCustomMT = ReadByte(f)
-	EndIf
+	;If version = "5.5.4" Then
+	;	I_Zone\Transition[0] = ReadByte(f)
+	;	I_Zone\Transition[1] = ReadByte(f)
+	;	I_Zone\HasCustomForest = ReadByte(f)
+	;	I_Zone\HasCustomMT = ReadByte(f)
+	;EndIf
 	
 	I_714\Using = ReadByte(f)
 	

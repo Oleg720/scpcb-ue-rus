@@ -8939,7 +8939,7 @@ Function UpdateMTF2Unit(n.NPCs)
 					EndIf
 					
 					If n\MTF2Leader=Null And n\LastSeen<70*30 And n\LastSeen+fs\FPSfactor[0]=>70*30 Then
-						If Rand(2)=1 Then 
+						If Rand(2)=1 Then
 							PlayMTFSound(LoadTempSound(SFXPath$+"Character\MTF2\Searching"+Rand(1,6)+".ogg"),n)
 						EndIf
 					EndIf

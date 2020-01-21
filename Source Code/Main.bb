@@ -16,7 +16,7 @@ Include "Source Code\Devil_Particle_System.bb"
 Include "Source Code\Math.bb"
 Include "Source Code\INI_Details.bb"
 
-Global ModCompatibleNumber$ = "5.5.4.1 [Rus Indev]"
+Global ModCompatibleNumber$ = "5.5.4.1 [Rus v0.1]"
 
 Type Fonts
     Field Font%[MaxFontAmount-1]
@@ -578,22 +578,22 @@ Function UpdateConsole()
 			ConsoleScroll = 0
 			CreateConsoleMsg(ConsoleInput,255,255,0,True)
 			If Instr(ConsoleInput, " ") > 0 Then
-				StrTemp$ = lower2(Left(ConsoleInput, Instr(ConsoleInput, " ") - 1))
+				StrTemp$ = lower(Left(ConsoleInput, Instr(ConsoleInput, " ") - 1))
 			Else
-				StrTemp$ = lower2(ConsoleInput)
+				StrTemp$ = lower(ConsoleInput)
 			End If
 			
-			Select lower2(StrTemp)
+			Select lower(StrTemp)
 				Case "help"
 					;[Block]
 					If Instr(ConsoleInput, " ")<>0 Then
-						StrTemp$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+						StrTemp$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					Else
 						StrTemp$ = ""
 					EndIf
 					ConsoleR = 0 : ConsoleG = 255 : ConsoleB = 255
 					
-					Select lower2(StrTemp)
+					Select lower(StrTemp)
 						Case "1",""
 							CreateConsoleMsg("СПИСОК КОМАНД - СТРАНИЦА 1/3") ;LIST OF COMMANDS - PAGE
 							CreateConsoleMsg("******************************")
@@ -1004,25 +1004,25 @@ Function UpdateConsole()
 					;[End Block]
 				Case "ending"
 					;[Block]
-					I_END\SelectedEnding = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					I_END\SelectedEnding = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					KillTimer = -0.1
 					;I_END\Timer = -0.1
 					;[End Block]
 				Case "noclipspeed"
 					;[Block]
-					StrTemp$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					NoClipSpeed = Float(StrTemp)
 					;[End Block]
 				Case "injure"
 					;[Block]
-					StrTemp$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					Injuries = Float(StrTemp)
 					;[End Block]
 				Case "infect"
 					;[Block]
-					StrTemp$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					I_008\Timer = Float(StrTemp)
 					;[End Block]
@@ -1070,7 +1070,7 @@ Function UpdateConsole()
 					;[End Block]
 				Case "teleport"
 					;[Block]
-					StrTemp$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					Select StrTemp
 						Case "895", "scp-895"
@@ -1100,16 +1100,16 @@ Function UpdateConsole()
 					;[End Block]
 				Case "spawnitem"
 					;[Block]
-					StrTemp$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					temp = False 
 					For itt.Itemtemplates = Each ItemTemplates
-						If (lower2(itt\name) = StrTemp) Then
+						If (lower(itt\name) = StrTemp) Then
 							temp = True
 							CreateConsoleMsg("Предмет "+Chr(34)+ itt\name +Chr(34)+" создан.") ;spawned.
 							it.Items = CreateItem(itt\name, itt\tempname, EntityX(Collider), EntityY(Camera,True), EntityZ(Collider))
 							EntityType(it\collider, HIT_ITEM)
 							Exit
-						Else If (lower2(itt\tempname) = StrTemp) Then
+						Else If (lower(itt\tempname) = StrTemp) Then
 							temp = True
 							CreateConsoleMsg("Предмет "+Chr(34)+ itt\name +Chr(34)+" создан.") ;spawned.
 							it.Items = CreateItem(itt\name, itt\tempname, EntityX(Collider), EntityY(Camera,True), EntityZ(Collider))
@@ -1122,7 +1122,7 @@ Function UpdateConsole()
 					;[End Block]
 				Case "wireframe"
 					;[Block]
-					StrTemp$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					Select StrTemp
 						Case "on", "1", "true"
@@ -1143,13 +1143,13 @@ Function UpdateConsole()
 					;[End Block]
 				Case "173speed"
 					;[Block]
-					StrTemp$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					Curr173\Speed = Float(StrTemp)
 					CreateConsoleMsg("Скорость 173-го установлена на " + StrTemp) ;173's speed set to
 					;[End Block]
 				Case "106speed"
 					;[Block]
-					StrTemp$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					Curr106\Speed = Float(StrTemp)
 					CreateConsoleMsg("Скорость 106-го установлена на " + StrTemp) ;106's speed set to
 					;[End Block]
@@ -1243,7 +1243,7 @@ Function UpdateConsole()
 					;[End Block]
 				Case "godmode", "god"
 					;[Block]
-					StrTemp$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					Select StrTemp
 						Case "on", "1", "true"
@@ -1305,7 +1305,7 @@ Function UpdateConsole()
 					;[End Block]
 				Case "noclip","fly"
 					;[Block]
-					StrTemp$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					Select StrTemp
 						Case "on", "1", "true"
@@ -1351,7 +1351,7 @@ Function UpdateConsole()
 					;[End Block]
 				Case "debughud"
 					;[Block]
-					StrTemp$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					Select StrTemp
 						Case "on", "1", "true"
 							DebugHUD = True
@@ -1396,20 +1396,20 @@ Function UpdateConsole()
 					;[End Block]
 				Case "camerafog"
 					;[Block]
-					args$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					args$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					CameraFogNear = Float(Left(args, Len(args) - Instr(args, " ")))
 					CameraFogFar = Float(Right(args, Len(args) - Instr(args, " ")))
 					CreateConsoleMsg("Начало тумана установлено на " + CameraFogNear + ", а конец на " + CameraFogFar) ;Near set to: ;, far set to
 					;[End Block]
 				Case "gamma"
 					;[Block]
-					StrTemp$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					ScreenGamma = Int(StrTemp)
 					CreateConsoleMsg("Уровень гаммы установлен на " + ScreenGamma) ;Gamma set to
 					;[End Block]
 				Case "spawn"
 					;[Block]
-					args$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					args$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					StrTemp$ = Piece$(args$, 1)
 					StrTemp2$ = Piece$(args$, 2)
 					
@@ -1422,7 +1422,7 @@ Function UpdateConsole()
 					;[End Block]
 				Case "infinitestamina","infstam", "is"
 					;[Block]
-					StrTemp$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					Select StrTemp
 						Case "on", "1", "true"
@@ -1463,7 +1463,7 @@ Function UpdateConsole()
 					;[End Block]
 				Case "unlockexits"
 					;[Block]
-					StrTemp$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					Select StrTemp
 						Case "a"
@@ -1521,7 +1521,7 @@ Function UpdateConsole()
 					;[Block]
 					; I think this might be broken since the FMod library streaming was added. -Mark
 					If Instr(ConsoleInput, " ")<>0 Then
-						StrTemp$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+						StrTemp$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					Else
 						StrTemp$ = ""
 					EndIf
@@ -1561,7 +1561,7 @@ Function UpdateConsole()
 					;[End Block]
 				Case "tele"
 					;[Block]
-					args$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					args$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					StrTemp$ = Piece$(args$,1," ")
 					StrTemp2$ = Piece$(args$,2," ")
 					StrTemp3$ = Piece$(args$,3," ")
@@ -1573,7 +1573,7 @@ Function UpdateConsole()
 					;[End Block]
 				Case "notarget", "nt"
 					;[Block]
-					StrTemp$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					Select StrTemp
 						Case "on", "1", "true"
@@ -1619,7 +1619,7 @@ Function UpdateConsole()
 					;[End Block]
 				Case "seteventstate"
 					;[Block]
-					args$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					args$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					StrTemp$ = Piece$(args$,1," ")
 					StrTemp2$ = Piece$(args$,2," ")
 					StrTemp3$ = Piece$(args$,3," ")
@@ -1630,16 +1630,16 @@ Function UpdateConsole()
 					Else
 						For e.Events = Each Events
 							If e\room = PlayerRoom
-								If lower2(StrTemp)<>"keep"
+								If lower(StrTemp)<>"keep"
 									e\EventState = Float(StrTemp)
 								EndIf
-								If lower2(StrTemp2)<>"keep"
+								If lower(StrTemp2)<>"keep"
 									e\EventState2 = Float(StrTemp2)
 								EndIf
-								If lower2(StrTemp3)<>"keep"
+								If lower(StrTemp3)<>"keep"
 									e\EventState3 = Float(StrTemp3)
 								EndIf
-								If lower2(StrTemp4)<>"keep"
+								If lower(StrTemp4)<>"keep"
 									e\EventState4 = Float(StrTemp4)
 								EndIf
 								CreateConsoleMsg("Изменено состояние события в текущей комнате на: "+e\EventState+"|"+e\EventState2+"|"+e\EventState3+"|"+e\EventState4) ;Changed event states from current player room to:
@@ -1655,7 +1655,7 @@ Function UpdateConsole()
 				Case "spawnparticles"
 					;[Block]
 					If Instr(ConsoleInput, " ")<>0 Then
-						StrTemp$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+						StrTemp$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					Else
 						StrTemp$ = ""
 					EndIf
@@ -1670,7 +1670,7 @@ Function UpdateConsole()
 				Case "giveachievement"
 					;[Block]
 					If Instr(ConsoleInput, " ")<>0 Then
-						StrTemp$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+						StrTemp$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					Else
 						StrTemp$ = ""
 					EndIf
@@ -1684,7 +1684,7 @@ Function UpdateConsole()
 					;[End Block]
 				Case "427state"
 					;[Block]
-					StrTemp$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					I_427\Timer = Float(StrTemp)*70.0
 					;[End Block]
@@ -1695,7 +1695,7 @@ Function UpdateConsole()
 					;[End Block]
 				Case "setblinkeffect"
 					;[Block]
-					args$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					args$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					BlinkEffect = Float(Left(args, Len(args) - Instr(args, " ")))
 					BlinkEffectTimer = Float(Right(args, Len(args) - Instr(args, " ")))
 					CreateConsoleMsg("Эффект моргания установлен на: " + BlinkEffect + ", а его таймер на: " + BlinkEffectTimer) ;Set BlinkEffect to: " + BlinkEffect + "and BlinkEffect timer:
@@ -1726,7 +1726,7 @@ Function UpdateConsole()
 				Case "cheats" 
 					;[Block]
 	
-					StrTemp$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					Select StrTemp
 						Case "on", "1", "true"
@@ -1754,7 +1754,7 @@ Function UpdateConsole()
 					;[End Block]
 				Case "fov" 
 					;[Block]
-					StrTemp$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					FOV# = Float(StrTemp)
                     ;[End Block]
@@ -1780,7 +1780,7 @@ Function UpdateConsole()
 					;[End Block]
 				Case "crystal" 
 					;[Block]				
-					StrTemp$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					I_409\Timer = Float(StrTemp)	
 					;[End Block]
@@ -1892,7 +1892,7 @@ Function UpdateConsole()
 					;[End Block]
 				Case "noblinking", "nb"
 					;[Block]
-					StrTemp$ = lower2(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+					StrTemp$ = lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					Select StrTemp
 						Case "on", "1", "true"
@@ -3765,7 +3765,7 @@ Function MainLoop()
 			AAText((GraphicWidth / 2), (GraphicHeight * 0.94), Msg, True, False, Min(MsgTimer / 2, 255)/255.0)
 		EndIf
 	End If
-		
+
 	Color 255, 255, 255
 	If ShowFPS Then AASetFont fo\ConsoleFont : AAText 20, 20, "FPS: " + fs\FPS : AASetFont fo\Font[0]
 		
@@ -3831,7 +3831,7 @@ Function DrawEnding()
 	Local x,y,width,height, temp
 	Local itt.ItemTemplates, r.Rooms
 	
-	Select lower2(I_END\SelectedEnding)
+	Select lower(I_END\SelectedEnding)
 		Case "b2", "a1"
 		    ;[Block]
 			ClsColor Max(255+(I_END\Timer)*2.8,0), Max(255+(I_END\Timer)*2.8,0), Max(255+(I_END\Timer)*2.8,0)
@@ -3879,7 +3879,7 @@ Function DrawEnding()
 			EndIf
 			
 			If I_END\Timer+fs\FPSfactor[1] > -450 And I_END\Timer <= -450 Then
-				Select lower2(I_END\SelectedEnding)
+				Select lower(I_END\SelectedEnding)
 					Case "a1", "a2"
 					    ;[Block]
 						PlaySound_Strict LoadTempSound(SFXPath$+"Ending\GateA\Ending"+I_END\SelectedEnding+".ogg")
@@ -4897,7 +4897,7 @@ Function MouseLook()
 						HeartBeatRate=0
 						BlurTimer = Max(BlurTimer, 500)
 						If SCP1025state[i]>140 Then 
-							DeathMSG = Chr(34)+"н погиб от сердечного приступа после чтения SCP-1025, это точно. Есть ли такая вещь, как психосоматический сердечный приступ, или же у SCP-1025 есть некоторые " ;He died of a cardiac arrest after reading SCP-1025, that's for sure. Is there such a thing as psychosomatic cardiac arrest, or does SCP-1025 have some 
+							DeathMSG = Chr(34)+"Он погиб от сердечного приступа после чтения SCP-1025, это точно. Есть ли такая вещь, как психосоматический сердечный приступ, или же у SCP-1025 есть некоторые " ;He died of a cardiac arrest after reading SCP-1025, that's for sure. Is there such a thing as psychosomatic cardiac arrest, or does SCP-1025 have some 
 							DeathMSG = DeathMSG + "аномальные свойства, о которых мы ещё не знаем?"+Chr(34) ;anomalous properties we are not yet aware of?
 							Kill()
 						EndIf
@@ -6840,8 +6840,8 @@ Function DrawGUI()
 					    Return
                     Else
 					    If (Not I_402\Using)
-						SelectedItem\name = Trim2(Lower2(SelectedItem\name))
-						If Lower2(Left(SelectedItem\name, Min(6,Len(SelectedItem\name)))) = "внутри" Then
+						SelectedItem\name = Trim2(lower2(SelectedItem\name))
+						If lower2(Left(SelectedItem\name, Min(6,Len(SelectedItem\name)))) = "внутри" Then
 							SelectedItem\name = Right(SelectedItem\name, Len(SelectedItem\name)-7)
 						;ElseIf Left(SelectedItem\name, Min(8,Len(SelectedItem\name))) = "a cup of" 
 						;	SelectedItem\name = Right(SelectedItem\name, Len(SelectedItem\name)-9)
@@ -6852,53 +6852,53 @@ Function DrawGUI()
 						
 						    Local iniStr$ = "Data\SCP-294.ini"
 						
-						    Local loc% = GetINISectionLocation(iniStr, SelectedItem\name)
+						    Local loc% = GetINISectionLocationCyr(iniStr, SelectedItem\name)
 						
 						    ;Stop
 						
-						    strtemp = GetINIString2(iniStr, loc, "message")
+						    strtemp = GetINIString2Cyr(iniStr, loc, "message")
 						    If strtemp <> "" Then Msg = strtemp : MsgTimer = 70*6
 						    
-						    If GetINIInt2(iniStr, loc, "lethal") Or GetINIInt2(iniStr, loc, "deathtimer") Then 
-							    DeathMSG = GetINIString2(iniStr, loc, "deathmessage")
-							    If GetINIInt2(iniStr, loc, "lethal") Then Kill()
+						    If GetINIInt2Cyr(iniStr, loc, "lethal") Or GetINIInt2Cyr(iniStr, loc, "deathtimer") Then 
+							    DeathMSG = GetINIString2Cyr(iniStr, loc, "deathmessage")
+							    If GetINIInt2Cyr(iniStr, loc, "lethal") Then Kill()
 						    EndIf
-						    BlurTimer = GetINIInt2(iniStr, loc, "blur")*70;*temp
-						    If VomitTimer = 0 Then VomitTimer = GetINIInt2(iniStr, loc, "vomit")
-						    CameraShakeTimer = GetINIString2(iniStr, loc, "camerashake")
-						    Injuries = Max(Injuries + GetINIInt2(iniStr, loc, "damage"),0);*temp
-						    Bloodloss = Max(Bloodloss + GetINIInt2(iniStr, loc, "blood loss"),0);*temp
+						    BlurTimer = GetINIInt2Cyr(iniStr, loc, "blur")*70;*temp
+						    If VomitTimer = 0 Then VomitTimer = GetINIInt2Cyr(iniStr, loc, "vomit")
+						    CameraShakeTimer = GetINIString2Cyr(iniStr, loc, "camerashake")
+						    Injuries = Max(Injuries + GetINIInt2Cyr(iniStr, loc, "damage"),0);*temp
+						    Bloodloss = Max(Bloodloss + GetINIInt2Cyr(iniStr, loc, "blood loss"),0);*temp
 						
 						    ;{~--<MOD>--~}
 						
-						    I_1079\Foam = Max(I_1079\Foam + GetINIInt2(iniStr, loc, "bubble foam"),0);*temp
+						    I_1079\Foam = Max(I_1079\Foam + GetINIInt2Cyr(iniStr, loc, "bubble foam"),0);*temp
 						
                             ;{~--<END>--~}
 
-						    strtemp =  GetINIString2(iniStr, loc, "sound")
+						    strtemp =  GetINIString2Cyr(iniStr, loc, "sound")
 						    If strtemp<>"" Then
 							    PlaySound_Strict LoadTempSound(strtemp)
 						    EndIf
-						    If GetINIInt2(iniStr, loc, "stomachache") Then SCP1025state[3]=1
+						    If GetINIInt2Cyr(iniStr, loc, "stomachache") Then SCP1025state[3]=1
 						
-						    If GetINIInt2(iniStr, loc, "infection") Then I_008\Timer = 1
+						    If GetINIInt2Cyr(iniStr, loc, "infection") Then I_008\Timer = 1
 						
 						    ;{~--<MOD>--~}
 						
-						    If GetINIInt2(iniStr, loc, "crystallization") Then I_409\Timer = 1
-						    If GetINIInt2(iniStr, loc, "cola") Then I_207\Timer = 1
+						    If GetINIInt2Cyr(iniStr, loc, "crystallization") Then I_409\Timer = 1
+						    If GetINIInt2Cyr(iniStr, loc, "cola") Then I_207\Timer = 1
 						
 						    ;{~--<END>--~}
 						
-						    DeathTimer = GetINIInt2(iniStr, loc, "deathtimer")*70
+						    DeathTimer = GetINIInt2Cyr(iniStr, loc, "deathtimer")*70
 						
-						    BlinkEffect = Float(GetINIString2(iniStr, loc, "blink effect", 1.0))*x2
-						    BlinkEffectTimer = Float(GetINIString2(iniStr, loc, "blink effect timer", 1.0))*x2
+						    BlinkEffect = Float(GetINIString2Cyr(iniStr, loc, "blink effect", 1.0))*x2
+						    BlinkEffectTimer = Float(GetINIString2Cyr(iniStr, loc, "blink effect timer", 1.0))*x2
 						
-						    StaminaEffect = Float(GetINIString2(iniStr, loc, "stamina effect", 1.0))*x2
-						    StaminaEffectTimer = Float(GetINIString2(iniStr, loc, "stamina effect timer", 1.0))*x2
+						    StaminaEffect = Float(GetINIString2Cyr(iniStr, loc, "stamina effect", 1.0))*x2
+						    StaminaEffectTimer = Float(GetINIString2Cyr(iniStr, loc, "stamina effect timer", 1.0))*x2
 						
-						    strtemp = GetINIString2(iniStr, loc, "refusemessage")
+						    strtemp = GetINIString2Cyr(iniStr, loc, "refusemessage")
 						    If strtemp <> "" Then
 							    Msg = strtemp 
 							    MsgTimer = 70*6		
@@ -9162,19 +9162,19 @@ Function DrawMenu()
 			
 			Color 0,255,0
 			If OptionsMenu = 1
-				Rect(x-10*MenuScale,y-5*MenuScale,110*MenuScale,40*MenuScale,True)
+				Rect(x-10*MenuScale,y-5*MenuScale,115*MenuScale,40*MenuScale,True)
 			ElseIf OptionsMenu = 2
-				Rect(x+100*MenuScale,y-5*MenuScale,110*MenuScale,40*MenuScale,True)
+				Rect(x+105*MenuScale,y-5*MenuScale,115*MenuScale,40*MenuScale,True)
 			ElseIf OptionsMenu = 3
-				Rect(x+210*MenuScale,y-5*MenuScale,110*MenuScale,40*MenuScale,True)
+				Rect(x+215*MenuScale,y-5*MenuScale,115*MenuScale,40*MenuScale,True)
 			ElseIf OptionsMenu = 4
-				Rect(x+320*MenuScale,y-5*MenuScale,110*MenuScale,40*MenuScale,True)
+				Rect(x+325*MenuScale,y-5*MenuScale,115*MenuScale,40*MenuScale,True)
 			EndIf
 			
-			If DrawButton(x-5*MenuScale,y,100*MenuScale,30*MenuScale,"ГРАФИКА",False) Then OptionsMenu = 1 ;GRAPHICS
-			If DrawButton(x+105*MenuScale,y,100*MenuScale,30*MenuScale,"АУДИО",False) Then OptionsMenu = 2 ;AUDIO
-			If DrawButton(x+215*MenuScale,y,100*MenuScale,30*MenuScale,"УПРАВЛЕНИЕ",False) Then OptionsMenu = 3 ;CONTROLS
-			If DrawButton(x+325*MenuScale,y,100*MenuScale,30*MenuScale,"ПРОЧЕЕ",False) Then OptionsMenu = 4 ;ADVANCED
+			If DrawButton(x-5*MenuScale,y,105*MenuScale,30*MenuScale,"ГРАФИКА",False) Then OptionsMenu = 1 ;GRAPHICS
+			If DrawButton(x+110*MenuScale,y,105*MenuScale,30*MenuScale,"АУДИО",False) Then OptionsMenu = 2 ;AUDIO
+			If DrawButton(x+220*MenuScale,y,105*MenuScale,30*MenuScale,"УПРАВЛЕНИЕ",False) Then OptionsMenu = 3 ;CONTROLS
+			If DrawButton(x+330*MenuScale,y,105*MenuScale,30*MenuScale,"ПРОЧЕЕ",False) Then OptionsMenu = 4 ;ADVANCED
 			
 			Local tx# = (GraphicWidth/2)+(width/2)
 			Local ty# = y
@@ -10326,7 +10326,7 @@ Function LoadEntities()
 			t1 = GetBrushTexture(b,0)
 			If t1<>0 Then
 				name$ = StripPath(TextureName(t1))
-				If lower2(name) <> "monitoroverlay.png"
+				If lower(name) <> "monitoroverlay.png"
 					BrushTexture b, at\OverlayTextureID[20], 0, 0
 					PaintSurface sf,b
 				EndIf
@@ -10342,7 +10342,7 @@ Function LoadEntities()
 			t1 = GetBrushTexture(b,0)
 			If t1<>0 Then
 				name$ = StripPath(TextureName(t1))
-				If lower2(name) <> "monitoroverlay.png"
+				If lower(name) <> "monitoroverlay.png"
 					BrushTexture b, at\OverlayTextureID[20], 0, 0
 					PaintSurface sf,b
 				EndIf
@@ -11332,7 +11332,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 					;[End Block]
 			End Select
 			;[End Block]
-		Case "Clipboard"
+		Case "Планшет" ;Clipboard
 		    ;[Block]
 			Select setting
 				Case "rough", "coarse"
@@ -11390,7 +11390,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 					;[End Block]
 			End Select
 			;[End Block]
-		Case "Metal Panel", "SCP-148 Ingot"
+		Case "Металлическая панель", "Слиток SCP-148" ;Metal Panel ;SCP-148 Ingot
 		    ;[Block]
 			Select setting
 				Case "rough", "coarse"
@@ -11436,7 +11436,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 								;[End Block]
 						End Select
 					Else 
-						If item\itemtemplate\name="SCP-148 Ingot" Then
+						If item\itemtemplate\name="Слиток SCP-148" Then
 							it2 = CreateItem("Металлическая панель", "scp148", x, y, z) ;Metal Panel
 							RemoveItem(item)
 						Else
@@ -11881,7 +11881,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 			
 			RemoveItem(item)
 			;[End Block]
-		Case "Radio Transceiver"
+		Case "Рация" ;Radio Transceiver
 		    ;[Block]
 			Select setting
 				Case "rough", "coarse"
@@ -11972,7 +11972,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 			
 			RemoveItem(item)
 			;[End Block]
-		Case "ReVision Eyedrops"
+		Case "Глазные капли Зрение+" ;ReVision Eyedrops
 		    ;[Block]
 			Select setting
 				Case "rough", "coarse"
@@ -11996,7 +11996,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 			
 			RemoveItem(item)
 			;[End Block]
-		Case "Eyedrops"
+		Case "Глазные капли" ;Eyedrops
 		    ;[Block]
 			Select setting
 				Case "rough", "coarse"
@@ -12206,7 +12206,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 			
 		;{~--<MOD>--~}
 			
-		Case "Wallet"
+		Case "Кошелёк" ;Wallet
 		    ;[Block]
 			Select setting
 				Case "rough", "coarse"
@@ -12897,7 +12897,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 									
 								Case 23
 								    ;[Block]
-									it2 = CreateItem("Дополнения к документу обSCP-457", "paper", x, y, z) ;SCP-457 Addendum
+									it2 = CreateItem("Дополнения к документу об SCP-457", "paper", x, y, z) ;SCP-457 Addendum
 									;[End Block]
 								Case 24
 								    ;[Block]
@@ -12979,7 +12979,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 	If it2 <> Null Then EntityType (it2\collider, HIT_ITEM)
 End Function
 
-Local langtemp%
+Global langtemp%
 
 Function Use294()
 	Local x#,y#, xtemp%,ytemp%, strtemp$, temp%
@@ -13141,30 +13141,30 @@ Function Use294()
 			
 			If temp And Input294<>"" Then ;dispense
 				Input294 = trim2(lower2(Input294))
-				If Lower2(Left(Input294, Min(7,Len(Input294)))) = "внутри " Then ;cup of
+				If lower2(Left(Input294, Min(7,Len(Input294)))) = "внутри " Then ;cup of
 					Input294 = Right(Input294, Len(Input294)-7)
 				;ElseIf Left(Input294, Min(9,Len(Input294))) = "a cup of " 
 				;	Input294 = Right(Input294, Len(Input294)-9)
 				EndIf
 				
 				If Input294<>""
-					Local loc% = GetINISectionLocation("Data\SCP-294.ini",Input294)
+					Local loc% = GetINISectionLocationCyr("Data\SCP-294.ini",Input294)
 				EndIf
 				
 				If loc > 0 Then
-					strtemp$ = GetINIString2("Data\SCP-294.ini", loc, "dispensesound")
+					strtemp$ = GetINIString2Cyr("Data\SCP-294.ini", loc, "dispensesound")
 					If strtemp="" Then
 						PlayerRoom\SoundCHN = PlaySound_Strict (LoadTempSound(SFXPath$+"SCP\294\Dispense1.ogg"))
 					Else
 						PlayerRoom\SoundCHN = PlaySound_Strict (LoadTempSound(strtemp))
 					EndIf
 					
-					If GetINIInt2("Data\SCP-294.ini", loc, "explosion")=True Then 
+					If GetINIInt2Cyr("Data\SCP-294.ini", loc, "explosion")=True Then 
 						ExplosionTimer = 135
-						DeathMSG = GetINIString2("Data\SCP-294.ini", loc, "deathmessage")
+						DeathMSG = GetINIString2Cyr("Data\SCP-294.ini", loc, "deathmessage")
 					EndIf
 					
-					strtemp$ = GetINIString2("Data\SCP-294.ini", loc, "color")
+					strtemp$ = GetINIString2Cyr("Data\SCP-294.ini", loc, "color")
 					
 					sep1 = Instr(strtemp, ",", 1)
 					sep2 = Instr(strtemp, ",", sep1+1)
@@ -13172,8 +13172,8 @@ Function Use294()
 					g% = trim2(Mid(strtemp, sep1+1, sep2-sep1-1))
 					b% = trim2(Right(strtemp, Len(strtemp)-sep2))
 					
-					alpha# = Float(GetINIString2("Data\SCP-294.ini", loc, "alpha",1.0))
-					glow = GetINIInt2("Data\SCP-294.ini", loc, "glow")
+					alpha# = Float(GetINIString2Cyr("Data\SCP-294.ini", loc, "alpha",1.0))
+					glow = GetINIInt2Cyr("Data\SCP-294.ini", loc, "glow")
 					;If alpha = 0 Then alpha = 1.0
 					If glow Then alpha = -alpha
 					
@@ -13671,7 +13671,7 @@ Function UpdateMTF()
 			
 			Local entrance.Rooms = Null
 			For r.Rooms = Each Rooms
-				If lower2(r\RoomTemplate\Name) = "gateaentrance" Then entrance = r : Exit
+				If lower(r\RoomTemplate\Name) = "gateaentrance" Then entrance = r : Exit
 			Next
 			If entrance <> Null Then 
 				If Abs(EntityZ(entrance\obj)-EntityZ(Collider))<30.0 Then
@@ -13764,7 +13764,7 @@ Function UpdateMTF2()
 			
 			Local entrance2.Rooms = Null
 			For r.Rooms = Each Rooms
-				If lower2(r\RoomTemplate\Name) = "gateb" Then entrance2 = r : Exit
+				If lower(r\RoomTemplate\Name) = "gateb" Then entrance2 = r : Exit
 			Next
 			
 			If entrance2 <> Null Then
@@ -14649,7 +14649,7 @@ Function Create3DIcon(width%,height%,modelpath$,modelX#=0,modelY#=0,modelZ#=0,mo
 		CameraFogRange cam,CameraFogNear,CameraFogFar
 	EndIf
 	
-	If Right(lower2(modelpath$),6)=".rmesh"
+	If Right(lower(modelpath$),6)=".rmesh"
 		model = LoadRMesh(modelpath$,Null)
 	Else
 		model = LoadMesh(modelpath$)

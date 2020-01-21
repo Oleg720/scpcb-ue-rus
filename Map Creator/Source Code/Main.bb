@@ -1,6 +1,6 @@
 Global ResWidth% = 910
 Global ResHeight% = 660
-Global VersionNumber$ = "5.5.4 [Rus]"
+Global VersionNumber$ = "5.5.4.1 [Rus]"
 
 Loadingwindow=CreateWindow("", GraphicsWidth()/2-160,GraphicsHeight()/2-120,320,260,winhandle,8)
 panelloading = CreatePanel(0,0,320,260,Loadingwindow,0)
@@ -184,7 +184,7 @@ author_descr = CreateMenu("Изменить автора и описание",19,options) ;Edit Author 
 CreateMenu "",1000,options
 CreateMenu "Настройки камеры",17,options ;Edit Camera
 
-Const OptionFile$ = "Source Code\options.ini"
+Const OptionFile$ = "..\Data\options_mp.ini" ;Source Code\options.ini
 Local option_event = GetINIInt(OptionFile,"general","events_default")
 If (Not option_event)
 	UncheckMenu event_default
@@ -237,7 +237,7 @@ Global greencursor = GetINIInt(OptionFile,"3d scene","cursor Color G")
 Global bluecursor = GetINIInt(OptionFile,"3d scene","cursor color B")
 
 labelrange=CreateLabel("Дальность прорисовки",15,140,80,30, optionwin) ;Culling Range
-Global camerarange = CreateTextField(25, 150, 40, 20, optionwin)
+Global camerarange = CreateTextField(25, 170, 40, 20, optionwin) ;150
 SetGadgetText camerarange, GetINIInt(OptionFile,"3d scene","camera range")
 
 ;labelrange=CreateLabel("Camera Range",10,140,80,20, optionwin)
@@ -258,10 +258,10 @@ HideGadget map_settings
 
 zonetext = CreateLabel("Настройки перехода между зонами:",10,10,200,20,map_settings) ;Zone transition settings:
 labelzonetrans1 = CreateLabel("Переход между ЗЛС и ЗТС",10,40,140,20,map_settings) ;LCZ to HCZ transition
-Global zonetrans1 = CreateTextField(20,40,80,20,map_settings)
+Global zonetrans1 = CreateTextField(160,37,40,20,map_settings) ;20,40,80
 SetGadgetText zonetrans1,5
 labelzonetrans2 = CreateLabel("Переход между ЗТС и ВЗ",10,60,140,20,map_settings) ;HCZ to EZ transition
-Global zonetrans2 = CreateTextField(130,40,80,20,map_settings)
+Global zonetrans2 = CreateTextField(160,57,40,20,map_settings) ;130,40,80
 SetGadgetText zonetrans2,11
 
 Global zonetransvalue1 = 13, zonetransvalue2 = 7

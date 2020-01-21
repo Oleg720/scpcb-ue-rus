@@ -27,7 +27,7 @@ End Function
 Function UpdateINIFile$(filename$)
 	Local file.INIFile = Null
 	For k.INIFile = Each INIFile
-		If k\name = lower2(filename) Then
+		If k\name = lower(filename) Then
 			file = k
 		EndIf
 	Next
@@ -54,31 +54,31 @@ Function GetINIString$(file$, section$, parameter$, defaultvalue$="")
 	
 	Local lfile.INIFile = Null
 	For k.INIFile = Each INIFile
-		If k\name = lower2(file) Then
+		If k\name = lower(file) Then
 			lfile = k
 		EndIf
 	Next
 	
 	If lfile = Null Then
 		lfile = New INIFile
-		lfile\name = lower2(file)
+		lfile\name = lower(file)
 		lfile\bank = 0
 		UpdateINIFile(lfile\name)
 	EndIf
 	
 	lfile\bankOffset = 0
 	
-	section = lower2(section)
+	section = lower(section)
 	
 	;While Not Eof(f)
 	While lfile\bankOffset<lfile\size
 		Local strtemp$ = ReadINILine(lfile)
 		If Left(strtemp,1) = "[" Then
-			strtemp$ = lower2(strtemp)
+			strtemp$ = lower(strtemp)
 			If Mid(strtemp, 2, Len(strtemp)-2)=section Then
 				Repeat
 					TemporaryString = ReadINILine(lfile)
-					If lower2(trim2(Left(TemporaryString, Max(Instr(TemporaryString, "=") - 1, 0)))) = lower2(parameter) Then
+					If lower(trim2(Left(TemporaryString, Max(Instr(TemporaryString, "=") - 1, 0)))) = lower(parameter) Then
 						;CloseFile f
 						Return trim2( Right(TemporaryString,Len(TemporaryString)-Instr(TemporaryString,"=")) )
 					EndIf
@@ -95,9 +95,9 @@ End Function
 
 Function GetINIInt%(file$, section$, parameter$, defaultvalue% = 0)
 	Local txt$ = GetINIString(file$, section$, parameter$, defaultvalue)
-	If lower2(txt) = "true" Then
+	If lower(txt) = "true" Then
 		Return 1
-	ElseIf lower2(txt) = "false"
+	ElseIf lower(txt) = "false"
 		Return 0
 	Else
 		Return Int(txt)
@@ -120,7 +120,7 @@ Function GetINIString2$(file$, start%, parameter$, defaultvalue$="")
 		If n=start Then 
 			Repeat
 				TemporaryString = ReadLine(f)
-				If lower2(trim2(Left(TemporaryString, Max(Instr(TemporaryString, "=") - 1, 0)))) = lower2(parameter) Then
+				If lower(trim2(Left(TemporaryString, Max(Instr(TemporaryString, "=") - 1, 0)))) = lower(parameter) Then
 					CloseFile f
 					Return trim2( Right(TemporaryString,Len(TemporaryString)-Instr(TemporaryString,"=")) )
 				EndIf
@@ -137,9 +137,9 @@ End Function
 
 Function GetINIInt2%(file$, start%, parameter$, defaultvalue$="")
 	Local txt$ = GetINIString2(file$, start%, parameter$, defaultvalue$)
-	If lower2(txt) = "true" Then
+	If lower(txt) = "true" Then
 		Return 1
-	ElseIf lower2(txt) = "false"
+	ElseIf lower(txt) = "false"
 		Return 0
 	Else
 		Return Int(txt)
@@ -150,14 +150,14 @@ Function GetINISectionLocation%(file$, section$)
 	Local Temp%
 	Local f% = ReadFile(file)
 	
-	section = lower2(section)
+	section = lower(section)
 	
 	Local n%=0
 	While Not Eof(f)
 		Local strtemp$ = ReadLine(f)
 		n=n+1
 		If Left(strtemp,1) = "[" Then
-			strtemp$ = lower2(strtemp)
+			strtemp$ = lower(strtemp)
 			Temp = Instr(strtemp, section)
 			If Temp>0 Then
 				If Mid(strtemp, Temp-1, 1)="[" Or Mid(strtemp, Temp-1, 1)="|" Then
@@ -177,8 +177,8 @@ Function PutINIValue%(file$, INI_sSection$, INI_sKey$, INI_sValue$)
 	
 	INI_sSection = "[" + trim2$(INI_sSection) + "]"
 	Local INI_sUpperSection$ = Upper$(INI_sSection)
-	INI_sKey = trim2$(INI_sKey)
-	INI_sValue = trim2$(INI_sValue)
+	INI_sKey = trim$(INI_sKey)
+	INI_sValue = trim$(INI_sValue)
 	Local INI_sFilename$ = file$
 	
 	; Retrieve the INI Data (If it exists)
@@ -220,7 +220,7 @@ Function PutINIValue%(file$, INI_sSection$, INI_sKey$, INI_sValue$)
 						; KEY=VALUE				
 					Local lEqualsPos% = Instr(INI_sTemp, "=")
 					If (lEqualsPos <> 0) Then
-						If (INI_sCurrentSection = INI_sUpperSection) And (Upper$(trim2$(Left$(INI_sTemp, (lEqualsPos - 1)))) = Upper$(INI_sKey)) Then
+						If (INI_sCurrentSection = INI_sUpperSection) And (Upper$(trim$(Left$(INI_sTemp, (lEqualsPos - 1)))) = Upper$(INI_sKey)) Then
 							If (INI_sValue <> "") Then INI_CreateKey INI_lFileHandle, INI_sKey, INI_sValue
 							INI_bWrittenKey = True
 						Else
@@ -492,3 +492,64 @@ Function Trim2$(txt$)
 	Return Mid(txt,txt1,txt2+1-txt1)
 End Function
 
+Function GetINIString2Cyr$(file$, start%, parameter$, defaultvalue$="")
+	Local TemporaryString$ = ""
+	Local f% = ReadFile(file)
+	
+	Local n%=0
+	While Not Eof(f)
+		Local strtemp$ = ReadLine(f)
+		n=n+1
+		If n=start Then 
+			Repeat
+				TemporaryString = ReadLine(f)
+				If lower2(trim2(Left(TemporaryString, Max(Instr(TemporaryString, "=") - 1, 0)))) = lower2(parameter) Then
+					CloseFile f
+					Return trim2( Right(TemporaryString,Len(TemporaryString)-Instr(TemporaryString,"=")) )
+				EndIf
+			Until Left(TemporaryString, 1) = "[" Or Eof(f)
+			CloseFile f
+			Return defaultvalue
+		EndIf
+	Wend
+	
+	CloseFile f	
+	
+	Return defaultvalue
+End Function
+
+Function GetINISectionLocationCyr%(file$, section$)
+	Local Temp%
+	Local f% = ReadFile(file)
+	
+	section = lower2(section)
+	
+	Local n%=0
+	While Not Eof(f)
+		Local strtemp$ = ReadLine(f)
+		n=n+1
+		If Left(strtemp,1) = "[" Then
+			strtemp$ = lower2(strtemp)
+			Temp = Instr(strtemp, section)
+			If Temp>0 Then
+				If Mid(strtemp, Temp-1, 1)="[" Or Mid(strtemp, Temp-1, 1)="|" Then
+					CloseFile f
+					Return n
+				EndIf
+			EndIf
+		EndIf
+	Wend
+	
+	CloseFile f
+End Function
+
+Function GetINIInt2Cyr%(file$, start%, parameter$, defaultvalue$="")
+	Local txt$ = GetINIString2(file$, start%, parameter$, defaultvalue$)
+	If lower2(txt) = "true" Then
+		Return 1
+	ElseIf lower2(txt) = "false"
+		Return 0
+	Else
+		Return Int(txt)
+	EndIf
+End Function

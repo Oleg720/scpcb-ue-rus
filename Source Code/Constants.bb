@@ -206,11 +206,11 @@ Const MusicPath2$ = SFXPath$+"Radio\UserTracks\"
 ;[VERSIONS]
 
 Const GameVersionNumber$ = "1.3.11"
-Const ModVersionNumber$ = "5.5.4.1 [Rus Indev]"
+Const ModVersionNumber$ = "5.5.4.1 [Rus v0.1]"
 
 ;[OPTIONS]
 
-Const OptionFile$ = "Source Code\options.ini"
+Const OptionFile$ = "Data\options.ini" ;Source Code\options.ini
 
 ;[SAVE]
 

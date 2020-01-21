@@ -547,13 +547,13 @@ Function UpdateMainMenu()
 									EndIf
 								EndIf
 								
-								If DrawButton(x + 400 * MenuScale, y + 20 * MenuScale, 100 * MenuScale, 30 * MenuScale, "Delete", False) Then
+								If DrawButton(x + 400 * MenuScale, y + 20 * MenuScale, 100 * MenuScale, 30 * MenuScale, "Удалить", False) Then ;Delete
 									SaveMSG = SaveGames(i - 1)
 									Exit
 								EndIf
 							Else
 								DrawFrame(x + 280 * MenuScale, y + 20 * MenuScale, 100 * MenuScale, 30 * MenuScale)
-								If SaveGameVersion(i - 1) <> ModCompatibleNumber And SaveGameVersion(i - 1) <> "5.4.1" Then
+								If SaveGameVersion(i - 1) <> ModCompatibleNumber Then ; And SaveGameVersion(i - 1) <> "5.4.1" Then
 									Color(255, 0, 0)
 								Else
 									Color(100, 100, 100)
@@ -577,13 +577,13 @@ Function UpdateMainMenu()
 						DrawFrame(x, y, 420 * MenuScale, 200 * MenuScale)
 						RowText("Вы уверены, что хотите удалить это сохранение?", x + 20 * MenuScale, y + 15 * MenuScale, 400 * MenuScale, 200 * MenuScale) ;Are you sure you want to delete this save?
 						;AAText(x + 20 * MenuScale, y + 15 * MenuScale, "Are you sure you want to delete this save?")
-						If DrawButton(x + 50 * MenuScale, y + 150 * MenuScale, 100 * MenuScale, 30 * MenuScale, "Yes", False) Then
+						If DrawButton(x + 50 * MenuScale, y + 150 * MenuScale, 100 * MenuScale, 30 * MenuScale, "Да", False) Then ;Yes
 							DeleteFile(CurrentDir() + SavePath + SaveMSG + "\save.txt")
 							DeleteDir(CurrentDir() + SavePath + SaveMSG)
 							SaveMSG = ""
 							LoadSaveGames()
 						EndIf
-						If DrawButton(x + 250 * MenuScale, y + 150 * MenuScale, 100 * MenuScale, 30 * MenuScale, "No", False) Then
+						If DrawButton(x + 250 * MenuScale, y + 150 * MenuScale, 100 * MenuScale, 30 * MenuScale, "Нет", False) Then ;No
 							SaveMSG = ""
 						EndIf
 					EndIf
@@ -883,7 +883,7 @@ Function UpdateMainMenu()
 							DrawOptionsTooltip(tx,ty,tw,th,"usertrackscan")
 						EndIf
 						If UserTrackCheck%>0
-							AAText x + 20 * MenuScale, y + 100 * MenuScale, "Пользоватильские треки обнаружены (загружено "+UserTrackCheck2+"/"+UserTrackCheck+" )" ;User tracks found ("+UserTrackCheck2+"/"+UserTrackCheck+" successfully loaded)
+							AAText x + 20 * MenuScale, y + 100 * MenuScale, "Пользовательские треки обнаружены (загружено "+UserTrackCheck2+"/"+UserTrackCheck+" )" ;User tracks found ("+UserTrackCheck2+"/"+UserTrackCheck+" successfully loaded)
 						EndIf
 					Else
 						UserTrackCheck%=0
@@ -1471,7 +1471,7 @@ Function InitLoadingScreens(file$)
 			
 			ls\disablebackground = GetINIInt(file, TemporaryString, "disablebackground")
 			
-			Select lower2(GetINIString(file, TemporaryString, "align x"))
+			Select lower(GetINIString(file, TemporaryString, "align x"))
 				Case "left"
 					ls\alignx = -1
 				Case "middle", "center"
@@ -1480,7 +1480,7 @@ Function InitLoadingScreens(file$)
 					ls\alignx = 1
 			End Select 
 			
-			Select lower2(GetINIString(file, TemporaryString, "align y"))
+			Select lower(GetINIString(file, TemporaryString, "align y"))
 				Case "top", "up"
 					ls\aligny = -1
 				Case "middle", "center"
@@ -2139,7 +2139,7 @@ Function DrawOptionsTooltip(x%,y%,width%,height%,option$,value#=0,ingame%=False)
 	
 	AASetFont fo\Font[0]
 	Color 255,255,255
-	Select lower2(option$)
+	Select lower(option$)
 		;Graphic options
 			;[Block]
 		Case "bump"

@@ -16,7 +16,7 @@ Include "Source Code\Devil_Particle_System.bb"
 Include "Source Code\Math.bb"
 Include "Source Code\INI_Details.bb"
 
-Global ModCompatibleNumber$ = "5.5.4.1 [Rus v0.1]"
+Global ModCompatibleNumber$ = "5.5.4.1 [Rus PreRelease]"
 
 Type Fonts
     Field Font%[MaxFontAmount-1]
@@ -325,6 +325,8 @@ End Type
 Global I_END.Ending = New Ending
 
 Global MsgTimer#, Msg$, DeathMSG$
+
+Global SubTimer#, Sub$, SubLine%
 
 Global AccessCode%, KeypadInput$, KeypadTimer#, KeypadMSG$
 
@@ -3765,7 +3767,36 @@ Function MainLoop()
 			AAText((GraphicWidth / 2), (GraphicHeight * 0.94), Msg, True, False, Min(MsgTimer / 2, 255)/255.0)
 		EndIf
 	End If
+	
+	;Временные субтитры для неозвученных реплик
+	If SubTimer > 0
+	    SubTimer = SubTimer-fs\FPSfactor[1]
+	EndIf	
+	
+	If SubTimer > 0 and SubtitlesEnabled = 1 Then
+		Local temp2% = False
+		If (Not InvOpen%)
+			If SelectedItem <> Null
+				If SelectedItem\itemtemplate\tempname = "paper" Or SelectedItem\itemtemplate\tempname = "oldpaper"
+					temp2% = True
+				EndIf
+			EndIf
+		EndIf
 
+		If (Not temp2%)
+			Color 0,0,0
+			AAText((GraphicWidth / 2)+1, (GraphicHeight / 2) + 221, Sub, True, False, Min(SubTimer / 2, 255)/255.0)
+			Color 255,255,255
+			AAText((GraphicWidth / 2), (GraphicHeight / 2) + 220, Sub, True, False, Min(SubTimer / 2, 255)/255.0)
+		;Else
+		;	Color 0,0,0
+		;	AAText((GraphicWidth / 2)+1, (GraphicHeight * 0.94) + 1, Sub, True, False, Min(SubTimer / 2, 255)/255.0)
+		;	Color 255,255,255
+		;	AAText((GraphicWidth / 2), (GraphicHeight * 0.94), Sub, True, False, Min(SubTimer / 2, 255)/255.0)
+		EndIf
+	End If
+	;Endsub
+	
 	Color 255, 255, 255
 	If ShowFPS Then AASetFont fo\ConsoleFont : AAText 20, 20, "FPS: " + fs\FPS : AASetFont fo\Font[0]
 		
@@ -5125,7 +5156,8 @@ Function DrawGUI()
 			AASetFont fo\ConsoleFont
 			
 			AAText x - 60, 40, "*******************************"
-            AAText x - 60, 60, "Комната: " + PlayerRoom\RoomTemplate\Name ;Room:
+            ;AAText x - 60, 60, "SubTimer: " + SubTimer
+			AAText x - 60, 60, "Комната: " + PlayerRoom\RoomTemplate\Name ;Room:
             AAText x - 60, 80, "Координаты комнаты: (" + Floor(EntityX(PlayerRoom\obj) / 8.0 + 0.5) + ", " + Floor(EntityZ(PlayerRoom\obj) / 8.0 + 0.5) + ", угол: "+PlayerRoom\angle + ")" ;Room coordinates: ;angle:
 			For ev.Events = Each Events
 				If ev\room = PlayerRoom Then
@@ -5224,7 +5256,7 @@ Function DrawGUI()
 			
 			AAText x + 720, 40, "********** СОСТОЯНИЕ ПЕРЕМЕННЫХ МОДИФИКАЦИИ **********" ;MOD STATS
 			AAText x + 720, 60, "Пузырьковая пена: "+I_1079\Foam ;BubbleFoam
-			AAText x + 720, 80, "Активация"  + Chr(34) + "Пузырьков" + Chr(34) + ": " + I_1079\Trigger ;BubbleTrigger
+			AAText x + 720, 80, "Активация "  + Chr(34) + "Пузырьков" + Chr(34) + ": " + I_1079\Trigger ;BubbleTrigger
 			AAText x + 720, 100, "Взято SCP-1079-01: "+I_1079\Take ;Taken
 			AAText x + 720, 120, "Таймер MTF2: " + MTF2Timer ;Timer
 			If I_1033RU\Using = 1
@@ -7616,7 +7648,7 @@ Function DrawGUI()
 								For z2 = Max(0, PlayerZ - 6) To Min(MapHeight, PlayerZ + 6)
 									
 									If CoffinDistance > 16.0 Or Rnd(16.0)<CoffinDistance Then 
-										If MapTemp(x2, z2)>0 And (MapFound(x2, z2) > 0 Or SelectedItem\itemtemplate\name = "S-NAV 310 Navigator" Or SelectedItem\itemtemplate\name = "S-NAV Navigator Ultimate") Then
+										If MapTemp(x2, z2)>0 And (MapFound(x2, z2) > 0 Or SelectedItem\itemtemplate\name = "Навигатор S-NAV 310" Or SelectedItem\itemtemplate\name = "Навигатор S-NAV Ultimate") Then ;;S-NAV 310 Navigator ;S-NAV Navigator Ultimate
 											Local drawx% = x + (PlayerX - 1 - x2) * 24 , drawy% = y - (PlayerZ - 1 - z2) * 24
 											
 											If x2+1<=MapWidth Then
@@ -8555,11 +8587,11 @@ Function DrawGUI()
 				Case "scp1033ru", "super1033ru"
 					;[Block]
 					If I_1033RU\Using > 0 Then
-						Msg = "You removed the bracelet."
+						Msg = "Вы сняли браслет." ;You removed the bracelet.
 						I_1033RU\Using = False
 					Else
 						GiveAchievement(Achv1033RU)
-						Msg = "You put on the bracelet."
+						Msg = "Вы надели браслет" ;You put on the bracelet.
 						If SelectedItem\itemtemplate\tempname = "scp1033ru" Then
 							I_1033RU\Using = 1
 						Else
@@ -9237,7 +9269,7 @@ Function DrawMenu()
 					
 					Color 255,255,255
 					AAText(x, y, "Количество частиц:") ;Particle amount:
-					ParticleAmount = Slider3(x+270*MenuScale,y+6*MenuScale,100*MenuScale,ParticleAmount,2,"MINIMAL","REDUCED","FULL")
+					ParticleAmount = Slider3(x+270*MenuScale,y+6*MenuScale,100*MenuScale,ParticleAmount,2,"МИНИМУМ","СРЕДНЕ","ВСЕ") ;MINIMAL REDUCED FULL
 					If (MouseOn(x + 270 * MenuScale, y-6*MenuScale, 100*MenuScale+14, 20) And OnSliderID=0) Or OnSliderID=2
 						DrawOptionsTooltip(tx,ty,tw,th,"particleamount",ParticleAmount)
 					EndIf
@@ -9575,6 +9607,16 @@ Function DrawMenu()
 					EndIf
 					If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
 						DrawOptionsTooltip(tx,ty,tw,th,"antialiastext")
+					EndIf
+					
+					;test subs
+					y = y + 30*MenuScale
+					
+					Color 255,255,255
+					AAText(x, y, "Вспомогательные субтитры:")
+					SubtitlesEnabled% = DrawTick(x + 270 * MenuScale, y + MenuScale, SubtitlesEnabled%)
+					If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
+						DrawOptionsTooltip(tx,ty,tw,th,"subtitles")
 					EndIf
 					;[End Block]
 			End Select

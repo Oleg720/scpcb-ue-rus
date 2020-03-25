@@ -8289,6 +8289,11 @@ Function UpdateMTF2Unit(n.NPCs)
 		If n\State = 2 
 		    If OtherNPCSeesMeNPC(Curr173,n) Or EntityDistance(n\Collider,Curr173\Collider)<3.0
 			    PlayMTFSound(LoadTempSound(SFXPath$+"Character\MTF2\173\BLINKING"+Rand(1,4)+".ogg"),n)
+				if EntityDistance(Collider, n\Collider) < 10 and EntityDistance(Collider, n\Collider) > 0 Then ;temp subs
+					;subtest
+					Sub = Chr(34) + "Мограю." + Chr(34)
+					SubTimer = 70*3
+				EndIf
 			EndIf
 		EndIf
 		n\BlinkTimer = 70.0*Rnd(10.0,15.0)
@@ -8367,8 +8372,31 @@ Function UpdateMTF2Unit(n.NPCs)
 											Curr173\Target = Null
 											Curr173\IsDead = True
 											If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-											n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\173\Cont"+Rand(1,6)+".ogg")
+											SubLine = Rand(1,6)
+											n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\173\Cont"+SubLine+".ogg")
 											PlayMTFSound(n\Sound, n)
+											if EntityDistance(Collider, n\Collider) < 10 and EntityDistance(Collider, n\Collider) > 0 Then ;temp subs
+												Select SubLine
+													Case 1
+														Sub = Chr(34) + "Центру, мы сдержали SCP-173 и теперь переходим к следующим заданиям. Конец связи." + Chr(34)
+														SubTimer = 70*7
+													Case 2
+														Sub = Chr(34) + "Отлично, дело с этим придурком закрыто. Пошли." + Chr(34)
+														SubTimer = 70*5
+													Case 3
+														Sub = Chr(34) + "Центру, мы сдержали SCP-173 в его камере содержания. Переходим к следующим заданиям. Конец связи" + Chr(34)
+														SubTimer = 70*9
+													Case 4
+														Sub = Chr(34) + "SCP-173 в камере содержания. Закрываем дверь." + Chr(34)
+														SubTimer = 70*3
+													Case 5
+														Sub = Chr(34) + "Статуя в камере. Закрываем дверь." + Chr(34)
+														SubTimer = 70*3
+													Case 6
+														Sub = Chr(34) + "Условия содержания SCP-173 восстановлены. Переходим к следующим заданиям." + Chr(34)
+														SubTimer = 70*3
+												End Select
+											EndIf
 											;PlayAnnouncement(SFXPath$+"Character\MTF2\Announc173Contain.ogg")
 											r\RoomDoors[1]\MTFClose = True
                                          	UseDoor(r\RoomDoors[1],False)
@@ -8519,14 +8547,54 @@ Function UpdateMTF2Unit(n.NPCs)
 					If n\LastSeen > 0 And n\LastSeen < 70*15 Then
 						If temp < 2
 							If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-							n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\ThereHeIs"+Rand(1,6)+".ogg")
+							SubLine% = Rand(1,6)
+							n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\ThereHeIs"+SubLine+".ogg")
 							PlayMTFSound(n\Sound, n)
+							if EntityDistance(Collider, n\Collider) < 10 and EntityDistance(Collider, n\Collider) > 0 Then ;temp subs
+								Select SubLine
+									Case 1
+										Sub = Chr(34) + "Смотрите-ка, он здесь!" + Chr(34)
+										SubTimer = 70*3
+									Case 2
+										Sub = Chr(34) + "Ага! Обнаружил Класс D!" + Chr(34)
+										SubTimer = 70*3
+									Case 3
+										Sub = Chr(34) + "Эй, это Класс D!" + Chr(34)
+										SubTimer = 70*3
+									Case 4
+										Sub = Chr(34) + "Вот ты где!" + Chr(34)
+										SubTimer = 70*3
+									Case 5
+										Sub = Chr(34) + "Вот он. Открыть огонь!" + Chr(34)
+										SubTimer = 70*3
+									Case 6
+										Sub = Chr(34) + "Класс D найден." + Chr(34)
+										SubTimer = 70*3
+								End Select
+							EndIf
 						EndIf
 					Else
 						If temp = True
 							If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-							n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\Stop"+Rand(1,6)+".ogg")
+							SubLine% = Rand(1,6)
+							n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\Stop"+SubLine+".ogg")
 							PlayMTFSound(n\Sound, n)
+							if EntityDistance(Collider, n\Collider) < 10 and EntityDistance(Collider, n\Collider) > 0 Then ;temp subs
+								Select SubLine
+									Case 1, 4
+										Sub = Chr(34) + "Стоять!" + Chr(34)
+										SubTimer = 70*3
+									Case 2
+										Sub = Chr(34) + "Эй! Эй! Стоять!" + Chr(34)
+										SubTimer = 70*3
+									Case 3, 6
+										Sub = Chr(34) + "А ну, стой!" + Chr(34)
+										SubTimer = 70*3
+									Case 5
+										Sub = Chr(34) + "Замечен Класс D!" + Chr(34)
+										SubTimer = 70*3
+								End Select
+							EndIf
 						ElseIf temp = 2
 							;If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 							;n\Sound = MTFSFX(Rand(0,3))
@@ -8563,8 +8631,22 @@ Function UpdateMTF2Unit(n.NPCs)
 							n\PathTimer=0.0
 							n\PathStatus=0
 							If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-							n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\173\Spotted"+Rand(1,4)+".ogg")
+							SubLine% = Rand(1,4)
+							n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\173\Spotted"+SubLine+".ogg")
 							PlayMTFSound(n\Sound, n)
+							if EntityDistance(Collider, n\Collider) < 10 and EntityDistance(Collider, n\Collider) > 0 Then ;temp subs
+								Select SubLine
+									Case 1, 4
+										Sub = Chr(34) + "Замечен SCP-173!" + Chr(34)
+										SubTimer = 70*3
+									Case 2
+										Sub = Chr(34) + "Забудьте про Класс D! Сфокусируйтесь на 173-м!" + Chr(34)
+										SubTimer = 70*5
+									Case 3
+										Sub = Chr(34) + "Забудьте про D! Смотрите на статую!" + Chr(34)
+										SubTimer = 70*4
+								End Select
+							EndIf
 						EndIf
 					EndIf
 				EndIf
@@ -8583,8 +8665,31 @@ Function UpdateMTF2Unit(n.NPCs)
 							n\Target = Curr106
 							;If n\MTF2Leader=Null
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\106\Spotted"+Rand(1,6)+".ogg")
+								SubLine = Rand(1,6)
+								n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\106\Spotted"+SubLine+".ogg")
 								PlayMTFSound(n\Sound, n)
+								if EntityDistance(Collider, n\Collider) < 10 and EntityDistance(Collider, n\Collider) > 0 Then ;temp subs
+									Select SubLine
+										Case 1
+											Sub = Chr(34) + "Заметил SCP-106, бежим!" + Chr(34)
+											SubTimer = 70*4
+										Case 2
+											Sub = Chr(34) + "Появляется SCP-106! Нам лучше свалить отсюда к чёрту!" + Chr(34)
+											SubTimer = 70*5
+										Case 3
+											Sub = Chr(34) + "SCP-106 приближается, уходим!" + Chr(34)
+											SubTimer = 70*4
+										Case 4
+											Sub = Chr(34) + "Забудьте про D, мы должны сваливать!" + Chr(34)
+											SubTimer = 70*4
+										Case 5
+											Sub = Chr(34) + "Появляется старик! Сваливаем отсюда к чёрту!" + Chr(34)
+											SubTimer = 70*5
+										Case 6
+											Sub = Chr(34) + "Замечен SCP-106! Бежим!" + Chr(34)
+											SubTimer = 70*4
+									End Select
+								EndIf
 							;EndIf
 						EndIf
 					EndIf
@@ -8602,8 +8707,19 @@ Function UpdateMTF2Unit(n.NPCs)
 							n\PathTimer = 0.0
 							n\PathStatus = 0
 							If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-							n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\096\Spotted"+Rand(1,2)+".ogg")
+							SubLine = Rand(1,2)
+							n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\096\Spotted"+SubLine+".ogg")
 							PlayMTFSound(n\Sound, n)
+							if EntityDistance(Collider, n\Collider) < 10 and EntityDistance(Collider, n\Collider) > 0 Then ;temp subs
+								Select SubLine
+									Case 1
+										Sub = Chr(34) + "Чёрт, здесь SCP-096. Держите головы замком, надевайте СВАЛКИ. Давайте сделаем это." + Chr(34)
+										SubTimer = 70*7
+									Case 2
+										Sub = Chr(34) + "Замечен SCP-096! Используйте СВАЛКИ." + Chr(34)
+										SubTimer = 70*5
+								End Select
+							EndIf
 						EndIf
 					EndIf
 				EndIf
@@ -8662,6 +8778,11 @@ Function UpdateMTF2Unit(n.NPCs)
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 								n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\049\Player0492_1.ogg")
 								PlayMTFSound(n\Sound, n)
+								if EntityDistance(Collider, n\Collider) < 10 and EntityDistance(Collider, n\Collider) > 0 Then ;temp subs
+								;subtest
+									Sub = Chr(34) + "Центру, обнаружен образец SCP-049-2." + Chr(34)
+									SubTimer = 70*5
+								EndIf
 								Exit
 							EndIf
 						EndIf
@@ -8772,7 +8893,25 @@ Function UpdateMTF2Unit(n.NPCs)
 									;player killed -> "target terminated"
 									If prev => 0 And KillTimer < 0 Then
 										DeathMSG=SubjectName$+". Уничтожен Не Вижу Зла." ;Terminated by See No Evil."
-										PlayMTFSound(LoadTempSound(SFXPath$+"Character\MTF2\Targetterminated"+Rand(1,5)+".ogg"),n)
+										SubLine = Rand(1,5)
+										PlayMTFSound(LoadTempSound(SFXPath$+"Character\MTF2\Targetterminated"+SubLine+".ogg"),n)
+										Select SubLine
+											Case 1
+												Sub = Chr(34) + "Убийство подтверждено. Уходим отсюда" + Chr(34)
+												SubTimer = 70*5
+											Case 2
+												Sub = Chr(34) + "Эм... Да... Он мёртв, так ведь? Боже, не хотел бы я быть на месте класса D." + Chr(34)
+												SubTimer = 70*8
+											Case 3
+												Sub = Chr(34) + "Я думаю, нам не стоило делать этого, но... плевать, пойдем." + Chr(34)
+												SubTimer = 70*7
+											Case 4
+												Sub = Chr(34) + "Я рад, что с этим покончено." + Chr(34)
+												SubTimer = 70*3
+											Case 5
+												Sub = Chr(34) + "Класс D был уничтожен." + Chr(34)
+												SubTimer = 70*4
+										End Select
 									EndIf
 								EndIf	
 							EndIf
@@ -8940,7 +9079,27 @@ Function UpdateMTF2Unit(n.NPCs)
 					
 					If n\MTF2Leader=Null And n\LastSeen<70*30 And n\LastSeen+fs\FPSfactor[0]=>70*30 Then
 						If Rand(2)=1 Then
-							PlayMTFSound(LoadTempSound(SFXPath$+"Character\MTF2\Searching"+Rand(1,6)+".ogg"),n)
+						SubLine = Rand(1,6)
+							PlayMTFSound(LoadTempSound(SFXPath$+"Character\MTF2\Searching"+SubLine+".ogg"),n)
+							if EntityDistance(Collider, n\Collider) < 10 and EntityDistance(Collider, n\Collider) > 0 Then ;temp subs
+								Select SubLine
+									Case 1
+										Sub = Chr(34) + "Давайте, ищите его." + Chr(34)
+										SubTimer = 70*4
+									Case 2, 6
+										Sub = Chr(34) + "Выходи, ублюдок!" + Chr(34)
+										SubTimer = 70*5
+									Case 3
+										Sub = Chr(34) + "Выходи!" + Chr(34)
+										SubTimer = 70*4
+									Case 4
+										Sub = Chr(34) + "Выходи, ты всё равно умрёшь!" + Chr(34)
+										SubTimer = 70*4
+									Case 5
+										Sub = Chr(34) + "Ищем класс D." + Chr(34)
+										SubTimer = 70*5
+								End Select
+							EndIf
 						EndIf
 					EndIf
 					
@@ -8951,7 +9110,24 @@ Function UpdateMTF2Unit(n.NPCs)
                 
                 If n\State2<=0.0 And n\State2+fs\FPSfactor[0] >0.0 Then
 					If n\MTF2Leader = Null Then
-						PlayMTFSound(LoadTempSound(SFXPath$+"Character\MTF2\Targetlost"+Rand(1,4)+".ogg"),n)
+						SubLine% = Rand(1,4)
+						PlayMTFSound(LoadTempSound(SFXPath$+"Character\MTF2\Targetlost"+SubLine+".ogg"),n)
+						if EntityDistance(Collider, n\Collider) < 10 and EntityDistance(Collider, n\Collider) > 0 Then ;temp subs
+							Select SubLine
+								Case 1
+									Sub = Chr(34) + "Смотрите-ка, он сбежал... В любом случае, он не имеет большого значения." + Chr(34)
+									SubTimer = 70*7
+								Case 2
+									Sub = Chr(34) + "Отлично... Давайте попробуем в следующий раз. Это всё, что я должен сказать." + Chr(34)
+									SubTimer = 70*7
+								Case 3
+									Sub = Chr(34) + "Блин... Этот парень ушёл. Давайте забудем про него." + Chr(34)
+									SubTimer = 70*7
+								Case 4
+									Sub = Chr(34) + "Класс D сбежал от нас. Возвращаемся к предыдущей задаче." + Chr(34)
+									SubTimer = 70*7
+							End Select
+						EndIf
 						If MTF2_CameraCheckTimer=0.0
 							If Rand(15-(7*SelectedDifficulty\aggressiveNPCs))=1 ;Maybe change this to another chance - ENDSHN
 								;PlayAnnouncement(SFXPath$+"Character\MTF2\AnnouncCameraCheck.ogg")
@@ -8975,6 +9151,11 @@ Function UpdateMTF2Unit(n.NPCs)
 							If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 							n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\173\Spotted3.ogg")
 							PlayMTFSound(n\Sound, n)
+							if EntityDistance(Collider, n\Collider) < 10 and EntityDistance(Collider, n\Collider) > 0 Then ;temp subs
+							;subtest
+								Sub = Chr(34) + "Забудьте про D! Смотрите на статую!" + Chr(34)
+								SubTimer = 70*4
+							EndIf
 							n\State3 = 0.0
 							n\PathTimer=0.0
 							n\PathStatus=0
@@ -8998,6 +9179,11 @@ Function UpdateMTF2Unit(n.NPCs)
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 								n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\106\Spotted4.ogg")
 								PlayMTFSound(n\Sound, n)
+								if EntityDistance(Collider, n\Collider) < 10 and EntityDistance(Collider, n\Collider) > 0 Then ;temp subs
+								;subtest
+									Sub = Chr(34) + "Забудьте про D, мы должны сваливать!" + Chr(34)
+									SubTimer = 70*4
+								EndIf
 							EndIf
 						EndIf
 					EndIf
@@ -9016,8 +9202,19 @@ Function UpdateMTF2Unit(n.NPCs)
 							n\PathStatus = 0
 							If n\MTF2Leader=Null
 								If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-								n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\096\Spotted"+Rand(1,2)+".ogg")
+								SubLine% = Rand(1,2)
+								n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\096\Spotted"+SubLine+".ogg")
 								PlayMTFSound(n\Sound, n)
+								if EntityDistance(Collider, n\Collider) < 10 and EntityDistance(Collider, n\Collider) > 0 Then ;temp subs
+									Select SubLine
+										Case 1
+											Sub = Chr(34) + "Чёрт, здесь SCP-096. Держите головы замком, надевайте СВАЛКИ. Давайте сделаем это." + Chr(34)
+											SubTimer = 70*7
+										Case 2
+											Sub = Chr(34) + "Замечен SCP-096! Используйте СВАЛКИ." + Chr(34)
+											SubTimer = 70*4
+									End Select
+								EndIf
 							EndIf
 						EndIf
 					EndIf
@@ -9059,6 +9256,11 @@ Function UpdateMTF2Unit(n.NPCs)
 									If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
 									n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\049\Player0492_1.ogg")
 									PlayMTFSound(n\Sound, n)
+									if EntityDistance(Collider, n\Collider) < 10 and EntityDistance(Collider, n\Collider) > 0 Then ;temp subs
+										;subtest
+										Sub = Chr(34) + "Центру, обнаружен образец SCP-049-2." + Chr(34)
+										SubTimer = 70*5
+									EndIf
 								;EndIf
 								Exit
 							EndIf
@@ -9165,8 +9367,25 @@ Function UpdateMTF2Unit(n.NPCs)
 									Curr173\Idle = 2
 									If n\MTF2Leader = Null Then Curr173\Target = n
 									If n\Sound <> 0 Then FreeSound_Strict n\Sound : n\Sound = 0
-									n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\173\Box"+Rand(1,4)+".ogg")
+									SubLine = Rand(1,4)
+									n\Sound = LoadSound_Strict(SFXPath$+"Character\MTF2\173\Box"+SubLine+".ogg")
 									PlayMTFSound(n\Sound, n)
+									if EntityDistance(Collider, n\Collider) < 10 and EntityDistance(Collider, n\Collider) > 0 Then ;temp subs
+										Select SubLine
+											Case 1
+												Sub = Chr(34) + "Хорошо, давайте доберёмся до камеры с этой клеткой. Я не хочу больше проводить время с этой штукой." + Chr(34)
+												SubTimer = 70*3
+											Case 2
+												Sub = Chr(34) + "Хорошо, с ореховым покончено, теперь возвращаемся в камеру содержания." + Chr(34)
+												SubTimer = 70*3
+											Case 3
+												Sub = Chr(34) + "SCP-173 помещён в сдерживающую клетку. Несём её в камеру содержания." + Chr(34)
+												SubTimer = 70*3
+											Case 4
+												Sub = Chr(34) + "Статуя в клетке. Несём её в камеру содержания." + Chr(34)
+												SubTimer = 70*3
+										End Select
+									EndIf
 								EndIf
 							EndIf
 							PositionEntity n\obj,EntityX(Curr173\Collider,True),EntityY(Curr173\Collider,True),EntityZ(Curr173\Collider,True),True

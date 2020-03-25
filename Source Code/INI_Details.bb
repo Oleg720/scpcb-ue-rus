@@ -363,6 +363,8 @@ Global Framelimit% = GetINIInt(OptionFile, "advanced", "framelimit")
 
 Global AATextEnable% = GetINIInt(OptionFile, "advanced", "antialiased text")
 
+Global SubtitlesEnabled% = GetINIInt(OptionFile, "advanced", "subtitles") ;test subs
+
 ;[GAME]
 
 Global IntroEnabled% = GetINIInt(OptionFile, "game", "intro enabled")
@@ -420,6 +422,8 @@ Function SaveOptionsINI()
 	PutINIValue(OptionFile, "graphics", "particle amount", ParticleAmount)
 	PutINIValue(OptionFile, "graphics", "enable vram", SaveTexturesInVRam)
 	PutINIValue(OptionFile, "controls", "mouse smoothing", MouseSmooth)
+	
+	PutINIValue(OptionFile, "advanced", "subtitles", SubtitlesEnabled) ;test subs
 	
 	;{~--<MOD>--~}
 	

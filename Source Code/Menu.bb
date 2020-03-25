@@ -88,15 +88,15 @@ Function UpdateMainMenu()
 				Case 14
 					ms\MenuStr = "чёрный белый чёрный белый чёрный белый серый" ;black white black white black white gray
 				Case 15
-					ms\MenuStr = "Камень не волнует" ;Stone does not care
+					ms\MenuStr = "Камню все равно" ;Stone does not care
 				Case 16
 					ms\MenuStr = "9341"
 				Case 17
-					ms\MenuStr = "Он управляет дверьми" ;It controls the doors
+					ms\MenuStr = "Оно управляет дверьми" ;It controls the doors
 				Case 18
 					ms\MenuStr = "e8m106]af173o+079m895w914"
 				Case 20
-					ms\MenuStr = "Он захватил всё" ;It has taken over everything
+					ms\MenuStr = "Оно взяло всё на себя" ;It has taken over everything
 				Case 21
 					ms\MenuStr = "Спираль растёт" ;The spiral is growing
 				Case 22
@@ -520,7 +520,7 @@ Function UpdateMainMenu()
 						If i <= SaveGameAmount Then
 							;DrawFrame(x,y,540* MenuScale, 70* MenuScale)
 							
-							If SaveGameVersion(i - 1) <> ModCompatibleNumber Then ; And SaveGameVersion(i - 1) <> "5.4.1"
+							If SaveGameVersion(i - 1) <> ModCompatibleNumber Then ; And SaveGameVersion(i - 1) <> "5.5.4.1 [Rus v0.1]"
 								Color 255,0,0
 							Else
 								Color 255,255,255
@@ -532,7 +532,7 @@ Function UpdateMainMenu()
 							AAText(x + 20 * MenuScale, y + (10+36) * MenuScale, SaveGameVersion(i - 1))
 							
 							If SaveMSG = "" Then
-								If SaveGameVersion(i - 1) <> ModCompatibleNumber And SaveGameVersion(i - 1) <> "5.4.1" Then
+								If SaveGameVersion(i - 1) <> ModCompatibleNumber Then ; And SaveGameVersion(i - 1) <> "5.5.4.1 [Rus v0.1]" Then
 									DrawFrame(x + 280 * MenuScale, y + 20 * MenuScale, 100 * MenuScale, 30 * MenuScale)
 									Color(255, 0, 0)
 									AAText(x + 330 * MenuScale, y + 34 * MenuScale, "Загрузить", True, True) ;Load
@@ -553,7 +553,7 @@ Function UpdateMainMenu()
 								EndIf
 							Else
 								DrawFrame(x + 280 * MenuScale, y + 20 * MenuScale, 100 * MenuScale, 30 * MenuScale)
-								If SaveGameVersion(i - 1) <> ModCompatibleNumber Then ; And SaveGameVersion(i - 1) <> "5.4.1" Then
+								If SaveGameVersion(i - 1) <> ModCompatibleNumber Then ; And SaveGameVersion(i - 1) <> "5.5.4.1 [Rus v0.1]" Then
 									Color(255, 0, 0)
 								Else
 									Color(100, 100, 100)
@@ -708,7 +708,7 @@ Function UpdateMainMenu()
 					
 					Color 255,255,255
 					AAText(x + 20 * MenuScale, y, "Количество частиц:") ;Particle amount:
-					ParticleAmount = Slider3(x+310*MenuScale,y+6*MenuScale,150*MenuScale,ParticleAmount,2,"MINIMAL","REDUCED","FULL")
+					ParticleAmount = Slider3(x+310*MenuScale,y+6*MenuScale,150*MenuScale,ParticleAmount,2,"МИНИМУМ","СРЕДНЕ","ВСЕ") ;MINIMAL REDUCED FULL
 					If (MouseOn(x + 310 * MenuScale, y-6*MenuScale, 150*MenuScale+14, 20) And OnSliderID=0) Or OnSliderID=2
 						DrawOptionsTooltip(tx,ty,tw,th,"particleamount",ParticleAmount)
 					EndIf
@@ -992,7 +992,7 @@ Function UpdateMainMenu()
 					;[End Block]
 				ElseIf ms\MainMenuTab = 7 ;Advanced
 					;[Block]
-					height = 370 * MenuScale
+					height = 400 * MenuScale ;370 <- изменено для субтитров
 					DrawFrame(x, y, width, height)	
 					
 					y = y + 20*MenuScale
@@ -1114,6 +1114,16 @@ Function UpdateMainMenu()
 					EndIf
 					If MouseOn(x+310*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
 						DrawOptionsTooltip(tx,ty,tw,th,"antialiastext")
+					EndIf
+					
+					;test subs
+					y = y + 30*MenuScale
+					
+					Color 255,255,255
+					AAText(x + 20 * MenuScale, y, "Вспомогательные субтитры:")
+					SubtitlesEnabled% = DrawTick(x + 310 * MenuScale, y + MenuScale, SubtitlesEnabled%)
+					If MouseOn(x+310*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
+						DrawOptionsTooltip(tx,ty,tw,th,"subtitles")
 					EndIf
 					;[End Block]
 				EndIf
@@ -2255,13 +2265,18 @@ Function DrawOptionsTooltip(x%,y%,width%,height%,option$,value#=0,ingame%=False)
 			EndIf
 		Case "antialiastext"
 			txt = "Сглаживает текст, делая его читабельным на мониторах с высоким разрешением экрана." ;Antialiased text"+Chr(34)+" smooths out the text before displaying. Makes text easier to read at high resolutions.
+		Case "subtitles" ;test subs
+			txt = "Включает субтитры для неозвученных на русский реплик."
+			txt2 = "Временная мера. Возможна некорректная работа."
+			R = 255
+			G = 255
 			;[End Block]
 			
 		;{~--<MOD>--~}
 		
 		    ;[Block]
 		Case "thaumiel" ;WIP
-			txt = "Этот уровень сложности откроется по завершению игры на Кетер. В будущих версиях этот уровень сложности будет изменён." ;This difficulty is unlocked at the End of the Keter difficulty. It is advisable to play consciously. This mode will be nerfed and upgraded in the future versions.
+			txt = "Этот уровень сложности откроется по завершению игры на сложности Кетер. В будущих версиях этот уровень сложности будет изменён." ;This difficulty is unlocked at the End of the Keter difficulty. It is advisable to play consciously. This mode will be nerfed and upgraded in the future versions.
 		Case "consoleversion"
 		    txt = "Переключает консоль между старой и новой версией." ;This function changes your console to Old Version or New Version.
 		Case "fov"
@@ -2761,18 +2776,18 @@ End Function
 Function CurrentDateRus$()
 	Local D$ = Left(CurrentDate(),2), M$, Y$ = Right(CurrentDate(),4)
 	Select Mid$(CurrentDate(),4,3)
-		Case "Jan" M = "Января"
-		Case "Feb" M = "Февраля"
-		Case "Mar" M = "Марта"
-		Case "Apr" M = "Апреля"
-		Case "May" M = "Мая"
-		Case "Jun" M = "Июня"
-		Case "Jul" M = "Июля"
-		Case "Aug" M = "Августа"
-		Case "Sep" M = "Сентября"
-		Case "Oct" M = "Октября"
-		Case "Nov" M = "Ноября"
-		Case "Dec" M = "Декабря"
+		Case "Jan" M = "января"
+		Case "Feb" M = "февраля"
+		Case "Mar" M = "марта"
+		Case "Apr" M = "апреля"
+		Case "May" M = "мая"
+		Case "Jun" M = "июня"
+		Case "Jul" M = "июля"
+		Case "Aug" M = "августа"
+		Case "Sep" M = "сентября"
+		Case "Oct" M = "октября"
+		Case "Nov" M = "ноября"
+		Case "Dec" M = "декабря"
 	End Select
 	Local Date$ = D+" "+M+" "+Y
 	Return Date

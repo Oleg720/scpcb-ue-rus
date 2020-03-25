@@ -289,7 +289,7 @@ Function InitItemTemplates()
 	it = CreateItemTemplate("SCP-427","scp427",ItemsPath$+"scp_427.b3d",ItemsPath$+"INV_scp_427.png", "", 0.001) : it\sound = 3
 	it = CreateItemTemplate("Улучшенная пилюля", "scp500pilldeath", ItemsPath$+"pill.b3d", ItemsPath$+"INV_scp_500_pill.png", "", 0.0001) : it\sound = 2 ;Upgraded pill
 	EntityColor it\obj, 255, 0, 0
-	it = CreateItemTemplate("Пилюля", "pill", ItemsPath$+"pill.b3d", ItemsPath$+"INV_pill.png", "", 0.0001) : it\sound = 2
+	it = CreateItemTemplate("Пилюля", "pill", ItemsPath$+"pill.b3d", ItemsPath$+"INV_pill.png", "", 0.0001) : it\sound = 2 ;Pill
 	EntityColor it\obj, 255, 255, 255
 	
 	it = CreateItemTemplate("Заметка", "paper", ItemsPath$+"note.x", ItemsPath$+"INV_note(2).png", ItemsPath$+"note_682.png", 0.0025) : it\sound = 0 ;Sticky Note

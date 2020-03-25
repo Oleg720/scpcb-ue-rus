@@ -1025,7 +1025,7 @@ Function UpdateEvents()
 								EntityAlpha(at\OverlayID[14], 0.5)
 								
 								CreateConsoleMsg("")
-								CreateConsoleMsg("ВНИМАНИЕ! Использование консольных команд или телепортирование из этой области может вызвать ошибки или вылеты.", 255, 0, 0) ;"WARNING! Using a console commands or teleporting away from the intro scene may cause bugs or crashing.
+								CreateConsoleMsg("ВНИМАНИЕ! Использование консольных команд или телепортация из этой области может вызвать ошибки или вылеты.", 255, 0, 0) ;"WARNING! Using a console commands or teleporting away from the intro scene may cause bugs or crashing.
 								CreateConsoleMsg("")
 							EndIf
 							
@@ -10158,7 +10158,7 @@ Function UpdateEndings()
 							Delay 100
 							
 							CreateConsoleMsg("")
-							CreateConsoleMsg("ВНИМАНИЕ! Телепортирование из этой области может вызвать ошибки или вылеты.") ;WARNING! Teleporting away from this area may cause bugs or crashing.
+							CreateConsoleMsg("ВНИМАНИЕ! Телепортация из этой области может вызвать ошибки или вылеты.") ;WARNING! Teleporting away from this area may cause bugs or crashing.
 							CreateConsoleMsg("")
 							
 							Sky = sky_CreateSky(MapPath$+"sky\sky")
@@ -10586,7 +10586,7 @@ Function UpdateEndings()
 						Next
 						
 						CreateConsoleMsg("")
-						CreateConsoleMsg("ВНИМАНИЕ! Телепортирование из этой области может вызвать ошибки или вылеты.") ;WARNING! Teleporting away from this area may cause bugs or crashing.
+						CreateConsoleMsg("ВНИМАНИЕ! Телепортация из этой области может вызвать ошибки или вылеты.") ;WARNING! Teleporting away from this area may cause bugs or crashing.
 						CreateConsoleMsg("")
 						
 						Sky = sky_CreateSky(MapPath$+"sky\sky")

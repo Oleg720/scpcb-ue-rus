@@ -1617,7 +1617,7 @@ Function DrawLoading(percent%, shortloading=False)
 						Case 5
 							SelectedLoadingScreen\txt[0] = "ВЫ ДОЛЖНЫ ДОВЕРЯТЬ ЕМУ" ;YOU NEED TO TRUST IT
 						Case 6 
-							SelectedLoadingScreen\txt[0] = "Смотрите моему другу в глаза, когда обращаетесь к нему. Разве это не по-джентельменски?" ;Look my friend in the eye when you address him, isn't that the way of the gentleman?
+							SelectedLoadingScreen\txt[0] = "Смотрите моему другу в глаза, когда обращаетесь к нему. Разве это не по-джентльменски?" ;Look my friend in the eye when you address him, isn't that the way of the gentleman?
 						Case 7
 							SelectedLoadingScreen\txt[0] = "???____??_???__????n?"
 						Case 8, 9
@@ -2153,7 +2153,7 @@ Function DrawOptionsTooltip(x%,y%,width%,height%,option$,value#=0,ingame%=False)
 		;Graphic options
 			;[Block]
 		Case "bump"
-			txt = Chr(34)+"Рельефное текстурирование"+Chr(34)+" используется для иммитации вмятин, искажая карты света." ;Bump mapping"+Chr(34)+" is used to simulate bumps and dents by distorting the lightmaps.
+			txt = Chr(34)+"Рельефное текстурирование"+Chr(34)+" используется для имитации вмятин, искажая карты света." ;Bump mapping"+Chr(34)+" is used to simulate bumps and dents by distorting the lightmaps.
 			txt2 = "Эта опция не может быть изменена во время игры." ;This option cannot be changed in-game.
 			R = 255
 		Case "vsync"
@@ -2261,12 +2261,15 @@ Function DrawOptionsTooltip(x%,y%,width%,height%,option$,value#=0,ingame%=False)
 			If value > 0 And value < 60
 				R = 255
 				G = 255
-				txt2 = "Предпочительно 60 FPS или выше. Если Вы замечаете чрезмерную прерывистость кадров, попробуйте уменьшить этот параметр, чтобы сделать FPS более стабильным." ;Usually, 60 FPS or higher is preferred. If you are noticing excessive stuttering at this setting, try lowering it to make your framerate more consistent.
+				txt2 = "Предпочтительно 60 FPS или выше. Если Вы замечаете чрезмерную прерывистость кадров, попробуйте уменьшить этот параметр, чтобы сделать FPS более стабильным." ;Usually, 60 FPS or higher is preferred. If you are noticing excessive stuttering at this setting, try lowering it to make your framerate more consistent.
 			EndIf
 		Case "antialiastext"
 			txt = "Сглаживает текст, делая его читабельным на мониторах с высоким разрешением экрана." ;Antialiased text"+Chr(34)+" smooths out the text before displaying. Makes text easier to read at high resolutions.
+			txt2 = "Возможна некорректная работа."
+			R = 255
+			G = 255
 		Case "subtitles" ;test subs
-			txt = "Включает субтитры для неозвученных на русский реплик."
+			txt = "Включает субтитры для не озвученных на русский реплик."
 			txt2 = "Временная мера. Возможна некорректная работа."
 			R = 255
 			G = 255
@@ -2276,7 +2279,7 @@ Function DrawOptionsTooltip(x%,y%,width%,height%,option$,value#=0,ingame%=False)
 		
 		    ;[Block]
 		Case "thaumiel" ;WIP
-			txt = "Этот уровень сложности откроется по завершению игры на сложности Кетер. В будущих версиях этот уровень сложности будет изменён." ;This difficulty is unlocked at the End of the Keter difficulty. It is advisable to play consciously. This mode will be nerfed and upgraded in the future versions.
+			txt = "Этот уровень сложности откроется по завершению игры на сложности Кетер, без использования консольных команд. В будущих версиях этот уровень сложности будет изменён." ;This difficulty is unlocked at the End of the Keter difficulty. It is advisable to play consciously. This mode will be nerfed and upgraded in the future versions.
 		Case "consoleversion"
 		    txt = "Переключает консоль между старой и новой версией." ;This function changes your console to Old Version or New Version.
 		Case "fov"

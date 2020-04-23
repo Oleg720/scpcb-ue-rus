@@ -8155,11 +8155,11 @@ Function UpdateEvents()
 							If (e\EventState2 > 250.0 And e\EventState2 - fs\FPSfactor[0] <= 250.0) Then
 								Select Rand(3)
 									Case 1
-										Msg = "По всему ващему телу растут уши." ;Ears are growing all over your body.
+										Msg = "По всему вашему телу растут уши." ;Ears are growing all over your body.
 									Case 2
-										Msg = "По всему ващему телу растёт нечто похожее на уши." ;Ear-like organs are growing all over your body.
+										Msg = "По всему вашему телу растёт нечто похожее на уши." ;Ear-like organs are growing all over your body.
 									Case 3
-										Msg = "По всему ващему телу растут уши. Они ползают по вашей коже." ;Ears are growing all over your body. They are crawling on your skin.
+										Msg = "По всему вашему телу растут уши. Они ползают по вашей коже." ;Ears are growing all over your body. They are crawling on your skin.
 								End Select
 								
 								MsgTimer = 70.0 * 3.0
@@ -9460,14 +9460,14 @@ Function UpdateEvents()
 				
 				    If e\EventState >= 4502.0 And e\EventState3 = 2.0 Then
 					    If PlayerRoom = e\room Then
-						    DeathMSG = "Кристаллизированный субъект класса D был обнаружен группой технического обслуживания," ;A crystallized D-class subject was found by the maintenance team dispatched to repair 
-							DeathMSG = DeathMSG+" отправленой на ремонт камеры содержания SCP-009. В настроящее время, тело не" ;SCP-009's containment chamber. The body is currently unidentifiable
-							DeathMSG = DeathMSG+" может быть опознано в связи с его сильными повреждениями, вследствии кристаллизации."
+						    DeathMSG = "Кристаллизованный субъект класса D был обнаружен группой технического обслуживания," ;A crystallized D-class subject was found by the maintenance team dispatched to repair 
+							DeathMSG = DeathMSG+" отправленной на ремонт камеры содержания SCP-009. В настоящее время, тело не" ;SCP-009's containment chamber. The body is currently unidentifiable
+							DeathMSG = DeathMSG+" может быть опознано в связи с его сильными повреждениями, в следствии кристаллизации."
 					    ElseIf EntityDistance(Collider, e\room\obj) < 128.0 Then
-						    DeathMSG = "Кристаллизированный субъект класса D был обнаружен недалеко от камеры содержания SCP-009." ;A crystallized D-class subject was found near SCP-009's containment chamber.
-						DeathMSG = DeathMSG+" В настроящее время, тело не может быть опознано в связи с его сильными повреждениями, вследствии кристаллизации." ;The body is currently unidentifiable due to massive damage caused by the substance.
+						    DeathMSG = "Кристаллизованный субъект класса D был обнаружен недалеко от камеры содержания SCP-009." ;A crystallized D-class subject was found near SCP-009's containment chamber.
+						DeathMSG = DeathMSG+" В настоящее время, тело не может быть опознано в связи с его сильными повреждениями, в следствии кристаллизации." ;The body is currently unidentifiable due to massive damage caused by the substance.
 					    Else
-						    DeathMSG = "Кристаллизированный " + SubjectName$ + " был обнаружен. Причиной смерти послужил" ;Found a crystallized " + SubjectName$ + ". Death caused by
+						    DeathMSG = "Кристаллизованный " + SubjectName$ + " был обнаружен. Причиной смерти послужил" ;Found a crystallized " + SubjectName$ + ". Death caused by
 						    DeathMSG = DeathMSG + " SCP-009. Как субъект достиг [УДАЛЕНО]" ; exposure to SCP-009. How the subject reached [REDACTED]
 							DeathMSG = DeathMSG+" до полного заражения - неизвестно." ; before total contamination is unknown.
 					    EndIf

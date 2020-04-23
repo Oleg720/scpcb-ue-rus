@@ -355,7 +355,7 @@ Function InitItemTemplates()
 
     it = CreateItemTemplate("Защитный шлем", "helmet", ItemsPath$+"helmet.x", ItemsPath$+"INV_helmet.png", "", 0.02) : it\sound = 2 ;Ballistic Helmet
 
-    it = CreateItemTemplate("Улучшення мятная пилюля", "mintscp500pilldeath", ItemsPath$+"pill.b3d", ItemsPath$+"INV_scp_447_pill.png", "", 0.0001) : it\sound = 2 ;Upgraded Minty Pill
+    it = CreateItemTemplate("Улучшенная мятная пилюля", "mintscp500pilldeath", ItemsPath$+"pill.b3d", ItemsPath$+"INV_scp_447_pill.png", "", 0.0001) : it\sound = 2 ;Upgraded Minty Pill
     EntityColor it\obj, 0, 140, 0
     it = CreateItemTemplate("Мятная пилюля", "mintpill", ItemsPath$+"pill.b3d", ItemsPath$+"INV_scp_447_pill.png", "", 0.0001) : it\sound = 2 ;Minty Pill
     EntityColor it\obj, 0, 140, 0

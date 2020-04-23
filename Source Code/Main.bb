@@ -16,7 +16,7 @@ Include "Source Code\Devil_Particle_System.bb"
 Include "Source Code\Math.bb"
 Include "Source Code\INI_Details.bb"
 
-Global ModCompatibleNumber$ = "5.5.4.1 [Rus PreRelease]"
+Global ModCompatibleNumber$ = "5.5.4.1 [Rus PreRelease_Rev1]"
 
 Type Fonts
     Field Font%[MaxFontAmount-1]
@@ -745,7 +745,7 @@ Function UpdateConsole()
 							CreateConsoleMsg("срабатывания анимации смерти.") ;animation triggers.
 							CreateConsoleMsg("Не влияет на травмы, кровопотерю") ;Does not affect injury, blood loss
 							CreateConsoleMsg("инфекцию 008,") ;008 infection values.
-							CreateConsoleMsg("эффект кристализации 409 и прочее.") ;or 409 crystalization values and others.
+							CreateConsoleMsg("эффект кристаллизации 409 и прочее.") ;or 409 crystalization values and others.
 							CreateConsoleMsg("******************************")
 						Case "teleport"
 							CreateConsoleMsg("СПРАВКА - teleport") ;HELP
@@ -846,7 +846,7 @@ Function UpdateConsole()
 						Case "crystal" 
 							CreateConsoleMsg("СПРАВКА - crystal") ;HELP
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("SCP-409 кристаллизирует игрока.") ;crystallizes player.
+							CreateConsoleMsg("SCP-409 кристаллизует игрока.") ;crystallizes player.
 							CreateConsoleMsg("Например: crystal 52") ;Example
 							CreateConsoleMsg("******************************")
 						Case "reset1033ru"
@@ -892,7 +892,7 @@ Function UpdateConsole()
 						Case "enable966"
 						   	CreateConsoleMsg("СПРАВКА - enable966") ;HELP
 							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("Возвращает SCP-966 наа карту.") ;Returns SCP-966 to the map.
+							CreateConsoleMsg("Возвращает SCP-966 на карту.") ;Returns SCP-966 to the map.
 							CreateConsoleMsg("******************************")
 							
                         ;{~--<END>--~}	
@@ -962,7 +962,7 @@ Function UpdateConsole()
 					CreateConsoleMsg("Пузырьковая пена: "+I_1079\Foam) ;BubbleFoam
 					CreateConsoleMsg("Активация"  + Chr(34) + "Пузырьков" + Chr(34) + ": " + I_1079\Trigger) ;BubbleTrigger
 					CreateConsoleMsg("Таймер MTF2: " + MTF2Timer) ;Timer
-					CreateConsoleMsg("Кристализация SCP-409: "+I_409\Timer) ;crystalization
+					CreateConsoleMsg("Кристаллизация SCP-409: "+I_409\Timer) ;crystalization
 					CreateConsoleMsg("Состояние покоя SCP-215: "+I_215\IdleTimer) ;Idle State:
 					CreateConsoleMsg("Состояние SCP-215: "+I_215\Timer) ;state
 					CreateConsoleMsg("Состояние SCP-207: "+I_207\Timer) ;state
@@ -1515,8 +1515,8 @@ Function UpdateConsole()
 							DeathMSG = "EXCP_ACCESS_VIOLATION"
 						Case 4
 							DeathMSG = SubjectName$+" найден мёртвым в секторе [УДАЛЕНО]. " ; found dead in Sector [REDACTED].
-							DeathMSG = DeathMSG + "Похоже, что субъект написал буквы "+Chr(34)+"kys"+Chr(34)+" своей собственной кровью радом с собой. " ;The subject appears to have scribbled the letters "+Chr(34)+"kys"+Chr(34)+" in his own blood beside him.
-							DeathMSG = DeathMSG + "Никаких других признаких физического повреждения или борьбы не обнаружено. Тело отправлено на вскрытие." ;No other signs of physical trauma or struggle can be observed. Body was sent for autopsy
+							DeathMSG = DeathMSG + "Похоже, что субъект написал буквы "+Chr(34)+"kys"+Chr(34)+" своей собственной кровью рядом с собой. " ;The subject appears to have scribbled the letters "+Chr(34)+"kys"+Chr(34)+" in his own blood beside him.
+							DeathMSG = DeathMSG + "Никаких других признаков физического повреждения или борьбы не обнаружено. Тело отправлено на вскрытие." ;No other signs of physical trauma or struggle can be observed. Body was sent for autopsy
 					End Select
 					;[End Block]
 				Case "playmusic"
@@ -2828,7 +2828,7 @@ Function UseDoor(d.Doors, showmsg%=True, playsfx%=True)
 						EndIf						
 					Else
 					    If temp = 1 Then 
-					        Msg = "The keycard was inserted into the slot but nothing happened. The keycard says: " +Chr(34)+ "Does the Black Moon Howl???? Yes. No. Yes. No." +Chr(34)
+					        Msg = "Вы вставили Ключ-карту в слот, но ничего не произошло. Сообщение: " +Chr(34)+ "Воет ли Чёрная Луна???? Да. Нет. Да. Нет." +Chr(34) ;The keycard was inserted into the slot but nothing happened. The keycard says: " +Chr(34)+ "Does the Black Moon Howl???? Yes. No. Yes. No." +Chr(34)
                         Else
 					 	    Msg = "Требуется Ключ-карта "+(d\KeyCard-2)+"-го уровня допуска или выше." ;A keycard with security clearance "+(d\KeyCard-2)+" or higher is required to operate this door.
 					    EndIf
@@ -2868,7 +2868,7 @@ Function UseDoor(d.Doors, showmsg%=True, playsfx%=True)
                 Msg = "Вы приложили ключ к сканеру. Сообщение: "+Chr(34)+"Неизвестная ДНК опознана. ОШИБКА! Доступ разрешён."+Chr(34) ;You hold the key onto the scanner. The scanner reads: "+Chr(34)+"Unknown DNA verified. ERROR! Access granted.
                 MsgTimer = 70 * 7
 				ElseIf temp = 2
-                Msg = "The type of this slot doesn't require keycards." ;..!
+                Msg = "Здесь не требуется Ключ-карта." ;..!
                 MsgTimer = 70 * 7
                 Return
             EndIf
@@ -4260,7 +4260,7 @@ Function MovePlayer()
 	EndIf
 	
 	If I_447\UsingEyeDrops = True Or I_447\UsingFirstAid = True Or I_447\UsingPill = True
-		DeathMSG = "Зона захвачена [ДАННЫЕ УДАЛЕНЫ]. Сетуация была успешно сдержана через [ДАННЫЕ УДАЛЕНЫ] часов. " ;Site compromised by [DATA REDACTED]. Situation successfully contained after [DATA REDACTRED] hours.
+		DeathMSG = "Зона захвачена [ДАННЫЕ УДАЛЕНЫ]. Ситуация была успешно сдержана через [ДАННЫЕ УДАЛЕНЫ] часов. " ;Site compromised by [DATA REDACTED]. Situation successfully contained after [DATA REDACTRED] hours.
 		DeathMSG = DeathMSG + "Дальнейшее исследование показало, что " + SubjectName$ + " был захвачен SCP-447-2 по неизвестной причине. " ;Further investigation reveals " + SubjectName$ + " in possession of an instance of SCP-447-2 through unknown means. 
 		DeathMSG = DeathMSG + SubjectName$ + " умер во время нахождения у SCP-447-2, и продолжил вызывать [ДАННЫЕ УДАЛЕНЫ]." ;died while in possession SCP-447-2 and proceeded to cause [DATA REDACTED].
 	EndIf
@@ -5268,7 +5268,7 @@ Function DrawGUI()
 			Else
 			    ;nothing
             EndIf
-			AAText x + 720, 180, "Кристализация SCP-409: "+I_409\Timer ;crystalization
+			AAText x + 720, 180, "Кристаллизация SCP-409: "+I_409\Timer ;crystalization
 			AAText x + 720, 200, "Состояние покоя SCP-215: "+I_215\IdleTimer ;Idle State:
 			AAText x + 720, 220, "Состояние SCP-215: "+I_215\Timer ;state
 			AAText x + 720, 240, "Состояние SCP-207: "+I_207\Timer ;state
@@ -6078,11 +6078,11 @@ Function DrawGUI()
 										
 										MsgTimer = 70 * 5
 									Else
-										Msg = "Вы не можете объеденить эти предметы." ;You cannot combine these two items.
+										Msg = "Вы не можете объединить эти предметы." ;You cannot combine these two items.
 										MsgTimer = 70 * 5
 									EndIf
 								Else
-									Msg = "Вы не можете объеденить эти предметы." ;You cannot combine these two items.
+									Msg = "Вы не можете объединить эти предметы." ;You cannot combine these two items.
 									MsgTimer = 70 * 5
 								EndIf
 								SelectedItem = Null
@@ -6147,7 +6147,7 @@ Function DrawGUI()
 										;[End Block]
 									Default
 									    ;[Block]
-										Msg = "Вы не можете объеденить эти предметы." ;You cannot combine these two items.
+										Msg = "Вы не можете объединить эти предметы." ;You cannot combine these two items.
 										MsgTimer = 70 * 5
 										;[End Block]	
 								End Select
@@ -6186,14 +6186,14 @@ Function DrawGUI()
 										;[End Block]
 									Default
 									    ;[Block]
-										Msg = "Вы не можете объеденить эти предметы." ;You cannot combine these two items.
+										Msg = "Вы не можете объединить эти предметы." ;You cannot combine these two items.
 										MsgTimer = 70 * 5
 										;[End Block]	
 								End Select
 								;[End Block]
 							Default
 								;[Block]
-								Msg = "Вы не можете объеденить эти предметы." ;You cannot combine these two items.
+								Msg = "Вы не можете объединить эти предметы." ;You cannot combine these two items.
 								MsgTimer = 70 * 5
 								;[End Block]
 						End Select					
@@ -8097,7 +8097,7 @@ Function DrawGUI()
 							        Injuries = 0
 							        Bloodloss = 0
 							        I_1079\Foam = 0	
-							        Msg = "Выши раны быстро заживают, а Ваше дыхание становится свежим." ;Your wounds are healing up rapidly and your breath feels minty fresh.
+							        Msg = "Ваши раны быстро заживают, а Ваше дыхание становится свежим." ;Your wounds are healing up rapidly and your breath feels minty fresh.
 							        MsgTimer = 70*7
 						        Case 2
 							        Injuries = Max(0, Injuries - Rnd(1.0,3.5))
@@ -8106,7 +8106,7 @@ Function DrawGUI()
 							        MsgTimer = 70*7
 						        Case 3
 							        Injuries = 2.5
-							        Msg = "У вас началось сильное кровотечение. По крайней мере, теперь у Вас свежее выхание." ;You started bleeding heavily. At least your breath feels minty fresh.
+							        Msg = "У вас началось сильное кровотечение. По крайней мере, теперь у Вас свежее дыхание." ;You started bleeding heavily. At least your breath feels minty fresh.
 							        MsgTimer = 70*7
 					        End Select
 					        I_447\UsingFirstAid = True
@@ -8756,7 +8756,7 @@ Function DrawGUI()
 							                Msg = "Вы выпили холодную колу, и чувствуете свежесть." ;You drink cold cola. You feel refreshed.
 							                MsgTimer = 70 * 6
 							            Case 3
-							                Msg = "Вы выпили холодную колу, и уталили жажду" ;You drink cold cola. You quench your thirst.
+							                Msg = "Вы выпили холодную колу, и утолили жажду" ;You drink cold cola. You quench your thirst.
 							                MsgTimer = 70 * 6
 							            Case 4
 							                Msg = "Вы выпили холодную колу. Она вкусная." ;You drink cold cola. You feel good taste.
@@ -8823,7 +8823,7 @@ Function DrawGUI()
 							        ElseIf Stamina > 60.0 And Stamina < 100.0
 								        PlaySound_Strict LoadTempSound(SFXPath$+"SCP\109\ahh.ogg")
 							            Injuries = Max(0, Injuries - Rnd(0.1, 0.5))
-								        Msg = "Вы выпили чистую воду, и уталили жажду." ;You drink clear water. You quench your thirst.
+								        Msg = "Вы выпили чистую воду, и утолили жажду." ;You drink clear water. You quench your thirst.
 							        Else
 								        Injuries = Max(0, Injuries - Rnd(0.1, 0.5))
 								        PlaySound_Strict LoadTempSound(SFXPath$+"SCP\109\ahh.ogg")
@@ -12317,7 +12317,7 @@ Function Use914(item.Items, setting$, x#, y#, z#)
 								RemoveItem(it2)
 								RemoveItem(item)
 								
-								it2 = CreateItem("Мятный SCP-500-01", "mintscp500", x, y, z) ;Minty SCP-500-01
+								it2 = CreateItem("Мятный SCP-500-01", "mintscp500pill", x, y, z) ;Minty SCP-500-01
 								
 								GiveAchievement(Achv447)
 								
@@ -13577,7 +13577,7 @@ Function Use402()
 
             If I_1033RU\HP > 0
                 If I_402\Timer > 12.0 Then
-                    Msg = "SCP-1033-RU вытазил SCP-402 из Вашего горла." ;SCP-1033-RU pulled out the SCP-402 from your throat."
+                    Msg = "SCP-1033-RU вытащил SCP-402 из Вашего горла." ;SCP-1033-RU pulled out the SCP-402 from your throat."
                     MsgTimer = 70*6
                     Damage1033RU(10 + (Rand(5) * SelectedDifficulty\aggressiveNPCs))
                     PlaySound_Strict(CoughSFX(Rand(0, 2)))
@@ -13669,7 +13669,7 @@ Function Use357()
 		 EndIf
          If I_357\Timer > 56.0 And prevI357Timer =< 56.0 Then
              BlurTimer = 5000
-             Msg = "Вы не можете пошевелить пильцами." ;You can't move your fingers.
+             Msg = "Вы не можете пошевелить пальцами." ;You can't move your fingers.
              MsgTimer = 70*6
          EndIf
          If I_357\Timer > 65.0 Then
@@ -13874,7 +13874,7 @@ Function Update409()
 		EndIf
 		If I_409\Timer >= 96.9222
 			DeathMSG = "Была обнаружена куча кристаллов SCP-409. Также, при опознании погибших, был обнаружен "+SubjectName$+", который имел физический контакт с SCP-409. " ;Pile of SCP-409 crystals found and, by comparing list of the dead, was found to be "+SubjectName$+" who had physical contact with SCP-409.
-			DeathMSG = DeathMSG + "Останки тела были сожжены вместе с кристаллизированным районом." ;Remains were incinerated along with crystal-infested areas of facility.
+			DeathMSG = DeathMSG + "Останки тела были сожжены вместе с кристаллизованным районом." ;Remains were incinerated along with crystal-infested areas of facility.
 			Kill(True)
         EndIf
     Else

@@ -3582,7 +3582,7 @@ Function UpdateNPCs()
 															DeathMSG = DeathMSG + "это щупальце избило какого-то бедолагу класса D до смерти."+Chr(34) ;beaten some unfortunate Class D to death at some point during the breach.
 														Else
 															DeathMSG = Chr(34)+"Чтобы с этим разобраться, обычной группой чистильщиков не обойдёшься. " ;We will need more than the regular cleaning team to take care of this. 
-															DeathMSG = DeathMSG + "Два больших и очень активных щупальца, похоже, сформаровались " ;Two large and highly active tentacle-like appendages seem 
+															DeathMSG = DeathMSG + "Два больших и очень активных щупальца, похоже, сформировались " ;Two large and highly active tentacle-like appendages seem 
 															DeathMSG = DeathMSG + "внутри камеры. Их уровень агрессии не похож на тот, " ;to have formed inside the chamber. Their level of aggression is 
 															DeathMSG = DeathMSG + "что мы видели раньше. Видимо, в какой-то момент " ;unlike anything we've seen before - it looks like they have 
 															DeathMSG = DeathMSG + "это щупальце избило какого-то бедолагу класса D до смерти."+Chr(34) ;beaten some unfortunate Class D to death at some point during the breach.
@@ -4490,7 +4490,7 @@ Function UpdateNPCs()
 												Case 2
 													Msg = Chr(34)+"Мне бы и правда не помешало вздремнуть..."+Chr(34) ;Could really go for a nap now...
 												Case 3
-													Msg = Chr(34)+"Если бы я не был в такой сетуации, я бы вздремнул где-нибудь."+Chr(34) ;If I wasn't in this situation I would take a nap somewhere.
+													Msg = Chr(34)+"Если бы я не был в такой ситуации, я бы вздремнул где-нибудь."+Chr(34) ;If I wasn't in this situation I would take a nap somewhere.
 												Case 4
 													Msg = "Вы чувствуете беспокойство." ;You feel restless.
 											End Select
@@ -5740,8 +5740,8 @@ Function UpdateNPCs()
 										                PlaySound_Strict(LoadTempSound(SFXPath$+"SCP\294\Burn.ogg"))
 												        Kill(False, True)
 												
-											            DeathMsg = SubjectName$+" найден мёртвым в туннелях харнения SCP-457. Похоже, Субъект был сожжён SCP-457, так как всё его тело в ожогах. " ;found dead inside the SCP-457's Storage Tunnels. Subject seems to be burned down by SCP-457 as his body is completely burnt. 
-											            DeathMsg = DeathMsg + "SCP-457 сжёг всю территорию вокрут, пытаясь добыть себе пищу. К счастью, SCP-457 не смог воспользоваться " ;SCP-457 seems to had damaged the whole area trying to get as many fuel as possible to grow. Luckely SCP-457 wasn't able to use the 
+											            DeathMsg = SubjectName$+" найден мёртвым в туннелях хранения SCP-457. Похоже, Субъект был сожжён SCP-457, так как всё его тело в ожогах. " ;found dead inside the SCP-457's Storage Tunnels. Subject seems to be burned down by SCP-457 as his body is completely burnt. 
+											            DeathMsg = DeathMsg + "SCP-457 сжёг всю территорию вокруг, пытаясь добыть себе пищу. К счастью, SCP-457 не смог воспользоваться " ;SCP-457 seems to had damaged the whole area trying to get as many fuel as possible to grow. Luckely SCP-457 wasn't able to use the 
 											            DeathMsg = DeathMsg + "лифтом, чтобы добраться до основной части комплекса." ;elevators to get to the main facility.
 	                                               EndIf
 	                                            EndIf
@@ -8291,7 +8291,7 @@ Function UpdateMTF2Unit(n.NPCs)
 			    PlayMTFSound(LoadTempSound(SFXPath$+"Character\MTF2\173\BLINKING"+Rand(1,4)+".ogg"),n)
 				if EntityDistance(Collider, n\Collider) < 10 and EntityDistance(Collider, n\Collider) > 0 Then ;temp subs
 					;subtest
-					Sub = Chr(34) + "Мограю." + Chr(34)
+					Sub = Chr(34) + "Моргаю." + Chr(34)
 					SubTimer = 70*3
 				EndIf
 			EndIf
@@ -10868,7 +10868,7 @@ Function Console_SpawnNPC(c_input$, c_state$ = "")
 			
 		Case "guard"
 			n.NPCs = CreateNPC(NPCtypeGuard, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
-			consoleMSG = "Сущность " +chr(34)+ "Охраник" +chr(34)+ " создана." ;Guard spawned.
+			consoleMSG = "Сущность " +chr(34)+ "Охранник" +chr(34)+ " создана." ;Guard spawned.
 			
 		Case "mtf"
 			n.NPCs = CreateNPC(NPCtypeMTF, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
@@ -11195,7 +11195,7 @@ End Function
 Function ChangeNPCTextureID(n.NPCs,textureid%)
     Local o.Objects = First Objects
 	If (n=Null) Then
-		CreateConsoleMsg("Tried to change the texture of an invalid NPC")
+		CreateConsoleMsg("Попытка изменить текстуру недействительного NPC") ;Tried to change the texture of an invalid NPC
 		If ConsoleOpening Then
 			ConsoleOpen = True
 		EndIf

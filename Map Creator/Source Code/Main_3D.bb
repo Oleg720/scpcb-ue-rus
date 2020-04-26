@@ -575,10 +575,10 @@ Repeat
 			rname$ = CurrSelectedRoom\RoomTemplate\Name
 			
 			Color 0,0,0
-			Rect (ResWidth-2)-StringWidth("Выбранная комната: "+rname),2,StringWidth("Выбранная комната: "+rname),StringHeight("Выбранная комната: "+rname) ;Selected room
+			Rect (ResWidth-2)-StringWidth("Выбранная комната: "+rname+"          "),2,StringWidth("Выбранная комната: "+rname),StringHeight("Выбранная комната: "+rname) ;Selected room
 			
 			Color 255,255,255
-			Text (ResWidth-2)-StringWidth("Выбранная комната: "+rname),2,"Выбранная комната "+rname ;Selected room
+			Text (ResWidth-2)-StringWidth("Выбранная комната: "+rname+"          "),2,"Выбранная комната: "+rname ;Selected room
 		EndIf
 		
 		Color CursorColorR,CursorColorG,CursorColorB

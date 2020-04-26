@@ -1126,7 +1126,7 @@ Repeat
 			EndIf
 		EndIf
 		If EID=6 Then ExecFile "Manual.pdf"
-		If EID=40  Then Notify "Редактор карт SCP Containement Breach Ultimate Edition/Расширенное издание v"+VersionNumber ;SCP Containement Breach Ultimate Edition Map Creator v
+		If EID=40  Then Notify "Редактор карт SCP Containment Breach Ultimate Edition/Расширенное издание v"+VersionNumber ;SCP Containment Breach Ultimate Edition Map Creator v
 		If EID=17 Then 
 			ShowGadget optionwin
 		EndIf

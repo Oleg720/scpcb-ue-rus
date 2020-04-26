@@ -575,7 +575,7 @@ Repeat
 			rname$ = CurrSelectedRoom\RoomTemplate\Name
 			
 			Color 0,0,0
-			Rect (ResWidth-2)-StringWidth("Выбранная комната: "+rname),2,StringWidth("Выбранная комната: "+rname),StringHeight("Selected room: "+rname) ;Selected room
+			Rect (ResWidth-2)-StringWidth("Выбранная комната: "+rname),2,StringWidth("Выбранная комната: "+rname),StringHeight("Выбранная комната: "+rname) ;Selected room
 			
 			Color 255,255,255
 			Text (ResWidth-2)-StringWidth("Выбранная комната: "+rname),2,"Выбранная комната "+rname ;Selected room
@@ -2032,7 +2032,7 @@ Function load_terrain(hmap,yscale#=0.7,t1%,t2%,mask%)
 	; load texture and lightmaps
 	If t1 = 0 Then RuntimeError "load_terrain ошибка: неверная текстура 1" ;load_terrain error: invalid texture 1
 	If t2 = 0 Then RuntimeError "load_terrain ошибка: неверная текстура 2" ;load_terrain error: invalid texture 2
-	If mask = 0 Then RuntimeError "load_terrain ошибка: неверня маска текстуры" ;load_terrain error: invalid texture mask
+	If mask = 0 Then RuntimeError "load_terrain ошибка: неверная маска текстуры" ;load_terrain error: invalid texture mask
 	
 	; auto scale the textures to the right size
 	If t1 Then ScaleTexture t1,x/4,y/4

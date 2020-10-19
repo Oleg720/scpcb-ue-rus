@@ -182,7 +182,7 @@ Global SelectedLoadingScreen.LoadingScreens, LoadingScreenAmount%, LoadingScreen
 Global LoadingBack% = LoadImage_Strict("Loadingscreens\loadingback.png")
 InitLoadingScreens("Loadingscreens\loadingscreens.ini")
 
-InitAAFont()
+;InitAAFont()
 ;For some reason, Blitz3D doesn't load fonts that have filenames that
 ;don't match their "internal name" (i.e. their display name in applications
 ;like Word and such). As a workaround, I moved the files and renamed them so they
@@ -3788,15 +3788,10 @@ Function MainLoop()
 			AAText((GraphicWidth / 2)+1, (GraphicHeight / 2) + 221, Sub, True, False, Min(SubTimer / 2, 255)/255.0)
 			Color 255,255,255
 			AAText((GraphicWidth / 2), (GraphicHeight / 2) + 220, Sub, True, False, Min(SubTimer / 2, 255)/255.0)
-		;Else
-		;	Color 0,0,0
-		;	AAText((GraphicWidth / 2)+1, (GraphicHeight * 0.94) + 1, Sub, True, False, Min(SubTimer / 2, 255)/255.0)
-		;	Color 255,255,255
-		;	AAText((GraphicWidth / 2), (GraphicHeight * 0.94), Sub, True, False, Min(SubTimer / 2, 255)/255.0)
 		EndIf
 	End If
 	;Endsub
-	
+
 	Color 255, 255, 255
 	If ShowFPS Then AASetFont fo\ConsoleFont : AAText 20, 20, "FPS: " + fs\FPS : AASetFont fo\Font[0]
 		
@@ -5156,7 +5151,6 @@ Function DrawGUI()
 			AASetFont fo\ConsoleFont
 			
 			AAText x - 60, 40, "*******************************"
-            ;AAText x - 60, 60, "SubTimer: " + SubTimer
 			AAText x - 60, 60, "Комната: " + PlayerRoom\RoomTemplate\Name ;Room:
             AAText x - 60, 80, "Координаты комнаты: (" + Floor(EntityX(PlayerRoom\obj) / 8.0 + 0.5) + ", " + Floor(EntityZ(PlayerRoom\obj) / 8.0 + 0.5) + ", угол: "+PlayerRoom\angle + ")" ;Room coordinates: ;angle:
 			For ev.Events = Each Events
@@ -9222,8 +9216,8 @@ Function DrawMenu()
 					
 					Color 100,100,100
 					AAText(x, y, "Рельефное текстурирование:") ;Enable bump mapping:
-					BumpEnabled = DrawTick(x + 270 * MenuScale, y + MenuScale, BumpEnabled, True)
-					If MouseOn(x + 270 * MenuScale, y + MenuScale, 20*MenuScale,20*MenuScale) And OnSliderID=0
+					BumpEnabled = DrawTick(x + 280 * MenuScale, y + MenuScale, BumpEnabled, True)
+					If MouseOn(x + 280 * MenuScale, y + MenuScale, 20*MenuScale,20*MenuScale) And OnSliderID=0
 						DrawOptionsTooltip(tx,ty,tw,th,"bump")
 					EndIf
 					
@@ -9231,8 +9225,8 @@ Function DrawMenu()
 					
 					Color 255,255,255
 					AAText(x, y, "Вертикальная синхронизация:") ;VSync:
-					Vsync% = DrawTick(x + 270 * MenuScale, y + MenuScale, Vsync%)
-					If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale) And OnSliderID=0
+					Vsync% = DrawTick(x + 280 * MenuScale, y + MenuScale, Vsync%)
+					If MouseOn(x+280*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale) And OnSliderID=0
 						DrawOptionsTooltip(tx,ty,tw,th,"vsync")
 					EndIf
 					
@@ -9240,8 +9234,8 @@ Function DrawMenu()
 					
 					Color 255,255,255
 					AAText(x, y, "Сглаживание:") ;Anti-aliasing:
-					Opt_AntiAlias = DrawTick(x + 270 * MenuScale, y + MenuScale, Opt_AntiAlias%)
-					If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale) And OnSliderID=0
+					Opt_AntiAlias = DrawTick(x + 280 * MenuScale, y + MenuScale, Opt_AntiAlias%)
+					If MouseOn(x+280*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale) And OnSliderID=0
 						DrawOptionsTooltip(tx,ty,tw,th,"antialias")
 					EndIf
 					
@@ -9249,17 +9243,17 @@ Function DrawMenu()
 					
 					Color 255,255,255
 					AAText(x, y, "Улучшенное освещение:") ;Enable room lights:
-					EnableRoomLights = DrawTick(x + 270 * MenuScale, y + MenuScale, EnableRoomLights)
-					If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale) And OnSliderID=0
+					EnableRoomLights = DrawTick(x + 280 * MenuScale, y + MenuScale, EnableRoomLights)
+					If MouseOn(x+280*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale) And OnSliderID=0
 						DrawOptionsTooltip(tx,ty,tw,th,"roomlights")
 					EndIf
 					
 					y=y+30*MenuScale
 					
-					ScreenGamma = (SlideBar(x + 270*MenuScale, y+6*MenuScale, 100*MenuScale, ScreenGamma*50.0)/50.0)
+					ScreenGamma = (SlideBar(x + 280*MenuScale, y+6*MenuScale, 100*MenuScale, ScreenGamma*50.0)/50.0)
 					Color 255,255,255
 					AAText(x, y, "Уровень гаммы:") ;Screen gamma
-					If MouseOn(x+270*MenuScale,y+6*MenuScale,100*MenuScale+14,20) And OnSliderID=0
+					If MouseOn(x+280*MenuScale,y+6*MenuScale,100*MenuScale+14,20) And OnSliderID=0
 						DrawOptionsTooltip(tx,ty,tw,th,"gamma",ScreenGamma)
 					EndIf
 					
@@ -9269,8 +9263,8 @@ Function DrawMenu()
 					
 					Color 255,255,255
 					AAText(x, y, "Количество частиц:") ;Particle amount:
-					ParticleAmount = Slider3(x+270*MenuScale,y+6*MenuScale,100*MenuScale,ParticleAmount,2,"МИНИМУМ","СРЕДНЕ","ВСЕ") ;MINIMAL REDUCED FULL
-					If (MouseOn(x + 270 * MenuScale, y-6*MenuScale, 100*MenuScale+14, 20) And OnSliderID=0) Or OnSliderID=2
+					ParticleAmount = Slider3(x+280*MenuScale,y+6*MenuScale,100*MenuScale,ParticleAmount,2,"МИНИМУМ","СРЕДНЕ","ВСЕ") ;MINIMAL REDUCED FULL
+					If (MouseOn(x + 280 * MenuScale, y-6*MenuScale, 100*MenuScale+14, 20) And OnSliderID=0) Or OnSliderID=2
 						DrawOptionsTooltip(tx,ty,tw,th,"particleamount",ParticleAmount)
 					EndIf
 					
@@ -9278,7 +9272,7 @@ Function DrawMenu()
 					
 					Color 255,255,255
 					AAText(x, y, "Детализация текстур:") ;Texture LOD Bias:
-					TextureDetails = Slider5(x+270*MenuScale,y+6*MenuScale,100*MenuScale,TextureDetails,3,"0.8","0.4","0.0","-0.4","-0.8")
+					TextureDetails = Slider5(x+280*MenuScale,y+6*MenuScale,100*MenuScale,TextureDetails,3,"0.8","0.4","0.0","-0.4","-0.8")
 					Select TextureDetails%
 						Case 0
 							TextureFloat# = 0.8
@@ -9292,15 +9286,15 @@ Function DrawMenu()
 							TextureFloat# = -0.8
 					End Select
 					TextureLodBias TextureFloat
-					If (MouseOn(x+270*MenuScale,y-6*MenuScale,100*MenuScale+14,20) And OnSliderID=0) Or OnSliderID=3
+					If (MouseOn(x+280*MenuScale,y-6*MenuScale,100*MenuScale+14,20) And OnSliderID=0) Or OnSliderID=3
 						DrawOptionsTooltip(tx,ty,tw,th+100*MenuScale,"texquality")
 					EndIf
 					
 					y=y+40*MenuScale
 					Color 100,100,100
 					AAText(x, y, "Сохранять текстуры в VRAM:") ;Save textures in the VRAM:
-					SaveTexturesInVRam = DrawTick(x + 270 * MenuScale, y + MenuScale, SaveTexturesInVRam, True)
-					If MouseOn(x + 270 * MenuScale, y + MenuScale, 20*MenuScale,20*MenuScale) And OnSliderID=0
+					SaveTexturesInVRam = DrawTick(x + 280 * MenuScale, y + MenuScale, SaveTexturesInVRam, True)
+					If MouseOn(x + 280 * MenuScale, y + MenuScale, 20*MenuScale,20*MenuScale) And OnSliderID=0
 						DrawOptionsTooltip(tx,ty,tw,th,"vram")
 					EndIf
 					
@@ -9310,13 +9304,13 @@ Function DrawMenu()
 					y=y+50*MenuScale
 					
 					Local SlideBarFOV# = FOV#-40
-					SlideBarFOV = (SlideBar(x + 270*MenuScale, y+6*MenuScale,100*MenuScale, SlideBarFOV*2.0)/2.0)
+					SlideBarFOV = (SlideBar(x + 280*MenuScale, y+6*MenuScale,100*MenuScale, SlideBarFOV*2.0)/2.0)
 					FOV = SlideBarFOV+40
 					Color 255,255,255
 					AAText(x, y, "Поле зрения (FOV):") ;Field of view:
 					Color 255,255,0
 					AAText(x + 5 * MenuScale, y + 25 * MenuScale, Int(FOV#)+" FOV")
-					If MouseOn(x+270*MenuScale,y+6*MenuScale,100*MenuScale+14,20)
+					If MouseOn(x+280*MenuScale,y+6*MenuScale,100*MenuScale+14,20)
 					;If MouseOn(x+250*MenuScale,y-4*MenuScale,100*MenuScale+14,20)
 						DrawOptionsTooltip(tx,ty,tw,th,"fov")
 					EndIf
@@ -9389,10 +9383,10 @@ Function DrawMenu()
 					;[Block]
 					y = y + 50*MenuScale
 					
-					MouseSensitivity = (SlideBar(x + 270*MenuScale, y-4*MenuScale, 100*MenuScale, (MouseSensitivity+0.5)*100.0)/100.0)-0.5
+					MouseSensitivity = (SlideBar(x + 280*MenuScale, y-4*MenuScale, 100*MenuScale, (MouseSensitivity+0.5)*100.0)/100.0)-0.5
 					Color(255, 255, 255)
 					AAText(x, y, "Чувствительность мыши:") ;Mouse sensitivity:
-					If MouseOn(x+270*MenuScale,y-4*MenuScale,100*MenuScale+14,20)
+					If MouseOn(x+280*MenuScale,y-4*MenuScale,100*MenuScale+14,20)
 						DrawOptionsTooltip(tx,ty,tw,th,"mousesensitivity",MouseSensitivity)
 					EndIf
 					
@@ -9400,17 +9394,17 @@ Function DrawMenu()
 					
 					Color(255, 255, 255)
 					AAText(x, y, "Инвертировать мышь по оси Y:") ;Invert mouse Y-axis:
-					InvertMouse = DrawTick(x + 270 * MenuScale, y + MenuScale, InvertMouse)
-					If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
+					InvertMouse = DrawTick(x + 280 * MenuScale, y + MenuScale, InvertMouse)
+					If MouseOn(x+280*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
 						DrawOptionsTooltip(tx,ty,tw,th,"mouseinvert")
 					EndIf
 					
 					y = y + 40*MenuScale
 					
-					MouseSmooth = (SlideBar(x + 270*MenuScale, y-4*MenuScale, 100*MenuScale, (MouseSmooth)*50.0)/50.0)
+					MouseSmooth = (SlideBar(x + 280*MenuScale, y-4*MenuScale, 100*MenuScale, (MouseSmooth)*50.0)/50.0)
 					Color(255, 255, 255)
 					AAText(x, y, "Сглаживание мыши:") ;Mouse smoothing:
-					If MouseOn(x+270*MenuScale,y-4*MenuScale,100*MenuScale+14,20)
+					If MouseOn(x+280*MenuScale,y-4*MenuScale,100*MenuScale+14,20)
 						DrawOptionsTooltip(tx,ty,tw,th,"mousesmoothing",MouseSmooth)
 					EndIf
 					
@@ -9421,30 +9415,30 @@ Function DrawMenu()
 					y = y + 10*MenuScale
 					
 					AAText(x, y + 20 * MenuScale, "Идти вперёд") ;Move Forward
-					InputBox(x + 200 * MenuScale, y + 20 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_UP,210)),5)		
+					InputBox(x + 200 * MenuScale, y + 20 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_UP,210)),5)		
 					AAText(x, y + 40 * MenuScale, "Идти влево") ;Strafe Left
-					InputBox(x + 200 * MenuScale, y + 40 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_LEFT,210)),3)	
+					InputBox(x + 200 * MenuScale, y + 40 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_LEFT,210)),3)	
 					AAText(x, y + 60 * MenuScale, "Идти назад") ;Move Backward
-					InputBox(x + 200 * MenuScale, y + 60 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_DOWN,210)),6)				
+					InputBox(x + 200 * MenuScale, y + 60 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_DOWN,210)),6)				
 					AAText(x, y + 80 * MenuScale, "Идти вправо") ;Strafe Right
-					InputBox(x + 200 * MenuScale, y + 80 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_RIGHT,210)),4)
+					InputBox(x + 200 * MenuScale, y + 80 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_RIGHT,210)),4)
 					
 					AAText(x, y + 100 * MenuScale, "Моргнуть") ;Manual Blink
-					InputBox(x + 200 * MenuScale, y + 100 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_BLINK,210)),7)				
+					InputBox(x + 200 * MenuScale, y + 100 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_BLINK,210)),7)				
 					AAText(x, y + 120 * MenuScale, "Бежать") ;Sprint
-					InputBox(x + 200 * MenuScale, y + 120 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_SPRINT,210)),8)
+					InputBox(x + 200 * MenuScale, y + 120 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_SPRINT,210)),8)
 					AAText(x, y + 140 * MenuScale, "Предметы") ;Open/Close Inventory
-					InputBox(x + 200 * MenuScale, y + 140 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_INV,210)),9)
+					InputBox(x + 200 * MenuScale, y + 140 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_INV,210)),9)
 					AAText(x, y + 160 * MenuScale, "Ползти") ;Crouch
-					InputBox(x + 200 * MenuScale, y + 160 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_CROUCH,210)),10)
+					InputBox(x + 200 * MenuScale, y + 160 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_CROUCH,210)),10)
 					AAText(x, y + 180 * MenuScale, "Быстрое сохр.") ;Quick Save
-					InputBox(x + 200 * MenuScale, y + 180 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_SAVE,210)),11)
+					InputBox(x + 200 * MenuScale, y + 180 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_SAVE,210)),11)
 					If CanOpenConsole	
 					    AAText(x, y + 200 * MenuScale, "Консоль") ;Open/Close Console
-					    InputBox(x + 200 * MenuScale, y + 200 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_CONSOLE,210)),12)
+					    InputBox(x + 200 * MenuScale, y + 200 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_CONSOLE,210)),12)
 					EndIf
 					AAText(x, y + 220 * MenuScale, "Скриншот") ;Take Screenshot
-					InputBox(x + 200 * MenuScale, y + 220 * MenuScale,100*MenuScale,20*MenuScale,KeyName(Min(KEY_SCREENSHOT,210)),13)
+					InputBox(x + 200 * MenuScale, y + 220 * MenuScale,120*MenuScale,20*MenuScale,KeyName(Min(KEY_SCREENSHOT,210)),13)
 					
 					If MouseOn(x,y,300*MenuScale,240*MenuScale)
 						DrawOptionsTooltip(tx,ty,tw,th,"controls")
@@ -9488,8 +9482,8 @@ Function DrawMenu()
 					
 					Color 255,255,255				
 					AAText(x, y, "Отображать HUD:") ;Show HUD:
-					HUDenabled = DrawTick(x + 270 * MenuScale, y + MenuScale, HUDenabled)
-					If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
+					HUDenabled = DrawTick(x + 280 * MenuScale, y + MenuScale, HUDenabled)
+					If MouseOn(x+280*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
 						DrawOptionsTooltip(tx,ty,tw,th,"hud")
 					EndIf
 					
@@ -9497,8 +9491,8 @@ Function DrawMenu()
 					
 					Color 255,255,255
 					AAText(x, y, "Включить консоль:") ;Enable console:
-					CanOpenConsole = DrawTick(x +270 * MenuScale, y + MenuScale, CanOpenConsole)
-					If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
+					CanOpenConsole = DrawTick(x +280 * MenuScale, y + MenuScale, CanOpenConsole)
+					If MouseOn(x+280*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
 						DrawOptionsTooltip(tx,ty,tw,th,"consoleenable")
 					EndIf
 					
@@ -9507,8 +9501,8 @@ Function DrawMenu()
 					If CanOpenConsole
 					    Color 255,255,255
 					    AAText(x, y, "Открыть консоль при ошибке:") ;Open console on error:
-					    ConsoleOpening = DrawTick(x + 270 * MenuScale, y + MenuScale, ConsoleOpening)
-					    If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
+					    ConsoleOpening = DrawTick(x + 280 * MenuScale, y + MenuScale, ConsoleOpening)
+					    If MouseOn(x+280*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
 						    DrawOptionsTooltip(tx,ty,tw,th,"consoleerror")
 					    EndIf
 					Else
@@ -9520,13 +9514,13 @@ Function DrawMenu()
 					If CanOpenConsole
 					    Color 255,255,255
 					    AAText(x, y, "Версия консоли:") ;Console Version:
-					    ConsoleVersion = DrawTick(x + 270 * MenuScale, y + MenuScale, ConsoleVersion)
+					    ConsoleVersion = DrawTick(x + 280 * MenuScale, y + MenuScale, ConsoleVersion)
 					    If ConsoleVersion = 1 Then
 					        AAText(x + 310 * MenuScale, y, "Новая") ;New Version
 					    Else
 					        AAText(x + 310 * MenuScale, y, "Старая") ;Old Version
 					    EndIf    
-					    If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
+					    If MouseOn(x+280*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
 						    DrawOptionsTooltip(tx,ty,tw,th,"consoleversion")
 					    EndIf
 					EndIf
@@ -9535,8 +9529,8 @@ Function DrawMenu()
 					
 					Color 255,255,255
 					AAText(x, y, "Уведом. о новом достижении:") ;Achievement popups:
-					AchvMSGenabled% = DrawTick(x + 270 * MenuScale, y, AchvMSGenabled%)
-					If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
+					AchvMSGenabled% = DrawTick(x + 280 * MenuScale, y, AchvMSGenabled%)
+					If MouseOn(x+280*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
 						DrawOptionsTooltip(tx,ty,tw,th,"achpopup")
 					EndIf
 					
@@ -9544,8 +9538,8 @@ Function DrawMenu()
 					
 					Color 255,255,255
 					AAText(x, y, "Отображать FPS:") ;Show FPS:
-					ShowFPS% = DrawTick(x + 270 * MenuScale, y, ShowFPS%)
-					If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
+					ShowFPS% = DrawTick(x + 280 * MenuScale, y, ShowFPS%)
+					If MouseOn(x+280*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
 						DrawOptionsTooltip(tx,ty,tw,th,"showfps")
 					EndIf
 					
@@ -9555,7 +9549,7 @@ Function DrawMenu()
 					AAText(x, y, "Лимит кадров:") ;Framelimit
 					
 					Color 255,255,255
-					If DrawTick(x + 270 * MenuScale, y, CurrFrameLimit > 0.0) Then
+					If DrawTick(x + 280 * MenuScale, y, CurrFrameLimit > 0.0) Then
 						;CurrFrameLimit# = (SlideBar(x + 150*MenuScale, y+30*MenuScale, 100*MenuScale, CurrFrameLimit#*50.0)/50.0)
 						;CurrFrameLimit = Max(CurrFrameLimit, 0.1)
 						;Framelimit% = CurrFrameLimit#*100.0
@@ -9568,54 +9562,54 @@ Function DrawMenu()
 						CurrFrameLimit# = 0.0
 						Framelimit = 0
 					EndIf
-					If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
+					If MouseOn(x+280*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
 						DrawOptionsTooltip(tx,ty,tw,th,"framelimit",Framelimit)
 					EndIf
 					If MouseOn(x+150*MenuScale,y+30*MenuScale,100*MenuScale+14,20)
 						DrawOptionsTooltip(tx,ty,tw,th,"framelimit",Framelimit)
 					EndIf
 					
-					y = y + 80*MenuScale
+					;y = y + 80*MenuScale
 					
-					Color 255,255,255
-					AAText(x, y, "Сглаживание текста:") ;Antialiased text:
-					AATextEnable% = DrawTick(x + 270 * MenuScale, y + MenuScale, AATextEnable%)
-					If AATextEnable_Prev% <> AATextEnable
-						For font.AAFont = Each AAFont
-							FreeFont font\lowResFont%
-							If (Not AATextEnable)
-								FreeTexture font\texture
-								FreeImage font\backup
-							EndIf
-							Delete font
-						Next
-						If (Not AATextEnable) Then
-							FreeEntity AATextCam
+					;Color 255,255,255
+					;AAText(x, y, "Сглаживание текста:") ;Antialiased text:
+					;AATextEnable% = DrawTick(x + 270 * MenuScale, y + MenuScale, AATextEnable%)
+					;If AATextEnable_Prev% <> AATextEnable
+					;	For font.AAFont = Each AAFont
+					;		FreeFont font\lowResFont%
+					;		If (Not AATextEnable)
+					;			FreeTexture font\texture
+					;			FreeImage font\backup
+					;		EndIf
+					;		Delete font
+					;	Next
+					;	If (Not AATextEnable) Then
+					;		FreeEntity AATextCam
 							;For i%=0 To 149
 							;	FreeEntity AATextSprite[i]
 							;Next
-						EndIf
-						InitAAFont()
-						fo\Font[0] = AALoadFont(FontPath$+"cour\Courier New Rus.ttf", Int(18 * (GraphicHeight / 1024.0)), 0,0,0)
-						fo\Font[1] = AALoadFont(FontPath$+"courbd\Courier New Rus.ttf", Int(58 * (GraphicHeight / 1024.0)), 0,0,0)
-						fo\Font[2] = AALoadFont(FontPath$+"LCDNovaRus.ttf", Int(22 * (GraphicHeight / 1024.0)), 0,0,0)
-						fo\Font[3] = AALoadFont(FontPath$+"LCDNovaRus.ttf", Int(58 * (GraphicHeight / 1024.0)), 0,0,0) ;60
-						fo\Font[4] = AALoadFont(FontPath$+"Journal\Journal.ttf", Int(58 * (GraphicHeight / 1024.0)), 0,0,0)
-						fo\ConsoleFont% = AALoadFont("Arial Cyr", Int(22 * (GraphicHeight / 1024.0)), 0,0,0,1) ;Blitz
+					;	EndIf
+					;	InitAAFont()
+					;	fo\Font[0] = AALoadFont(FontPath$+"cour\Courier New Rus.ttf", Int(18 * (GraphicHeight / 1024.0)), 0,0,0)
+					;	fo\Font[1] = AALoadFont(FontPath$+"courbd\Courier New Rus.ttf", Int(58 * (GraphicHeight / 1024.0)), 0,0,0)
+					;	fo\Font[2] = AALoadFont(FontPath$+"LCDNovaRus.ttf", Int(22 * (GraphicHeight / 1024.0)), 0,0,0)
+					;	fo\Font[3] = AALoadFont(FontPath$+"LCDNovaRus.ttf", Int(58 * (GraphicHeight / 1024.0)), 0,0,0) ;60
+					;	fo\Font[4] = AALoadFont(FontPath$+"Journal\Journal.ttf", Int(58 * (GraphicHeight / 1024.0)), 0,0,0)
+					;	fo\ConsoleFont% = AALoadFont("Arial Cyr", Int(22 * (GraphicHeight / 1024.0)), 0,0,0,1) ;Blitz
 						;ReloadAAFont()
-						AATextEnable_Prev% = AATextEnable
-					EndIf
-					If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
-						DrawOptionsTooltip(tx,ty,tw,th,"antialiastext")
-					EndIf
-					
+					;	AATextEnable_Prev% = AATextEnable
+					;EndIf
+					;If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
+					;	DrawOptionsTooltip(tx,ty,tw,th,"antialiastext")
+					;EndIf
+
 					;test subs
-					y = y + 30*MenuScale
+					y = y + 80*MenuScale
 					
 					Color 255,255,255
 					AAText(x, y, "Вспомогательные субтитры:")
-					SubtitlesEnabled% = DrawTick(x + 270 * MenuScale, y + MenuScale, SubtitlesEnabled%)
-					If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
+					SubtitlesEnabled% = DrawTick(x + 280 * MenuScale, y + MenuScale, SubtitlesEnabled%)
+					If MouseOn(x+280*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
 						DrawOptionsTooltip(tx,ty,tw,th,"subtitles")
 					EndIf
 					;[End Block]
@@ -11245,7 +11239,7 @@ Function NullGame(playbuttonsfx%=True)
 	;DeInitExt
 	
 	ClearWorld
-	ReloadAAFont()
+	;ReloadAAFont()
 	Camera = 0
 	ark_blur_cam = 0
 	Collider = 0

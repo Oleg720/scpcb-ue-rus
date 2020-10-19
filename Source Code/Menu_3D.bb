@@ -752,7 +752,7 @@ Function DeInit3DMenu()
 	Next
 	
 	ClearWorld
-	ReloadAAFont()
+	;ReloadAAFont()
 	Camera = 0
 	ark_blur_cam = 0
 	InitFastResize()

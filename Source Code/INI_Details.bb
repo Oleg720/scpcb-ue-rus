@@ -361,9 +361,8 @@ Global AchvMSGenabled% = GetINIInt(OptionFile, "advanced", "achievement popup en
 Global ShowFPS = GetINIInt(OptionFile, "advanced", "show FPS")
 Global Framelimit% = GetINIInt(OptionFile, "advanced", "framelimit")
 
-Global AATextEnable% = GetINIInt(OptionFile, "advanced", "antialiased text")
-
-Global SubtitlesEnabled% = GetINIInt(OptionFile, "advanced", "subtitles") ;test subs
+;Global AATextEnable% = GetINIInt(OptionFile, "advanced", "antialiased text")
+Global SubtitlesEnabled% = GetINIInt(OptionFile, "advanced", "subtitles") ;test subs																					
 
 ;[GAME]
 
@@ -418,13 +417,12 @@ Function SaveOptionsINI()
 	PutINIValue(OptionFile, "graphics", "texture details", TextureDetails%)
 	PutINIValue(OptionFile, "advanced", "console enabled", CanOpenConsole%)
 	PutINIValue(OptionFile, "advanced", "console auto opening", ConsoleOpening%)
-	PutINIValue(OptionFile, "advanced", "antialiased text", AATextEnable)
+	;PutINIValue(OptionFile, "advanced", "antialiased text", AATextEnable)
 	PutINIValue(OptionFile, "graphics", "particle amount", ParticleAmount)
 	PutINIValue(OptionFile, "graphics", "enable vram", SaveTexturesInVRam)
 	PutINIValue(OptionFile, "controls", "mouse smoothing", MouseSmooth)
 	
 	PutINIValue(OptionFile, "advanced", "subtitles", SubtitlesEnabled) ;test subs
-	
 	;{~--<MOD>--~}
 	
 	PutINIValue(OptionFile, "graphics", "fov", Int(FOV))

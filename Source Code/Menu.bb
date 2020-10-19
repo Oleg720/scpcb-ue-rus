@@ -298,7 +298,7 @@ Function UpdateMainMenu()
 				
 				AASetFont fo\Font[0]
 				
-				AAText (x + 20 * MenuScale, y + 20 * MenuScale, "Имя субъекта:") ;Name
+				AAText (x + 10 * MenuScale, y + 20 * MenuScale, "Имя субъекта:") ;Name
 				CurrSave = InputBox(x + 150 * MenuScale, y + 15 * MenuScale, 200 * MenuScale, 30 * MenuScale, CurrSave, 1)
 				CurrSave = Left(CurrSave, 15)
 				CurrSave = Replace(CurrSave,":","")
@@ -314,10 +314,10 @@ Function UpdateMainMenu()
 								
 				Color 255,255,255
 				If SelectedMap = "" Then
-					AAText (x + 20 * MenuScale, y + 60 * MenuScale, "Сид карты:") ;Map seed:
+					AAText (x + 10 * MenuScale, y + 60 * MenuScale, "Сид карты:") ;Map seed:
 					RandomSeed = Left(InputBox(x+150*MenuScale, y+55*MenuScale, 200*MenuScale, 30*MenuScale, RandomSeed, 3),15)	
 				Else
-					AAText (x + 20 * MenuScale, y + 60 * MenuScale, "Карта:") ;Selected map:
+					AAText (x + 10 * MenuScale, y + 60 * MenuScale, "Карта:") ;Selected map:
 					Color (255, 255, 255)
 					Rect(x+150*MenuScale, y+55*MenuScale, 200*MenuScale, 30*MenuScale)
 					Color (0, 0, 0)
@@ -335,34 +335,34 @@ Function UpdateMainMenu()
 					EndIf
 				EndIf	
 				
-				AAText(x + 20 * MenuScale, y + 110 * MenuScale, "Включить вступление:") ;Enable intro sequence:
-				IntroEnabled = DrawTick(x + 280 * MenuScale, y + 110 * MenuScale, IntroEnabled)	
+				AAText(x + 10 * MenuScale, y + 110 * MenuScale, "Включить вступление:") ;Enable intro sequence:
+				IntroEnabled = DrawTick(x + 235 * MenuScale, y + 110 * MenuScale, IntroEnabled)	;280
 				
 				;Local modeName$, modeDescription$, selectedDescription$
-				AAText (x + 20 * MenuScale, y + 150 * MenuScale, "Сложность:") ;Difficulty:
+				AAText (x + 10 * MenuScale, y + 150 * MenuScale, "Сложность:") ;Difficulty:
 						
-				If DrawTick(x + 20 * MenuScale, y + (180+30*SAFE) * MenuScale, (SelectedDifficulty = difficulties(SAFE))) Then SelectedDifficulty = difficulties(SAFE)
+				If DrawTick(x + 10 * MenuScale, y + (180+30*SAFE) * MenuScale, (SelectedDifficulty = difficulties(SAFE))) Then SelectedDifficulty = difficulties(SAFE)
 					Color(difficulties(SAFE)\r,difficulties(SAFE)\g,difficulties(SAFE)\b)
-					AAText(x + 60 * MenuScale, y + (180+30*SAFE) * MenuScale, difficulties(SAFE)\name)
+					AAText(x + 50 * MenuScale, y + (180+30*SAFE) * MenuScale, difficulties(SAFE)\name)
 
-				If DrawTick(x + 20 * MenuScale, y + (180+30*EUCLID) * MenuScale, (SelectedDifficulty = difficulties(EUCLID))) Then SelectedDifficulty = difficulties(EUCLID)
+				If DrawTick(x + 10 * MenuScale, y + (180+30*EUCLID) * MenuScale, (SelectedDifficulty = difficulties(EUCLID))) Then SelectedDifficulty = difficulties(EUCLID)
 					Color(difficulties(EUCLID)\r,difficulties(EUCLID)\g,difficulties(EUCLID)\b)
-					AAText(x + 60 * MenuScale, y + (180+30*EUCLID) * MenuScale, difficulties(EUCLID)\name)
+					AAText(x + 50 * MenuScale, y + (180+30*EUCLID) * MenuScale, difficulties(EUCLID)\name)
 					
-				If DrawTick(x + 20 * MenuScale, y + (180+30*KETER) * MenuScale, (SelectedDifficulty = difficulties(KETER))) Then SelectedDifficulty = difficulties(KETER)
+				If DrawTick(x + 10 * MenuScale, y + (180+30*KETER) * MenuScale, (SelectedDifficulty = difficulties(KETER))) Then SelectedDifficulty = difficulties(KETER)
 					Color(difficulties(KETER)\r,difficulties(KETER)\g,difficulties(KETER)\b)
-					AAText(x + 60 * MenuScale, y + (180+30*KETER) * MenuScale, difficulties(KETER)\name)
+					AAText(x + 50 * MenuScale, y + (180+30*KETER) * MenuScale, difficulties(KETER)\name)
 						
 				If UnlockThaumiel = 0 Then lock% = True
 				If UnlockThaumiel = 1 Then lock% = False
 			
-				If DrawTick(x + 20 * MenuScale, y + (180+30*THAUMIEL) * MenuScale, (SelectedDifficulty = difficulties(THAUMIEL)),lock%) Then SelectedDifficulty = difficulties(THAUMIEL)
+				If DrawTick(x + 10 * MenuScale, y + (180+30*THAUMIEL) * MenuScale, (SelectedDifficulty = difficulties(THAUMIEL)),lock%) Then SelectedDifficulty = difficulties(THAUMIEL)
 					Color(difficulties(THAUMIEL)\r,difficulties(THAUMIEL)\g,difficulties(THAUMIEL)\b)
-					AAText(x + 60 * MenuScale, y + (180+30*THAUMIEL) * MenuScale, difficulties(THAUMIEL)\name)
+					AAText(x + 50 * MenuScale, y + (180+30*THAUMIEL) * MenuScale, difficulties(THAUMIEL)\name)
 										
-				If DrawTick(x + 20 * MenuScale, y + (180+30*CUSTOM) * MenuScale, (SelectedDifficulty = difficulties(CUSTOM))) Then SelectedDifficulty = difficulties(CUSTOM)
+				If DrawTick(x + 10 * MenuScale, y + (180+30*CUSTOM) * MenuScale, (SelectedDifficulty = difficulties(CUSTOM))) Then SelectedDifficulty = difficulties(CUSTOM)
 					Color(difficulties(CUSTOM)\r,difficulties(CUSTOM)\g,difficulties(CUSTOM)\b)
-					AAText(x + 60 * MenuScale, y + (180+30*CUSTOM) * MenuScale, difficulties(CUSTOM)\name)			
+					AAText(x + 50 * MenuScale, y + (180+30*CUSTOM) * MenuScale, difficulties(CUSTOM)\name)			
 				
 				Color(255, 255, 255)
 				DrawFrame(x + 150 * MenuScale, y + 155 * MenuScale, 450*MenuScale, 170*MenuScale)
@@ -520,7 +520,7 @@ Function UpdateMainMenu()
 						If i <= SaveGameAmount Then
 							;DrawFrame(x,y,540* MenuScale, 70* MenuScale)
 							
-							If SaveGameVersion(i - 1) <> ModCompatibleNumber Then ; And SaveGameVersion(i - 1) <> "5.5.4.1 [Rus v0.1]"
+							If SaveGameVersion(i - 1) <> ModCompatibleNumber Then ;And SaveGameVersion(i - 1) <> "5.5.4.1 [Rus PreRelease_Rev1]" Then
 								Color 255,0,0
 							Else
 								Color 255,255,255
@@ -532,7 +532,7 @@ Function UpdateMainMenu()
 							AAText(x + 20 * MenuScale, y + (10+36) * MenuScale, SaveGameVersion(i - 1))
 							
 							If SaveMSG = "" Then
-								If SaveGameVersion(i - 1) <> ModCompatibleNumber Then ; And SaveGameVersion(i - 1) <> "5.5.4.1 [Rus v0.1]" Then
+								If SaveGameVersion(i - 1) <> ModCompatibleNumber Then ;And SaveGameVersion(i - 1) <> "5.5.4.1 [Rus PreRelease_Rev1]" Then
 									DrawFrame(x + 280 * MenuScale, y + 20 * MenuScale, 100 * MenuScale, 30 * MenuScale)
 									Color(255, 0, 0)
 									AAText(x + 330 * MenuScale, y + 34 * MenuScale, "Загрузить", True, True) ;Load
@@ -553,7 +553,7 @@ Function UpdateMainMenu()
 								EndIf
 							Else
 								DrawFrame(x + 280 * MenuScale, y + 20 * MenuScale, 100 * MenuScale, 30 * MenuScale)
-								If SaveGameVersion(i - 1) <> ModCompatibleNumber Then ; And SaveGameVersion(i - 1) <> "5.5.4.1 [Rus v0.1]" Then
+								If SaveGameVersion(i - 1) <> ModCompatibleNumber Then ;And SaveGameVersion(i - 1) <> "5.5.4.1 [Rus PreRelease_Rev1]" Then
 									Color(255, 0, 0)
 								Else
 									Color(100, 100, 100)
@@ -992,7 +992,7 @@ Function UpdateMainMenu()
 					;[End Block]
 				ElseIf ms\MainMenuTab = 7 ;Advanced
 					;[Block]
-					height = 400 * MenuScale ;370 <- изменено для субтитров
+					height = 370 * MenuScale ;320
 					DrawFrame(x, y, width, height)	
 					
 					y = y + 20*MenuScale
@@ -1082,42 +1082,42 @@ Function UpdateMainMenu()
 						DrawOptionsTooltip(tx,ty,tw,th,"framelimit",Framelimit)
 					EndIf
 					
-					y = y + 80*MenuScale
-					
-					Color 255,255,255
-					AAText(x + 20 * MenuScale, y, "Сглаживание текста:") ;Antialiased text:
-					AATextEnable% = DrawTick(x + 310 * MenuScale, y + MenuScale, AATextEnable%)
-					If AATextEnable_Prev% <> AATextEnable
-						For font.AAFont = Each AAFont
-							FreeFont font\lowResFont%
-							If (Not AATextEnable)
-								FreeTexture font\texture
-								FreeImage font\backup
-							EndIf
-							Delete font
-						Next
-						If (Not AATextEnable) Then
-							FreeEntity AATextCam
+					;y = y + 80*MenuScale
+					;
+					;Color 255,255,255
+					;AAText(x + 20 * MenuScale, y, "Сглаживание текста:") ;Antialiased text:
+					;AATextEnable% = DrawTick(x + 310 * MenuScale, y + MenuScale, AATextEnable%)
+					;If AATextEnable_Prev% <> AATextEnable
+					;	For font.AAFont = Each AAFont
+					;		FreeFont font\lowResFont%
+					;		If (Not AATextEnable)
+					;			FreeTexture font\texture
+					;			FreeImage font\backup
+					;		EndIf
+					;		Delete font
+					;	Next
+					;	If (Not AATextEnable) Then
+					;		FreeEntity AATextCam
 							;For i%=0 To 149
 							;	FreeEntity AATextSprite[i]
 							;Next
-						EndIf
-						InitAAFont()
-						fo\Font[0] = AALoadFont(FontPath$+"cour\Courier New Rus.ttf", Int(18 * (GraphicHeight / 1024.0)), 0,0,0)
-						fo\Font[1] = AALoadFont(FontPath$+"courbd\Courier New Rus.ttf", Int(58 * (GraphicHeight / 1024.0)), 0,0,0)
-						fo\Font[2] = AALoadFont(FontPath$+"LCDNovaRus.ttf", Int(22 * (GraphicHeight / 1024.0)), 0,0,0)
-						fo\Font[3] = AALoadFont(FontPath$+"LCDNovaRus.ttf", Int(58 * (GraphicHeight / 1024.0)), 0,0,0)
-						fo\Font[4] = AALoadFont(FontPath$+"Journal\Journal.ttf", Int(58 * (GraphicHeight / 1024.0)), 0,0,0)
-						fo\ConsoleFont% = AALoadFont("Arial Cyr", Int(22 * (GraphicHeight / 1024.0)), 0,0,0,1)
+					;	EndIf
+					;	InitAAFont()
+					;	fo\Font[0] = AALoadFont(FontPath$+"cour\Courier New Rus.ttf", Int(18 * (GraphicHeight / 1024.0)), 0,0,0)
+					;	fo\Font[1] = AALoadFont(FontPath$+"courbd\Courier New Rus.ttf", Int(58 * (GraphicHeight / 1024.0)), 0,0,0)
+					;	fo\Font[2] = AALoadFont(FontPath$+"LCDNovaRus.ttf", Int(22 * (GraphicHeight / 1024.0)), 0,0,0)
+					;	fo\Font[3] = AALoadFont(FontPath$+"LCDNovaRus.ttf", Int(58 * (GraphicHeight / 1024.0)), 0,0,0)
+					;	fo\Font[4] = AALoadFont(FontPath$+"Journal\Journal.ttf", Int(58 * (GraphicHeight / 1024.0)), 0,0,0)
+					;	fo\ConsoleFont% = AALoadFont("Arial Cyr", Int(22 * (GraphicHeight / 1024.0)), 0,0,0,1)
 						;ReloadAAFont()
-						AATextEnable_Prev% = AATextEnable
-					EndIf
-					If MouseOn(x+310*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
-						DrawOptionsTooltip(tx,ty,tw,th,"antialiastext")
-					EndIf
-					
+					;	AATextEnable_Prev% = AATextEnable
+					;EndIf
+					;If MouseOn(x+310*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
+					;	DrawOptionsTooltip(tx,ty,tw,th,"antialiastext")
+					;EndIf
+
 					;test subs
-					y = y + 30*MenuScale
+					y = y + 80*MenuScale
 					
 					Color 255,255,255
 					AAText(x + 20 * MenuScale, y, "Вспомогательные субтитры:")
@@ -2166,7 +2166,7 @@ Function DrawOptionsTooltip(x%,y%,width%,height%,option$,value#=0,ingame%=False)
 		Case "roomlights"
 			txt = "Создаёт эффект вспышки на некоторых источниках света." ;Toggles the artificial lens flare effect generated over specific light sources.
 		Case "gamma"
-			txt = Chr(34)+"Коррекция гаммы"+Chr(34)+" поможет достичь баланса яркости, если игра кажется слишком тёмной или светлой. " ;Gamma correction"+Chr(34)+" is used to achieve a good brightness factor to balance out your display's gamma if the game appears either too dark or bright. 
+			txt = Chr(34)+"Уровень гаммы"+Chr(34)+" поможет достичь баланса яркости, если игра кажется слишком тёмной или светлой. " ;Gamma correction"+Chr(34)+" is used to achieve a good brightness factor to balance out your display's gamma if the game appears either too dark or bright. 
 			txt = txt + "Установка слишком большого или низкого значения может вызвать ухудшение детализации изображения." ;Setting it too high or low can cause the graphics to look less detailed.
 			R = 255
 			G = 255
@@ -2212,7 +2212,7 @@ Function DrawOptionsTooltip(x%,y%,width%,height%,option$,value#=0,ingame%=False)
 			R = 255
 			txt2 = "Эта опция не может быть изменена во время игры." ;This option cannot be changed in-game.
 		Case "usertrack"
-			txt = "Включает возможность прослушивания пользовательский треков на 1-ом канале радио. Треки загружаются из " + Chr(34) + "SFX\Radio\UserTracks\" + Chr(34) ;Toggles the ability to play custom tracks over channel 1 of the radio. These tracks are loaded from the 
+			txt = "Включает возможность прослушивания пользовательских треков на 1-ом канале радио. Треки загружаются из " + Chr(34) + "SFX\Radio\UserTracks\" + Chr(34) ;Toggles the ability to play custom tracks over channel 1 of the radio. These tracks are loaded from the 
 			txt = txt + " Нажмите " + Chr(34) + "1" + Chr(34) + " когда выбрано радио, чтобы прослушать Ваши треки." ; directory. Press  ;when the radio is selected to change track.
 			R = 255
 			txt2 = "Эта опция не может быть изменена во время игры." ;This option cannot be changed in-game.
@@ -2263,14 +2263,14 @@ Function DrawOptionsTooltip(x%,y%,width%,height%,option$,value#=0,ingame%=False)
 				G = 255
 				txt2 = "Предпочтительно 60 FPS или выше. Если Вы замечаете чрезмерную прерывистость кадров, попробуйте уменьшить этот параметр, чтобы сделать FPS более стабильным." ;Usually, 60 FPS or higher is preferred. If you are noticing excessive stuttering at this setting, try lowering it to make your framerate more consistent.
 			EndIf
-		Case "antialiastext"
-			txt = "Сглаживает текст, делая его читабельным на мониторах с высоким разрешением экрана." ;Antialiased text"+Chr(34)+" smooths out the text before displaying. Makes text easier to read at high resolutions.
-			txt2 = "Возможна некорректная работа."
-			R = 255
-			G = 255
+		;Case "antialiastext"
+		;	txt = "Сглаживает текст, делая его читабельным на мониторах с высоким разрешением экрана." ;Antialiased text"+Chr(34)+" smooths out the text before displaying. Makes text easier to read at high resolutions.
+		;	txt2 = "Возможна некорректная работа."
+		;	R = 255
+		;	G = 255
 		Case "subtitles" ;test subs
-			txt = "Включает субтитры для не озвученных на русский реплик."
-			txt2 = "Временная мера. Возможна некорректная работа."
+			txt = "Включает субтитры для неозвученных на русский реплик."
+			txt2 = "Возможна некорректная работа."
 			R = 255
 			G = 255
 			;[End Block]
